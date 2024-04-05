@@ -9,6 +9,8 @@ public struct WPPostMapper: WPPostMapperProtocol {
         return formatter
     }()
     
+    public init() {}
+    
     public func mapPost(_ wpPost: WPPost) -> RefinedPost {
         RefinedPost(
             id: wpPost.id,
