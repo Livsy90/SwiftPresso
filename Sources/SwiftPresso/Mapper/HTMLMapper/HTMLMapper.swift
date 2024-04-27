@@ -3,6 +3,8 @@ import UIKit
 
 public struct HTMLMapper: HTMLMapperProtocol {
     
+    public init() {}
+    
     public func attributedStringFrom(htmlText: String) -> NSMutableAttributedString {
         let modifiedFont = formatStringWithYTVideo(text: htmlText)
         
