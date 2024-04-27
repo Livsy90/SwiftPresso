@@ -1,26 +1,37 @@
-//
-//  SwiftPresso.swift
-//
-//
-//  Created by Livsy on 05.04.2024.
-//
-
 import Foundation
 
-public struct SwiftPressoFactory {
+public enum SwiftPressoFactory {
     
-    public static func makePostListManager(
-        url: URL,
+    public static func postListManager(
+        host: String,
         httpScheme: HTTPScheme,
         httpAdditionalHeaders: [AnyHashable: Any]?
     ) -> PostListManagerProtocol {
         
-        let client = APIClientFactory.client(url: url, httpScheme: httpScheme, httpAdditionalHeaders: httpAdditionalHeaders)
+        var components = URLComponents()
+        components.scheme = httpScheme.rawValue
+        components.host = host
+        
+        guard let url = components.url else {
+            fatalError("SwiftPresso: Invalid URL")
+        }
+        
+        let client = APIClientFactory.client(
+            url: url,
+            httpScheme: httpScheme,
+            httpAdditionalHeaders: httpAdditionalHeaders
+        )
         let configurator = PostListServiceConfigurator()
         let mapper = WPPostMapper()
-        let service = PostListService(networkClient: client, configurator: configurator)
+        let service = PostListService(
+            networkClient: client,
+            configurator: configurator
+        )
         
-        return PostListManager(service: service, mapper: mapper)
+        return PostListManager(
+            service: service,
+            mapper: mapper
+        )
     }
     
 }

@@ -9,9 +9,7 @@ import SkavokNetworking
 
 public struct PostListServiceConfigurator {
     
-    private enum Constants {
-        static let feedPath = "/wp/v2/posts"
-        
+    private enum Constants {        
         enum Keys {
             static let embedParameter = "_embed"
             static let pageParameter = "page"
@@ -34,7 +32,9 @@ extension PostListServiceConfigurator: PostListConfiguratorProtocol {
             (Constants.Keys.pageParameter, "\(pageNumber)"),
             (Constants.Keys.perPageParameter, Constants.Values.perPage),
         ]
-        return Request(path: Constants.feedPath, query: parameters)
+        let path = Endpoint.path(for: .posts)
+        
+        return Request(path: path, query: parameters)
     }
     
 }
