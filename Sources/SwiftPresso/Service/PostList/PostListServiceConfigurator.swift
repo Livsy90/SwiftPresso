@@ -11,13 +11,10 @@ public struct PostListServiceConfigurator {
     
     private enum Constants {        
         enum Keys {
-            static let embedParameter = "_embed"
-            static let pageParameter = "page"
-            static let perPageParameter = "per_page"
-        }
-        
-        enum Values {
-            static let perPage = "50"
+            static let embed = "_embed"
+            static let page = "page"
+            static let perPage = "per_page"
+            static let categories = "categories"
         }
     }
 }
@@ -26,12 +23,17 @@ public struct PostListServiceConfigurator {
 
 extension PostListServiceConfigurator: PostListConfiguratorProtocol {
 
-    public func feedRequest(pageNumber: Int) -> Request<[WPPost]> {
-        let parameters: [(String, String)] = [
-            (Constants.Keys.embedParameter, ""),
-            (Constants.Keys.pageParameter, "\(pageNumber)"),
-            (Constants.Keys.perPageParameter, Constants.Values.perPage),
+    public func feedRequest(pageNumber: Int, perPage: Int, categories: Int?) -> Request<[WPPost]> {
+        var parameters: [(String, String)] = [
+            (Constants.Keys.embed, ""),
+            (Constants.Keys.page, "\(pageNumber)"),
+            (Constants.Keys.perPage, "\(perPage)")
         ]
+        
+        if let categories {
+            parameters.append((Constants.Keys.categories, "\(categories)"))
+        }
+        
         let path = Endpoint.path(for: .posts)
         
         return Request(path: path, query: parameters)

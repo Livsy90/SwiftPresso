@@ -1,5 +1,5 @@
 import SkavokNetworking
 
 public protocol PostListServiceProtocol {
-    func requestPosts(pageNumber: Int) async throws -> [WPPost]
+    func requestPosts(pageNumber: Int, perPage: Int, categories: Int?) async throws -> [WPPost]
 }

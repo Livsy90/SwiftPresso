@@ -12,8 +12,17 @@ public struct PostListService {
 
 extension PostListService: PostListServiceProtocol {
     
-    public func requestPosts(pageNumber: Int) async throws -> [WPPost] {
-        let request: Request<[WPPost]> = configurator.feedRequest(pageNumber: pageNumber)
+    public func requestPosts(
+        pageNumber: Int,
+        perPage: Int,
+        categories: Int?
+    ) async throws -> [WPPost] {
+        
+        let request: Request<[WPPost]> = configurator.feedRequest(
+            pageNumber: pageNumber,
+            perPage: perPage,
+            categories: categories
+        )
         return try await networkClient.send(request).value
     }
     
