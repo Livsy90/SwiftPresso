@@ -11,7 +11,8 @@ public struct PostListManager: PostListManagerProtocol {
     public func getPosts(
         pageNumber: Int,
         perPage: Int,
-        categories: [Int]?
+        categories: [Int]?,
+        tags: [Int]?
     ) async throws -> [RefinedPost] {
         
         do {

@@ -15,7 +15,8 @@ extension PostListService: PostListServiceProtocol {
     public func requestPosts(
         pageNumber: Int,
         perPage: Int,
-        categories: [Int]?
+        categories: [Int]?,
+        tags: [Int]?
     ) async throws -> [WPPost] {
         
         let request: Request<[WPPost]> = configurator.feedRequest(
