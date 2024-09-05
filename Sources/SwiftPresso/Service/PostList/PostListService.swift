@@ -22,7 +22,8 @@ extension PostListService: PostListServiceProtocol {
         let request: Request<[WPPost]> = configurator.feedRequest(
             pageNumber: pageNumber,
             perPage: perPage,
-            categories: categories
+            categories: categories,
+            tags: tags
         )
         return try await networkClient.send(request).value
     }

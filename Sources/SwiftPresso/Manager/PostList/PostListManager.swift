@@ -19,7 +19,8 @@ public struct PostListManager: PostListManagerProtocol {
             let posts = try await service.requestPosts(
                 pageNumber: pageNumber,
                 perPage: perPage,
-                categories: categories
+                categories: categories,
+                tags: tags
             )
             return mapper.mapPosts(posts)
         } catch {

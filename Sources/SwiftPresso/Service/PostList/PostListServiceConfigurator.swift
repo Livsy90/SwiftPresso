@@ -37,11 +37,11 @@ extension PostListServiceConfigurator: PostListConfiguratorProtocol {
             (Constants.Keys.perPage, "\(perPage)")
         ]
         
-        if let categories {
+        if let categories, !categories.isEmpty{
             parameters.append((Constants.Keys.categories, categories.map { String($0) }.joined(separator: ",")  ))
         }
         
-        if let tags {
+        if let tags, !tags.isEmpty {
             parameters.append((Constants.Keys.tags, tags.map { String($0) }.joined(separator: ",")  ))
         }
         
