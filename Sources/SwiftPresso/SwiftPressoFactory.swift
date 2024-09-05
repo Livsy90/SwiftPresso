@@ -34,6 +34,38 @@ public enum SwiftPressoFactory {
         )
     }
     
+    public static func searchManager(
+        host: String,
+        httpScheme: HTTPScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]?
+    ) -> SearchManagerProtocol {
+        
+        var components = URLComponents()
+        components.scheme = httpScheme.rawValue
+        components.host = host
+        
+        guard let url = components.url else {
+            fatalError("SwiftPresso: Invalid URL")
+        }
+        
+        let client = APIClientFactory.client(
+            url: url,
+            httpScheme: httpScheme,
+            httpAdditionalHeaders: httpAdditionalHeaders
+        )
+        let configurator = SearchServiceConfigurator()
+        let mapper = WPPostMapper()
+        let service = SearchService(
+            networkClient: client,
+            configurator: configurator
+        )
+        
+        return SearchManager(
+            service: service,
+            mapper: mapper
+        )
+    }
+    
     public static func pageListManager(
         host: String,
         httpScheme: HTTPScheme,
