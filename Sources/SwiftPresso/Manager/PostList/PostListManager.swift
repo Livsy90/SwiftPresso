@@ -16,4 +16,5 @@ public struct PostListManager: PostListManagerProtocol {
             throw WPPostMapperError.mapperError
         }
     }
+    
 }
