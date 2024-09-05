@@ -64,4 +64,34 @@ public enum SwiftPressoFactory {
         )
     }
     
+    public static func tagListManager(
+        host: String,
+        httpScheme: HTTPScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]?
+    ) ->  TagListManagerProtocol {
+        
+        var components = URLComponents()
+        components.scheme = httpScheme.rawValue
+        components.host = host
+        
+        guard let url = components.url else {
+            fatalError("SwiftPresso: Invalid URL")
+        }
+        
+        let client = APIClientFactory.client(
+            url: url,
+            httpScheme: httpScheme,
+            httpAdditionalHeaders: httpAdditionalHeaders
+        )
+        let configurator = TagListServiceConfigurator()
+        let service = TagListService(
+            networkClient: client,
+            configurator: configurator
+        )
+        
+        return TagListManager(
+            service: service
+        )
+    }
+    
 }

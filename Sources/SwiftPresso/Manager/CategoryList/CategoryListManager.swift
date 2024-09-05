@@ -8,8 +8,8 @@ public struct CategoryListManager: CategoryListManagerProtocol {
     
     public func getCategories() async throws -> [Category] {
         do {
-            let posts = try await service.requestCategories()
-            return posts
+            let categories = try await service.requestCategories()
+            return categories
         } catch {
             throw error
         }
