@@ -16,6 +16,7 @@ public struct PostListServiceConfigurator {
             static let perPage = "per_page"
             static let categories = "categories"
             static let tags = "tags"
+            static let search = "search"
         }
     }
 }
@@ -27,6 +28,7 @@ extension PostListServiceConfigurator: PostListConfiguratorProtocol {
     public func feedRequest(
         pageNumber: Int,
         perPage: Int,
+        searchTerms: String?,
         categories: [Int]?,
         tags: [Int]?
     ) -> Request<[WPPost]> {
@@ -37,12 +39,16 @@ extension PostListServiceConfigurator: PostListConfiguratorProtocol {
             (Constants.Keys.perPage, "\(perPage)")
         ]
         
-        if let categories, !categories.isEmpty{
-            parameters.append((Constants.Keys.categories, categories.map { String($0) }.joined(separator: ",")  ))
+        if let searchTerms, !searchTerms.isEmpty {
+            parameters.append((Constants.Keys.search, searchTerms))
+        }
+        
+        if let categories, !categories.isEmpty {
+            parameters.append((Constants.Keys.categories, categories.map { String($0) }.joined(separator: ",")))
         }
         
         if let tags, !tags.isEmpty {
-            parameters.append((Constants.Keys.tags, tags.map { String($0) }.joined(separator: ",")  ))
+            parameters.append((Constants.Keys.tags, tags.map { String($0) }.joined(separator: ",")))
         }
         
         let path = Endpoint.path(for: .posts)

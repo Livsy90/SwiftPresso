@@ -15,6 +15,7 @@ extension PostListService: PostListServiceProtocol {
     public func requestPosts(
         pageNumber: Int,
         perPage: Int,
+        searchTerms: String?,
         categories: [Int]?,
         tags: [Int]?
     ) async throws -> [WPPost] {
@@ -22,6 +23,7 @@ extension PostListService: PostListServiceProtocol {
         let request: Request<[WPPost]> = configurator.feedRequest(
             pageNumber: pageNumber,
             perPage: perPage,
+            searchTerms: searchTerms,
             categories: categories,
             tags: tags
         )

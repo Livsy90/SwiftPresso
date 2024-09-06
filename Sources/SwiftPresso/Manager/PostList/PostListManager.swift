@@ -11,6 +11,7 @@ public struct PostListManager: PostListManagerProtocol {
     public func getPosts(
         pageNumber: Int,
         perPage: Int,
+        searchTerms: String?,
         categories: [Int]?,
         tags: [Int]?
     ) async throws -> [RefinedPost] {
@@ -19,6 +20,7 @@ public struct PostListManager: PostListManagerProtocol {
             let posts = try await service.requestPosts(
                 pageNumber: pageNumber,
                 perPage: perPage,
+                searchTerms: searchTerms,
                 categories: categories,
                 tags: tags
             )
