@@ -6,6 +6,7 @@ struct SPLinkView<Placehodler: View>: View {
     let title: String
     let webViewBackgroundColor: Color
     let accentColor: Color
+    let textColor: Color
     
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
@@ -16,6 +17,7 @@ struct SPLinkView<Placehodler: View>: View {
             Link("", destination: url)
             Text(title)
                 .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(textColor)
         }
         .webViewLinkRow(
             backgroundColor: webViewBackgroundColor,

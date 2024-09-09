@@ -11,6 +11,7 @@ public final class SPSettings {
         public let isExcludeWebHeaderAndFooter: Bool
         public let backgroundColor: Color
         public let accentColor: Color
+        public let textColor: Color
         public let isShowPageMenu: Bool
         public let isShowTagMenu: Bool
         public let isShowCategoryMenu: Bool
@@ -19,6 +20,7 @@ public final class SPSettings {
             host: String,
             backgroundColor: Color = .white,
             accentColor: Color = .blue,
+            textColor: Color = .primary,
             isShowPageMenu: Bool = true,
             isShowTagMenu: Bool = true,
             isShowCategoryMenu: Bool = true,
@@ -30,6 +32,7 @@ public final class SPSettings {
             self.host = host
             self.backgroundColor = backgroundColor
             self.accentColor = accentColor
+            self.textColor = textColor
             self.isShowPageMenu = isShowPageMenu
             self.isShowTagMenu = isShowTagMenu
             self.isShowCategoryMenu = isShowCategoryMenu

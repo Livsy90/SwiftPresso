@@ -11,6 +11,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
     @State private var urlToOpen: URL?
     private let backgroundColor: Color
     private let accentColor: Color
+    private let textColor: Color
     private let isShowPageMenu: Bool
     private let isShowTagMenu: Bool
     private let isShowCategoryMenu: Bool
@@ -24,6 +25,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
         self.viewModel = SPPostListViewModel(configuration: configuration)
         self.backgroundColor = configuration.backgroundColor
         self.accentColor = configuration.accentColor
+        self.textColor = configuration.textColor
         self.homePlaceholder = homePlaceholder
         self.postPlaceholder = postPlaceholder
         self.isShowTagMenu = configuration.isShowTagMenu
@@ -39,6 +41,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                         post: post,
                         webViewBackgroundColor: backgroundColor,
                         accentColor: accentColor,
+                        textColor: textColor,
                         onTag: { tagName in
                             Task {
                                 await viewModel.onTag(tagName)
@@ -210,6 +213,7 @@ private struct SPPostListRow<Placeholder: View>: View {
     let post: PostModel
     let webViewBackgroundColor: Color
     let accentColor: Color
+    let textColor: Color
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
@@ -221,6 +225,7 @@ private struct SPPostListRow<Placeholder: View>: View {
                 title: post.title,
                 webViewBackgroundColor: webViewBackgroundColor,
                 accentColor: accentColor,
+                textColor: textColor,
                 onTag: onTag,
                 onCategory: onCategory,
                 placeholder: placeholder
