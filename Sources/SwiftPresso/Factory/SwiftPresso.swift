@@ -9,7 +9,7 @@ public enum SwiftPresso {
     
     public enum View {
             
-        public static func postList<Placeholder: SwiftUI.View>(placeholder: @escaping () -> Placeholder) -> some SwiftUI.View {
+        public static func postListView<Placeholder: SwiftUI.View>(placeholder: @escaping () -> Placeholder) -> some SwiftUI.View {
             SPPostListView(
                 backgroundColor: SPPreferences.shared.configuration.backgroundColor,
                 accentColor: SPPreferences.shared.configuration.accentColor,
@@ -26,7 +26,7 @@ public enum SwiftPresso {
             )
         }
         
-        public static func shimmerPlaceholder(backgroundColor: Color = Configuration.backgroundColor) -> some SwiftUI.View {
+        public static func shimmerPlaceholderView(backgroundColor: Color = Configuration.backgroundColor) -> some SwiftUI.View {
             SPShimmerPlacehodler(backgroundColor: backgroundColor)
         }
         
@@ -55,7 +55,7 @@ public enum SwiftPresso {
     
     public enum Provider {
         
-        public static func postListProvider() -> PostListProviderProtocol {
+        public static var postListProvider: PostListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
             }
@@ -84,9 +84,9 @@ public enum SwiftPresso {
                 service: service,
                 mapper: mapper
             )
-        }
+        }()
         
-        public static func pageListProvider() -> PageListProviderProtocol {
+        public static var pageListProvider: PageListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
             }
@@ -115,9 +115,9 @@ public enum SwiftPresso {
                 service: service,
                 mapper: mapper
             )
-        }
+        }()
         
-        public static func categoryListProvider() ->  CategoryListProviderProtocol {
+        public static var categoryListProvider: CategoryListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
             }
@@ -144,9 +144,9 @@ public enum SwiftPresso {
             return CategoryListProvider(
                 service: service
             )
-        }
+        }()
         
-        public static func tagListProvider() ->  TagListProviderProtocol {
+        public static var tagListProvider:  TagListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
             }
@@ -173,7 +173,7 @@ public enum SwiftPresso {
             return TagListProvider(
                 service: service
             )
-        }
+        }()
         
     }
 }
