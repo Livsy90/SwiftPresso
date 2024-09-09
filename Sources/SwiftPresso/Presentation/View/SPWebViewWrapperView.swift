@@ -87,6 +87,7 @@ struct SPWebViewWrapperView<Content: View>: View {
                     .animation(.easeInOut(duration: isLoading ? 0 : 0.5), value: isLoading)
                     .allowsHitTesting(false)
                     .ignoresSafeArea()
+                    .padding(12)
             }
         }
         .background {
