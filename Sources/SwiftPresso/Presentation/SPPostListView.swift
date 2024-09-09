@@ -1,5 +1,26 @@
 import SwiftUI
 
+///A View to represent a post list.
+///* Example
+///```swift
+/// @main
+/// struct DemoApp: App {
+///     var body: some Scene {
+///         WindowGroup {
+///              SPPostListView(
+///                  configuration: .init(
+///                      host: "livsycode.com",
+///                      backgroundColor: .black,
+///                      accentColor: .white,
+///                      textColor: .white
+///                  )
+///              ) {
+///                  SPShimmerPlacehodler(backgroundColor: .black)
+///              }
+///          }
+///      }
+///  }
+/// ```
 public struct SPPostListView<Placeholder: View>: View {
     
     public let loadingPlaceholder: () -> Placeholder
