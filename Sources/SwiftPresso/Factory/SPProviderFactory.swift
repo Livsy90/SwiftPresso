@@ -2,15 +2,14 @@ import Foundation
 
 public enum SPProviderFactory {
     
-    public static func postListProvider(
-        host: String = SPConfigurator.shared.configuration.host,
-        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
-    ) -> PostListProviderProtocol {
+    public static func postListProvider() -> PostListProviderProtocol {
+        guard !SPPreferences.shared.configuration.host.isEmpty else {
+            fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+        }
         
         var components = URLComponents()
-        components.scheme = httpScheme.rawValue
-        components.host = host
+        components.scheme = SPPreferences.shared.configuration.httpScheme.rawValue
+        components.host = SPPreferences.shared.configuration.host
         
         guard let url = components.url else {
             fatalError("SwiftPresso: Invalid URL")
@@ -18,8 +17,8 @@ public enum SPProviderFactory {
         
         let client = APIClientFactory.client(
             url: url,
-            httpScheme: httpScheme,
-            httpAdditionalHeaders: httpAdditionalHeaders
+            httpScheme: SPPreferences.shared.configuration.httpScheme,
+            httpAdditionalHeaders: SPPreferences.shared.configuration.httpAdditionalHeaders
         )
         let configurator = PostListServiceConfigurator()
         let mapper = WPPostMapper()
@@ -34,15 +33,14 @@ public enum SPProviderFactory {
         )
     }
         
-    public static func pageListProvider(
-        host: String = SPConfigurator.shared.configuration.host,
-        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
-    ) -> PageListProviderProtocol {
+    public static func pageListProvider() -> PageListProviderProtocol {
+        guard !SPPreferences.shared.configuration.host.isEmpty else {
+            fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+        }
         
         var components = URLComponents()
-        components.scheme = httpScheme.rawValue
-        components.host = host
+        components.scheme = SPPreferences.shared.configuration.httpScheme.rawValue
+        components.host = SPPreferences.shared.configuration.host
         
         guard let url = components.url else {
             fatalError("SwiftPresso: Invalid URL")
@@ -50,8 +48,8 @@ public enum SPProviderFactory {
         
         let client = APIClientFactory.client(
             url: url,
-            httpScheme: httpScheme,
-            httpAdditionalHeaders: httpAdditionalHeaders
+            httpScheme: SPPreferences.shared.configuration.httpScheme,
+            httpAdditionalHeaders: SPPreferences.shared.configuration.httpAdditionalHeaders
         )
         let configurator = PageListServiceConfigurator()
         let mapper = WPPostMapper()
@@ -66,15 +64,14 @@ public enum SPProviderFactory {
         )
     }
     
-    public static func categoryListProvider(
-        host: String = SPConfigurator.shared.configuration.host,
-        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
-    ) ->  CategoryListProviderProtocol {
+    public static func categoryListProvider() ->  CategoryListProviderProtocol {
+        guard !SPPreferences.shared.configuration.host.isEmpty else {
+            fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+        }
         
         var components = URLComponents()
-        components.scheme = httpScheme.rawValue
-        components.host = host
+        components.scheme = SPPreferences.shared.configuration.httpScheme.rawValue
+        components.host = SPPreferences.shared.configuration.host
         
         guard let url = components.url else {
             fatalError("SwiftPresso: Invalid URL")
@@ -82,8 +79,8 @@ public enum SPProviderFactory {
         
         let client = APIClientFactory.client(
             url: url,
-            httpScheme: httpScheme,
-            httpAdditionalHeaders: httpAdditionalHeaders
+            httpScheme: SPPreferences.shared.configuration.httpScheme,
+            httpAdditionalHeaders: SPPreferences.shared.configuration.httpAdditionalHeaders
         )
         let configurator = CategoryListServiceConfigurator()
         let service = CategoryListService(
@@ -96,15 +93,14 @@ public enum SPProviderFactory {
         )
     }
     
-    public static func tagListProvider(
-        host: String = SPConfigurator.shared.configuration.host,
-        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
-    ) ->  TagListProviderProtocol {
+    public static func tagListProvider() ->  TagListProviderProtocol {
+        guard !SPPreferences.shared.configuration.host.isEmpty else {
+            fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+        }
         
         var components = URLComponents()
-        components.scheme = httpScheme.rawValue
-        components.host = host
+        components.scheme = SPPreferences.shared.configuration.httpScheme.rawValue
+        components.host = SPPreferences.shared.configuration.host
         
         guard let url = components.url else {
             fatalError("SwiftPresso: Invalid URL")
@@ -112,8 +108,8 @@ public enum SPProviderFactory {
         
         let client = APIClientFactory.client(
             url: url,
-            httpScheme: httpScheme,
-            httpAdditionalHeaders: httpAdditionalHeaders
+            httpScheme: SPPreferences.shared.configuration.httpScheme,
+            httpAdditionalHeaders: SPPreferences.shared.configuration.httpAdditionalHeaders
         )
         let configurator = TagListServiceConfigurator()
         let service = TagListService(

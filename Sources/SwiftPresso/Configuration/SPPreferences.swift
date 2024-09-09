@@ -1,7 +1,7 @@
 import SwiftUI
 import Foundation
 
-public final class SPConfigurator {
+public final class SPPreferences {
     
     public struct Configuration {
         public let host: String
@@ -55,7 +55,7 @@ public final class SPConfigurator {
         }
     }
     
-    public static let shared: SPConfigurator = .init()
+    public static let shared: SPPreferences = .init()
     
     public var configuration: Configuration {
         get {
@@ -71,15 +71,11 @@ public final class SPConfigurator {
     }
     
     private let queue = DispatchQueue(
-        label: "com.spsettings.queue",
+        label: "com.sppreferences.queue",
         qos: .default,
         attributes: .concurrent
     )
-    private var _configuration = Configuration.init(
-        host: "",
-        backgroundColor: .white,
-        accentColor: .blue
-    )
+    private var _configuration = Configuration.init(host: "")
     
     private init() {}
     

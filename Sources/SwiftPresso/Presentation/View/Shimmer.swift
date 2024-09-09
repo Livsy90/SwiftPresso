@@ -4,7 +4,7 @@ public struct SPShimmerPlacehodler: View {
     
     public let backgroundColor: Color
     
-    public init(backgroundColor: Color) {
+    public init(backgroundColor: Color = SPPreferences.shared.configuration.backgroundColor) {
         self.backgroundColor = backgroundColor
     }
     

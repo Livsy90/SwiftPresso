@@ -3,11 +3,11 @@ import SwiftUI
 public enum SPViewBuilder {
         
     public static func postList<Placeholder: View>(
-        configuration: SPConfigurator.Configuration,
+        configuration: SPPreferences.Configuration,
         placeholder: @escaping () -> Placeholder
     ) -> some View {
         
-        SPConfigurator.shared.configuration = configuration
+        SPPreferences.shared.configuration = configuration
         
         return SPPostListView(
             backgroundColor: configuration.backgroundColor,

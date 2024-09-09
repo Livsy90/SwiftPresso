@@ -5,9 +5,6 @@ public struct SPProvider<T> {
     
     public var wrappedValue: T {
         get {
-            guard !SPConfigurator.shared.configuration.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SPConfigurator.shared.configuration' value.")
-            }
             return InjectedValues[keyPath]
         }
         set {
