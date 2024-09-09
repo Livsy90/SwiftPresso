@@ -8,7 +8,7 @@ struct PostListManager: PostListManagerProtocol {
         self.mapper = mapper
     }
     
-    func getPosts(
+    func getRefinedPosts(
         pageNumber: Int,
         perPage: Int,
         searchTerms: String?,
@@ -27,6 +27,28 @@ struct PostListManager: PostListManagerProtocol {
             return mapper.mapPosts(posts)
         } catch {
             throw WPPostMapperError.mapperError
+        }
+    }
+    
+    func getRawPosts(
+        pageNumber: Int,
+        perPage: Int,
+        searchTerms: String?,
+        categories: [Int]?,
+        tags: [Int]?
+    ) async throws -> [WPPost] {
+        
+        do {
+            let posts = try await service.requestPosts(
+                pageNumber: pageNumber,
+                perPage: perPage,
+                searchTerms: searchTerms,
+                categories: categories,
+                tags: tags
+            )
+            return posts
+        } catch {
+            throw error
         }
     }
     

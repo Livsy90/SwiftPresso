@@ -1,30 +1,30 @@
-struct WPMedia: Codable {
-    struct WPMediaDetails: Codable {
-        let width: Double?
-        let height: Double?
-        let file: String?
-        let sizes: WPMediaSizes?
+public struct WPMedia: Codable {
+    public struct WPMediaDetails: Codable {
+        public let width: Double?
+        public let height: Double?
+        public let file: String?
+        public let sizes: WPMediaSizes?
     }
-    
-    struct WPMediaSizes: Codable {
-        let thumbnail: WPMediaSize?
-        let medium: WPMediaSize?
-        let mediumLarge: WPMediaSize?
-        let large: WPMediaSize?
-        let full: WPMediaSize?
+
+    public struct WPMediaSizes: Codable {
+        public let thumbnail: WPMediaSize?
+        public let medium: WPMediaSize?
+        public let mediumLarge: WPMediaSize?
+        public let large: WPMediaSize?
+        public let full: WPMediaSize?
         
         private enum CodingKeys: String, CodingKey {
             case thumbnail, medium, large, full
             case mediumLarge = "medium_large"
         }
     }
-    
-    struct WPMediaSize: Codable {
-        let file: String?
-        let width: Double?
-        let height: Double?
-        let mimeType: String?
-        let sourceUrl: String?
+
+    public struct WPMediaSize: Codable {
+        public let file: String?
+        public let width: Double?
+        public let height: Double?
+        public let mimeType: String?
+        public let sourceUrl: String?
         
         private enum CodingKeys: String, CodingKey {
             case file, width, height
@@ -33,20 +33,20 @@ struct WPMedia: Codable {
         }
     }
     
-    let id: Int?
-    let date: String?
-    let slug: String?
-    let type: String?
-    let link: String?
-    let title: WPText?
-    let author: Int?
-    let caption: WPText?
-    let altText: String?
-    let mediaType: String?
-    let mimeType: String?
-    let mediaDetails: WPMediaDetails?
-    let sourceUrl: String?
-    let links: WPLinks?
+    public let id: Int?
+    public let date: String?
+    public let slug: String?
+    public let type: String?
+    public let link: String?
+    public let title: WPText?
+    public let author: Int?
+    public let caption: WPText?
+    public let altText: String?
+    public let mediaType: String?
+    public let mimeType: String?
+    public let mediaDetails: WPMediaDetails?
+    public let sourceUrl: String?
+    public let links: WPLinks?
     
     private enum CodingKeys: String, CodingKey {
         case id, date, slug, type, link, title, author, caption

@@ -1,9 +1,17 @@
 public protocol PostListManagerProtocol {
-    func getPosts(
+    func getRefinedPosts(
         pageNumber: Int,
         perPage: Int,
         searchTerms: String?,
         categories: [Int]?,
         tags: [Int]?
     ) async throws -> [PostModel]
+    
+    func getRawPosts(
+        pageNumber: Int,
+        perPage: Int,
+        searchTerms: String?,
+        categories: [Int]?,
+        tags: [Int]?
+    ) async throws -> [WPPost]
 }

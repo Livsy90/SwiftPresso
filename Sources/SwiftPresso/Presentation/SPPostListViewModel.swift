@@ -159,7 +159,7 @@ final class SPPostListViewModel {
         tag: Int? = nil
     ) async -> [PostModel] {
         do {
-            return try await postListManager.getPosts(
+            return try await postListManager.getRefinedPosts(
                 pageNumber: pageNumber,
                 perPage: settings.configuration.postsPerPage,
                 searchTerms: searchTerms,
