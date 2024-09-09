@@ -85,7 +85,6 @@ public struct SPPostListView<Placeholder: View>: View {
                         }
                     }
                 }
-                .navigationBarColor(.red)
                 
                 if viewModel.isInitialLoading {
                     loadingPlaceholder()
