@@ -4,7 +4,7 @@ import SwiftUI
 public enum SwiftPresso {
     
     public enum View {
-            
+        
         public static func postListView<Placeholder: SwiftUI.View>(
             configuration: SPConfiguration,
             placeholder: @escaping () -> Placeholder
@@ -32,7 +32,6 @@ public enum SwiftPresso {
         }
         
     }
-
     
     public enum Configuration {
         
@@ -150,7 +149,7 @@ public enum SwiftPresso {
             )
         }()
         
-        public static var tagListProvider:  TagListProviderProtocol = {
+        public static var tagListProvider: TagListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
             }
@@ -180,4 +179,5 @@ public enum SwiftPresso {
         }()
         
     }
+    
 }
