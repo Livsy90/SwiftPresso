@@ -1,7 +1,7 @@
 import SkavokNetworking
 import Foundation
 
-struct APIClientFactory {
+enum APIClientFactory {
     static func client(
         url: URL, 
         httpScheme: HTTPScheme,
