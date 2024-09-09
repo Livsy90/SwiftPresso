@@ -5,7 +5,10 @@ public struct SPProvider<T> {
     
     public var wrappedValue: T {
         get {
-            InjectedValues[keyPath]
+            guard !SPConfigurator.shared.configuration.host.isEmpty else {
+                fatalError("The host value must not be empty. To configure it, set the 'SPConfigurator.shared.configuration' value.")
+            }
+            return InjectedValues[keyPath]
         }
         set {
             InjectedValues[keyPath] = newValue
@@ -22,7 +25,7 @@ public struct SPProvider<T> {
 
 protocol InjectionKey {
     associatedtype Value
-
+    
     static var currentValue: Self.Value { get set }
 }
 

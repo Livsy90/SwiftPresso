@@ -1,10 +1,3 @@
-//
-//  PostListViewModel.swift
-//  LivsyCode
-//
-//  Created by Livsy on 28.08.2024.
-//
-
 import Observation
 import Foundation
 
@@ -63,6 +56,7 @@ final class SPPostListViewModel {
     }
     
     private let postPerPage: Int
+    
     private let postListProvider: PostListProviderProtocol
     private let categoryListProvider: CategoryListProviderProtocol
     private let tagListProvider: TagListProviderProtocol
@@ -74,6 +68,10 @@ final class SPPostListViewModel {
     
     init(postPerPage: Int) {
         self.postPerPage = postPerPage
+        postListProvider = SPProviderFactory.postListProvider()
+        categoryListProvider = SPProviderFactory.categoryListProvider()
+        tagListProvider = SPProviderFactory.tagListProvider()
+        pageListProvider = SPProviderFactory.pageListProvider()
         
         Task {
             async let postList = await getPostList()

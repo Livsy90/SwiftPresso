@@ -10,5 +10,5 @@ extension InjectedValues {
 }
 
 private enum PostListProviderKey: InjectionKey {
-    static var currentValue: PostListProviderProtocol = SPFactory.postListProvider()
+    static var currentValue: PostListProviderProtocol = SPProviderFactory.postList()
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum SPFactory {
+public enum SPProviderFactory {
     
     public static func postListProvider(
         host: String = SPConfigurator.shared.configuration.host,
