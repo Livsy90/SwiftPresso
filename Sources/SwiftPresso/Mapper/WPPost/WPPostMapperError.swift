@@ -1,3 +1,3 @@
-public enum WPPostMapperError: Error {
+enum WPPostMapperError: Error {
     case mapperError
 }

@@ -1,4 +1,4 @@
-public protocol WPPostMapperProtocol {
-    func mapPost(_ wpPost: WPPost) -> RefinedPost
-    func mapPosts(_ wpPosts: [WPPost]) -> [RefinedPost]
+protocol WPPostMapperProtocol {
+    func mapPost(_ wpPost: WPPost) -> PostModel
+    func mapPosts(_ wpPosts: [WPPost]) -> [PostModel]
 }

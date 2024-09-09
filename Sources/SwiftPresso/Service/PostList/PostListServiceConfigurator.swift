@@ -1,13 +1,6 @@
-//
-//  PostListServiceConfigurator.swift
-//  
-//
-//  Created by Livsy on 05.04.2024.
-//
-
 import SkavokNetworking
 
-public struct PostListServiceConfigurator {
+struct PostListServiceConfigurator {
     
     private enum Constants {        
         enum Keys {
@@ -25,7 +18,7 @@ public struct PostListServiceConfigurator {
 
 extension PostListServiceConfigurator: PostListConfiguratorProtocol {
 
-    public func feedRequest(
+    func feedRequest(
         pageNumber: Int,
         perPage: Int,
         searchTerms: String?,

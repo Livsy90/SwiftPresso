@@ -3,9 +3,9 @@ import Foundation
 public enum SwiftPressoFactory {
     
     public static func postListManager(
-        host: String,
-        httpScheme: HTTPScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]?
+        host: String = SwiftPressoSettings.shared.host,
+        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
     ) -> PostListManagerProtocol {
         
         var components = URLComponents()
@@ -35,9 +35,9 @@ public enum SwiftPressoFactory {
     }
         
     public static func pageListManager(
-        host: String,
-        httpScheme: HTTPScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]?
+        host: String = SwiftPressoSettings.shared.host,
+        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
     ) -> PageListManagerProtocol {
         
         var components = URLComponents()
@@ -67,9 +67,9 @@ public enum SwiftPressoFactory {
     }
     
     public static func categoryListManager(
-        host: String,
-        httpScheme: HTTPScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]?
+        host: String = SwiftPressoSettings.shared.host,
+        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
     ) ->  CategoryListManagerProtocol {
         
         var components = URLComponents()
@@ -97,9 +97,9 @@ public enum SwiftPressoFactory {
     }
     
     public static func tagListManager(
-        host: String,
-        httpScheme: HTTPScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]?
+        host: String = SwiftPressoSettings.shared.host,
+        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
     ) ->  TagListManagerProtocol {
         
         var components = URLComponents()

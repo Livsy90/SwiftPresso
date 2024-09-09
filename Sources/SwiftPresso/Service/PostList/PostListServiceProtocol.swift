@@ -1,6 +1,6 @@
 import SkavokNetworking
 
-public protocol PostListServiceProtocol {
+protocol PostListServiceProtocol {
     func requestPosts(
         pageNumber: Int,
         perPage: Int,

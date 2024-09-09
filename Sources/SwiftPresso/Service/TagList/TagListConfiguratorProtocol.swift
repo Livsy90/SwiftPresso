@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-public protocol TagListConfiguratorProtocol {
-    func tagsRequest() -> Request<[Category]>
+protocol TagListConfiguratorProtocol {
+    func tagsRequest() -> Request<[CategoryModel]>
 }

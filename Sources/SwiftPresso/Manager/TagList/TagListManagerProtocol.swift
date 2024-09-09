@@ -1,3 +1,3 @@
 public protocol TagListManagerProtocol {
-    func getTags() async throws -> [Category]
+    func getTags() async throws -> [CategoryModel]
 }

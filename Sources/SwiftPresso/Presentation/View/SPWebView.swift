@@ -18,13 +18,16 @@ struct SPWebView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> WKWebView  {
         let contentController = WKUserContentController()
-        let script = """
-        var style = document.createElement('style');
-        style.innerHTML = 'header {display: none;} footer {display: none;}';
-        document.head.appendChild(style);
-        """
-        let scriptInjection = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-        contentController.addUserScript(scriptInjection)
+        
+        if SwiftPressoSettings.shared.isExcludeWebHeaderAndFooter {
+            let script = """
+            var style = document.createElement('style');
+            style.innerHTML = 'header {display: none;} footer {display: none;}';
+            document.head.appendChild(style);
+            """
+            let scriptInjection = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+            contentController.addUserScript(scriptInjection)
+        }
         
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = .nonPersistent()
@@ -97,7 +100,7 @@ struct SPWebView: UIViewRepresentable {
                 parent.onCategory(categoryName)
             }
             
-            if host != API.host {
+            if host != SwiftPressoSettings.shared.host {
                 UIApplication.shared.open(url)
                 decisionHandler(.cancel)
             } else {

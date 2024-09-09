@@ -19,14 +19,10 @@ final class SPPostListViewModel {
         
         var title: String {
             switch self {
-            case .common:
-                "Home"
-            case .tag(let title):
-                title
-            case .category(let title):
-                title
-            case .search:
-                "Search"
+            case .common: "Home"
+            case .tag(let title): title
+            case .category(let title): title
+            case .search: "Search"
             }
         }
     }
@@ -38,14 +34,14 @@ final class SPPostListViewModel {
         isLoading && !isError
     }
     private(set) var isLoading: Bool = true
-    private(set) var postList: [RefinedPost] = []
-    private(set) var pageList: [RefinedPost] = [] {
+    private(set) var postList: [PostModel] = []
+    private(set) var pageList: [PostModel] = [] {
         didSet {
             isMenuUnavailable = pageList.isEmpty
         }
     }
-    private(set) var tags: [SwiftPresso.Category] = []
-    private(set) var categories: [SwiftPresso.Category] = []
+    private(set) var tags: [CategoryModel] = []
+    private(set) var categories: [CategoryModel] = []
     
     private(set) var isRefreshable: Bool = false
     private(set) var isMenuUnavailable: Bool = true
@@ -56,27 +52,11 @@ final class SPPostListViewModel {
         }
     }
     
-    private let postListManager = SwiftPressoFactory.postListManager(
-        host: API.host,
-        httpScheme: .https,
-        httpAdditionalHeaders: nil
-    )
-    
-    private let categoryListManager = SwiftPressoFactory.categoryListManager(
-        host: API.host,
-        httpScheme: .https,
-        httpAdditionalHeaders: nil
-    )
-    private let tagListManager = SwiftPressoFactory.tagListManager(
-        host: API.host,
-        httpScheme: .https,
-        httpAdditionalHeaders: nil
-    )
-    private let pageListManager = SwiftPressoFactory.pageListManager(
-        host: API.host,
-        httpScheme: .https,
-        httpAdditionalHeaders: nil
-    )
+    private let postListManager = SwiftPressoFactory.postListManager()
+    private let categoryListManager = SwiftPressoFactory.categoryListManager()
+    private let tagListManager = SwiftPressoFactory.tagListManager()
+    private let pageListManager = SwiftPressoFactory.pageListManager()
+    private let settings = SwiftPressoSettings.shared
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true
@@ -161,11 +141,11 @@ final class SPPostListViewModel {
         searchTerms: String? = nil,
         category: Int? = nil,
         tag: Int? = nil
-    ) async -> [RefinedPost] {
+    ) async -> [PostModel] {
         do {
             return try await postListManager.getPosts(
                 pageNumber: pageNumber,
-                perPage: 50,
+                perPage: settings.postsPerPage,
                 searchTerms: searchTerms,
                 categories: CollectionOfOne(category).compactMap { $0 },
                 tags: CollectionOfOne(tag).compactMap { $0 }
@@ -177,7 +157,7 @@ final class SPPostListViewModel {
         }
     }
     
-    private func getTags() async -> [SwiftPresso.Category] {
+    private func getTags() async -> [CategoryModel] {
         do {
             return try await tagListManager.getTags()
         } catch {
@@ -187,7 +167,7 @@ final class SPPostListViewModel {
         }
     }
     
-    private func getCategories() async -> [SwiftPresso.Category]  {
+    private func getCategories() async -> [CategoryModel]  {
         do {
             return try await categoryListManager.getCategories()
         } catch {
@@ -197,7 +177,7 @@ final class SPPostListViewModel {
         }
     }
     
-    private func getPages() async -> [RefinedPost]  {
+    private func getPages() async -> [PostModel]  {
         do {
             return try await pageListManager.getPages()
         } catch {
@@ -214,7 +194,7 @@ final class SPPostListViewModel {
     }
     
     private func id(by name: String) -> Int? {
-        let categoryArray: [SwiftPresso.Category]
+        let categoryArray: [SwiftPresso.CategoryModel]
         
         switch mode {
         case .common, .search:
@@ -231,24 +211,4 @@ final class SPPostListViewModel {
             .first
     }
     
-}
-
-extension RefinedPost: Hashable {
-    public static func == (lhs: RefinedPost, rhs: RefinedPost) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
-extension SwiftPresso.Category: Hashable {
-    public static func == (lhs: SwiftPresso.Category, rhs: SwiftPresso.Category) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
 }

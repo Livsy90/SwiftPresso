@@ -166,7 +166,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
 
 private struct SPPostListRow<Placeholder: View>: View {
     
-    let post: RefinedPost
+    let post: PostModel
     let webViewBackgroundColor: Color
     let accentColor: Color
     let onTag: (String) -> Void

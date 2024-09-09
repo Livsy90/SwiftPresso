@@ -1,8 +1,8 @@
-public struct WPPost: Codable {
-    public struct WPEmbeddedPost: Codable {
-        public let author: [WPAuthor]?
-        public let wpFeaturedMedia: [WPMedia]?
-        public let wpTerm: [[WPEmbeddedTerm]]?
+struct WPPost: Codable {
+    struct WPEmbeddedPost: Codable {
+        let author: [WPAuthor]?
+        let wpFeaturedMedia: [WPMedia]?
+        let wpTerm: [[WPEmbeddedTerm]]?
         
         private enum CodingKeys: String, CodingKey {
             case author
@@ -11,14 +11,14 @@ public struct WPPost: Codable {
         }
     }
     
-    public struct WPAuthor: Codable {
-        public let id: Int
-        public let name: String?
-        public let url: String?
-        public let description: String?
-        public let link: String?
-        public let slug: String?
-        public let avatarUrls: [Int:String]?
+    struct WPAuthor: Codable {
+        let id: Int
+        let name: String?
+        let url: String?
+        let description: String?
+        let link: String?
+        let slug: String?
+        let avatarUrls: [Int:String]?
         
         private enum CodingKeys: String, CodingKey {
             case id, name, url, description, link, slug
@@ -26,18 +26,18 @@ public struct WPPost: Codable {
         }
     }
     
-    public struct WPProtectedText: Codable {
-        public let rendered: String
-        public let protected: Bool?
+    struct WPProtectedText: Codable {
+        let rendered: String
+        let protected: Bool?
     }
     
-    public struct WPEmbeddedTerm: Codable {
-        public let id: Int?
-        public let link: String?
-        public let name: String?
-        public let slug: String?
-        public let taxonomy: String?
-        public let links: WPLinks?
+    struct WPEmbeddedTerm: Codable {
+        let id: Int?
+        let link: String?
+        let name: String?
+        let slug: String?
+        let taxonomy: String?
+        let links: WPLinks?
         
         private enum CodingKeys: String, CodingKey {
             case id, link, name, slug, taxonomy
@@ -45,29 +45,29 @@ public struct WPPost: Codable {
         }
     }
     
-    public let id: Int
-    public let date: String
-    public let dateGMT: String
-    public let guid: WPText
-    public let modified: String
-    public let modifiedGMT: String
-    public let slug: String
-    public let status: String
-    public let type: String
-    public let link: String
-    public let title: WPText
-    public let content: WPProtectedText
-    public let excerpt: WPProtectedText?
-    public let author: Int
-    public let featuredMedia: Int?
-    public let commentStatus: String?
-    public let pingStatus: String?
-    public let sticky: Bool?
-    public let format: String?
-    public let categories: [Int]?
-    public let tags: [Int]?
-    public let links: WPLinks?
-    public var embedded: WPEmbeddedPost?
+    let id: Int
+    let date: String
+    let dateGMT: String
+    let guid: WPText
+    let modified: String
+    let modifiedGMT: String
+    let slug: String
+    let status: String
+    let type: String
+    let link: String
+    let title: WPText
+    let content: WPProtectedText
+    let excerpt: WPProtectedText?
+    let author: Int
+    let featuredMedia: Int?
+    let commentStatus: String?
+    let pingStatus: String?
+    let sticky: Bool?
+    let format: String?
+    let categories: [Int]?
+    let tags: [Int]?
+    let links: WPLinks?
+    var embedded: WPEmbeddedPost?
     
     private enum CodingKeys: String, CodingKey {
         case id, date, guid, modified, slug, status, type, link, title, content, excerpt, author, sticky, format, categories, tags
@@ -81,35 +81,35 @@ public struct WPPost: Codable {
     }
 }
 
-public struct WPText: Codable {
-    public let rendered: String
+struct WPText: Codable {
+    let rendered: String
 }
 
-public struct WPLinks: Codable {
-    public struct WPLink: Codable {
-        public let href: String
+struct WPLinks: Codable {
+    struct WPLink: Codable {
+        let href: String
     }
     
-    public struct WPEmbeddableLink: Codable {
-        public let href: String?
-        public let embeddable: Bool?
+    struct WPEmbeddableLink: Codable {
+        let href: String?
+        let embeddable: Bool?
     }
     
-    public struct WPTerm: Codable {
-        public let taxonomy: String?
-        public let embeddable: Bool?
-        public let href: String?
+    struct WPTerm: Codable {
+        let taxonomy: String?
+        let embeddable: Bool?
+        let href: String?
     }
     
-    public let `self`: [WPLink]?
-    public let collection: [WPLink]?
-    public let about: [WPLink]?
-    public let author: [WPEmbeddableLink]?
-    public let replies: [WPEmbeddableLink]?
-    public let versionHistory: [WPLink]?
-    public let wpFeaturedmedia: [WPEmbeddableLink]?
-    public let wpAttachment: [WPLink]?
-    public let wpTerm: [WPTerm]?
+    let `self`: [WPLink]?
+    let collection: [WPLink]?
+    let about: [WPLink]?
+    let author: [WPEmbeddableLink]?
+    let replies: [WPEmbeddableLink]?
+    let versionHistory: [WPLink]?
+    let wpFeaturedmedia: [WPEmbeddableLink]?
+    let wpAttachment: [WPLink]?
+    let wpTerm: [WPTerm]?
     
     private enum CodingKeys: String, CodingKey {
         case collection, about, author, replies, `self`

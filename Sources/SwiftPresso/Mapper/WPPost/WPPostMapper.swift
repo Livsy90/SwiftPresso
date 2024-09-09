@@ -1,6 +1,6 @@
 import Foundation
 
-public struct WPPostMapper: WPPostMapperProtocol {
+struct WPPostMapper: WPPostMapperProtocol {
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -8,11 +8,9 @@ public struct WPPostMapper: WPPostMapperProtocol {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return formatter
     }()
-    
-    public init() {}
-    
-    public func mapPost(_ wpPost: WPPost) -> RefinedPost {
-        RefinedPost(
+        
+    func mapPost(_ wpPost: WPPost) -> PostModel {
+        PostModel(
             id: wpPost.id,
             date: dateFormatter.date(from: wpPost.date),
             title: wpPost.title.rendered,
@@ -25,7 +23,7 @@ public struct WPPostMapper: WPPostMapperProtocol {
         )
     }
     
-    public func mapPosts(_ wpPosts: [WPPost]) -> [RefinedPost] {
+    func mapPosts(_ wpPosts: [WPPost]) -> [PostModel] {
         wpPosts.map { mapPost($0) }
     }
     

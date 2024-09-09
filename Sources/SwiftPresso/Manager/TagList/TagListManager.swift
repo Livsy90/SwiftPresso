@@ -1,12 +1,12 @@
-public struct TagListManager: TagListManagerProtocol {
+struct TagListManager: TagListManagerProtocol {
         
     private let service: TagListServiceProtocol
     
-    public init(service: TagListServiceProtocol) {
+    init(service: TagListServiceProtocol) {
         self.service = service
     }
     
-    public func getTags() async throws -> [Category] {
+    func getTags() async throws -> [CategoryModel] {
         do {
             let tags = try await service.requestTags()
             return tags

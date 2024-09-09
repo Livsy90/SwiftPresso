@@ -5,5 +5,5 @@ public protocol PostListManagerProtocol {
         searchTerms: String?,
         categories: [Int]?,
         tags: [Int]?
-    ) async throws -> [RefinedPost]
+    ) async throws -> [PostModel]
 }

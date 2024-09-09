@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-public protocol TagListServiceProtocol {
-    func requestTags() async throws -> [Category]
+protocol TagListServiceProtocol {
+    func requestTags() async throws -> [CategoryModel]
 }

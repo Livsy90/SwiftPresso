@@ -1,6 +1,6 @@
 import SkavokNetworking
 
-public struct PostListService {
+struct PostListService {
     private let networkClient: ApiClientProtocol
     private let configurator: PostListConfiguratorProtocol
     
@@ -12,7 +12,7 @@ public struct PostListService {
 
 extension PostListService: PostListServiceProtocol {
     
-    public func requestPosts(
+    func requestPosts(
         pageNumber: Int,
         perPage: Int,
         searchTerms: String?,

@@ -1,6 +1,6 @@
 import SkavokNetworking
 
-public struct CategoryListService {
+struct CategoryListService {
     private let networkClient: ApiClientProtocol
     private let configurator: CategoryListConfiguratorProtocol
     
@@ -11,8 +11,8 @@ public struct CategoryListService {
 }
 
 extension CategoryListService: CategoryListServiceProtocol {
-    public func requestCategories() async throws -> [Category] {
-        let request: Request<[Category]> = configurator.categoriesRequest()
+    func requestCategories() async throws -> [CategoryModel] {
+        let request: Request<[CategoryModel]> = configurator.categoriesRequest()
         return try await networkClient.send(request).value
     }
 }

@@ -1,7 +1,7 @@
 import SkavokNetworking
 
-public struct TagListServiceConfigurator: TagListConfiguratorProtocol {
-    public func tagsRequest() -> Request<[Category]> {
+struct TagListServiceConfigurator: TagListConfiguratorProtocol {
+    func tagsRequest() -> Request<[CategoryModel]> {
         let path = Endpoint.path(for: .tags)
         
         return Request(path: path)

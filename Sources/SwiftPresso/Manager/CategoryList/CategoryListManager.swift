@@ -1,12 +1,12 @@
-public struct CategoryListManager: CategoryListManagerProtocol {
+struct CategoryListManager: CategoryListManagerProtocol {
         
     private let service: CategoryListServiceProtocol
     
-    public init(service: CategoryListServiceProtocol) {
+    init(service: CategoryListServiceProtocol) {
         self.service = service
     }
     
-    public func getCategories() async throws -> [Category] {
+    func getCategories() async throws -> [CategoryModel] {
         do {
             let categories = try await service.requestCategories()
             return categories

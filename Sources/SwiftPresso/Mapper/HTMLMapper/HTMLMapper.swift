@@ -5,8 +5,8 @@ public struct HTMLMapper: HTMLMapperProtocol {
     
     public init() {}
     
-    public func attributedStringFrom(htmlText: String) -> NSMutableAttributedString {
-        let modifiedFont = formatStringWithYTVideo(text: htmlText)
+    public func attributedStringFrom(htmlText: String, width: CGFloat) -> NSMutableAttributedString {
+        let modifiedFont = formatStringWithYTVideo(text: htmlText, width: width)
         
         guard let data = modifiedFont.data(using: .unicode, allowLossyConversion: true), let attributedString = try? NSMutableAttributedString(
             data: data,
@@ -23,7 +23,7 @@ public struct HTMLMapper: HTMLMapperProtocol {
         return attributedString
     }
     
-    private func formatStringWithYTVideo(text: String) -> String {
+    private func formatStringWithYTVideo(text: String, width: CGFloat) -> String {
         let iframeTexts = matches(for: ".*iframe.*", in: text)
         var newText = text
         
@@ -32,11 +32,10 @@ public struct HTMLMapper: HTMLMapperProtocol {
                 let iframeId = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframeText);
                 
                 if !iframeId.isEmpty {
-                    
-                    let ytString = """
-                    <a href='https://www.youtube.com/watch?v=\(iframeId[0])'>YouTube</a>
+                    let imgString = """
+                    <a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src="https://img.youtube.com/vi/\(iframeId[0])/maxresdefault.jpg" alt="" width="\(width)"/></a>
                     """
-                    newText = newText.replacingOccurrences(of: iframeText, with: ytString)
+                    newText = newText.replacingOccurrences(of: iframeText, with: imgString)
                 }
             }
         }

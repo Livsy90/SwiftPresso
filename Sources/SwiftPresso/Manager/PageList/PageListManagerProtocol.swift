@@ -1,3 +1,3 @@
 public protocol PageListManagerProtocol {
-    func getPages() async throws -> [RefinedPost]
+    func getPages() async throws -> [PostModel]
 }

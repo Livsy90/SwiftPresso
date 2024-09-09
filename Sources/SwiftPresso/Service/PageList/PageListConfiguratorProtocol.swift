@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-public protocol PageListConfiguratorProtocol {
+protocol PageListConfiguratorProtocol {
     func pagesRequest() -> Request<[WPPost]>
 }

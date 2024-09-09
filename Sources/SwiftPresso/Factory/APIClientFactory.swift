@@ -1,8 +1,8 @@
 import SkavokNetworking
 import Foundation
 
-public struct APIClientFactory {
-    public static func client(
+struct APIClientFactory {
+    static func client(
         url: URL, 
         httpScheme: HTTPScheme,
         httpAdditionalHeaders: [AnyHashable: Any]?
