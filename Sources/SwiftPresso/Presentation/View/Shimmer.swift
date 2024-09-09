@@ -1,14 +1,14 @@
 import SwiftUI
 
-public struct SPShimmerPlacehodler: View {
+struct SPShimmerPlacehodler: View {
     
-    public let backgroundColor: Color
+    private let backgroundColor: Color
     
-    public init(backgroundColor: Color = SPPreferences.shared.configuration.backgroundColor) {
+    init(backgroundColor: Color) {
         self.backgroundColor = backgroundColor
     }
     
-    public var body: some View {
+    var body: some View {
         ScrollView {
             ForEach(1...100, id: \.self) { _ in
                 SPShimmerView()

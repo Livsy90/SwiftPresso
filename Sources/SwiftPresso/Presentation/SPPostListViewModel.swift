@@ -68,10 +68,10 @@ final class SPPostListViewModel {
     
     init(postPerPage: Int) {
         self.postPerPage = postPerPage
-        postListProvider = SPProviderFactory.postListProvider()
-        categoryListProvider = SPProviderFactory.categoryListProvider()
-        tagListProvider = SPProviderFactory.tagListProvider()
-        pageListProvider = SPProviderFactory.pageListProvider()
+        postListProvider = SwiftPresso.Provider.postListProvider()
+        categoryListProvider = SwiftPresso.Provider.categoryListProvider()
+        tagListProvider = SwiftPresso.Provider.tagListProvider()
+        pageListProvider = SwiftPresso.Provider.pageListProvider()
         
         Task {
             async let postList = await getPostList()

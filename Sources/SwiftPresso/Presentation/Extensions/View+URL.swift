@@ -1,8 +1,8 @@
 import SwiftUI
 
-public extension View {
+extension View {
     
-    public func webViewLinkRow(
+    func webViewLinkRow(
         backgroundColor: Color,
         accentColor: Color,
         onTag: @escaping (String) -> Void,
@@ -21,7 +21,7 @@ public extension View {
         )
     }
     
-    public func webView(
+    func webView(
         url: Binding<URL?>,
         backgroundColor: Color,
         accentColor: Color,

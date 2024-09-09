@@ -55,7 +55,7 @@ struct SPPostListView<Placeholder: View>: View {
         self.loadingPlaceholder = loadingPlaceholder
     }
     
-    public var body: some View {
+    var body: some View {
         NavigationStack {
             List {
                 ForEach(viewModel.postList, id: \.self) { post in
