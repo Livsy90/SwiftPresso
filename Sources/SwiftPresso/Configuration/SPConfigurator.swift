@@ -23,7 +23,7 @@ public final class SPConfigurator {
         public init(
             host: String,
             backgroundColor: Color = .white,
-            accentColor: Color = .blue,
+            accentColor: Color = .black,
             textColor: Color = .black,
             tagIcon: Image = Image(systemName: "tag"),
             pageIcon: Image = Image(systemName: "book"),
