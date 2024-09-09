@@ -58,8 +58,6 @@ public struct SPPostListView<Placeholder: View>: View {
         self.accentColor = configuration.accentColor
         self.textColor = configuration.textColor
         
-        self.loadingPlaceholder = loadingPlaceholder
-        
         self.isShowTagMenu = configuration.isShowTagMenu
         self.isShowCategoryMenu = configuration.isShowCategoryMenu
         self.isShowPageMenu = configuration.isShowPageMenu
@@ -68,6 +66,8 @@ public struct SPPostListView<Placeholder: View>: View {
         self.tagIcon = configuration.tagIcon
         self.pageIcon = configuration.pageIcon
         self.categoryIcon = configuration.categoryIcon
+        
+        self.loadingPlaceholder = loadingPlaceholder
     }
     
     public var body: some View {
