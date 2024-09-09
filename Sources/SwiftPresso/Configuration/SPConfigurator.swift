@@ -24,7 +24,7 @@ public final class SPConfigurator {
             host: String,
             backgroundColor: Color = .white,
             accentColor: Color = .blue,
-            textColor: Color = .primary,
+            textColor: Color = .black,
             tagIcon: Image = Image(systemName: "tag"),
             pageIcon: Image = Image(systemName: "book"),
             categoryIcon: Image = Image(systemName: "list.bullet.below.rectangle"),
