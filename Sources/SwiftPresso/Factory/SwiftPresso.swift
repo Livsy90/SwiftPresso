@@ -3,14 +3,15 @@ import SwiftUI
 
 public enum SwiftPresso {
     
-    public static func configure(_ configuration: SPConfiguration) {
-        SPPreferences.shared.configuration = configuration
-    }
-    
     public enum View {
             
-        public static func postListView<Placeholder: SwiftUI.View>(placeholder: @escaping () -> Placeholder) -> some SwiftUI.View {
-            SPPostListView(
+        public static func postListView<Placeholder: SwiftUI.View>(
+            configuration: SPConfiguration,
+            placeholder: @escaping () -> Placeholder
+        ) -> some SwiftUI.View {
+            Configuration.configure(with: configuration)
+            
+            return SPPostListView(
                 backgroundColor: SPPreferences.shared.configuration.backgroundColor,
                 accentColor: SPPreferences.shared.configuration.accentColor,
                 textColor: SPPreferences.shared.configuration.textColor,
@@ -51,6 +52,9 @@ public enum SwiftPresso {
         public static var categoryIcon: Image { SPPreferences.shared.configuration.categoryIcon }
         public static var homeIcon: Image { SPPreferences.shared.configuration.homeIcon }
         
+        public static func configure(with configuration: SPConfiguration) {
+            SPPreferences.shared.configuration = configuration
+        }
     }
     
     public enum Provider {
