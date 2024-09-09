@@ -52,11 +52,11 @@ final class SPPostListViewModel {
         }
     }
     
-    private let postListManager = SPFactory.postListManager()
-    private let categoryListManager = SPFactory.categoryListManager()
-    private let tagListManager = SPFactory.tagListManager()
-    private let pageListManager = SPFactory.pageListManager()
     private let settings = SPSettings.shared
+    private let postListManager: PostListManagerProtocol
+    private let categoryListManager: CategoryListManagerProtocol
+    private let tagListManager: TagListManagerProtocol
+    private let pageListManager: PageListManagerProtocol
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true
@@ -64,6 +64,10 @@ final class SPPostListViewModel {
     
     init(configuration: SPSettings.Configuration) {
         settings.configure(with: configuration)
+        postListManager = SPFactory.postListManager()
+        categoryListManager = SPFactory.categoryListManager()
+        tagListManager = SPFactory.tagListManager()
+        pageListManager = SPFactory.pageListManager()
         
         Task {
             async let postList = await getPostList()
