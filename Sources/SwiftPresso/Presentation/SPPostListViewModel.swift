@@ -63,7 +63,7 @@ final class SPPostListViewModel {
     private var isError: Bool = false
     
     init(configuration: SPSettings.Configuration) {
-        SPSettings.shared.configure(with: configuration)
+        settings.configure(with: configuration)
         
         Task {
             async let postList = await getPostList()
