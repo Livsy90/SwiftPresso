@@ -69,12 +69,8 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                 
                 HStack {
                     Spacer()
-                    Image(systemName: "ellipsis")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 8)
+                    ProgressView()
                         .opacity(viewModel.isLoadMore ? 1 : 0)
-                        .symbolEffect(.variableColor.cumulative, value: viewModel.isLoadMore)
                         .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
                     Spacer()
                 }
