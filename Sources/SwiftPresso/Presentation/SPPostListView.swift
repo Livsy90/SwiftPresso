@@ -2,29 +2,33 @@ import SwiftUI
 
 public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View {
     
-    public let backgroundColor: Color
-    public let accentColor: Color
     public let homePlaceholder: () -> HomePlaceholder
     public let postPlaceholder: () -> PostPlaceholder
-        
+    
     @State private var viewModel: SPPostListViewModel
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var urlToOpen: URL?
+    private let backgroundColor: Color
+    private let accentColor: Color
+    private let isShowPageMenu: Bool
+    private let isShowTagMenu: Bool
+    private let isShowCategoryMenu: Bool
     
     public init(
         configuration: SPSettings.Configuration,
-        backgroundColor: Color,
-        accentColor: Color,
         homePlaceholder: @escaping () -> HomePlaceholder,
         postPlaceholder: @escaping () -> PostPlaceholder
     ) {
         
         self.viewModel = SPPostListViewModel(configuration: configuration)
-        self.backgroundColor = backgroundColor
-        self.accentColor = accentColor
+        self.backgroundColor = configuration.backgroundColor
+        self.accentColor = configuration.accentColor
         self.homePlaceholder = homePlaceholder
         self.postPlaceholder = postPlaceholder
+        self.isShowTagMenu = configuration.isShowTagMenu
+        self.isShowCategoryMenu = configuration.isShowCategoryMenu
+        self.isShowPageMenu = configuration.isShowPageMenu
     }
     
     public var body: some View {
@@ -63,10 +67,13 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                         .listRowBackground(Color.clear)
                 }
                 
-                ProgressView()
-                    .opacity(viewModel.isLoadMore ? 1 : 0)
-                    .frame(alignment: .center)
-                    .listRowBackground(Color.clear)
+                HStack {
+                    Spacer()
+                    ProgressView()
+                        .opacity(viewModel.isLoadMore ? 1 : 0)
+                    Spacer()
+                }
+                .listRowBackground(Color.clear)
             }
             .disabled(viewModel.isInitialLoading)
             .scrollContentBackground(.hidden)
@@ -103,21 +110,59 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                         .opacity(viewModel.isLoadMore ? 1 : 0)
                         .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
                     
-                    Menu {
-                        ForEach(viewModel.pageList, id: \.self) { page in
-                            Button {
-                                if let url = page.link {
-                                    urlToOpen = url
+                    if isShowTagMenu {
+                        Menu {
+                            ForEach(viewModel.tags, id: \.self) { tag in
+                                Button {
+                                    Task {
+                                        await viewModel.onTag(tag.name)
+                                    }
+                                } label: {
+                                    Text(tag.name)
                                 }
-                            } label: {
-                                Text(page.title)
                             }
+                        } label: {
+                            Image(systemName: "tag")
                         }
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
+                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
                     }
-                    .disabled(viewModel.isMenuUnavailable || viewModel.isLoading)
+                    
+                    if isShowCategoryMenu {
+                        Menu {
+                            ForEach(viewModel.categories, id: \.self) { category in
+                                Button {
+                                    Task {
+                                        await viewModel.onCategory(category.name)
+                                    }
+                                } label: {
+                                    Text(category.name)
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "book")
+                        }
+                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
+                    }
+                    
+                    if isShowPageMenu {
+                        
+                        Menu {
+                            ForEach(viewModel.pageList, id: \.self) { page in
+                                Button {
+                                    if let url = page.link {
+                                        urlToOpen = url
+                                    }
+                                } label: {
+                                    Text(page.title)
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "list.bullet.below.rectangle")
+                        }
+                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
+                    }
                 }
+                
             }
             .searchable(text: $searchText, isPresented: $isSearching)
             .onSubmit(of: .search) {

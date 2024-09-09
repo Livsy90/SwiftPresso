@@ -1,22 +1,38 @@
+import SwiftUI
 import Foundation
 
 public final class SPSettings {
     
     public struct Configuration {
-        let host: String
-        let postsPerPage: Int
-        let httpScheme: HTTPScheme
-        let httpAdditionalHeaders: [AnyHashable: Any]?
-        let isExcludeWebHeaderAndFooter: Bool
+        public let host: String
+        public let postsPerPage: Int
+        public let httpScheme: HTTPScheme
+        public let httpAdditionalHeaders: [AnyHashable: Any]?
+        public let isExcludeWebHeaderAndFooter: Bool
+        public let backgroundColor: Color
+        public let accentColor: Color
+        public let isShowPageMenu: Bool
+        public let isShowTagMenu: Bool
+        public let isShowCategoryMenu: Bool
         
         public init(
             host: String,
+            backgroundColor: Color,
+            accentColor: Color,
+            isShowPageMenu: Bool = true,
+            isShowTagMenu: Bool = true,
+            isShowCategoryMenu: Bool = true,
             postsPerPage: Int = 50,
             httpScheme: HTTPScheme = .https,
             httpAdditionalHeaders: [AnyHashable : Any]? = nil,
             isExcludeWebHeaderAndFooter: Bool = true
         ) {
             self.host = host
+            self.backgroundColor = backgroundColor
+            self.accentColor = accentColor
+            self.isShowPageMenu = isShowPageMenu
+            self.isShowTagMenu = isShowTagMenu
+            self.isShowCategoryMenu = isShowCategoryMenu
             self.postsPerPage = postsPerPage
             self.httpScheme = httpScheme
             self.httpAdditionalHeaders = httpAdditionalHeaders
@@ -26,20 +42,30 @@ public final class SPSettings {
     
     public static let shared: SPSettings = .init()
     
-    public private(set) var host: String = ""
-    public private(set) var postsPerPage: Int = 50
-    public private(set) var httpScheme: HTTPScheme = .https
-    public private(set) var httpAdditionalHeaders: [AnyHashable: Any]?
-    public private(set) var isExcludeWebHeaderAndFooter: Bool = true
+    public var configuration: Configuration {
+        get {
+            queue.sync {
+                _configuration
+            }
+        }
+        set {
+            queue.async(flags: .barrier) {
+                self._configuration = newValue
+            }
+        }
+    }
+    
+    private let queue = DispatchQueue(
+        label: "com.spsettings.queue",
+        qos: .default,
+        attributes: .concurrent
+    )
+    private var _configuration = Configuration.init(
+        host: "",
+        backgroundColor: .white,
+        accentColor: .blue
+    )
     
     private init() {}
-    
-    public func configure(with configuration: Configuration) {
-        self.host = configuration.host
-        self.postsPerPage = configuration.postsPerPage
-        self.httpScheme = configuration.httpScheme
-        self.httpAdditionalHeaders = configuration.httpAdditionalHeaders
-        self.isExcludeWebHeaderAndFooter = configuration.isExcludeWebHeaderAndFooter
-    }
     
 }

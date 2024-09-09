@@ -37,14 +37,24 @@ final class SPPostListViewModel {
     private(set) var postList: [PostModel] = []
     private(set) var pageList: [PostModel] = [] {
         didSet {
-            isMenuUnavailable = pageList.isEmpty
+            isPagesUnavailable = pageList.isEmpty
         }
     }
-    private(set) var tags: [CategoryModel] = []
-    private(set) var categories: [CategoryModel] = []
+    private(set) var tags: [CategoryModel] = [] {
+       didSet {
+           isTagsUnavailable = pageList.isEmpty
+       }
+   }
+    private(set) var categories: [CategoryModel] = [] {
+        didSet {
+            isCategoriesUnavailable = pageList.isEmpty
+        }
+    }
     
     private(set) var isRefreshable: Bool = false
-    private(set) var isMenuUnavailable: Bool = true
+    private(set) var isPagesUnavailable: Bool = true
+    private(set) var isTagsUnavailable: Bool = true
+    private(set) var isCategoriesUnavailable: Bool = true
     private(set) var mode: ListMode = .common {
         didSet {
             shouldShowFullScreenPlaceholder = true
@@ -63,7 +73,7 @@ final class SPPostListViewModel {
     private var isError: Bool = false
     
     init(configuration: SPSettings.Configuration) {
-        settings.configure(with: configuration)
+        settings.configuration = configuration
         postListManager = SPFactory.postListManager()
         categoryListManager = SPFactory.categoryListManager()
         tagListManager = SPFactory.tagListManager()
@@ -151,7 +161,7 @@ final class SPPostListViewModel {
         do {
             return try await postListManager.getPosts(
                 pageNumber: pageNumber,
-                perPage: settings.postsPerPage,
+                perPage: settings.configuration.postsPerPage,
                 searchTerms: searchTerms,
                 categories: CollectionOfOne(category).compactMap { $0 },
                 tags: CollectionOfOne(tag).compactMap { $0 }

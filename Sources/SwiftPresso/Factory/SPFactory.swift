@@ -3,9 +3,9 @@ import Foundation
 public enum SPFactory {
     
     public static func postListManager(
-        host: String = SPSettings.shared.host,
-        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.configuration.host,
+        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
     ) -> PostListManagerProtocol {
         
         var components = URLComponents()
@@ -35,9 +35,9 @@ public enum SPFactory {
     }
         
     public static func pageListManager(
-        host: String = SPSettings.shared.host,
-        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.configuration.host,
+        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
     ) -> PageListManagerProtocol {
         
         var components = URLComponents()
@@ -67,9 +67,9 @@ public enum SPFactory {
     }
     
     public static func categoryListManager(
-        host: String = SPSettings.shared.host,
-        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.configuration.host,
+        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
     ) ->  CategoryListManagerProtocol {
         
         var components = URLComponents()
@@ -97,9 +97,9 @@ public enum SPFactory {
     }
     
     public static func tagListManager(
-        host: String = SPSettings.shared.host,
-        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.configuration.host,
+        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
     ) ->  TagListManagerProtocol {
         
         var components = URLComponents()
