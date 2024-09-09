@@ -1,4 +1,4 @@
-public protocol PostListManagerProtocol {
+public protocol PostListProviderProtocol {
     func getRefinedPosts(
         pageNumber: Int,
         perPage: Int,

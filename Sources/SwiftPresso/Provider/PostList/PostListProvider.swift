@@ -1,4 +1,4 @@
-struct PostListManager: PostListManagerProtocol {
+struct PostListProvider: PostListProviderProtocol {
         
     private let service: PostListServiceProtocol
     private let mapper: WPPostMapperProtocol

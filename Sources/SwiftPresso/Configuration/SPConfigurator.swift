@@ -1,7 +1,7 @@
 import SwiftUI
 import Foundation
 
-public final class SPSettings {
+public final class SPConfigurator {
     
     public struct Configuration {
         public let host: String
@@ -55,7 +55,7 @@ public final class SPSettings {
         }
     }
     
-    public static let shared: SPSettings = .init()
+    public static let shared: SPConfigurator = .init()
     
     public var configuration: Configuration {
         get {

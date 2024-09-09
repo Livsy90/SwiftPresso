@@ -1,4 +1,4 @@
-struct PageListManager: PageListManagerProtocol {
+struct PageListProvider: PageListProviderProtocol {
         
     private let service: PageListServiceProtocol
     private let mapper: WPPostMapperProtocol

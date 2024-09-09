@@ -1,4 +1,4 @@
-struct TagListManager: TagListManagerProtocol {
+struct TagListProvider: TagListProviderProtocol {
         
     private let service: TagListServiceProtocol
     

@@ -62,22 +62,18 @@ final class SPPostListViewModel {
         }
     }
     
-    private let settings = SPSettings.shared
-    private let postListManager: PostListManagerProtocol
-    private let categoryListManager: CategoryListManagerProtocol
-    private let tagListManager: TagListManagerProtocol
-    private let pageListManager: PageListManagerProtocol
+    private let postPerPage: Int
+    private let postListProvider: PostListProviderProtocol
+    private let categoryListProvider: CategoryListProviderProtocol
+    private let tagListProvider: TagListProviderProtocol
+    private let pageListProvider: PageListProviderProtocol
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true
     private var isError: Bool = false
     
-    init(configuration: SPSettings.Configuration) {
-        settings.configuration = configuration
-        postListManager = SPFactory.postListManager()
-        categoryListManager = SPFactory.categoryListManager()
-        tagListManager = SPFactory.tagListManager()
-        pageListManager = SPFactory.pageListManager()
+    init(postPerPage: Int) {
+        self.postPerPage = postPerPage
         
         Task {
             async let postList = await getPostList()
@@ -159,9 +155,9 @@ final class SPPostListViewModel {
         tag: Int? = nil
     ) async -> [PostModel] {
         do {
-            return try await postListManager.getRefinedPosts(
+            return try await postListProvider.getRefinedPosts(
                 pageNumber: pageNumber,
-                perPage: settings.configuration.postsPerPage,
+                perPage: postPerPage,
                 searchTerms: searchTerms,
                 categories: CollectionOfOne(category).compactMap { $0 },
                 tags: CollectionOfOne(tag).compactMap { $0 }
@@ -175,7 +171,7 @@ final class SPPostListViewModel {
     
     private func getTags() async -> [CategoryModel] {
         do {
-            return try await tagListManager.getTags()
+            return try await tagListProvider.getTags()
         } catch {
             isError = true
             print(error.localizedDescription)
@@ -185,7 +181,7 @@ final class SPPostListViewModel {
     
     private func getCategories() async -> [CategoryModel]  {
         do {
-            return try await categoryListManager.getCategories()
+            return try await categoryListProvider.getCategories()
         } catch {
             isError = true
             print(error.localizedDescription)
@@ -195,7 +191,7 @@ final class SPPostListViewModel {
     
     private func getPages() async -> [PostModel]  {
         do {
-            return try await pageListManager.getPages()
+            return try await pageListProvider.getPages()
         } catch {
             isError = true
             print(error.localizedDescription)

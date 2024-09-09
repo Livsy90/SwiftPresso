@@ -1,4 +1,4 @@
-struct CategoryListManager: CategoryListManagerProtocol {
+struct CategoryListProvider: CategoryListProviderProtocol {
         
     private let service: CategoryListServiceProtocol
     

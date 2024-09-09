@@ -1,29 +1,8 @@
 import SwiftUI
 
-///A View to represent a post list.
-///* Example
-///```swift
-/// @main
-/// struct DemoApp: App {
-///     var body: some Scene {
-///         WindowGroup {
-///              SPPostListView(
-///                  configuration: .init(
-///                      host: "livsycode.com",
-///                      backgroundColor: .black,
-///                      accentColor: .white,
-///                      textColor: .white
-///                  )
-///              ) {
-///                  SPShimmerPlacehodler(backgroundColor: .black)
-///              }
-///          }
-///      }
-///  }
-/// ```
-public struct SPPostListView<Placeholder: View>: View {
+struct SPPostListView<Placeholder: View>: View {
     
-    public let loadingPlaceholder: () -> Placeholder
+    let loadingPlaceholder: () -> Placeholder
     
     @State private var viewModel: SPPostListViewModel
     @State private var searchText = ""
@@ -43,29 +22,35 @@ public struct SPPostListView<Placeholder: View>: View {
     private let isShowTagMenu: Bool
     private let isShowCategoryMenu: Bool
     
-    /// Initialization
-    /// - Parameters:
-    ///   - configuration: SwiftPresso Configuration.
-    ///   - loadingPlaceholder: A placeholder to show while the content is loading.
-    public init(
-        configuration: SPSettings.Configuration,
+    init(
+        backgroundColor: Color,
+        accentColor: Color,
+        textColor: Color,
+        homeIcon: Image,
+        tagIcon: Image,
+        pageIcon: Image,
+        categoryIcon: Image,
+        isShowPageMenu: Bool,
+        isShowTagMenu: Bool,
+        isShowCategoryMenu: Bool,
+        postPerPage: Int,
         loadingPlaceholder: @escaping () -> Placeholder
     ) {
         
-        self.viewModel = SPPostListViewModel(configuration: configuration)
+        self.viewModel = SPPostListViewModel(postPerPage: postPerPage)
         
-        self.backgroundColor = configuration.backgroundColor
-        self.accentColor = configuration.accentColor
-        self.textColor = configuration.textColor
+        self.backgroundColor = backgroundColor
+        self.accentColor = accentColor
+        self.textColor = textColor
         
-        self.isShowTagMenu = configuration.isShowTagMenu
-        self.isShowCategoryMenu = configuration.isShowCategoryMenu
-        self.isShowPageMenu = configuration.isShowPageMenu
+        self.isShowTagMenu = isShowTagMenu
+        self.isShowCategoryMenu = isShowCategoryMenu
+        self.isShowPageMenu = isShowPageMenu
         
-        self.homeIcon = configuration.homeIcon
-        self.tagIcon = configuration.tagIcon
-        self.pageIcon = configuration.pageIcon
-        self.categoryIcon = configuration.categoryIcon
+        self.homeIcon = homeIcon
+        self.tagIcon = tagIcon
+        self.pageIcon = pageIcon
+        self.categoryIcon = categoryIcon
         
         self.loadingPlaceholder = loadingPlaceholder
     }

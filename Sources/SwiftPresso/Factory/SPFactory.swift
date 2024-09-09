@@ -2,11 +2,11 @@ import Foundation
 
 public enum SPFactory {
     
-    public static func postListManager(
-        host: String = SPSettings.shared.configuration.host,
-        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
-    ) -> PostListManagerProtocol {
+    public static func postListProvider(
+        host: String = SPConfigurator.shared.configuration.host,
+        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
+    ) -> PostListProviderProtocol {
         
         var components = URLComponents()
         components.scheme = httpScheme.rawValue
@@ -28,17 +28,17 @@ public enum SPFactory {
             configurator: configurator
         )
         
-        return PostListManager(
+        return PostListProvider(
             service: service,
             mapper: mapper
         )
     }
         
-    public static func pageListManager(
-        host: String = SPSettings.shared.configuration.host,
-        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
-    ) -> PageListManagerProtocol {
+    public static func pageListProvider(
+        host: String = SPConfigurator.shared.configuration.host,
+        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
+    ) -> PageListProviderProtocol {
         
         var components = URLComponents()
         components.scheme = httpScheme.rawValue
@@ -60,17 +60,17 @@ public enum SPFactory {
             configurator: configurator
         )
         
-        return PageListManager(
+        return PageListProvider(
             service: service,
             mapper: mapper
         )
     }
     
-    public static func categoryListManager(
-        host: String = SPSettings.shared.configuration.host,
-        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
-    ) ->  CategoryListManagerProtocol {
+    public static func categoryListProvider(
+        host: String = SPConfigurator.shared.configuration.host,
+        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
+    ) ->  CategoryListProviderProtocol {
         
         var components = URLComponents()
         components.scheme = httpScheme.rawValue
@@ -91,16 +91,16 @@ public enum SPFactory {
             configurator: configurator
         )
         
-        return CategoryListManager(
+        return CategoryListProvider(
             service: service
         )
     }
     
-    public static func tagListManager(
-        host: String = SPSettings.shared.configuration.host,
-        httpScheme: HTTPScheme = SPSettings.shared.configuration.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.configuration.httpAdditionalHeaders
-    ) ->  TagListManagerProtocol {
+    public static func tagListProvider(
+        host: String = SPConfigurator.shared.configuration.host,
+        httpScheme: HTTPScheme = SPConfigurator.shared.configuration.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPConfigurator.shared.configuration.httpAdditionalHeaders
+    ) ->  TagListProviderProtocol {
         
         var components = URLComponents()
         components.scheme = httpScheme.rawValue
@@ -121,7 +121,7 @@ public enum SPFactory {
             configurator: configurator
         )
         
-        return TagListManager(
+        return TagListProvider(
             service: service
         )
     }

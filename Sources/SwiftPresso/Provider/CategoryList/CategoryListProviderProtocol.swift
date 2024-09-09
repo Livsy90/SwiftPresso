@@ -1,3 +1,3 @@
-public protocol CategoryListManagerProtocol {
+public protocol CategoryListProviderProtocol {
     func getCategories() async throws -> [CategoryModel]
 }
