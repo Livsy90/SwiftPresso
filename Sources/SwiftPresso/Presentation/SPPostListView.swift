@@ -2,8 +2,7 @@ import SwiftUI
 
 public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View {
     
-    public let homePlaceholder: () -> HomePlaceholder
-    public let postPlaceholder: () -> PostPlaceholder
+    public let loadingPlaceholder: () -> HomePlaceholder
     
     @State private var viewModel: SPPostListViewModel
     @State private var searchText = ""
@@ -16,18 +15,20 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
     private let isShowTagMenu: Bool
     private let isShowCategoryMenu: Bool
     
+    /// Initialization
+    /// - Parameters:
+    ///   - configuration: SwiftPresso Configuration.
+    ///   - loadingPlaceholder: A placeholder to show while the content is loading.
     public init(
         configuration: SPSettings.Configuration,
-        homePlaceholder: @escaping () -> HomePlaceholder,
-        postPlaceholder: @escaping () -> PostPlaceholder
+        loadingPlaceholder: @escaping () -> HomePlaceholder
     ) {
         
         self.viewModel = SPPostListViewModel(configuration: configuration)
         self.backgroundColor = configuration.backgroundColor
         self.accentColor = configuration.accentColor
         self.textColor = configuration.textColor
-        self.homePlaceholder = homePlaceholder
-        self.postPlaceholder = postPlaceholder
+        self.loadingPlaceholder = loadingPlaceholder
         self.isShowTagMenu = configuration.isShowTagMenu
         self.isShowCategoryMenu = configuration.isShowCategoryMenu
         self.isShowPageMenu = configuration.isShowPageMenu
@@ -53,7 +54,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                             }
                         },
                         placeholder: {
-                            postPlaceholder()
+                            loadingPlaceholder()
                         }
                     )
                     .listRowBackground(Color.clear)
@@ -65,7 +66,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                 }
                 
                 if viewModel.isInitialLoading {
-                    homePlaceholder()
+                    loadingPlaceholder()
                         .frame(maxWidth: .infinity)
                         .listRowBackground(Color.clear)
                 }
@@ -200,7 +201,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                     }
                 },
                 placeholder: {
-                    homePlaceholder()
+                    loadingPlaceholder()
                 }
             )
         }
