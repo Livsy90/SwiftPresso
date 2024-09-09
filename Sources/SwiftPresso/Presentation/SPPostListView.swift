@@ -73,6 +73,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                         ProgressView()
                         Spacer()
                     }
+                    .id(UUID())
                     .listRowBackground(Color.clear)
                 }
             }
