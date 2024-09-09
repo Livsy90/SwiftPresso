@@ -7,18 +7,20 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
     public let homePlaceholder: () -> HomePlaceholder
     public let postPlaceholder: () -> PostPlaceholder
         
-    @State private var viewModel = SPPostListViewModel()
+    @State private var viewModel: SPPostListViewModel
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var urlToOpen: URL?
     
     public init(
+        configuration: SPSettings.Configuration,
         backgroundColor: Color,
         accentColor: Color,
         homePlaceholder: @escaping () -> HomePlaceholder,
         postPlaceholder: @escaping () -> PostPlaceholder
     ) {
         
+        self.viewModel = SPPostListViewModel(configuration: configuration)
         self.backgroundColor = backgroundColor
         self.accentColor = accentColor
         self.homePlaceholder = homePlaceholder

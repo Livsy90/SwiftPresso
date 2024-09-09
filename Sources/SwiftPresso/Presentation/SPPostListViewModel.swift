@@ -62,7 +62,9 @@ final class SPPostListViewModel {
     private var shouldShowFullScreenPlaceholder = true
     private var isError: Bool = false
     
-    init() {
+    init(configuration: SPSettings.Configuration) {
+        SPSettings.shared.configure(with: configuration)
+        
         Task {
             async let postList = await getPostList()
             async let pageList = await getPages()
