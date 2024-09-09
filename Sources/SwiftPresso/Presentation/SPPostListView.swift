@@ -227,6 +227,7 @@ public struct SPPostListView<Placeholder: View>: View {
             )
         }
         .tint(accentColor)
+        .navigationBarColor(.red)
     }
 }
 

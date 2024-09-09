@@ -18,7 +18,6 @@ struct SPWebViewWrapperView<Content: View>: View {
     var body: some View {
         VStack {
             HStack(spacing: 20) {
-                
                 if isCanGoBack {
                     Button(action: {
                         isGoBack.toggle()
