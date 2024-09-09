@@ -1,11 +1,11 @@
 import Foundation
 
 @propertyWrapper
-public struct SPProvider<T> {
+public struct SwiftPressoProvider<T> {
     
     public var wrappedValue: T {
         get {
-            return InjectedValues[keyPath]
+            InjectedValues[keyPath]
         }
         set {
             InjectedValues[keyPath] = newValue
