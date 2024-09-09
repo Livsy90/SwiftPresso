@@ -10,5 +10,5 @@ extension InjectedValues {
 }
 
 private enum PageListProviderKey: InjectionKey {
-    static var currentValue: PageListProviderProtocol = SPProviderFactory.pageList()
+    static var currentValue: PageListProviderProtocol = SPProviderFactory.pageListProvider()
 }
