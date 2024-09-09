@@ -52,11 +52,11 @@ final class SPPostListViewModel {
         }
     }
     
-    private let postListManager = SwiftPressoFactory.postListManager()
-    private let categoryListManager = SwiftPressoFactory.categoryListManager()
-    private let tagListManager = SwiftPressoFactory.tagListManager()
-    private let pageListManager = SwiftPressoFactory.pageListManager()
-    private let settings = SwiftPressoSettings.shared
+    private let postListManager = SPFactory.postListManager()
+    private let categoryListManager = SPFactory.categoryListManager()
+    private let tagListManager = SPFactory.tagListManager()
+    private let pageListManager = SPFactory.pageListManager()
+    private let settings = SPSettings.shared
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true
@@ -194,7 +194,7 @@ final class SPPostListViewModel {
     }
     
     private func id(by name: String) -> Int? {
-        let categoryArray: [SwiftPresso.CategoryModel]
+        let categoryArray: [CategoryModel]
         
         switch mode {
         case .common, .search:

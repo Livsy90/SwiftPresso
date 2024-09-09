@@ -1,8 +1,8 @@
 import Foundation
 
-public final class SwiftPressoSettings {
+public final class SPSettings {
     
-    public static let shared: SwiftPressoSettings = .init()
+    public static let shared: SPSettings = .init()
     
     public private(set) var host: String = ""
     public private(set) var postsPerPage: Int = 50

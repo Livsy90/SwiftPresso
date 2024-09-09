@@ -19,7 +19,7 @@ struct SPWebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView  {
         let contentController = WKUserContentController()
         
-        if SwiftPressoSettings.shared.isExcludeWebHeaderAndFooter {
+        if SPSettings.shared.isExcludeWebHeaderAndFooter {
             let script = """
             var style = document.createElement('style');
             style.innerHTML = 'header {display: none;} footer {display: none;}';
@@ -100,7 +100,7 @@ struct SPWebView: UIViewRepresentable {
                 parent.onCategory(categoryName)
             }
             
-            if host != SwiftPressoSettings.shared.host {
+            if host != SPSettings.shared.host {
                 UIApplication.shared.open(url)
                 decisionHandler(.cancel)
             } else {

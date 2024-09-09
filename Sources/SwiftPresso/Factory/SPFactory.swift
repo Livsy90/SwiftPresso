@@ -1,11 +1,11 @@
 import Foundation
 
-public enum SwiftPressoFactory {
+public enum SPFactory {
     
     public static func postListManager(
-        host: String = SwiftPressoSettings.shared.host,
-        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.host,
+        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
     ) -> PostListManagerProtocol {
         
         var components = URLComponents()
@@ -35,9 +35,9 @@ public enum SwiftPressoFactory {
     }
         
     public static func pageListManager(
-        host: String = SwiftPressoSettings.shared.host,
-        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.host,
+        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
     ) -> PageListManagerProtocol {
         
         var components = URLComponents()
@@ -67,9 +67,9 @@ public enum SwiftPressoFactory {
     }
     
     public static func categoryListManager(
-        host: String = SwiftPressoSettings.shared.host,
-        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.host,
+        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
     ) ->  CategoryListManagerProtocol {
         
         var components = URLComponents()
@@ -97,9 +97,9 @@ public enum SwiftPressoFactory {
     }
     
     public static func tagListManager(
-        host: String = SwiftPressoSettings.shared.host,
-        httpScheme: HTTPScheme = SwiftPressoSettings.shared.httpScheme,
-        httpAdditionalHeaders: [AnyHashable: Any]? = SwiftPressoSettings.shared.httpAdditionalHeaders
+        host: String = SPSettings.shared.host,
+        httpScheme: HTTPScheme = SPSettings.shared.httpScheme,
+        httpAdditionalHeaders: [AnyHashable: Any]? = SPSettings.shared.httpAdditionalHeaders
     ) ->  TagListManagerProtocol {
         
         var components = URLComponents()

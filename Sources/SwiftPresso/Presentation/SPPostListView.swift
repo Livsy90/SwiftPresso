@@ -61,18 +61,10 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                         .listRowBackground(Color.clear)
                 }
                 
-                HStack {
-                    Spacer()
-                    Image(systemName: "ellipsis")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 10)
-                        .opacity(viewModel.isLoadMore ? 1 : 0)
-                        .symbolEffect(.variableColor.cumulative, value: viewModel.isLoadMore)
-                        .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
-                    Spacer()
-                }
-                .listRowBackground(Color.clear)
+                ProgressView()
+                    .opacity(viewModel.isLoadMore ? 1 : 0)
+                    .frame(alignment: .center)
+                    .listRowBackground(Color.clear)
             }
             .disabled(viewModel.isInitialLoading)
             .scrollContentBackground(.hidden)
