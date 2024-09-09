@@ -29,9 +29,16 @@ public struct SPPostListView<Placeholder: View>: View {
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var urlToOpen: URL?
+    
     private let backgroundColor: Color
     private let accentColor: Color
     private let textColor: Color
+    
+    private let homeIcon: Image
+    private let tagIcon: Image
+    private let pageIcon: Image
+    private let categoryIcon: Image
+    
     private let isShowPageMenu: Bool
     private let isShowTagMenu: Bool
     private let isShowCategoryMenu: Bool
@@ -46,13 +53,21 @@ public struct SPPostListView<Placeholder: View>: View {
     ) {
         
         self.viewModel = SPPostListViewModel(configuration: configuration)
+        
         self.backgroundColor = configuration.backgroundColor
         self.accentColor = configuration.accentColor
         self.textColor = configuration.textColor
+        
         self.loadingPlaceholder = loadingPlaceholder
+        
         self.isShowTagMenu = configuration.isShowTagMenu
         self.isShowCategoryMenu = configuration.isShowCategoryMenu
         self.isShowPageMenu = configuration.isShowPageMenu
+        
+        self.homeIcon = configuration.homeIcon
+        self.tagIcon = configuration.tagIcon
+        self.pageIcon = configuration.pageIcon
+        self.categoryIcon = configuration.categoryIcon
     }
     
     public var body: some View {
@@ -124,7 +139,7 @@ public struct SPPostListView<Placeholder: View>: View {
                             await viewModel.loadDefault()
                         }
                     } label: {
-                        Image(systemName: "house")
+                        homeIcon
                     }
                     .opacity(viewModel.isRefreshable ? 1 : 0)
                     .animation(.default, value: viewModel.isRefreshable)
@@ -149,7 +164,7 @@ public struct SPPostListView<Placeholder: View>: View {
                                 }
                             }
                         } label: {
-                            Image(systemName: "tag")
+                            tagIcon
                         }
                         .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
                     }
@@ -166,13 +181,12 @@ public struct SPPostListView<Placeholder: View>: View {
                                 }
                             }
                         } label: {
-                            Image(systemName: "book")
+                            categoryIcon
                         }
                         .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
                     }
                     
                     if isShowPageMenu {
-                        
                         Menu {
                             ForEach(viewModel.pageList, id: \.self) { page in
                                 Button {
@@ -184,7 +198,7 @@ public struct SPPostListView<Placeholder: View>: View {
                                 }
                             }
                         } label: {
-                            Image(systemName: "list.bullet.below.rectangle")
+                            pageIcon
                         }
                         .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
                     }

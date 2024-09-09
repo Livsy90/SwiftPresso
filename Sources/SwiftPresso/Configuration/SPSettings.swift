@@ -15,12 +15,20 @@ public final class SPSettings {
         public let isShowPageMenu: Bool
         public let isShowTagMenu: Bool
         public let isShowCategoryMenu: Bool
+        public let tagIcon: Image
+        public let pageIcon: Image
+        public let categoryIcon: Image
+        public let homeIcon: Image
         
         public init(
             host: String,
             backgroundColor: Color = .white,
             accentColor: Color = .blue,
             textColor: Color = .primary,
+            tagIcon: Image = Image(systemName: "tag"),
+            pageIcon: Image = Image(systemName: "book"),
+            categoryIcon: Image = Image(systemName: "list.bullet.below.rectangle"),
+            homeIcon: Image = Image(systemName: "house"),
             isShowPageMenu: Bool = true,
             isShowTagMenu: Bool = true,
             isShowCategoryMenu: Bool = true,
@@ -40,6 +48,10 @@ public final class SPSettings {
             self.httpScheme = httpScheme
             self.httpAdditionalHeaders = httpAdditionalHeaders
             self.isExcludeWebHeaderAndFooter = isExcludeWebHeaderAndFooter
+            self.homeIcon = homeIcon
+            self.tagIcon = tagIcon
+            self.pageIcon = pageIcon
+            self.categoryIcon = categoryIcon
         }
     }
     
