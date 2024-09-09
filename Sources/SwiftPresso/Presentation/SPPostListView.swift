@@ -67,14 +67,14 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                         .listRowBackground(Color.clear)
                 }
                 
-                HStack {
-                    Spacer()
-                    ProgressView()
-                        .opacity(viewModel.isLoadMore ? 1 : 0)
-                        .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
-                    Spacer()
+                if viewModel.isLoadMore {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .listRowBackground(Color.clear)
                 }
-                .listRowBackground(Color.clear)
             }
             .disabled(viewModel.isInitialLoading)
             .scrollContentBackground(.hidden)
