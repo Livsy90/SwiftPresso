@@ -200,7 +200,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
                     }
                 },
                 placeholder: {
-                    postPlaceholder()
+                    homePlaceholder()
                 }
             )
         }
