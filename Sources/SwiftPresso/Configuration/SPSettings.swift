@@ -17,8 +17,8 @@ public final class SPSettings {
         
         public init(
             host: String,
-            backgroundColor: Color,
-            accentColor: Color,
+            backgroundColor: Color = .white,
+            accentColor: Color = .blue,
             isShowPageMenu: Bool = true,
             isShowTagMenu: Bool = true,
             isShowCategoryMenu: Bool = true,
