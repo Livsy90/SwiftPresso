@@ -29,7 +29,7 @@ public struct SPShimmerPlacehodler: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 12) {
-                ShimmerView()
+                SPShimmerView()
                      .cornerRadius(5)
                      .frame(height: 60)
                 
@@ -40,7 +40,7 @@ public struct SPShimmerPlacehodler: View {
                     .padding(.top, 20)
                 
                 ForEach(1...100, id: \.self) { _ in
-                    ShimmerView()
+                    SPShimmerView()
                          .cornerRadius(5)
                          .frame(height: 150)
                          .padding(.vertical, 12)
@@ -66,7 +66,7 @@ public struct SPShimmerHomePlacehodler: View {
     public var body: some View {
         ScrollView {
             ForEach(1...100, id: \.self) { _ in
-                ShimmerView()
+                SPShimmerView()
                      .cornerRadius(5)
                      .frame(height: 80)
                      .padding(.vertical, 20)
