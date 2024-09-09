@@ -10,5 +10,5 @@ extension InjectedValues {
 }
 
 private enum TagListProviderKey: InjectionKey {
-    static var currentValue: TagListProviderProtocol = SwiftPresso.Provider.tagListProvider()
+    static var currentValue: TagListProviderProtocol = SwiftPresso.Provider.tagListProvider
 }
