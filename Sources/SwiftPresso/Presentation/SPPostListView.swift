@@ -1,8 +1,8 @@
 import SwiftUI
 
-public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View {
+public struct SPPostListView<Placeholder: View>: View {
     
-    public let loadingPlaceholder: () -> HomePlaceholder
+    public let loadingPlaceholder: () -> Placeholder
     
     @State private var viewModel: SPPostListViewModel
     @State private var searchText = ""
@@ -21,7 +21,7 @@ public struct SPPostListView<HomePlaceholder: View, PostPlaceholder: View>: View
     ///   - loadingPlaceholder: A placeholder to show while the content is loading.
     public init(
         configuration: SPSettings.Configuration,
-        loadingPlaceholder: @escaping () -> HomePlaceholder
+        loadingPlaceholder: @escaping () -> Placeholder
     ) {
         
         self.viewModel = SPPostListViewModel(configuration: configuration)
