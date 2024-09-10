@@ -9,8 +9,8 @@ extension SwiftPresso {
             _ configuration: SwiftPressoConfiguration,
             placeholder: @escaping () -> Placeholder
         ) -> some SwiftUI.View {
-            
             Configuration.configure(with: configuration)
+            
             return PostListView(
                 backgroundColor: Configuration.backgroundColor,
                 interfaceColor: Configuration.interfaceColor,
@@ -47,13 +47,9 @@ extension SwiftPresso {
                 categoryMenuTitle: Configuration.categoryMenuTitle,
                 postPerPage: Configuration.postsPerPage,
                 loadingPlaceholder: {
-                    shimmerPlaceholder()
+                    ShimmerPlacehodler(backgroundColor: Configuration.backgroundColor)
                 }
             )
-        }
-        
-        public static func shimmerPlaceholder(backgroundColor: Color = Configuration.backgroundColor) -> some SwiftUI.View {
-            SPShimmerPlacehodler(backgroundColor: backgroundColor)
         }
         
     }

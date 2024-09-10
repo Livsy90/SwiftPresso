@@ -1,20 +1,17 @@
 import SwiftUI
 
-struct SPShimmerPlacehodler: View {
+struct ShimmerPlacehodler: View {
     
-    private let backgroundColor: Color
-    
-    init(backgroundColor: Color) {
-        self.backgroundColor = backgroundColor
-    }
+    let backgroundColor: Color
     
     var body: some View {
         ScrollView {
             ForEach(1...100, id: \.self) { _ in
-                SPShimmerView()
+                ShimmerView()
                      .cornerRadius(5)
                      .frame(height: 80)
                      .padding(.vertical, 20)
+                     .padding(.horizontal, 12)
             }
         }
         .scrollDisabled(true)
@@ -24,7 +21,7 @@ struct SPShimmerPlacehodler: View {
     
 }
 
-private struct SPShimmerView: View {
+private struct ShimmerView: View {
     
     @State private var startPoint: UnitPoint = .init(x: -1.8, y: -1.2)
     @State private var endPoint: UnitPoint = .init(x: 0, y: -0.2)

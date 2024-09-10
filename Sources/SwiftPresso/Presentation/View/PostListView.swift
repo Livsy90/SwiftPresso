@@ -99,7 +99,7 @@ struct PostListView<Placeholder: View>: View {
                 }
                 
                 if viewModel.isInitialLoading {
-                    loadingPlaceholder()
+                    placeholder()
                         .frame(maxWidth: .infinity)
                         .listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
@@ -116,6 +116,7 @@ struct PostListView<Placeholder: View>: View {
                     .padding(.horizontal)
                 }
             }
+            .listStyle(.plain)
             .disabled(viewModel.isInitialLoading)
             .scrollContentBackground(.hidden)
             .background {
@@ -175,6 +176,7 @@ struct PostListView<Placeholder: View>: View {
                 },
                 placeholder: {
                     loadingPlaceholder()
+                        .id(UUID())
                 }
             )
         }
@@ -182,6 +184,11 @@ struct PostListView<Placeholder: View>: View {
         .sideMenu(isShowing: $isShowMenu) {
             menu()
         }
+    }
+    
+    private func placeholder() -> some View {
+        loadingPlaceholder()
+            .id(UUID())
     }
     
     private func navigationBarPrincipalItem() -> some View {
@@ -383,8 +390,10 @@ private struct PostListRow<Placeholder: View>: View {
                 onCategory: onCategory,
                 placeholder: placeholder
             )
+            .padding(.vertical, 8)
         } else {
             Text(post.title)
+                .padding(.vertical, 8)
         }
     }
 }

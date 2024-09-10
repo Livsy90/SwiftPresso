@@ -82,7 +82,6 @@ struct WebViewWrapperView<Content: View>: View {
                     .opacity(isLoading ? 0 : 1)
                 }
                 placeHolder()
-                    .padding(20)
                     .opacity(isLoading ? 1 : 0)
                     .animation(.easeInOut(duration: isLoading ? 0 : 0.5), value: isLoading)
                     .allowsHitTesting(false)
