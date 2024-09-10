@@ -112,6 +112,7 @@ struct SPPostListView<Placeholder: View>: View {
                     }
                     .id(UUID())
                     .listRowBackground(Color.clear)
+                    .padding(.horizontal)
                 }
             }
             .disabled(viewModel.isInitialLoading)
