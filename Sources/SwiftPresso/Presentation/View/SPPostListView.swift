@@ -129,6 +129,23 @@ struct SPPostListView<Placeholder: View>: View {
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
+                    if isShowTagMenu || isShowCategoryMenu || isShowPageMenu {
+                        Button {
+                            withAnimation {
+                                self.isShowSideMenu = true
+                            }
+                        } label: {
+                            Image(systemName: "line.horizontal.3")
+                        }
+                        
+                    }
+                }
+                
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    ProgressView()
+                        .opacity(viewModel.isLoadMore ? 1 : 0)
+                        .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
+                    
                     Button {
                         Task {
                             await viewModel.loadDefault()
@@ -140,23 +157,6 @@ struct SPPostListView<Placeholder: View>: View {
                     .animation(.default, value: viewModel.isRefreshable)
                     .symbolEffect(.bounce, value: viewModel.isRefreshable)
                     .disabled(viewModel.isLoading)
-                }
-                
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    ProgressView()
-                        .opacity(viewModel.isLoadMore ? 1 : 0)
-                        .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
-                    
-                    if isShowTagMenu || isShowCategoryMenu || isShowPageMenu {
-                        Button {
-                            withAnimation {
-                                self.isShowSideMenu = true
-                            }
-                        } label: {
-                            Image(systemName: "line.horizontal.3")
-                        }
-                        
-                    }
                 }
                 
             }
@@ -253,9 +253,8 @@ struct SPPostListView<Placeholder: View>: View {
                         }
                         .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
                     }
-                }
                 
-                if isShowPageMenu {
+                    if isShowPageMenu {
                     Section("Category", isExpanded: $isPageMenuExpanded) {
                         ForEach(viewModel.pageList, id: \.self) { page in
                             Button {
@@ -273,13 +272,11 @@ struct SPPostListView<Placeholder: View>: View {
                     .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
                 }
             }
-            
-            Spacer()
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.black)
-        .edgesIgnoringSafeArea(.bottom)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
