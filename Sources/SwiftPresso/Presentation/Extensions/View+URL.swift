@@ -4,7 +4,7 @@ extension View {
     
     func webViewLinkRow(
         backgroundColor: Color,
-        accentColor: Color,
+        interfaceColor: Color,
         onTag: @escaping (String) -> Void,
         onCategory: @escaping (String) -> Void,
         placeholder: @escaping () -> some View
@@ -13,7 +13,7 @@ extension View {
         modifier(
             SPWebViewLinkModifier(
                 backgroundColor: backgroundColor,
-                accentColor: accentColor,
+                interfaceColor: interfaceColor,
                 onTag: onTag,
                 onCategory: onCategory,
                 placeholder: placeholder
@@ -24,7 +24,7 @@ extension View {
     func webView(
         url: Binding<URL?>,
         backgroundColor: Color,
-        accentColor: Color,
+        interfaceColor: Color,
         onTag: @escaping (String) -> Void,
         onCategory: @escaping (String) -> Void,
         placeholder: @escaping () -> some View
@@ -34,7 +34,7 @@ extension View {
             SPWebViewModifier(
                 urlToOpen: url,
                 backgroundColor: backgroundColor,
-                accentColor: accentColor,
+                interfaceColor: interfaceColor,
                 onTag: onTag,
                 onCategory: onCategory,
                 placeholder: placeholder
@@ -48,7 +48,7 @@ private struct SPWebViewModifier<Placeholder: View>: ViewModifier {
     
     @Binding var urlToOpen: URL?
     let backgroundColor: Color
-    let accentColor: Color
+    let interfaceColor: Color
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
@@ -69,7 +69,7 @@ private struct SPWebViewModifier<Placeholder: View>: ViewModifier {
                 content: {
                     SPWebViewWrapperView(
                         backgroundColor: backgroundColor,
-                        accentColor: accentColor,
+                        interfaceColor: interfaceColor,
                         urlToOpen: $urlToOpen,
                         isLoading: $isLoading,
                         isGoBack: $isGoBack,
@@ -88,7 +88,7 @@ private struct SPWebViewModifier<Placeholder: View>: ViewModifier {
 private struct SPWebViewLinkModifier<Placeholder: View>: ViewModifier {
     
     let backgroundColor: Color
-    let accentColor: Color
+    let interfaceColor: Color
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
@@ -114,7 +114,7 @@ private struct SPWebViewLinkModifier<Placeholder: View>: ViewModifier {
                 content: {
                     SPWebViewWrapperView(
                         backgroundColor: backgroundColor,
-                        accentColor: accentColor,
+                        interfaceColor: interfaceColor,
                         urlToOpen: $urlToOpen,
                         isLoading: $isLoading,
                         isGoBack: $isGoBack,

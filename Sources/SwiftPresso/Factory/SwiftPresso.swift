@@ -13,7 +13,7 @@ public enum SwiftPresso {
             
             return SPPostListView(
                 backgroundColor: SPPreferences.shared.configuration.backgroundColor,
-                accentColor: SPPreferences.shared.configuration.accentColor,
+                interfaceColor: SPPreferences.shared.configuration.interfaceColor,
                 textColor: SPPreferences.shared.configuration.textColor,
                 homeIcon: SPPreferences.shared.configuration.homeIcon,
                 tagIcon: SPPreferences.shared.configuration.tagIcon,
@@ -41,7 +41,7 @@ public enum SwiftPresso {
         public static var httpAdditionalHeaders: [AnyHashable: Any]? { SPPreferences.shared.configuration.httpAdditionalHeaders }
         public static var isExcludeWebHeaderAndFooter: Bool { SPPreferences.shared.configuration.isExcludeWebHeaderAndFooter }
         public static var backgroundColor: Color { SPPreferences.shared.configuration.backgroundColor }
-        public static var accentColor: Color { SPPreferences.shared.configuration.accentColor }
+        public static var interfaceColor: Color { SPPreferences.shared.configuration.interfaceColor }
         public static var textColor: Color { SPPreferences.shared.configuration.textColor }
         public static var isShowPageMenu: Bool { SPPreferences.shared.configuration.isShowPageMenu }
         public static var isShowTagMenu: Bool { SPPreferences.shared.configuration.isShowTagMenu }

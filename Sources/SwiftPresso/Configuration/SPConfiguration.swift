@@ -7,7 +7,7 @@ public struct SPConfiguration {
     public let httpAdditionalHeaders: [AnyHashable: Any]?
     public let isExcludeWebHeaderAndFooter: Bool
     public let backgroundColor: Color
-    public let accentColor: Color
+    public let interfaceColor: Color
     public let textColor: Color
     public let isShowPageMenu: Bool
     public let isShowTagMenu: Bool
@@ -20,7 +20,7 @@ public struct SPConfiguration {
     public init(
         host: String,
         backgroundColor: Color = .white,
-        accentColor: Color = .black,
+        interfaceColor: Color = .black,
         textColor: Color = .black,
         tagIcon: Image = Image(systemName: "tag"),
         pageIcon: Image = Image(systemName: "book"),
@@ -36,7 +36,7 @@ public struct SPConfiguration {
     ) {
         self.host = host
         self.backgroundColor = backgroundColor
-        self.accentColor = accentColor
+        self.interfaceColor = interfaceColor
         self.textColor = textColor
         self.isShowPageMenu = isShowPageMenu
         self.isShowTagMenu = isShowTagMenu

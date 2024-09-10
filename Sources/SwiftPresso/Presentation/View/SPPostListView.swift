@@ -10,7 +10,7 @@ struct SPPostListView<Placeholder: View>: View {
     @State private var urlToOpen: URL?
     
     private let backgroundColor: Color
-    private let accentColor: Color
+    private let interfaceColor: Color
     private let textColor: Color
     
     private let homeIcon: Image
@@ -24,7 +24,7 @@ struct SPPostListView<Placeholder: View>: View {
     
     init(
         backgroundColor: Color,
-        accentColor: Color,
+        interfaceColor: Color,
         textColor: Color,
         homeIcon: Image,
         tagIcon: Image,
@@ -40,7 +40,7 @@ struct SPPostListView<Placeholder: View>: View {
         self.viewModel = SPPostListViewModel(postPerPage: postPerPage)
         
         self.backgroundColor = backgroundColor
-        self.accentColor = accentColor
+        self.interfaceColor = interfaceColor
         self.textColor = textColor
         
         self.isShowTagMenu = isShowTagMenu
@@ -62,7 +62,7 @@ struct SPPostListView<Placeholder: View>: View {
                     SPPostListRow(
                         post: post,
                         webViewBackgroundColor: backgroundColor,
-                        accentColor: accentColor,
+                        interfaceColor: interfaceColor,
                         textColor: textColor,
                         onTag: { tagName in
                             Task {
@@ -114,10 +114,15 @@ struct SPPostListView<Placeholder: View>: View {
                     await viewModel.reload()
                 }
             }
-            .navigationTitle(viewModel.mode.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(backgroundColor, for: .navigationBar)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(viewModel.mode.title)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(interfaceColor)
+                }
+                
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
                         Task {
@@ -205,7 +210,7 @@ struct SPPostListView<Placeholder: View>: View {
             .webView(
                 url: $urlToOpen,
                 backgroundColor: backgroundColor,
-                accentColor: accentColor,
+                interfaceColor: interfaceColor,
                 onTag: { tagName in
                     searchText.removeAll()
                     isSearching = false
@@ -225,7 +230,7 @@ struct SPPostListView<Placeholder: View>: View {
                 }
             )
         }
-        .tint(accentColor)
+        .tint(interfaceColor)
     }
 }
 
@@ -233,7 +238,7 @@ private struct SPPostListRow<Placeholder: View>: View {
     
     let post: PostModel
     let webViewBackgroundColor: Color
-    let accentColor: Color
+    let interfaceColor: Color
     let textColor: Color
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
@@ -245,7 +250,7 @@ private struct SPPostListRow<Placeholder: View>: View {
                 url: link,
                 title: post.title,
                 webViewBackgroundColor: webViewBackgroundColor,
-                accentColor: accentColor,
+                interfaceColor: interfaceColor,
                 textColor: textColor,
                 onTag: onTag,
                 onCategory: onCategory,

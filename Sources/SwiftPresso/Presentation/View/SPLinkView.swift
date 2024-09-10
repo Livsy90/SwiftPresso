@@ -5,7 +5,7 @@ struct SPLinkView<Placehodler: View>: View {
     let url: URL
     let title: String
     let webViewBackgroundColor: Color
-    let accentColor: Color
+    let interfaceColor: Color
     let textColor: Color
     
     let onTag: (String) -> Void
@@ -21,7 +21,7 @@ struct SPLinkView<Placehodler: View>: View {
         }
         .webViewLinkRow(
             backgroundColor: webViewBackgroundColor,
-            accentColor: accentColor,
+            interfaceColor: interfaceColor,
             onTag: onTag,
             onCategory: onCategory,
             placeholder: placeholder
