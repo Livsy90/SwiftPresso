@@ -88,6 +88,7 @@ struct PostListView<Placeholder: View>: View {
                         },
                         placeholder: {
                             loadingPlaceholder()
+                                .id(UUID())
                         }
                     )
                     .listRowBackground(Color.clear)
