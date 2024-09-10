@@ -6,7 +6,7 @@ extension SwiftPresso {
     public enum View {
         
         public static func postListView<Placeholder: SwiftUI.View>(
-            configuration: SwiftPressoConfiguration,
+            _ configuration: SwiftPressoConfiguration,
             placeholder: @escaping () -> Placeholder
         ) -> some SwiftUI.View {
             Configuration.configure(with: configuration)
