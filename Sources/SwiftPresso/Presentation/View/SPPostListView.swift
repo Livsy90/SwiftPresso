@@ -232,12 +232,8 @@ struct SPPostListView<Placeholder: View>: View {
                         .frame(height: 18)
                 }
             }
-            .padding(.top, 30)
-            .padding(.horizontal)
+            .padding()
             .accentColor(menuTextColor)
-            
-            Divider()
-                .padding()
             
             ScrollView {
                 VStack(alignment: .leading) {
@@ -263,6 +259,7 @@ struct SPPostListView<Placeholder: View>: View {
                                         }
                                         Divider()
                                     }
+                                    .padding(.top)
                                 }
                                 .padding(.horizontal)
                             }
@@ -298,6 +295,7 @@ struct SPPostListView<Placeholder: View>: View {
                                         }
                                         Divider()
                                     }
+                                    .padding(.top)
                                 }
                                 .padding(.horizontal)
                             }
@@ -332,6 +330,7 @@ struct SPPostListView<Placeholder: View>: View {
                                         }
                                         Divider()
                                     }
+                                    .padding(.top)
                                 }
                                 .padding(.horizontal)
                             }
