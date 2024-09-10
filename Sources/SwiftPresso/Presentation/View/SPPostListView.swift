@@ -239,38 +239,38 @@ struct SPPostListView<Placeholder: View>: View {
                     loadingPlaceholder()
                 }
             )
-            .sideMenu(isShowing: $isShowSideMenu) {
-                VStack(alignment: .leading) {
-                    Button(action: {
-                        withAnimation {
-                            self.isShowSideMenu = false
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.white)
-                            Text("close menu")
-                                .foregroundColor(.white)
-                                .font(.system(size: 14))
-                                .padding(.leading, 15.0)
-                        }
-                    }
-                    .padding(.top, 20)
-                    
-                    Divider()
-                        .frame(height: 20)
-                    Text("Sample item 1")
-                        .foregroundColor(.white)
-                    Text("Sample item 2")
-                        .foregroundColor(.white)
-                    Spacer()
-                }.padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.black)
-                    .edgesIgnoringSafeArea(.all)
-            }
         }
         .tint(interfaceColor)
+        .sideMenu(isShowing: $isShowSideMenu) {
+            VStack(alignment: .leading) {
+                Button(action: {
+                    withAnimation {
+                        self.isShowSideMenu = false
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.white)
+                        Text("close menu")
+                            .foregroundColor(.white)
+                            .font(.system(size: 14))
+                            .padding(.leading, 15.0)
+                    }
+                }
+                .padding(.top, 20)
+                
+                Divider()
+                    .frame(height: 20)
+                Text("Sample item 1")
+                    .foregroundColor(.white)
+                Text("Sample item 2")
+                    .foregroundColor(.white)
+                Spacer()
+            }.padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.black)
+                .edgesIgnoringSafeArea(.all)
+        }
     }
 }
 
