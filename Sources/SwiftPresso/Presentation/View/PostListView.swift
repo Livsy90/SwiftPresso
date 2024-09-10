@@ -185,15 +185,9 @@ struct PostListView<Placeholder: View>: View {
     }
     
     private func navigationBarPrincipalItem() -> some View {
-        HStack {
-            Text(viewModel.mode.title)
-                .fontWeight(.semibold)
-                .foregroundStyle(interfaceColor)
-            
-            ProgressView()
-                .opacity(viewModel.isLoadMore ? 1 : 0)
-                .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
-        }
+        Text(viewModel.mode.title)
+            .fontWeight(.semibold)
+            .foregroundStyle(interfaceColor)
     }
     
     @ViewBuilder
