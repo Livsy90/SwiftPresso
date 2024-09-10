@@ -347,12 +347,12 @@ struct SPPostListView<Placeholder: View>: View {
                     Spacer()
                 }
             }
-            .background(.white)
+            .background(.yellow)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .background(.white)
+        .background(.green)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .accentColor(.black)
+        .accentColor(.red)
         .edgesIgnoringSafeArea(.all)
         .padding()
     }
