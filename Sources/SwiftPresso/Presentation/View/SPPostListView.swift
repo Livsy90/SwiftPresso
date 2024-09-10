@@ -9,10 +9,7 @@ struct SPPostListView<Placeholder: View>: View {
     @State private var isSearching = false
     @State private var urlToOpen: URL?
     
-    @State private var isShowSideMenu = false
-    @State private var isTagMenuExpanded = false
-    @State private var isCategoryMenuExpanded = false
-    @State private var isPageMenuExpanded = false
+    @State private var isShowMenu = false
     
     private let backgroundColor: Color
     private let interfaceColor: Color
@@ -129,23 +126,16 @@ struct SPPostListView<Placeholder: View>: View {
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
-                    if isShowTagMenu || isShowCategoryMenu || isShowPageMenu {
-                        Button {
-                            withAnimation {
-                                self.isShowSideMenu = true
-                            }
-                        } label: {
-                            Image(systemName: "line.horizontal.3")
+                    Button {
+                        withAnimation {
+                            isShowMenu = true
                         }
-                        
+                    } label: {
+                        Image(systemName: "line.horizontal.3")
                     }
                 }
                 
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    ProgressView()
-                        .opacity(viewModel.isLoadMore ? 1 : 0)
-                        .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
-                    
                     Button {
                         Task {
                             await viewModel.loadDefault()
@@ -157,6 +147,61 @@ struct SPPostListView<Placeholder: View>: View {
                     .animation(.default, value: viewModel.isRefreshable)
                     .symbolEffect(.bounce, value: viewModel.isRefreshable)
                     .disabled(viewModel.isLoading)
+                    
+                    ProgressView()
+                        .opacity(viewModel.isLoadMore ? 1 : 0)
+                        .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
+                    
+                    if isShowTagMenu {
+                        Menu {
+                            ForEach(viewModel.tags, id: \.self) { tag in
+                                Button {
+                                    Task {
+                                        await viewModel.onTag(tag.name)
+                                    }
+                                } label: {
+                                    Text(tag.name)
+                                }
+                            }
+                        } label: {
+                            tagIcon
+                        }
+                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
+                    }
+                    
+                    if isShowCategoryMenu {
+                        Menu {
+                            ForEach(viewModel.categories, id: \.self) { category in
+                                Button {
+                                    Task {
+                                        await viewModel.onCategory(category.name)
+                                    }
+                                } label: {
+                                    Text(category.name)
+                                }
+                            }
+                        } label: {
+                            categoryIcon
+                        }
+                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
+                    }
+                    
+                    if isShowPageMenu {
+                        Menu {
+                            ForEach(viewModel.pageList, id: \.self) { page in
+                                Button {
+                                    if let url = page.link {
+                                        urlToOpen = url
+                                    }
+                                } label: {
+                                    Text(page.title)
+                                }
+                            }
+                        } label: {
+                            pageIcon
+                        }
+                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
+                    }
                 }
                 
             }
@@ -196,87 +241,19 @@ struct SPPostListView<Placeholder: View>: View {
             )
         }
         .tint(interfaceColor)
-        .sideMenu(isShowing: $isShowSideMenu) {
+        .sideMenu(isShowing: $isShowMenu) {
             VStack(alignment: .leading) {
-                Button(action: {
-                    withAnimation {
-                        self.isShowSideMenu = false
-                    }
-                }) {
-                    HStack {
-                        Spacer()
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 15)
-                            .foregroundColor(.white)
-                    }
+                DisclosureGroup("Mastering SwiftUI 3") {
+                    Text("Learn SwiftUI 3 with Examples in this comprehansive video course.")
                 }
-                .padding()
-                
-                Divider()
-                    .padding()
-                
-                List {
-                    if isShowTagMenu {
-                        Section("Tags", isExpanded: $isTagMenuExpanded) {
-                            ForEach(viewModel.tags, id: \.self) { tag in
-                                Button {
-                                    withAnimation {
-                                        self.isShowSideMenu = false
-                                    }
-                                    Task {
-                                        await viewModel.onTag(tag.name)
-                                    }
-                                } label: {
-                                    Text(tag.name)
-                                }
-                            }
-                        }
-                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
-                    }
-                    
-                    if isShowCategoryMenu {
-                        Section("Category", isExpanded: $isCategoryMenuExpanded) {
-                            ForEach(viewModel.categories, id: \.self) { category in
-                                Button {
-                                    withAnimation {
-                                        self.isShowSideMenu = false
-                                    }
-                                    Task {
-                                        await viewModel.onTag(category.name)
-                                    }
-                                } label: {
-                                    Text(category.name)
-                                }
-                            }
-                        }
-                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
-                    }
-                    
-                    if isShowPageMenu {
-                        Section("Category", isExpanded: $isPageMenuExpanded) {
-                            ForEach(viewModel.pageList, id: \.self) { page in
-                                Button {
-                                    withAnimation {
-                                        self.isShowSideMenu = false
-                                    }
-                                    if let url = page.link {
-                                        urlToOpen = url
-                                    }
-                                } label: {
-                                    Text(page.title)
-                                }
-                            }
-                        }
-                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
-                    }
+                DisclosureGroup("iOS 15 WidgetKit") {
+                    Text("Learn all there is in iOS 15 Widgets with this practical video course on WidgetKit.")
                 }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.black)
-            .edgesIgnoringSafeArea(.all)
+                DisclosureGroup("MVVM Design Pattern and Protocols") {
+                    Text("Combine power of protocol oriented programming with MVVM design pattern in SwiftUI by building Task List app.")
+                }
+                
+            }.padding()
         }
     }
 }
