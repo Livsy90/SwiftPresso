@@ -253,19 +253,22 @@ struct SPPostListView<Placeholder: View>: View {
                                 } label: {
                                     HStack {
                                         Text(page.title)
+                                            .frame(alignment: .leading)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(menuTextColor)
                                         Spacer()
                                     }
                                 }
+                                .padding(.horizontal)
                             }
                         } label: {
                             Text(pageMenuTitle)
+                                .frame(alignment: .leading)
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
                         }
-                        .tint(.white)
+                        .tint(menuTextColor)
                     }
                     
                     if isShowCategoryMenu {
@@ -281,19 +284,22 @@ struct SPPostListView<Placeholder: View>: View {
                                 } label: {
                                     HStack {
                                         Text(category.name)
+                                            .frame(alignment: .leading)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(menuTextColor)
                                         Spacer()
                                     }
                                 }
+                                .padding(.horizontal)
                             }
                         } label: {
                             Text(categoryMenuTitle)
+                                .frame(alignment: .leading)
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
                         }
-                        .tint(.white)
+                        .tint(menuTextColor)
                     }
                     
                     if isShowTagMenu {
@@ -309,14 +315,17 @@ struct SPPostListView<Placeholder: View>: View {
                                 } label: {
                                     HStack {
                                         Text(tag.name)
+                                            .frame(alignment: .leading)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(menuTextColor)
                                         Spacer()
                                     }
                                 }
+                                .padding(.horizontal)
                             }
                         } label: {
                             Text(tagMenuTitle)
+                                .frame(alignment: .leading)
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
@@ -326,6 +335,7 @@ struct SPPostListView<Placeholder: View>: View {
                     
                     Spacer()
                 }
+                .accentColor(menuTextColor)
                 .padding()
             }
         }
