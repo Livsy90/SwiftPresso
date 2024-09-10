@@ -24,7 +24,7 @@ final class SPPostListViewModel {
         isLoading && shouldShowFullScreenPlaceholder
     }
     var isLoadMore: Bool {
-        isLoading && !isError
+        isLoading && !isError && !isInitialLoading
     }
     private(set) var isLoading: Bool = true
     private(set) var postList: [PostModel] = []
