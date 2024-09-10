@@ -253,30 +253,31 @@ struct SPPostListView<Placeholder: View>: View {
                         }
                         .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
                     }
-                
+                    
                     if isShowPageMenu {
-                    Section("Category", isExpanded: $isPageMenuExpanded) {
-                        ForEach(viewModel.pageList, id: \.self) { page in
-                            Button {
-                                withAnimation {
-                                    self.isShowSideMenu = false
+                        Section("Category", isExpanded: $isPageMenuExpanded) {
+                            ForEach(viewModel.pageList, id: \.self) { page in
+                                Button {
+                                    withAnimation {
+                                        self.isShowSideMenu = false
+                                    }
+                                    if let url = page.link {
+                                        urlToOpen = url
+                                    }
+                                } label: {
+                                    Text(page.title)
                                 }
-                                if let url = page.link {
-                                    urlToOpen = url
-                                }
-                            } label: {
-                                Text(page.title)
                             }
                         }
+                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
                     }
-                    .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
                 }
             }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.black)
+            .edgesIgnoringSafeArea(.all)
         }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.black)
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
