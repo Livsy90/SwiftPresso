@@ -65,6 +65,7 @@ public enum SwiftPresso {
         public static func configure(with configuration: SwiftPressoConfiguration) {
             Preferences.shared.configuration = configuration
         }
+        
     }
     
 }
