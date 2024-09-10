@@ -205,7 +205,7 @@ struct PostListView<Placeholder: View>: View {
         Text(viewModel.mode.title)
             .fontWeight(.semibold)
             .foregroundStyle(interfaceColor)
-            .frame(width: 200)
+            .frame(maxWidth: .infinity)
     }
     
     @ViewBuilder
