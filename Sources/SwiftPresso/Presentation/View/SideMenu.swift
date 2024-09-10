@@ -4,8 +4,10 @@ struct SideMenu<MenuContent: View>: ViewModifier {
     @Binding var isShowing: Bool
     private let menuContent: () -> MenuContent
     
-    init(isShowing: Binding<Bool>,
-         @ViewBuilder menuContent: @escaping () -> MenuContent) {
+    init(
+        isShowing: Binding<Bool>,
+        @ViewBuilder menuContent: @escaping () -> MenuContent
+    ) {
         _isShowing = isShowing
         self.menuContent = menuContent
     }
@@ -29,7 +31,8 @@ struct SideMenu<MenuContent: View>: ViewModifier {
                     .frame(width: geometry.size.width / 2)
                     .transition(.move(edge: .leading))
                     .offset(x: self.isShowing ? 0 : -geometry.size.width / 2)
-            }.gesture(drag)
+            }
+            .gesture(drag)
         }
     }
 }
