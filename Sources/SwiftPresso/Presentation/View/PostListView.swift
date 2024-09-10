@@ -113,6 +113,7 @@ struct PostListView<Placeholder: View>: View {
                     }
                     .id(UUID())
                     .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                     .padding(.horizontal)
                 }
             }
