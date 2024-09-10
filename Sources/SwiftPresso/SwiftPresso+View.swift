@@ -47,7 +47,7 @@ extension SwiftPresso {
                 categoryMenuTitle: Configuration.categoryMenuTitle,
                 postPerPage: Configuration.postsPerPage,
                 loadingPlaceholder: {
-                    shimmerPlaceholderView()
+                    shimmerPlaceholder()
                 }
             )
         }
