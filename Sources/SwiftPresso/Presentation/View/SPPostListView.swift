@@ -143,56 +143,65 @@ struct SPPostListView<Placeholder: View>: View {
                         .opacity(viewModel.isLoadMore ? 1 : 0)
                         .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
                     
-                    if isShowTagMenu {
-                        Menu {
-                            ForEach(viewModel.tags, id: \.self) { tag in
-                                Button {
-                                    Task {
-                                        await viewModel.onTag(tag.name)
-                                    }
-                                } label: {
-                                    Text(tag.name)
-                                }
-                            }
+                    if isShowTagMenu || isShowCategoryMenu || isShowPageMenu {
+                        Button {
+                            isShowSideMenu.toggle()
                         } label: {
-                            tagIcon
+                            Image(systemName: "line.horizontal.3")
                         }
-                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
+
                     }
                     
-                    if isShowCategoryMenu {
-                        Menu {
-                            ForEach(viewModel.categories, id: \.self) { category in
-                                Button {
-                                    Task {
-                                        await viewModel.onCategory(category.name)
-                                    }
-                                } label: {
-                                    Text(category.name)
-                                }
-                            }
-                        } label: {
-                            categoryIcon
-                        }
-                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
-                    }
-                    
-                    if isShowPageMenu {
-                        Menu {
-                            ForEach(viewModel.pageList, id: \.self) { page in
-                                Button {
-                                    if let url = page.link {
-                                        urlToOpen = url
-                                    }
-                                } label: {
-                                    Text(page.title)
-                                }
-                            }
-                        } label: {
-                            pageIcon
-                        }
-                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
-                    }
+//                    if isShowTagMenu {
+//                        Menu {
+//                            ForEach(viewModel.tags, id: \.self) { tag in
+//                                Button {
+//                                    Task {
+//                                        await viewModel.onTag(tag.name)
+//                                    }
+//                                } label: {
+//                                    Text(tag.name)
+//                                }
+//                            }
+//                        } label: {
+//                            tagIcon
+//                        }
+//                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
+//                    }
+//                    
+//                    if isShowCategoryMenu {
+//                        Menu {
+//                            ForEach(viewModel.categories, id: \.self) { category in
+//                                Button {
+//                                    Task {
+//                                        await viewModel.onCategory(category.name)
+//                                    }
+//                                } label: {
+//                                    Text(category.name)
+//                                }
+//                            }
+//                        } label: {
+//                            categoryIcon
+//                        }
+//                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
+//                    }
+//                    
+//                    if isShowPageMenu {
+//                        Menu {
+//                            ForEach(viewModel.pageList, id: \.self) { page in
+//                                Button {
+//                                    if let url = page.link {
+//                                        urlToOpen = url
+//                                    }
+//                                } label: {
+//                                    Text(page.title)
+//                                }
+//                            }
+//                        } label: {
+//                            pageIcon
+//                        }
+//                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
+//                    }
                 }
                 
             }
