@@ -5,20 +5,32 @@ public struct HTMLMapper: HTMLMapperProtocol {
     
     public init() {}
     
-    public func attributedStringFrom(htmlText: String, width: CGFloat) -> NSMutableAttributedString {
-        let modifiedFont = formatStringWithYTVideo(text: htmlText, width: width)
+    public func attributedStringFrom(
+        htmlText: String,
+        width: CGFloat
+    ) -> NSMutableAttributedString {
         
-        guard let data = modifiedFont.data(using: .unicode, allowLossyConversion: true), let attributedString = try? NSMutableAttributedString(
-            data: data,
-            options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
-            documentAttributes: nil
-        ) else {
+        let modifiedFont = formatStringWithYTVideo(
+            text: htmlText,
+            width: width
+        )
+        
+        guard
+            let data = modifiedFont.data(using: .unicode, allowLossyConversion: true),
+            let attributedString = try? NSMutableAttributedString(
+                data: data,
+                options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
+                documentAttributes: nil
+            ) else {
             assert(false, "HTMLMapper: attributedStringFrom(htmlText: \(htmlText)")
             return .init()
         }
         
         let attributedStringColor = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        attributedString.addAttributes(attributedStringColor, range: NSMakeRange(0, attributedString.length))
+        attributedString.addAttributes(
+            attributedStringColor,
+            range: NSMakeRange(0, attributedString.length)
+        )
         
         return attributedString
     }
@@ -29,13 +41,19 @@ public struct HTMLMapper: HTMLMapperProtocol {
         
         if !iframeTexts.isEmpty {
             iframeTexts.forEach { iframeText in
-                let iframeId = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframeText);
+                let iframeId = matches(
+                    for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)",
+                    in: iframeText
+                )
                 
                 if !iframeId.isEmpty {
                     let imgString = """
                     <a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src="https://img.youtube.com/vi/\(iframeId[0])/maxresdefault.jpg" alt="" width="\(width)"/></a>
                     """
-                    newText = newText.replacingOccurrences(of: iframeText, with: imgString)
+                    newText = newText.replacingOccurrences(
+                        of: iframeText,
+                        with: imgString
+                    )
                 }
             }
         }
@@ -43,16 +61,22 @@ public struct HTMLMapper: HTMLMapperProtocol {
         return newText
     }
     
-    private func matches(for regex: String, in text: String) -> [String] {
+    private func matches(
+        for regex: String,
+        in text: String
+    ) -> [String] {
         do {
-            let regex = try NSRegularExpression(pattern: regex,  options: .caseInsensitive)
+            let regex = try NSRegularExpression(
+                pattern: regex,
+                options: .caseInsensitive
+            )
             let nsString = text as NSString
-            let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
-            return results.map { nsString.substring(with: $0.range)}
-        } catch let error {
-            #if DEBUG
-            print("invalid regex: \(error.localizedDescription)")
-            #endif
+            let results = regex.matches(
+                in: text,
+                range: NSRange(location: 0, length: nsString.length)
+            )
+            return results.map { nsString.substring(with: $0.range) }
+        } catch {
             return []
         }
     }

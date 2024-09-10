@@ -91,7 +91,7 @@ struct WebViewWrapperView<Content: View>: View {
         .background {
             Rectangle()
                 .fill(backgroundColor)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
         }
     }
 }

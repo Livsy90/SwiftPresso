@@ -180,7 +180,6 @@ private extension PostListViewModel {
             )
         } catch {
             isError = true
-            print(error.localizedDescription)
             return []
         }
     }
@@ -190,7 +189,6 @@ private extension PostListViewModel {
             return try await tagListProvider.getTags()
         } catch {
             isError = true
-            print(error.localizedDescription)
             return []
         }
     }
@@ -200,7 +198,6 @@ private extension PostListViewModel {
             return try await categoryListProvider.getCategories()
         } catch {
             isError = true
-            print(error.localizedDescription)
             return []
         }
     }
@@ -210,7 +207,6 @@ private extension PostListViewModel {
             return try await pageListProvider.getPages()
         } catch {
             isError = true
-            print(error.localizedDescription)
             return []
         }
     }
