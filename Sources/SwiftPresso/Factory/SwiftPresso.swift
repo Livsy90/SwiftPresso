@@ -7,23 +7,25 @@ public enum SwiftPresso {
         
         public static func postListView<Placeholder: SwiftUI.View>(
             configuration: SPConfiguration,
-            placeholder: @escaping () -> Placeholder
+            placeholder: (() -> Placeholder)? = nil
         ) -> some SwiftUI.View {
             Configuration.configure(with: configuration)
             
             return SPPostListView(
-                backgroundColor: SPPreferences.shared.configuration.backgroundColor,
-                interfaceColor: SPPreferences.shared.configuration.interfaceColor,
-                textColor: SPPreferences.shared.configuration.textColor,
-                homeIcon: SPPreferences.shared.configuration.homeIcon,
-                tagIcon: SPPreferences.shared.configuration.tagIcon,
-                pageIcon: SPPreferences.shared.configuration.pageIcon,
-                categoryIcon: SPPreferences.shared.configuration.categoryIcon,
-                isShowPageMenu: SPPreferences.shared.configuration.isShowPageMenu,
-                isShowTagMenu: SPPreferences.shared.configuration.isShowTagMenu,
-                isShowCategoryMenu: SPPreferences.shared.configuration.isShowCategoryMenu,
-                postPerPage: SPPreferences.shared.configuration.postsPerPage,
-                loadingPlaceholder: placeholder
+                backgroundColor: Configuration.backgroundColor,
+                interfaceColor: Configuration.interfaceColor,
+                textColor: Configuration.textColor,
+                menuBackgroundColor: Configuration.menuBackgroundColor,
+                menuTextColor: Configuration.textColor,
+                homeIcon: Configuration.homeIcon,
+                isShowPageMenu: Configuration.isShowPageMenu,
+                isShowTagMenu: Configuration.isShowTagMenu,
+                isShowCategoryMenu: Configuration.isShowCategoryMenu,
+                pageMenuTitle: Configuration.pageMenuTitle,
+                tagMenuTitle: Configuration.tagMenuTitle,
+                categoryMenuTitle: Configuration.categoryMenuTitle,
+                postPerPage: Configuration.postsPerPage,
+                loadingPlaceholder: placeholder ?? { shimmerPlaceholderView(backgroundColor: Configuration.backgroundColor) as! () -> Placeholder }()
             )
         }
         
@@ -46,10 +48,12 @@ public enum SwiftPresso {
         public static var isShowPageMenu: Bool { SPPreferences.shared.configuration.isShowPageMenu }
         public static var isShowTagMenu: Bool { SPPreferences.shared.configuration.isShowTagMenu }
         public static var isShowCategoryMenu: Bool { SPPreferences.shared.configuration.isShowCategoryMenu }
-        public static var tagIcon: Image { SPPreferences.shared.configuration.tagIcon }
-        public static var pageIcon: Image { SPPreferences.shared.configuration.pageIcon }
-        public static var categoryIcon: Image { SPPreferences.shared.configuration.categoryIcon }
         public static var homeIcon: Image { SPPreferences.shared.configuration.homeIcon }
+        public static var pageMenuTitle: String { SPPreferences.shared.configuration.pageMenuTitle }
+        public static var tagMenuTitle: String { SPPreferences.shared.configuration.tagMenuTitle }
+        public static var categoryMenuTitle: String { SPPreferences.shared.configuration.categoryMenuTitle }
+        public static var menuBackgroundColor: Color { SPPreferences.shared.configuration.menuBackgroundColor }
+        public static var menuTextColor: Color { SPPreferences.shared.configuration.menuTextColor }
         
         public static func configure(with configuration: SPConfiguration) {
             SPPreferences.shared.configuration = configuration

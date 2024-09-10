@@ -16,25 +16,31 @@ struct SPPostListView<Placeholder: View>: View {
     private let textColor: Color
     
     private let homeIcon: Image
-    private let tagIcon: Image
-    private let pageIcon: Image
-    private let categoryIcon: Image
     
     private let isShowPageMenu: Bool
     private let isShowTagMenu: Bool
     private let isShowCategoryMenu: Bool
     
+    private let pageMenuTitle: String
+    private let tagMenuTitle: String
+    private let categoryMenuTitle: String
+    
+    private let menuBackgroundColor: Color
+    private let menuTextColor: Color
+    
     init(
         backgroundColor: Color,
         interfaceColor: Color,
         textColor: Color,
+        menuBackgroundColor: Color,
+        menuTextColor: Color,
         homeIcon: Image,
-        tagIcon: Image,
-        pageIcon: Image,
-        categoryIcon: Image,
         isShowPageMenu: Bool,
         isShowTagMenu: Bool,
         isShowCategoryMenu: Bool,
+        pageMenuTitle: String,
+        tagMenuTitle: String,
+        categoryMenuTitle: String,
         postPerPage: Int,
         loadingPlaceholder: @escaping () -> Placeholder
     ) {
@@ -45,14 +51,18 @@ struct SPPostListView<Placeholder: View>: View {
         self.interfaceColor = interfaceColor
         self.textColor = textColor
         
+        self.menuBackgroundColor = menuBackgroundColor
+        self.menuTextColor = menuTextColor
+        
         self.isShowTagMenu = isShowTagMenu
         self.isShowCategoryMenu = isShowCategoryMenu
         self.isShowPageMenu = isShowPageMenu
         
         self.homeIcon = homeIcon
-        self.tagIcon = tagIcon
-        self.pageIcon = pageIcon
-        self.categoryIcon = categoryIcon
+        
+        self.pageMenuTitle = pageMenuTitle
+        self.tagMenuTitle = tagMenuTitle
+        self.categoryMenuTitle = categoryMenuTitle
         
         self.loadingPlaceholder = loadingPlaceholder
     }
@@ -126,84 +136,12 @@ struct SPPostListView<Placeholder: View>: View {
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        withAnimation {
-                            isShowMenu = true
-                        }
-                    } label: {
-                        Image(systemName: "line.horizontal.3")
-                    }
+                    navigationBarLeadingItems()
                 }
                 
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button {
-                        Task {
-                            await viewModel.loadDefault()
-                        }
-                    } label: {
-                        homeIcon
-                    }
-                    .opacity(viewModel.isRefreshable ? 1 : 0)
-                    .animation(.default, value: viewModel.isRefreshable)
-                    .symbolEffect(.bounce, value: viewModel.isRefreshable)
-                    .disabled(viewModel.isLoading)
-                    
-                    ProgressView()
-                        .opacity(viewModel.isLoadMore ? 1 : 0)
-                        .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
-                    
-                    if isShowTagMenu {
-                        Menu {
-                            ForEach(viewModel.tags, id: \.self) { tag in
-                                Button {
-                                    Task {
-                                        await viewModel.onTag(tag.name)
-                                    }
-                                } label: {
-                                    Text(tag.name)
-                                }
-                            }
-                        } label: {
-                            tagIcon
-                        }
-                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
-                    }
-                    
-                    if isShowCategoryMenu {
-                        Menu {
-                            ForEach(viewModel.categories, id: \.self) { category in
-                                Button {
-                                    Task {
-                                        await viewModel.onCategory(category.name)
-                                    }
-                                } label: {
-                                    Text(category.name)
-                                }
-                            }
-                        } label: {
-                            categoryIcon
-                        }
-                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
-                    }
-                    
-                    if isShowPageMenu {
-                        Menu {
-                            ForEach(viewModel.pageList, id: \.self) { page in
-                                Button {
-                                    if let url = page.link {
-                                        urlToOpen = url
-                                    }
-                                } label: {
-                                    Text(page.title)
-                                }
-                            }
-                        } label: {
-                            pageIcon
-                        }
-                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
-                    }
+                    navigationBarTrailingItems()
                 }
-                
             }
             .searchable(text: $searchText, isPresented: $isSearching)
             .onSubmit(of: .search) {
@@ -242,6 +180,64 @@ struct SPPostListView<Placeholder: View>: View {
         }
         .tint(interfaceColor)
         .sideMenu(isShowing: $isShowMenu) {
+            menu()
+        }
+    }
+    
+    @ViewBuilder
+    private func navigationBarLeadingItems() -> some View {
+        if isShowTagMenu || isShowPageMenu || isShowCategoryMenu {
+            Button {
+                withAnimation {
+                    isShowMenu = true
+                }
+            } label: {
+                Image(systemName: "line.horizontal.3")
+            }
+        }
+    }
+    
+    private func navigationBarTrailingItems() -> some View {
+        VStack {
+            Button {
+                Task {
+                    await viewModel.loadDefault()
+                }
+            } label: {
+                homeIcon
+            }
+            .opacity(viewModel.isRefreshable ? 1 : 0)
+            .animation(.default, value: viewModel.isRefreshable)
+            .symbolEffect(.bounce, value: viewModel.isRefreshable)
+            .disabled(viewModel.isLoading)
+            
+            ProgressView()
+                .opacity(viewModel.isLoadMore ? 1 : 0)
+                .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
+        }
+    }
+    
+    private func menu() -> some View {
+        VStack {
+            Button {
+                withAnimation {
+                    isShowMenu = false
+                }
+            } label: {
+                HStack {
+                    Spacer()
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 18)
+                }
+            }
+            .padding(.top, 40)
+            .padding(.horizontal)
+            
+            Divider()
+                .padding()
+            
             ScrollView {
                 VStack(alignment: .leading) {
                     if isShowPageMenu {
@@ -255,16 +251,19 @@ struct SPPostListView<Placeholder: View>: View {
                                         urlToOpen = url
                                     }
                                 } label: {
-                                    Text(page.title)
-                                        .frame(alignment: .leading)
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(.white)
+                                    HStack {
+                                        Text(page.title)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(menuTextColor)
+                                        Spacer()
+                                    }
                                 }
                             }
                         } label: {
-                            Text("Pages")
+                            Text(pageMenuTitle)
+                                .font(.title)
                                 .fontWeight(.semibold)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(menuTextColor)
                         }
                         .tint(.white)
                     }
@@ -280,16 +279,19 @@ struct SPPostListView<Placeholder: View>: View {
                                         await viewModel.onCategory(category.name)
                                     }
                                 } label: {
-                                    Text(category.name)
-                                        .frame(alignment: .leading)
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(.white)
+                                    HStack {
+                                        Text(category.name)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(menuTextColor)
+                                        Spacer()
+                                    }
                                 }
                             }
                         } label: {
-                            Text("Categories")
+                            Text(categoryMenuTitle)
+                                .font(.title)
                                 .fontWeight(.semibold)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(menuTextColor)
                         }
                         .tint(.white)
                     }
@@ -305,19 +307,21 @@ struct SPPostListView<Placeholder: View>: View {
                                         await viewModel.onTag(tag.name)
                                     }
                                 } label: {
-                                    Text(tag.name)
-                                        .frame(alignment: .leading)
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(.white)
+                                    HStack {
+                                        Text(tag.name)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(menuTextColor)
+                                        Spacer()
+                                    }
                                 }
                             }
                         } label: {
-                            Text("Tags")
+                            Text(tagMenuTitle)
                                 .font(.title)
                                 .fontWeight(.semibold)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(menuTextColor)
                         }
-                        .tint(.white)
+                        .tint(menuTextColor)
                     }
                     
                     Spacer()

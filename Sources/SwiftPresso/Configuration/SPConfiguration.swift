@@ -12,23 +12,27 @@ public struct SPConfiguration {
     public let isShowPageMenu: Bool
     public let isShowTagMenu: Bool
     public let isShowCategoryMenu: Bool
-    public let tagIcon: Image
-    public let pageIcon: Image
-    public let categoryIcon: Image
     public let homeIcon: Image
+    public let pageMenuTitle: String
+    public let tagMenuTitle: String
+    public let categoryMenuTitle: String
+    public let menuBackgroundColor: Color
+    public let menuTextColor: Color
     
     public init(
         host: String,
-        backgroundColor: Color = .white,
-        interfaceColor: Color = .black,
-        textColor: Color = .black,
-        tagIcon: Image = Image(systemName: "tag"),
-        pageIcon: Image = Image(systemName: "book"),
-        categoryIcon: Image = Image(systemName: "list.bullet.below.rectangle"),
+        backgroundColor: Color = Color(uiColor: .systemBackground),
+        interfaceColor: Color = .primary,
+        textColor: Color = .primary,
         homeIcon: Image = Image(systemName: "house"),
         isShowPageMenu: Bool = true,
         isShowTagMenu: Bool = true,
         isShowCategoryMenu: Bool = true,
+        pageMenuTitle: String = "Pages",
+        tagMenuTitle: String = "Tags",
+        categoryMenuTitle: String = "Category",
+        menuBackgroundColor: Color = .primary,
+        menuTextColor: Color = Color(uiColor: .label),
         postsPerPage: Int = 50,
         httpScheme: HTTPScheme = .https,
         httpAdditionalHeaders: [AnyHashable : Any]? = nil,
@@ -41,6 +45,11 @@ public struct SPConfiguration {
         self.isShowPageMenu = isShowPageMenu
         self.isShowTagMenu = isShowTagMenu
         self.isShowCategoryMenu = isShowCategoryMenu
+        self.pageMenuTitle = pageMenuTitle
+        self.tagMenuTitle = tagMenuTitle
+        self.categoryMenuTitle = categoryMenuTitle
+        self.menuBackgroundColor = menuBackgroundColor
+        self.menuTextColor = menuTextColor
         self.postsPerPage = postsPerPage
         self.httpScheme = httpScheme
         self.httpAdditionalHeaders = httpAdditionalHeaders
