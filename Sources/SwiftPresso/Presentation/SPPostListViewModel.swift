@@ -12,13 +12,13 @@ final class SPPostListViewModel {
         
         var title: String {
             switch self {
-            case .common: 
+            case .common:
                 SwiftPresso.Configuration.homeTitle ?? "Home"
             case .tag(let title):
                 title
             case .category(let title):
                 title
-            case .search: 
+            case .search:
                 SwiftPresso.Configuration.searchTitle ?? "Search"
             }
         }
@@ -43,6 +43,8 @@ final class SPPostListViewModel {
         }
     }
     
+    private let postPerPage: Int
+    
     @ObservationIgnored
     @SwiftPressoProvider(\.postList)
     private var postListProvider: PostListProviderProtocol
@@ -58,8 +60,6 @@ final class SPPostListViewModel {
     @ObservationIgnored
     @SwiftPressoProvider(\.pageList)
     private var pageListProvider: PageListProviderProtocol
-    
-    private let postPerPage: Int
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true
@@ -83,6 +83,12 @@ final class SPPostListViewModel {
             isLoading = false
         }
     }
+    
+}
+
+// MARK: - Functions
+
+extension SPPostListViewModel {
     
     func updateIfNeeded(id: Int) async {
         guard let last = postList.last, id == last.id, !isLoading else { return }
@@ -122,7 +128,13 @@ final class SPPostListViewModel {
         await loadPosts()
     }
     
-    private func loadPosts() async {
+}
+
+// MARK: - Private Functions
+
+private extension SPPostListViewModel {
+    
+    func loadPosts() async {
         isLoading = true
         switch mode {
         case .common:
@@ -152,7 +164,7 @@ final class SPPostListViewModel {
         shouldShowFullScreenPlaceholder = false
     }
     
-    private func getPostList(
+    func getPostList(
         pageNumber: Int,
         searchTerms: String? = nil,
         category: Int? = nil,
@@ -173,7 +185,7 @@ final class SPPostListViewModel {
         }
     }
     
-    private func getTags() async -> [CategoryModel] {
+    func getTags() async -> [CategoryModel] {
         do {
             return try await tagListProvider.getTags()
         } catch {
@@ -183,7 +195,7 @@ final class SPPostListViewModel {
         }
     }
     
-    private func getCategories() async -> [CategoryModel]  {
+    func getCategories() async -> [CategoryModel]  {
         do {
             return try await categoryListProvider.getCategories()
         } catch {
@@ -193,7 +205,7 @@ final class SPPostListViewModel {
         }
     }
     
-    private func getPages() async -> [PostModel]  {
+    func getPages() async -> [PostModel]  {
         do {
             return try await pageListProvider.getPages()
         } catch {
@@ -203,13 +215,13 @@ final class SPPostListViewModel {
         }
     }
     
-    private func reset() {
+    func reset() {
         isError = false
         pageNumber = 1
         postList.removeAll()
     }
     
-    private func id(by name: String) -> Int? {
+    func id(by name: String) -> Int? {
         let categoryArray: [CategoryModel]
         
         switch mode {
