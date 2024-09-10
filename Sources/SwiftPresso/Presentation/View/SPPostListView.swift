@@ -270,7 +270,7 @@ struct SPPostListView<Placeholder: View>: View {
                             Text(pageMenuTitle)
                                 .multilineTextAlignment(.leading)
                                 .frame(alignment: .leading)
-                                .font(.title)
+                                .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
                         }
@@ -304,7 +304,7 @@ struct SPPostListView<Placeholder: View>: View {
                         } label: {
                             Text(categoryMenuTitle)
                                 .multilineTextAlignment(.leading)
-                                .font(.title)
+                                .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
                         }
@@ -338,7 +338,7 @@ struct SPPostListView<Placeholder: View>: View {
                         } label: {
                             Text(tagMenuTitle)
                                 .multilineTextAlignment(.leading)
-                                .font(.title)
+                                .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
                         }
