@@ -198,7 +198,7 @@ struct SPPostListView<Placeholder: View>: View {
     }
     
     private func navigationBarTrailingItems() -> some View {
-        VStack {
+        HStack {
             Button {
                 Task {
                     await viewModel.loadDefault()
@@ -232,8 +232,9 @@ struct SPPostListView<Placeholder: View>: View {
                         .frame(height: 18)
                 }
             }
-            .padding(.top, 40)
+            .padding(.top, 30)
             .padding(.horizontal)
+            .accentColor(menuTextColor)
             
             Divider()
                 .padding()
@@ -251,12 +252,12 @@ struct SPPostListView<Placeholder: View>: View {
                                         urlToOpen = url
                                     }
                                 } label: {
-                                    HStack {
+                                    VStack {
                                         Text(page.title)
                                             .frame(alignment: .leading)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(menuTextColor)
-                                        Spacer()
+                                        Divider()
                                     }
                                 }
                                 .padding(.horizontal)
@@ -282,19 +283,19 @@ struct SPPostListView<Placeholder: View>: View {
                                         await viewModel.onCategory(category.name)
                                     }
                                 } label: {
-                                    HStack {
+                                    VStack {
                                         Text(category.name)
-                                            .frame(alignment: .leading)
+                                            .multilineTextAlignment(.leading)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(menuTextColor)
-                                        Spacer()
+                                        Divider()
                                     }
                                 }
                                 .padding(.horizontal)
                             }
                         } label: {
                             Text(categoryMenuTitle)
-                                .frame(alignment: .leading)
+                                .multilineTextAlignment(.leading)
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
@@ -313,19 +314,19 @@ struct SPPostListView<Placeholder: View>: View {
                                         await viewModel.onTag(tag.name)
                                     }
                                 } label: {
-                                    HStack {
+                                    VStack {
                                         Text(tag.name)
-                                            .frame(alignment: .leading)
+                                            .multilineTextAlignment(.leading)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(menuTextColor)
-                                        Spacer()
+                                        Divider()
                                     }
                                 }
                                 .padding(.horizontal)
                             }
                         } label: {
                             Text(tagMenuTitle)
-                                .frame(alignment: .leading)
+                                .multilineTextAlignment(.leading)
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(menuTextColor)
