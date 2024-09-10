@@ -253,10 +253,14 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                 } label: {
                                     VStack {
-                                        Text(page.title)
-                                            .frame(alignment: .leading)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(menuTextColor)
+                                        HStack {
+                                            Text(page.title)
+                                                .multilineTextAlignment(.leading)
+                                                .frame(alignment: .leading)
+                                                .fontWeight(.semibold)
+                                                .foregroundStyle(menuTextColor)
+                                            Spacer()
+                                        }
                                         Divider()
                                     }
                                 }
@@ -264,6 +268,7 @@ struct SPPostListView<Placeholder: View>: View {
                             }
                         } label: {
                             Text(pageMenuTitle)
+                                .multilineTextAlignment(.leading)
                                 .frame(alignment: .leading)
                                 .font(.title)
                                 .fontWeight(.semibold)
@@ -284,10 +289,13 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                 } label: {
                                     VStack {
-                                        Text(category.name)
-                                            .multilineTextAlignment(.leading)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(menuTextColor)
+                                        HStack {
+                                            Text(category.name)
+                                                .multilineTextAlignment(.leading)
+                                                .fontWeight(.semibold)
+                                                .foregroundStyle(menuTextColor)
+                                            Spacer()
+                                        }
                                         Divider()
                                     }
                                 }
@@ -315,10 +323,13 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                 } label: {
                                     VStack {
-                                        Text(tag.name)
-                                            .multilineTextAlignment(.leading)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(menuTextColor)
+                                        HStack {
+                                            Text(tag.name)
+                                                .multilineTextAlignment(.leading)
+                                                .fontWeight(.semibold)
+                                                .foregroundStyle(menuTextColor)
+                                            Spacer()
+                                        }
                                         Divider()
                                     }
                                 }
