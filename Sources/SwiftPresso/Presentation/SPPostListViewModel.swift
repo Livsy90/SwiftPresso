@@ -12,10 +12,14 @@ final class SPPostListViewModel {
         
         var title: String {
             switch self {
-            case .common: "Home"
-            case .tag(let title): title
-            case .category(let title): title
-            case .search: "Search"
+            case .common: 
+                SwiftPresso.Configuration.homeTitle ?? "Home"
+            case .tag(let title):
+                title
+            case .category(let title):
+                title
+            case .search: 
+                SwiftPresso.Configuration.searchTitle ?? "Search"
             }
         }
     }

@@ -52,6 +52,8 @@ public enum SwiftPresso {
         public static var pageMenuTitle: String { SPPreferences.shared.configuration.pageMenuTitle }
         public static var tagMenuTitle: String { SPPreferences.shared.configuration.tagMenuTitle }
         public static var categoryMenuTitle: String { SPPreferences.shared.configuration.categoryMenuTitle }
+        public static var homeTitle: String? { SPPreferences.shared.configuration.homeTitle }
+        public static var searchTitle: String? { SPPreferences.shared.configuration.searchTitle }
         public static var menuBackgroundColor: Color { SPPreferences.shared.configuration.menuBackgroundColor }
         public static var menuTextColor: Color { SPPreferences.shared.configuration.menuTextColor }
         

@@ -13,6 +13,8 @@ public struct SPConfiguration {
     public let isShowTagMenu: Bool
     public let isShowCategoryMenu: Bool
     public let homeIcon: Image
+    public let homeTitle: String?
+    public let searchTitle: String?
     public let pageMenuTitle: String
     public let tagMenuTitle: String
     public let categoryMenuTitle: String
@@ -25,6 +27,8 @@ public struct SPConfiguration {
         interfaceColor: Color = .primary,
         textColor: Color = .primary,
         homeIcon: Image = Image(systemName: "house"),
+        homeTitle: String? = nil,
+        searchTitle: String? = nil,
         isShowPageMenu: Bool = true,
         isShowTagMenu: Bool = true,
         isShowCategoryMenu: Bool = true,
@@ -55,5 +59,7 @@ public struct SPConfiguration {
         self.httpAdditionalHeaders = httpAdditionalHeaders
         self.isExcludeWebHeaderAndFooter = isExcludeWebHeaderAndFooter
         self.homeIcon = homeIcon
+        self.homeTitle = homeTitle
+        self.searchTitle = searchTitle
     }
 }
