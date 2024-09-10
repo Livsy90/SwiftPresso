@@ -390,7 +390,5 @@ private struct PostListRow<Placeholder: View>: View {
 }
 
 #Preview {
-    SwiftPresso.View.postListView("livsycode.com") {
-        SwiftPresso.View.shimmerPlaceholderView()
-    }
+    SwiftPresso.View.postListWithDefaultPlaceholder("livsycode.com")
 }
