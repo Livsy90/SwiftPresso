@@ -282,7 +282,6 @@ struct PostListView<Placeholder: View>: View {
                                                     .foregroundStyle(menuTextColor)
                                                 Spacer()
                                             }
-                                            Divider()
                                         }
                                         .padding(.top)
                                     }
@@ -323,7 +322,6 @@ struct PostListView<Placeholder: View>: View {
                                                     .foregroundStyle(menuTextColor)
                                                 Spacer()
                                             }
-                                            Divider()
                                         }
                                         .padding(.top)
                                     }
@@ -363,7 +361,6 @@ struct PostListView<Placeholder: View>: View {
                                                     .foregroundStyle(menuTextColor)
                                                 Spacer()
                                             }
-                                            Divider()
                                         }
                                         .padding(.top)
                                     }
