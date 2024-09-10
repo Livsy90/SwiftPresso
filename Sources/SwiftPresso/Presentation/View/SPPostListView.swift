@@ -39,6 +39,11 @@ struct SPPostListView<Placeholder: View>: View {
         
         self.viewModel = SPPostListViewModel(postPerPage: postPerPage)
         
+        // Large Navigation Title
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
+        // Inline Navigation Title
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.purple]
+        
         self.backgroundColor = backgroundColor
         self.accentColor = accentColor
         self.textColor = textColor
