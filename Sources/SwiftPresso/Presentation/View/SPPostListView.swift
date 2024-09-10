@@ -348,6 +348,9 @@ struct SPPostListView<Placeholder: View>: View {
                 }
                 .accentColor(menuTextColor)
                 .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(menuBackgroundColor)
+                .edgesIgnoringSafeArea(.all)
             }
         }
     }
