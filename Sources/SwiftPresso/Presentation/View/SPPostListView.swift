@@ -8,6 +8,7 @@ struct SPPostListView<Placeholder: View>: View {
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var urlToOpen: URL?
+    @State private var isShowSideMenu = false
     
     private let backgroundColor: Color
     private let interfaceColor: Color
@@ -229,6 +230,36 @@ struct SPPostListView<Placeholder: View>: View {
                     loadingPlaceholder()
                 }
             )
+            .sideMenu(isShowing: $isShowSideMenu) {
+                VStack(alignment: .leading) {
+                    Button(action: {
+                        withAnimation {
+                            self.isShowSideMenu = false
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.white)
+                            Text("close menu")
+                                .foregroundColor(.white)
+                                .font(.system(size: 14))
+                                .padding(.leading, 15.0)
+                        }
+                    }
+                    .padding(.top, 20)
+                    
+                    Divider()
+                        .frame(height: 20)
+                    Text("Sample item 1")
+                        .foregroundColor(.white)
+                    Text("Sample item 2")
+                        .foregroundColor(.white)
+                    Spacer()
+                }.padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.black)
+                    .edgesIgnoringSafeArea(.all)
+            }
         }
         .tint(interfaceColor)
     }
