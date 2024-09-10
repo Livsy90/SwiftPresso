@@ -6,7 +6,6 @@ public enum SwiftPresso {
     /// SwiftPresso configuration.
     public enum Configuration {
         
-        
         /// API host.
         public static var host: String { Preferences.shared.configuration.host }
         
@@ -60,7 +59,6 @@ public enum SwiftPresso {
         
         /// Menu text color.
         public static var menuTextColor: Color { Preferences.shared.configuration.menuTextColor }
-        
         
         /// Initial configuration.
         /// - Parameter configuration: configuration model.
