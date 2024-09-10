@@ -28,26 +28,10 @@ final class SPPostListViewModel {
     }
     private(set) var isLoading: Bool = true
     private(set) var postList: [PostModel] = []
-    private(set) var pageList: [PostModel] = [] {
-        didSet {
-            isPagesUnavailable = pageList.isEmpty
-        }
-    }
-    private(set) var tags: [CategoryModel] = [] {
-       didSet {
-           isTagsUnavailable = pageList.isEmpty
-       }
-   }
-    private(set) var categories: [CategoryModel] = [] {
-        didSet {
-            isCategoriesUnavailable = pageList.isEmpty
-        }
-    }
-    
+    private(set) var pageList: [PostModel] = []
+    private(set) var tags: [CategoryModel] = []
+    private(set) var categories: [CategoryModel] = []
     private(set) var isRefreshable: Bool = false
-    private(set) var isPagesUnavailable: Bool = true
-    private(set) var isTagsUnavailable: Bool = true
-    private(set) var isCategoriesUnavailable: Bool = true
     private(set) var mode: ListMode = .common {
         didSet {
             shouldShowFullScreenPlaceholder = true

@@ -194,6 +194,7 @@ struct SPPostListView<Placeholder: View>: View {
             } label: {
                 Image(systemName: "line.horizontal.3")
             }
+            .disabled(viewModel.isLoading)
         }
     }
     
@@ -236,7 +237,7 @@ struct SPPostListView<Placeholder: View>: View {
             .accentColor(menuTextColor)
             
             ScrollView {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 20) {
                     if isShowPageMenu {
                         DisclosureGroup {
                             ForEach(viewModel.pageList, id: \.self) { page in
@@ -261,14 +262,13 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                     .padding(.top)
                                 }
-                                .padding(.horizontal)
                             }
                         } label: {
                             Text(pageMenuTitle)
                                 .multilineTextAlignment(.leading)
                                 .frame(alignment: .leading)
                                 .font(.title2)
-                                .fontWeight(.semibold)
+                                .fontWeight(.bold)
                                 .foregroundStyle(menuTextColor)
                         }
                         .tint(menuTextColor)
@@ -297,13 +297,12 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                     .padding(.top)
                                 }
-                                .padding(.horizontal)
                             }
                         } label: {
                             Text(categoryMenuTitle)
                                 .multilineTextAlignment(.leading)
                                 .font(.title2)
-                                .fontWeight(.semibold)
+                                .fontWeight(.bold)
                                 .foregroundStyle(menuTextColor)
                         }
                         .tint(menuTextColor)
@@ -332,13 +331,12 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                     .padding(.top)
                                 }
-                                .padding(.horizontal)
                             }
                         } label: {
                             Text(tagMenuTitle)
                                 .multilineTextAlignment(.leading)
                                 .font(.title2)
-                                .fontWeight(.semibold)
+                                .fontWeight(.bold)
                                 .foregroundStyle(menuTextColor)
                         }
                         .tint(menuTextColor)
@@ -347,14 +345,10 @@ struct SPPostListView<Placeholder: View>: View {
                     Spacer()
                 }
             }
-            .background(.yellow)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
         }
-        .background(.green)
+        .background(menuBackgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .accentColor(.red)
-        .edgesIgnoringSafeArea(.all)
-        .padding()
     }
 }
 
@@ -385,3 +379,9 @@ private struct SPPostListRow<Placeholder: View>: View {
         }
     }
 }
+
+#Preview(body: {
+    SwiftPresso.View.postListView(configuration: .init(host: "livsycode.com")) {
+        SwiftPresso.View.shimmerPlaceholderView()
+    }
+})

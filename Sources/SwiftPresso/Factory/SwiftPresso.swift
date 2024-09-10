@@ -16,7 +16,7 @@ public enum SwiftPresso {
                 interfaceColor: Configuration.interfaceColor,
                 textColor: Configuration.textColor,
                 menuBackgroundColor: Configuration.menuBackgroundColor,
-                menuTextColor: Configuration.textColor,
+                menuTextColor: Configuration.menuTextColor,
                 homeIcon: Configuration.homeIcon,
                 isShowPageMenu: Configuration.isShowPageMenu,
                 isShowTagMenu: Configuration.isShowTagMenu,
@@ -64,7 +64,7 @@ public enum SwiftPresso {
         
         public static var postListProvider: PostListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+                fatalError("The host value must not be empty. To configure it, use the 'SwiftPresso.Configuration.configure' method.")
             }
             
             var components = URLComponents()
@@ -95,7 +95,7 @@ public enum SwiftPresso {
         
         public static var pageListProvider: PageListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
             
             var components = URLComponents()
@@ -126,7 +126,7 @@ public enum SwiftPresso {
         
         public static var categoryListProvider: CategoryListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
             
             var components = URLComponents()
@@ -155,7 +155,7 @@ public enum SwiftPresso {
         
         public static var tagListProvider: TagListProviderProtocol = {
             guard !SPPreferences.shared.configuration.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SPPreferences.shared.configuration' value.")
+                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
             
             var components = URLComponents()

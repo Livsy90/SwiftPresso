@@ -32,7 +32,7 @@ public struct SPConfiguration {
         tagMenuTitle: String = "Tags",
         categoryMenuTitle: String = "Category",
         menuBackgroundColor: Color = .primary,
-        menuTextColor: Color = Color(uiColor: .label),
+        menuTextColor: Color = Color(uiColor: .systemBackground),
         postsPerPage: Int = 50,
         httpScheme: HTTPScheme = .https,
         httpAdditionalHeaders: [AnyHashable : Any]? = nil,
