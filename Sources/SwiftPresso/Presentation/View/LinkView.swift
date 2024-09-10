@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SPLinkView<Placehodler: View>: View {
+struct LinkView<Placehodler: View>: View {
     
     let url: URL
     let title: String

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SPWebViewWrapperView<Content: View>: View {
+struct WebViewWrapperView<Content: View>: View {
     
     let backgroundColor: Color
     let interfaceColor: Color
@@ -63,7 +63,7 @@ struct SPWebViewWrapperView<Content: View>: View {
             
             ZStack {
                 if let urlToOpen {
-                    SPWebView(
+                    WebView(
                         url: urlToOpen,
                         isLoading: $isLoading,
                         isGoBack: $isGoBack,

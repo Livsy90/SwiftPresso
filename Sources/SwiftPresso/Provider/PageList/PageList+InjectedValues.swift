@@ -1,4 +1,4 @@
-extension InjectedValues {
+extension SwiftPressoInjectedValues {
     public var pageList: PageListProviderProtocol {
         get {
             Self[PageListProviderKey.self]
@@ -9,6 +9,6 @@ extension InjectedValues {
     }
 }
 
-private enum PageListProviderKey: InjectionKey {
-    static var currentValue: PageListProviderProtocol = SwiftPresso.Provider.pageListProvider
+private enum PageListProviderKey: SwiftPressoInjectionKey {
+    static var currentValue: PageListProviderProtocol = SwiftPresso.Provider.pageListProvider()
 }

@@ -2,7 +2,7 @@ import Observation
 import Foundation
 
 @Observable
-final class SPPostListViewModel {
+final class PostListViewModel {
     
     enum ListMode {
         case common
@@ -46,19 +46,19 @@ final class SPPostListViewModel {
     private let postPerPage: Int
     
     @ObservationIgnored
-    @SwiftPressoProvider(\.postList)
+    @SwiftPressoInjected(\.postList)
     private var postListProvider: PostListProviderProtocol
     
     @ObservationIgnored
-    @SwiftPressoProvider(\.categoryList)
+    @SwiftPressoInjected(\.categoryList)
     private var categoryListProvider: CategoryListProviderProtocol
     
     @ObservationIgnored
-    @SwiftPressoProvider(\.tagList)
+    @SwiftPressoInjected(\.tagList)
     private var tagListProvider: TagListProviderProtocol
     
     @ObservationIgnored
-    @SwiftPressoProvider(\.pageList)
+    @SwiftPressoInjected(\.pageList)
     private var pageListProvider: PageListProviderProtocol
     
     private var pageNumber = 1
@@ -88,7 +88,7 @@ final class SPPostListViewModel {
 
 // MARK: - Functions
 
-extension SPPostListViewModel {
+extension PostListViewModel {
     
     func updateIfNeeded(id: Int) async {
         guard let last = postList.last, id == last.id, !isLoading else { return }
@@ -132,7 +132,7 @@ extension SPPostListViewModel {
 
 // MARK: - Private Functions
 
-private extension SPPostListViewModel {
+private extension PostListViewModel {
     
     func loadPosts() async {
         isLoading = true

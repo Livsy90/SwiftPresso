@@ -1,4 +1,4 @@
-extension InjectedValues {
+extension SwiftPressoInjectedValues {
     public var categoryList: CategoryListProviderProtocol {
         get {
             Self[CategoryListProviderKey.self]
@@ -9,6 +9,6 @@ extension InjectedValues {
     }
 }
 
-private enum CategoryListProviderKey: InjectionKey {
-    static var currentValue: CategoryListProviderProtocol = SwiftPresso.Provider.categoryListProvider
+private enum CategoryListProviderKey: SwiftPressoInjectionKey {
+    static var currentValue: CategoryListProviderProtocol = SwiftPresso.Provider.categoryListProvider()
 }

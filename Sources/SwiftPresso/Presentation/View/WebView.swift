@@ -1,7 +1,7 @@
 import SwiftUI
 import WebKit
 
-struct SPWebView: UIViewRepresentable {
+struct WebView: UIViewRepresentable {
     
     let url: URL
     @Binding var isLoading: Bool
@@ -19,7 +19,7 @@ struct SPWebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView  {
         let contentController = WKUserContentController()
         
-        if SPPreferences.shared.configuration.isExcludeWebHeaderAndFooter {
+        if Preferences.shared.configuration.isExcludeWebHeaderAndFooter {
             let script = """
             var style = document.createElement('style');
             style.innerHTML = 'header {display: none;} footer {display: none;}';
@@ -60,9 +60,9 @@ struct SPWebView: UIViewRepresentable {
     
     final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         
-        private let parent: SPWebView
+        private let parent: WebView
         
-        init(_ parent: SPWebView) {
+        init(_ parent: WebView) {
             self.parent = parent
         }
         
@@ -100,7 +100,7 @@ struct SPWebView: UIViewRepresentable {
                 parent.onCategory(categoryName)
             }
             
-            if host != SPPreferences.shared.configuration.host {
+            if host != Preferences.shared.configuration.host {
                 UIApplication.shared.open(url)
                 decisionHandler(.cancel)
             } else {

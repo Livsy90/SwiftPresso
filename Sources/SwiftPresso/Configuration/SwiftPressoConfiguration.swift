@@ -1,10 +1,9 @@
 import SwiftUI
 
-public struct SPConfiguration {
+public struct SwiftPressoConfiguration {
     public let host: String
     public let postsPerPage: Int
     public let httpScheme: HTTPScheme
-    public let httpAdditionalHeaders: [AnyHashable: Any]?
     public let isExcludeWebHeaderAndFooter: Bool
     public let backgroundColor: Color
     public let interfaceColor: Color
@@ -39,7 +38,6 @@ public struct SPConfiguration {
         menuTextColor: Color = Color(uiColor: .systemBackground),
         postsPerPage: Int = 50,
         httpScheme: HTTPScheme = .https,
-        httpAdditionalHeaders: [AnyHashable : Any]? = nil,
         isExcludeWebHeaderAndFooter: Bool = true
     ) {
         self.host = host
@@ -56,7 +54,6 @@ public struct SPConfiguration {
         self.menuTextColor = menuTextColor
         self.postsPerPage = postsPerPage
         self.httpScheme = httpScheme
-        self.httpAdditionalHeaders = httpAdditionalHeaders
         self.isExcludeWebHeaderAndFooter = isExcludeWebHeaderAndFooter
         self.homeIcon = homeIcon
         self.homeTitle = homeTitle

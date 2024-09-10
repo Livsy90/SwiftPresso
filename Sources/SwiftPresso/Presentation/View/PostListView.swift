@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct SPPostListView<Placeholder: View>: View {
+struct PostListView<Placeholder: View>: View {
     
     let loadingPlaceholder: () -> Placeholder
     
-    @State private var viewModel: SPPostListViewModel
+    @State private var viewModel: PostListViewModel
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var urlToOpen: URL?
@@ -45,7 +45,7 @@ struct SPPostListView<Placeholder: View>: View {
         loadingPlaceholder: @escaping () -> Placeholder
     ) {
         
-        self.viewModel = SPPostListViewModel(postPerPage: postPerPage)
+        self.viewModel = PostListViewModel(postPerPage: postPerPage)
         
         self.backgroundColor = backgroundColor
         self.interfaceColor = interfaceColor
@@ -71,7 +71,7 @@ struct SPPostListView<Placeholder: View>: View {
         NavigationStack {
             List {
                 ForEach(viewModel.postList, id: \.self) { post in
-                    SPPostListRow(
+                    PostListRow(
                         post: post,
                         webViewBackgroundColor: backgroundColor,
                         interfaceColor: interfaceColor,
@@ -354,7 +354,7 @@ struct SPPostListView<Placeholder: View>: View {
     }
 }
 
-private struct SPPostListRow<Placeholder: View>: View {
+private struct PostListRow<Placeholder: View>: View {
     
     let post: PostModel
     let webViewBackgroundColor: Color
@@ -366,7 +366,7 @@ private struct SPPostListRow<Placeholder: View>: View {
     
     var body: some View {
         if let link = post.link {
-            SPLinkView(
+            LinkView(
                 url: link,
                 title: post.title,
                 webViewBackgroundColor: webViewBackgroundColor,

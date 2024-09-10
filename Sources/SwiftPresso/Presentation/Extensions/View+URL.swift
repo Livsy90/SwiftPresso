@@ -67,7 +67,7 @@ private struct SPWebViewModifier<Placeholder: View>: ViewModifier {
                     urlToOpen = nil
                 },
                 content: {
-                    SPWebViewWrapperView(
+                    WebViewWrapperView(
                         backgroundColor: backgroundColor,
                         interfaceColor: interfaceColor,
                         urlToOpen: $urlToOpen,
@@ -112,7 +112,7 @@ private struct SPWebViewLinkModifier<Placeholder: View>: ViewModifier {
                     urlToOpen = nil
                 },
                 content: {
-                    SPWebViewWrapperView(
+                    WebViewWrapperView(
                         backgroundColor: backgroundColor,
                         interfaceColor: interfaceColor,
                         urlToOpen: $urlToOpen,

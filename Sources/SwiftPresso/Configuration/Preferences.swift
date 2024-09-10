@@ -1,11 +1,11 @@
 import SwiftUI
 import Foundation
 
-final class SPPreferences {
+final class Preferences {
     
-    static let shared: SPPreferences = .init()
+    static let shared: Preferences = .init()
     
-    var configuration: SPConfiguration {
+    var configuration: SwiftPressoConfiguration {
         get {
             queue.sync {
                 _configuration
@@ -23,7 +23,7 @@ final class SPPreferences {
         qos: .default,
         attributes: .concurrent
     )
-    private var _configuration = SPConfiguration.init(host: "")
+    private var _configuration = SwiftPressoConfiguration.init(host: "")
     
     private init() {}
     
