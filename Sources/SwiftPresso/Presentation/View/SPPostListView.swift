@@ -256,6 +256,9 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                 } label: {
                                     Text(page.title)
+                                        .frame(alignment: .leading)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(.white)
                                 }
                             }
                         } label: {
@@ -263,6 +266,7 @@ struct SPPostListView<Placeholder: View>: View {
                                 .fontWeight(.semibold)
                                 .foregroundStyle(.white)
                         }
+                        .tint(.white)
                     }
                     
                     if isShowCategoryMenu {
@@ -277,6 +281,9 @@ struct SPPostListView<Placeholder: View>: View {
                                     }
                                 } label: {
                                     Text(category.name)
+                                        .frame(alignment: .leading)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(.white)
                                 }
                             }
                         } label: {
@@ -284,6 +291,7 @@ struct SPPostListView<Placeholder: View>: View {
                                 .fontWeight(.semibold)
                                 .foregroundStyle(.white)
                         }
+                        .tint(.white)
                     }
                     
                     if isShowTagMenu {
@@ -294,17 +302,22 @@ struct SPPostListView<Placeholder: View>: View {
                                         isShowMenu = false
                                     }
                                     Task {
-                                        await viewModel.onCategory(tag.name)
+                                        await viewModel.onTag(tag.name)
                                     }
                                 } label: {
                                     Text(tag.name)
+                                        .frame(alignment: .leading)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(.white)
                                 }
                             }
                         } label: {
                             Text("Tags")
+                                .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(.white)
                         }
+                        .tint(.white)
                     }
                     
                     Spacer()
