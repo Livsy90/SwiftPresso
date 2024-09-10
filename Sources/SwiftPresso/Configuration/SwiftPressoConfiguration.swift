@@ -5,6 +5,7 @@ public struct SwiftPressoConfiguration {
     public let postsPerPage: Int
     public let httpScheme: HTTPScheme
     public let isExcludeWebHeaderAndFooter: Bool
+    public let isMenuExpanded: Bool
     public let backgroundColor: Color
     public let interfaceColor: Color
     public let textColor: Color
@@ -38,7 +39,8 @@ public struct SwiftPressoConfiguration {
         menuTextColor: Color = Color(uiColor: .systemBackground),
         postsPerPage: Int = 50,
         httpScheme: HTTPScheme = .https,
-        isExcludeWebHeaderAndFooter: Bool = true
+        isExcludeWebHeaderAndFooter: Bool = true,
+        isMenuExpanded: Bool = true
     ) {
         self.host = host
         self.backgroundColor = backgroundColor
@@ -58,6 +60,7 @@ public struct SwiftPressoConfiguration {
         self.homeIcon = homeIcon
         self.homeTitle = homeTitle
         self.searchTitle = searchTitle
+        self.isMenuExpanded = isMenuExpanded
     }
 }
 

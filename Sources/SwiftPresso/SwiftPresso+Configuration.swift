@@ -60,6 +60,9 @@ public enum SwiftPresso {
         /// Menu text color.
         public static var menuTextColor: Color { Preferences.shared.configuration.menuTextColor }
         
+        /// To expand menu items by default.
+        public static var isMenuExpanded: Bool { Preferences.shared.configuration.isMenuExpanded }
+        
         /// Initial configuration.
         /// - Parameter configuration: configuration model.
         public static func configure(with configuration: SwiftPressoConfiguration) {

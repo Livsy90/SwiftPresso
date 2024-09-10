@@ -11,6 +11,10 @@ struct PostListView<Placeholder: View>: View {
     
     @State private var isShowMenu = false
     
+    @State private var isPageMenuExpanded: Bool
+    @State private var isTagMenuExpanded: Bool
+    @State private var isCategoryMenuExpanded: Bool
+    
     private let backgroundColor: Color
     private let interfaceColor: Color
     private let textColor: Color
@@ -38,6 +42,7 @@ struct PostListView<Placeholder: View>: View {
         isShowPageMenu: Bool,
         isShowTagMenu: Bool,
         isShowCategoryMenu: Bool,
+        isMenuExpanded: Bool,
         pageMenuTitle: String,
         tagMenuTitle: String,
         categoryMenuTitle: String,
@@ -65,6 +70,10 @@ struct PostListView<Placeholder: View>: View {
         self.categoryMenuTitle = categoryMenuTitle
         
         self.loadingPlaceholder = loadingPlaceholder
+        
+        self.isPageMenuExpanded = isMenuExpanded
+        self.isTagMenuExpanded = isMenuExpanded
+        self.isCategoryMenuExpanded = isMenuExpanded
     }
     
     var body: some View {
@@ -251,112 +260,124 @@ struct PostListView<Placeholder: View>: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     if isShowPageMenu {
-                        DisclosureGroup {
-                            ForEach(viewModel.pageList, id: \.self) { page in
-                                Button {
-                                    withAnimation {
-                                        isShowMenu = false
-                                    }
-                                    if let url = page.link {
-                                        urlToOpen = url
-                                    }
-                                } label: {
-                                    VStack {
-                                        HStack {
-                                            Text(page.title)
-                                                .font(.callout)
-                                                .multilineTextAlignment(.leading)
-                                                .frame(alignment: .leading)
-                                                .fontWeight(.semibold)
-                                                .foregroundStyle(menuTextColor)
-                                            Spacer()
+                        DisclosureGroup(
+                            isExpanded: $isPageMenuExpanded,
+                            content: {
+                                ForEach(viewModel.pageList, id: \.self) { page in
+                                    Button {
+                                        withAnimation {
+                                            isShowMenu = false
                                         }
-                                        Divider()
+                                        if let url = page.link {
+                                            urlToOpen = url
+                                        }
+                                    } label: {
+                                        VStack {
+                                            HStack {
+                                                Text(page.title)
+                                                    .font(.callout)
+                                                    .multilineTextAlignment(.leading)
+                                                    .frame(alignment: .leading)
+                                                    .fontWeight(.semibold)
+                                                    .foregroundStyle(menuTextColor)
+                                                Spacer()
+                                            }
+                                            Divider()
+                                        }
+                                        .padding(.top)
                                     }
-                                    .padding(.top)
                                 }
+                            },
+                            label: {
+                                Text(pageMenuTitle)
+                                    .multilineTextAlignment(.leading)
+                                    .frame(alignment: .leading)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(menuTextColor)
                             }
-                        } label: {
-                            Text(pageMenuTitle)
-                                .multilineTextAlignment(.leading)
-                                .frame(alignment: .leading)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(menuTextColor)
-                        }
-                        .padding(.horizontal)
+                        )
+                        .padding()
                         .tint(menuTextColor)
                     }
                     
                     if isShowCategoryMenu {
-                        DisclosureGroup {
-                            ForEach(viewModel.categories, id: \.self) { category in
-                                Button {
-                                    withAnimation {
-                                        isShowMenu = false
-                                    }
-                                    Task {
-                                        await viewModel.onCategory(category.name)
-                                    }
-                                } label: {
-                                    VStack {
-                                        HStack {
-                                            Text(category.name)
-                                                .font(.callout)
-                                                .multilineTextAlignment(.leading)
-                                                .fontWeight(.semibold)
-                                                .foregroundStyle(menuTextColor)
-                                            Spacer()
+                        DisclosureGroup(
+                            isExpanded: $isCategoryMenuExpanded,
+                            content: {
+                                ForEach(viewModel.categories, id: \.self) { category in
+                                    Button {
+                                        withAnimation {
+                                            isShowMenu = false
                                         }
-                                        Divider()
+                                        Task {
+                                            await viewModel.onCategory(category.name)
+                                        }
+                                    } label: {
+                                        VStack {
+                                            HStack {
+                                                Text(category.name)
+                                                    .font(.callout)
+                                                    .multilineTextAlignment(.leading)
+                                                    .fontWeight(.semibold)
+                                                    .foregroundStyle(menuTextColor)
+                                                Spacer()
+                                            }
+                                            Divider()
+                                        }
+                                        .padding(.top)
                                     }
-                                    .padding(.top)
                                 }
+                            },
+                            label: {
+                                Text(categoryMenuTitle)
+                                    .multilineTextAlignment(.leading)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(menuTextColor)
                             }
-                        } label: {
-                            Text(categoryMenuTitle)
-                                .multilineTextAlignment(.leading)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(menuTextColor)
-                        }
-                        .padding(.horizontal)
+                        )
+                        .padding()
                         .tint(menuTextColor)
                     }
                     
                     if isShowTagMenu {
-                        DisclosureGroup {
-                            ForEach(viewModel.tags, id: \.self) { tag in
-                                Button {
-                                    withAnimation {
-                                        isShowMenu = false
-                                    }
-                                    Task {
-                                        await viewModel.onTag(tag.name)
-                                    }
-                                } label: {
-                                    VStack {
-                                        HStack {
-                                            Text(tag.name)
-                                                .font(.callout)
-                                                .multilineTextAlignment(.leading)
-                                                .fontWeight(.semibold)
-                                                .foregroundStyle(menuTextColor)
-                                            Spacer()
+                        DisclosureGroup(
+                            isExpanded: $isTagMenuExpanded,
+                            content: {
+                                ForEach(viewModel.tags, id: \.self) { tag in
+                                    Button {
+                                        withAnimation {
+                                            isShowMenu = false
                                         }
-                                        Divider()
+                                        Task {
+                                            await viewModel.onTag(tag.name)
+                                        }
+                                    } label: {
+                                        VStack {
+                                            HStack {
+                                                Text(tag.name)
+                                                    .font(.callout)
+                                                    .multilineTextAlignment(.leading)
+                                                    .fontWeight(.semibold)
+                                                    .foregroundStyle(menuTextColor)
+                                                Spacer()
+                                            }
+                                            Divider()
+                                        }
+                                        .padding(.top)
                                     }
-                                    .padding(.top)
                                 }
+                            },
+                            label: {
+                                Text(tagMenuTitle)
+                                    .multilineTextAlignment(.leading)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(menuTextColor)
                             }
-                        } label: {
-                            Text(tagMenuTitle)
-                                .multilineTextAlignment(.leading)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(menuTextColor)
-                        }
-                        .padding(.horizontal)
+                        )
+                        .padding()
                         .tint(menuTextColor)
                     }
                     
