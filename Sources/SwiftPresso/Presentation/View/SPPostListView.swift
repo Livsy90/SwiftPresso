@@ -8,7 +8,11 @@ struct SPPostListView<Placeholder: View>: View {
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var urlToOpen: URL?
+    
     @State private var isShowSideMenu = false
+    @State private var isTagMenuExpanded = false
+    @State private var isCategoryMenuExpanded = false
+    @State private var isPageMenuExpanded = false
     
     private let backgroundColor: Color
     private let interfaceColor: Color
@@ -145,63 +149,14 @@ struct SPPostListView<Placeholder: View>: View {
                     
                     if isShowTagMenu || isShowCategoryMenu || isShowPageMenu {
                         Button {
-                            isShowSideMenu.toggle()
+                            withAnimation {
+                                self.isShowSideMenu = true
+                            }
                         } label: {
                             Image(systemName: "line.horizontal.3")
                         }
-
+                        
                     }
-                    
-//                    if isShowTagMenu {
-//                        Menu {
-//                            ForEach(viewModel.tags, id: \.self) { tag in
-//                                Button {
-//                                    Task {
-//                                        await viewModel.onTag(tag.name)
-//                                    }
-//                                } label: {
-//                                    Text(tag.name)
-//                                }
-//                            }
-//                        } label: {
-//                            tagIcon
-//                        }
-//                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
-//                    }
-//                    
-//                    if isShowCategoryMenu {
-//                        Menu {
-//                            ForEach(viewModel.categories, id: \.self) { category in
-//                                Button {
-//                                    Task {
-//                                        await viewModel.onCategory(category.name)
-//                                    }
-//                                } label: {
-//                                    Text(category.name)
-//                                }
-//                            }
-//                        } label: {
-//                            categoryIcon
-//                        }
-//                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
-//                    }
-//                    
-//                    if isShowPageMenu {
-//                        Menu {
-//                            ForEach(viewModel.pageList, id: \.self) { page in
-//                                Button {
-//                                    if let url = page.link {
-//                                        urlToOpen = url
-//                                    }
-//                                } label: {
-//                                    Text(page.title)
-//                                }
-//                            }
-//                        } label: {
-//                            pageIcon
-//                        }
-//                        .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
-//                    }
                 }
                 
             }
@@ -249,28 +204,82 @@ struct SPPostListView<Placeholder: View>: View {
                     }
                 }) {
                     HStack {
+                        Spacer()
                         Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 15)
                             .foregroundColor(.white)
-                        Text("close menu")
-                            .foregroundColor(.white)
-                            .font(.system(size: 14))
-                            .padding(.leading, 15.0)
                     }
                 }
-                .padding(.top, 20)
+                .padding()
                 
                 Divider()
-                    .frame(height: 20)
-                Text("Sample item 1")
-                    .foregroundColor(.white)
-                Text("Sample item 2")
-                    .foregroundColor(.white)
-                Spacer()
-            }.padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.black)
-                .edgesIgnoringSafeArea(.all)
+                    .padding()
+                
+                List {
+                    if isShowTagMenu {
+                        Section("Tags", isExpanded: $isTagMenuExpanded) {
+                            ForEach(viewModel.tags, id: \.self) { tag in
+                                Button {
+                                    withAnimation {
+                                        self.isShowSideMenu = false
+                                    }
+                                    Task {
+                                        await viewModel.onTag(tag.name)
+                                    }
+                                } label: {
+                                    Text(tag.name)
+                                }
+                            }
+                        }
+                        .disabled(viewModel.isTagsUnavailable || viewModel.isLoading)
+                    }
+                    
+                    if isShowCategoryMenu {
+                        Section("Category", isExpanded: $isCategoryMenuExpanded) {
+                            ForEach(viewModel.categories, id: \.self) { category in
+                                Button {
+                                    withAnimation {
+                                        self.isShowSideMenu = false
+                                    }
+                                    Task {
+                                        await viewModel.onTag(category.name)
+                                    }
+                                } label: {
+                                    Text(category.name)
+                                }
+                            }
+                        }
+                        .disabled(viewModel.isCategoriesUnavailable || viewModel.isLoading)
+                    }
+                }
+                
+                if isShowPageMenu {
+                    Section("Category", isExpanded: $isPageMenuExpanded) {
+                        ForEach(viewModel.pageList, id: \.self) { page in
+                            Button {
+                                withAnimation {
+                                    self.isShowSideMenu = false
+                                }
+                                if let url = page.link {
+                                    urlToOpen = url
+                                }
+                            } label: {
+                                Text(page.title)
+                            }
+                        }
+                    }
+                    .disabled(viewModel.isPagesUnavailable || viewModel.isLoading)
+                }
+            }
+            
+            Spacer()
         }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.black)
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
