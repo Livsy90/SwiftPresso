@@ -88,7 +88,6 @@ struct PostListView<Placeholder: View>: View {
                         },
                         placeholder: {
                             loadingPlaceholder()
-                                .id(UUID())
                         }
                     )
                     .listRowBackground(Color.clear)
@@ -236,7 +235,9 @@ struct PostListView<Placeholder: View>: View {
                         .frame(height: 18)
                 }
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.top, 8)
+            .padding(.bottom, 80)
             .accentColor(menuTextColor)
             
             ScrollView {
@@ -255,6 +256,7 @@ struct PostListView<Placeholder: View>: View {
                                     VStack {
                                         HStack {
                                             Text(page.title)
+                                                .font(.callout)
                                                 .multilineTextAlignment(.leading)
                                                 .frame(alignment: .leading)
                                                 .fontWeight(.semibold)
@@ -274,6 +276,7 @@ struct PostListView<Placeholder: View>: View {
                                 .fontWeight(.bold)
                                 .foregroundStyle(menuTextColor)
                         }
+                        .padding(.horizontal)
                         .tint(menuTextColor)
                     }
                     
@@ -291,6 +294,7 @@ struct PostListView<Placeholder: View>: View {
                                     VStack {
                                         HStack {
                                             Text(category.name)
+                                                .font(.callout)
                                                 .multilineTextAlignment(.leading)
                                                 .fontWeight(.semibold)
                                                 .foregroundStyle(menuTextColor)
@@ -308,6 +312,7 @@ struct PostListView<Placeholder: View>: View {
                                 .fontWeight(.bold)
                                 .foregroundStyle(menuTextColor)
                         }
+                        .padding(.horizontal)
                         .tint(menuTextColor)
                     }
                     
@@ -325,6 +330,7 @@ struct PostListView<Placeholder: View>: View {
                                     VStack {
                                         HStack {
                                             Text(tag.name)
+                                                .font(.callout)
                                                 .multilineTextAlignment(.leading)
                                                 .fontWeight(.semibold)
                                                 .foregroundStyle(menuTextColor)
@@ -342,13 +348,13 @@ struct PostListView<Placeholder: View>: View {
                                 .fontWeight(.bold)
                                 .foregroundStyle(menuTextColor)
                         }
+                        .padding(.horizontal)
                         .tint(menuTextColor)
                     }
                     
                     Spacer()
                 }
             }
-            .padding()
         }
         .background(menuBackgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)

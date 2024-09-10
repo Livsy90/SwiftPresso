@@ -25,12 +25,12 @@ struct SideMenu<MenuContent: View>: ViewModifier {
                 content
                     .disabled(isShowing)
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    .offset(x: self.isShowing ? geometry.size.width / 2 : 0)
+                    .offset(x: self.isShowing ? geometry.size.width / 1.3 : 0)
                 
                 menuContent()
-                    .frame(width: geometry.size.width / 2)
+                    .frame(width: geometry.size.width / 1.3)
                     .transition(.move(edge: .leading))
-                    .offset(x: self.isShowing ? 0 : -geometry.size.width / 2)
+                    .offset(x: self.isShowing ? 0 : -geometry.size.width / 1.3)
             }
             .gesture(drag)
         }
