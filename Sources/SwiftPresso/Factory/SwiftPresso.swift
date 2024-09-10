@@ -7,7 +7,7 @@ public enum SwiftPresso {
         
         public static func postListView<Placeholder: SwiftUI.View>(
             configuration: SPConfiguration,
-            placeholder: (() -> Placeholder)? = nil
+            placeholder: @escaping () -> Placeholder
         ) -> some SwiftUI.View {
             Configuration.configure(with: configuration)
             
@@ -25,7 +25,7 @@ public enum SwiftPresso {
                 tagMenuTitle: Configuration.tagMenuTitle,
                 categoryMenuTitle: Configuration.categoryMenuTitle,
                 postPerPage: Configuration.postsPerPage,
-                loadingPlaceholder: placeholder ?? { shimmerPlaceholderView(backgroundColor: Configuration.backgroundColor) as! () -> Placeholder }()
+                loadingPlaceholder: placeholder
             )
         }
         

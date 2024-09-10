@@ -55,8 +55,5 @@ public struct SPConfiguration {
         self.httpAdditionalHeaders = httpAdditionalHeaders
         self.isExcludeWebHeaderAndFooter = isExcludeWebHeaderAndFooter
         self.homeIcon = homeIcon
-        self.tagIcon = tagIcon
-        self.pageIcon = pageIcon
-        self.categoryIcon = categoryIcon
     }
 }
