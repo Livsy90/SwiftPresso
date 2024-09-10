@@ -75,6 +75,7 @@ final class SPPostListViewModel {
         
         Task {
             async let postList = await getPostList()
+            pageNumber += 1
             async let pageList = await getPages()
             self.postList = await postList
             self.pageList = await pageList
@@ -142,9 +143,9 @@ final class SPPostListViewModel {
             self.postList += await getPostList(searchTerms: searchTerms)
         }
         
+        pageNumber += 1
         isLoading = false
         shouldShowFullScreenPlaceholder = false
-        pageNumber += 1
     }
     
     private func getPostList(
