@@ -254,7 +254,7 @@ struct PostListView<Placeholder: View>: View {
                 }
             }
             .padding(.horizontal)
-            .padding(.top, 8)
+            .padding(.top, 50)
             .padding(.bottom, 80)
             .accentColor(menuTextColor)
             
@@ -273,28 +273,27 @@ struct PostListView<Placeholder: View>: View {
                                             urlToOpen = url
                                         }
                                     } label: {
-                                        VStack {
-                                            HStack {
-                                                Text(page.title)
-                                                    .font(.callout)
-                                                    .multilineTextAlignment(.leading)
-                                                    .frame(alignment: .leading)
-                                                    .fontWeight(.semibold)
-                                                    .foregroundStyle(menuTextColor)
-                                                Spacer()
-                                            }
-                                        }
-                                        .padding(.top)
+                                        Text(page.title)
+                                            .font(.callout)
+                                            .multilineTextAlignment(.center)
+                                            .frame(alignment: .leading)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(menuTextColor)
+                                            .padding(.top)
                                     }
                                 }
                             },
                             label: {
-                                Text(pageMenuTitle)
-                                    .multilineTextAlignment(.leading)
-                                    .frame(alignment: .leading)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(menuTextColor)
+                                HStack {
+                                    Spacer()
+                                    Text(pageMenuTitle)
+                                        .multilineTextAlignment(.center)
+                                        .frame(alignment: .leading)
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(menuTextColor)
+                                    Spacer()
+                                }
                             }
                         )
                         .padding()
@@ -314,26 +313,25 @@ struct PostListView<Placeholder: View>: View {
                                             await viewModel.onCategory(category.name)
                                         }
                                     } label: {
-                                        VStack {
-                                            HStack {
-                                                Text(category.name)
-                                                    .font(.callout)
-                                                    .multilineTextAlignment(.leading)
-                                                    .fontWeight(.semibold)
-                                                    .foregroundStyle(menuTextColor)
-                                                Spacer()
-                                            }
-                                        }
-                                        .padding(.top)
+                                        Text(category.name)
+                                            .font(.callout)
+                                            .multilineTextAlignment(.center)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(menuTextColor)
+                                            .padding(.top)
                                     }
                                 }
                             },
                             label: {
-                                Text(categoryMenuTitle)
-                                    .multilineTextAlignment(.leading)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(menuTextColor)
+                                HStack {
+                                    Spacer()
+                                    Text(categoryMenuTitle)
+                                        .multilineTextAlignment(.center)
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(menuTextColor)
+                                    Spacer()
+                                }
                             }
                         )
                         .padding()
@@ -353,26 +351,25 @@ struct PostListView<Placeholder: View>: View {
                                             await viewModel.onTag(tag.name)
                                         }
                                     } label: {
-                                        VStack {
-                                            HStack {
-                                                Text(tag.name)
-                                                    .font(.callout)
-                                                    .multilineTextAlignment(.leading)
-                                                    .fontWeight(.semibold)
-                                                    .foregroundStyle(menuTextColor)
-                                                Spacer()
-                                            }
-                                        }
-                                        .padding(.top)
+                                        Text(tag.name)
+                                            .font(.callout)
+                                            .multilineTextAlignment(.center)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(menuTextColor)
+                                            .padding(.top)
                                     }
                                 }
                             },
                             label: {
-                                Text(tagMenuTitle)
-                                    .multilineTextAlignment(.leading)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(menuTextColor)
+                                HStack {
+                                    Spacer()
+                                    Text(tagMenuTitle)
+                                        .multilineTextAlignment(.center)
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(menuTextColor)
+                                    Spacer()
+                                }
                             }
                         )
                         .padding()
@@ -384,7 +381,7 @@ struct PostListView<Placeholder: View>: View {
             }
         }
         .background(menuBackgroundColor)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
