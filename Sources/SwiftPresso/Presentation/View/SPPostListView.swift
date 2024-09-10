@@ -242,18 +242,75 @@ struct SPPostListView<Placeholder: View>: View {
         }
         .tint(interfaceColor)
         .sideMenu(isShowing: $isShowMenu) {
-            VStack(alignment: .leading) {
-                DisclosureGroup("Mastering SwiftUI 3") {
-                    Text("Learn SwiftUI 3 with Examples in this comprehansive video course.")
+            ScrollView {
+                VStack(alignment: .leading) {
+                    if isShowPageMenu {
+                        DisclosureGroup {
+                            ForEach(viewModel.pageList, id: \.self) { page in
+                                Button {
+                                    withAnimation {
+                                        isShowMenu = false
+                                    }
+                                    if let url = page.link {
+                                        urlToOpen = url
+                                    }
+                                } label: {
+                                    Text(page.title)
+                                }
+                            }
+                        } label: {
+                            Text("Pages")
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    
+                    if isShowCategoryMenu {
+                        DisclosureGroup {
+                            ForEach(viewModel.categories, id: \.self) { category in
+                                Button {
+                                    withAnimation {
+                                        isShowMenu = false
+                                    }
+                                    Task {
+                                        await viewModel.onCategory(category.name)
+                                    }
+                                } label: {
+                                    Text(category.name)
+                                }
+                            }
+                        } label: {
+                            Text("Categories")
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    
+                    if isShowTagMenu {
+                        DisclosureGroup {
+                            ForEach(viewModel.tags, id: \.self) { tag in
+                                Button {
+                                    withAnimation {
+                                        isShowMenu = false
+                                    }
+                                    Task {
+                                        await viewModel.onCategory(tag.name)
+                                    }
+                                } label: {
+                                    Text(tag.name)
+                                }
+                            }
+                        } label: {
+                            Text("Tags")
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    
+                    Spacer()
                 }
-                DisclosureGroup("iOS 15 WidgetKit") {
-                    Text("Learn all there is in iOS 15 Widgets with this practical video course on WidgetKit.")
-                }
-                DisclosureGroup("MVVM Design Pattern and Protocols") {
-                    Text("Combine power of protocol oriented programming with MVVM design pattern in SwiftUI by building Task List app.")
-                }
-                
-            }.padding()
+                .padding()
+            }
         }
     }
 }
