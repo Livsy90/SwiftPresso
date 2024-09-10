@@ -131,18 +131,16 @@ struct PostListView<Placeholder: View>: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(backgroundColor, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text(viewModel.mode.title)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(interfaceColor)
+                ToolbarItemGroup(placement: .principal) {
+                    navigationBarPrincipalItem()
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
-                    navigationBarLeadingItems()
+                    navigationBarLeadingItem()
                 }
                 
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    navigationBarTrailingItems()
+                ToolbarItem(placement: .topBarTrailing) {
+                    navigationBarTrailingItem()
                 }
             }
             .searchable(text: $searchText, isPresented: $isSearching)
@@ -186,8 +184,20 @@ struct PostListView<Placeholder: View>: View {
         }
     }
     
+    private func navigationBarPrincipalItem() -> some View {
+        HStack {
+            Text(viewModel.mode.title)
+                .fontWeight(.semibold)
+                .foregroundStyle(interfaceColor)
+            
+            ProgressView()
+                .opacity(viewModel.isLoadMore ? 1 : 0)
+                .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
+        }
+    }
+    
     @ViewBuilder
-    private func navigationBarLeadingItems() -> some View {
+    private func navigationBarLeadingItem() -> some View {
         if isShowTagMenu || isShowPageMenu || isShowCategoryMenu {
             Button {
                 withAnimation {
@@ -200,7 +210,7 @@ struct PostListView<Placeholder: View>: View {
         }
     }
     
-    private func navigationBarTrailingItems() -> some View {
+    private func navigationBarTrailingItem() -> some View {
         HStack {
             Button {
                 Task {
@@ -213,10 +223,6 @@ struct PostListView<Placeholder: View>: View {
             .animation(.default, value: viewModel.isRefreshable)
             .symbolEffect(.bounce, value: viewModel.isRefreshable)
             .disabled(viewModel.isLoading)
-            
-            ProgressView()
-                .opacity(viewModel.isLoadMore ? 1 : 0)
-                .animation(.easeInOut(duration: viewModel.isLoadMore ? 0 : 0.5), value: viewModel.isLoadMore)
         }
     }
     
