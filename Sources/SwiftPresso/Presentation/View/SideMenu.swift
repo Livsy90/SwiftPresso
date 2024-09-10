@@ -32,6 +32,7 @@ struct SideMenu<MenuContent: View>: ViewModifier {
                     .frame(width: geometry.size.width / 1.3)
                     .transition(.move(edge: .leading))
                     .offset(x: isShowing ? 0 : -geometry.size.width / 1.3)
+                    .ignoresSafeArea()
             }
             .gesture(dragGesture)
         }
