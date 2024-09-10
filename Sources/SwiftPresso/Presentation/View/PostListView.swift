@@ -389,8 +389,8 @@ private struct PostListRow<Placeholder: View>: View {
     }
 }
 
-#Preview(body: {
-    SwiftPresso.View.postListView(configuration: .init(host: "livsycode.com")) {
+#Preview {
+    SwiftPresso.View.postListView("livsycode.com") {
         SwiftPresso.View.shimmerPlaceholderView()
     }
-})
+}
