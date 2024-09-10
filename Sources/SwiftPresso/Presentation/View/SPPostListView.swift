@@ -102,6 +102,7 @@ struct SPPostListView<Placeholder: View>: View {
                     loadingPlaceholder()
                         .frame(maxWidth: .infinity)
                         .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
                 }
                 
                 if viewModel.isLoadMore {
