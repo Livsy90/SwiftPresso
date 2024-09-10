@@ -60,3 +60,9 @@ public struct SwiftPressoConfiguration {
         self.searchTitle = searchTitle
     }
 }
+
+extension SwiftPressoConfiguration: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self = .init(host: value)
+    }
+}
