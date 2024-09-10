@@ -81,8 +81,7 @@ final class SPPostListViewModel {
         self.postPerPage = postPerPage
         
         Task {
-            async let postList = await getPostList()
-            pageNumber += 1
+            async let postList = await getPostList(pageNumber: 1)
             async let pageList = await getPages()
             self.postList = await postList
             self.pageList = await pageList
@@ -92,6 +91,7 @@ final class SPPostListViewModel {
             async let categories = await getCategories()
             self.categories = await categories
             self.tags = await tags
+            pageNumber += 1
             isLoading = false
         }
     }
@@ -138,16 +138,25 @@ final class SPPostListViewModel {
         isLoading = true
         switch mode {
         case .common:
-            self.postList += await getPostList()
+            self.postList += await getPostList(pageNumber: pageNumber)
             
         case .tag(let name):
-            self.postList += await getPostList(tag: id(by: name))
+            self.postList += await getPostList(
+                pageNumber: pageNumber,
+                tag: id(by: name)
+            )
             
         case .category(let name):
-            self.postList += await getPostList(category: id(by: name))
+            self.postList += await getPostList(
+                pageNumber: pageNumber,
+                category: id(by: name)
+            )
             
         case .search(let searchTerms):
-            self.postList += await getPostList(searchTerms: searchTerms)
+            self.postList += await getPostList(
+                pageNumber: pageNumber,
+                searchTerms: searchTerms
+            )
         }
         
         pageNumber += 1
@@ -156,6 +165,7 @@ final class SPPostListViewModel {
     }
     
     private func getPostList(
+        pageNumber: Int,
         searchTerms: String? = nil,
         category: Int? = nil,
         tag: Int? = nil
