@@ -142,39 +142,16 @@ struct PostListView<Placeholder: View>: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(backgroundColor, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text(viewModel.mode.title)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(interfaceColor)
+                ToolbarItemGroup(placement: .principal) {
+                    navigationBarPrincipalItem()
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
-                    if isShowTagMenu || isShowPageMenu || isShowCategoryMenu {
-                        Button {
-                            withAnimation {
-                                isShowMenu = true
-                            }
-                        } label: {
-                            Image(systemName: "line.horizontal.3")
-                        }
-                        .disabled(viewModel.isLoading)
-                    }
+                    navigationBarLeadingItem()
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    HStack {
-                        Button {
-                            Task {
-                                await viewModel.loadDefault()
-                            }
-                        } label: {
-                            homeIcon
-                        }
-                        .opacity(viewModel.isRefreshable ? 1 : 0)
-                        .animation(.default, value: viewModel.isRefreshable)
-                        .symbolEffect(.bounce, value: viewModel.isRefreshable)
-                        .disabled(viewModel.isLoading)
-                    }
+                    navigationBarTrailingItem()
                 }
             }
             .searchable(text: $searchText, isPresented: $isSearching)
@@ -222,6 +199,43 @@ struct PostListView<Placeholder: View>: View {
     private func placeholder() -> some View {
         loadingPlaceholder()
             .id(UUID())
+    }
+    
+    private func navigationBarPrincipalItem() -> some View {
+        Text(viewModel.mode.title)
+            .fontWeight(.semibold)
+            .foregroundStyle(interfaceColor)
+            .frame(width: 200)
+    }
+    
+    @ViewBuilder
+    private func navigationBarLeadingItem() -> some View {
+        if isShowTagMenu || isShowPageMenu || isShowCategoryMenu {
+            Button {
+                withAnimation {
+                    isShowMenu = true
+                }
+            } label: {
+                Image(systemName: "line.horizontal.3")
+            }
+            .disabled(viewModel.isLoading)
+        }
+    }
+    
+    private func navigationBarTrailingItem() -> some View {
+        HStack {
+            Button {
+                Task {
+                    await viewModel.loadDefault()
+                }
+            } label: {
+                homeIcon
+            }
+            .opacity(viewModel.isRefreshable ? 1 : 0)
+            .animation(.default, value: viewModel.isRefreshable)
+            .symbolEffect(.bounce, value: viewModel.isRefreshable)
+            .disabled(viewModel.isLoading)
+        }
     }
     
     private func menu() -> some View {
