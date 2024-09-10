@@ -55,12 +55,23 @@ final class SPPostListViewModel {
         }
     }
     
-    private let postPerPage: Int
+    @ObservationIgnored
+    @SwiftPressoProvider(\.postList)
+    private var postListProvider: PostListProviderProtocol
     
-    private let postListProvider: PostListProviderProtocol
-    private let categoryListProvider: CategoryListProviderProtocol
-    private let tagListProvider: TagListProviderProtocol
-    private let pageListProvider: PageListProviderProtocol
+    @ObservationIgnored
+    @SwiftPressoProvider(\.categoryList)
+    private var categoryListProvider: CategoryListProviderProtocol
+    
+    @ObservationIgnored
+    @SwiftPressoProvider(\.tagList)
+    private var tagListProvider: TagListProviderProtocol
+    
+    @ObservationIgnored
+    @SwiftPressoProvider(\.pageList)
+    private var pageListProvider: PageListProviderProtocol
+    
+    private let postPerPage: Int
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true
@@ -68,10 +79,6 @@ final class SPPostListViewModel {
     
     init(postPerPage: Int) {
         self.postPerPage = postPerPage
-        postListProvider = SwiftPresso.Provider.postListProvider
-        categoryListProvider = SwiftPresso.Provider.categoryListProvider
-        tagListProvider = SwiftPresso.Provider.tagListProvider
-        pageListProvider = SwiftPresso.Provider.pageListProvider
         
         Task {
             async let postList = await getPostList()
