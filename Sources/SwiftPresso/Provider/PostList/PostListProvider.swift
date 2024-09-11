@@ -24,7 +24,8 @@ struct PostListProvider: PostListProviderProtocol {
                 categories: categories,
                 tags: tags
             )
-            return mapper.mapPosts(posts)
+            let mapped = mapper.mapPosts(posts)
+            return mapped
         } catch {
             throw WPPostMapperError.mapperError
         }

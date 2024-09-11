@@ -8,10 +8,19 @@ struct PageListProvider: PageListProviderProtocol {
         self.mapper = mapper
     }
     
-    func getPages() async throws -> [PostModel] {
+    func getRefinedPages() async throws -> [PostModel] {
         do {
             let pages = try await service.requestPages()
             return mapper.mapPosts(pages)
+        } catch {
+            throw WPPostMapperError.mapperError
+        }
+    }
+    
+    func getRawPages() async throws -> [WPPost] {
+        do {
+            let pages = try await service.requestPages()
+            return pages
         } catch {
             throw WPPostMapperError.mapperError
         }

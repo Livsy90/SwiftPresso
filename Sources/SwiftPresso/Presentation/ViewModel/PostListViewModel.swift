@@ -204,7 +204,7 @@ private extension PostListViewModel {
     
     func getPages() async -> [PostModel]  {
         do {
-            return try await pageListProvider.getPages()
+            return try await pageListProvider.getRefinedPages()
         } catch {
             isError = true
             return []
