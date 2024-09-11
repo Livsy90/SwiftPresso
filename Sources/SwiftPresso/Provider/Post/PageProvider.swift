@@ -8,7 +8,7 @@ struct PostProvider: PostProviderProtocol {
         self.mapper = mapper
     }
     
-    func getRefinedPost(id: Int) async throws -> PostModel {
+    func getPost(id: Int) async throws -> PostModel {
         do {
             let post = try await service.requestPost(id: id)
             let mapped = mapper.mapPost(post)

@@ -1,5 +1,5 @@
 public protocol PostListProviderProtocol {
-    func getRefinedPosts(
+    func getPosts(
         pageNumber: Int,
         perPage: Int,
         searchTerms: String?,

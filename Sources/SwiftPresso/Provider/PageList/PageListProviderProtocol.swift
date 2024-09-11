@@ -1,4 +1,4 @@
 public protocol PageListProviderProtocol {
-    func getRefinedPages() async throws -> [PostModel]
+    func getPages() async throws -> [PostModel]
     func getRawPages() async throws -> [WPPost]
 }

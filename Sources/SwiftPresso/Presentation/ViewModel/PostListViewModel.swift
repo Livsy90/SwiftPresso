@@ -171,7 +171,7 @@ private extension PostListViewModel {
         tag: Int? = nil
     ) async -> [PostModel] {
         do {
-            return try await postListProvider.getRefinedPosts(
+            return try await postListProvider.getPosts(
                 pageNumber: pageNumber,
                 perPage: postPerPage,
                 searchTerms: searchTerms,
@@ -204,7 +204,7 @@ private extension PostListViewModel {
     
     func getPages() async -> [PostModel]  {
         do {
-            return try await pageListProvider.getRefinedPages()
+            return try await pageListProvider.getPages()
         } catch {
             isError = true
             return []

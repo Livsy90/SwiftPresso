@@ -1,11 +1,14 @@
 import Foundation
 import UIKit
 
-public struct HTMLMapper: HTMLMapperProtocol {
-    
-    public init() {}
-    
-    public func attributedStringFrom(
+ struct HTMLMapper: HTMLMapperProtocol {
+     
+     /// Create an ``NSMutableAttributedString`` value from an HTML string. If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a clickable link.
+     /// - Parameters:
+     ///   - htmlText: HTML text.
+     ///   - width: Width of the view where this text will be presented.
+     /// - Returns: An ``NSMutableAttributedString`` value.
+     func attributedStringFrom(
         htmlText: String,
         width: CGFloat
     ) -> NSMutableAttributedString {
@@ -16,13 +19,19 @@ public struct HTMLMapper: HTMLMapperProtocol {
         )
         
         guard
-            let data = modifiedFont.data(using: .unicode, allowLossyConversion: true),
+            let data = modifiedFont.data(
+                using: .unicode,
+                allowLossyConversion: true
+            ),
             let attributedString = try? NSMutableAttributedString(
                 data: data,
                 options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
                 documentAttributes: nil
             ) else {
-            assert(false, "HTMLMapper: attributedStringFrom(htmlText: \(htmlText)")
+            assert(
+                false,
+                "SwiftPresso HTMLMapper: attributedStringFrom(htmlText: \(htmlText)"
+            )
             return .init()
         }
         
@@ -35,7 +44,10 @@ public struct HTMLMapper: HTMLMapperProtocol {
         return attributedString
     }
     
-    private func formatStringWithYTVideo(text: String, width: CGFloat) -> String {
+     private func formatStringWithYTVideo(
+        text: String,
+        width: CGFloat
+     ) -> String {
         let iframeTexts = matches(for: ".*iframe.*", in: text)
         var newText = text
         

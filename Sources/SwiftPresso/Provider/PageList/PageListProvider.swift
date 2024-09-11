@@ -8,7 +8,7 @@ struct PageListProvider: PageListProviderProtocol {
         self.mapper = mapper
     }
     
-    func getRefinedPages() async throws -> [PostModel] {
+    func getPages() async throws -> [PostModel] {
         do {
             let pages = try await service.requestPages()
             return mapper.mapPosts(pages)
