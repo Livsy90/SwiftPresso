@@ -13,7 +13,7 @@ struct PostService {
 extension PostService: PostServiceProtocol {
     
     func requestPost(id: Int) async throws -> WPPost {
-        let request: Request<WPPost> = configurator.postRequest(id: id)
+        let request: Request<WPPost> = configurator.postRequest()
         return try await networkClient.send(request).value
     }
     
