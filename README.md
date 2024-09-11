@@ -8,7 +8,18 @@ If you prefer full control, you can create your own entities and use SwiftPresso
 
 You can also use SwiftPresso HTML mapper to transform HTML text into NSAttributedString.
 
+## Installation
+
+### SPM:
+.package(url: "https://github.com/Livsy90/SwiftPresso.git", from: "2.0.0")
+
 ## Built-in View
+
+To use built-in SwiftPresso View, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel and open Settings -> Permalinks.
+
+```
+yourhostname/%category%/%postname%/
+```
 
 You can call the SwiftPresso factory method to use the built-in post-list view and inject the desired configuration. 
 
