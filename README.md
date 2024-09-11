@@ -143,6 +143,14 @@ class ViewModel {
             categories: [1,2,3],
             tags: [1,2,3]
         )
+        
+        let rawData = try? await postListProvider.getRawPosts(
+            pageNumber: 1,
+            perPage: 20,
+            searchTerms: "some text...",
+            categories: [1,2,3],
+            tags: [1,2,3]
+        )
     }
     
 }
@@ -154,17 +162,57 @@ The single post provider has two methods for retrieving a specific post model.
 * The first one provides a lightweight model, which includes only crucial data. 
 * The second provider returns the raw data model.
 
+```swift
+class ViewModel {
+    
+    @SwiftPressoInjected(\.post)
+    var postProvider: PostProviderProtocol
+        
+    func getData() async {
+        let data = try? await postProvider.getPost(id: 55)
+    }
+    
+}
+```
+
 ### Page List Provider
 
 As the post list provider, the page list provider also has two methods for retrieving an array of page models, which return two types of page models in SwiftPresso.
 * The first one provides a lightweight model, which includes only crucial data. 
 * The second provider returns an array of raw data models.
 
+```swift
+class ViewModel {
+    
+    @SwiftPressoInjected(\.pageList)
+    var pageListProvider: PageListProviderProtocol
+        
+    func getData() async {
+        let data = try? await pageListProvider.getPages()
+        let rawData = try? await pageListProvider.getRawPages()
+    }
+    
+}
+```
+
 ### Single Page Provider
 
 The page provider also has two methods for retrieving a page model.
 * The first one provides a lightweight model, which includes only crucial data. 
 * The second provider returns the raw data model.
+
+```swift
+class ViewModel {
+    
+    @SwiftPressoInjected(\.page)
+    var pageProvider: PageProviderProtocol
+        
+    func getData() async {
+        let data = try? await pageProvider.getPage(id: 22)
+    }
+    
+}
+```
 
 ### Category / Tag List Provider
 
@@ -183,11 +231,27 @@ class ViewModel {
 }
 ```
 
+```swift
+class ViewModel {
+    
+    @SwiftPressoInjected(\.tagList)
+    var tagListProvider: TagListProviderProtocol
+        
+    func getData() async {
+        let data = try? await tagListProvider.getTags()
+    }
+    
+}
+```
+
 ## HTML Mapper
 
 The HTML mapper can trasform a HTML text into the NSAtributted String.  If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a clickable link.
 
+```swift
+let mapper = SwiftPresso.Mapper.htmlMapper()
 
-
-
-
+func map(post: PostModel) -> NSAttributedString {
+    mapper.attributedStringFrom(htmlText: post.content, width: 375)
+}
+```
