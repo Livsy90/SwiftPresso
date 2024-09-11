@@ -401,5 +401,5 @@ private struct PostListRow<Placeholder: View>: View {
 }
 
 #Preview {
-    SwiftPresso.View.postListWithDefaultPlaceholder("livsycode.com")
+    SwiftPresso.View.postList("livsycode.com")
 }

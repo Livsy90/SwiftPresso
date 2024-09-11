@@ -13,7 +13,7 @@ struct PageService {
 extension PageService: PageServiceProtocol {
     
     func requestPage(id: Int) async throws -> WPPost {
-        let request: Request<WPPost> = configurator.pageRequest()
+        let request: Request<WPPost> = configurator.pageRequest(id: id)
         return try await networkClient.send(request).value
     }
     

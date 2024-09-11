@@ -23,6 +23,10 @@ public struct SwiftPressoConfiguration {
     
     public init(
         host: String,
+        httpScheme: HTTPScheme = .https,
+        postsPerPage: Int = 50,
+        menuBackgroundColor: Color = .primary,
+        menuTextColor: Color = Color(uiColor: .systemBackground),
         backgroundColor: Color = Color(uiColor: .systemBackground),
         interfaceColor: Color = .primary,
         textColor: Color = .primary,
@@ -35,10 +39,7 @@ public struct SwiftPressoConfiguration {
         pageMenuTitle: String = "Pages",
         tagMenuTitle: String = "Tags",
         categoryMenuTitle: String = "Category",
-        menuBackgroundColor: Color = .primary,
-        menuTextColor: Color = Color(uiColor: .systemBackground),
-        postsPerPage: Int = 50,
-        httpScheme: HTTPScheme = .https,
+        
         isExcludeWebHeaderAndFooter: Bool = true,
         isMenuExpanded: Bool = true
     ) {

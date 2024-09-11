@@ -30,7 +30,7 @@ extension SwiftPresso {
             )
         }
         
-        public static func postListWithDefaultPlaceholder(_ configuration: SwiftPressoConfiguration) -> some SwiftUI.View {
+        public static func postList(_ configuration: SwiftPressoConfiguration) -> some SwiftUI.View {
             Configuration.configure(with: configuration)
             
             return PostListView(
