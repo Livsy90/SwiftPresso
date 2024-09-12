@@ -8,7 +8,7 @@ final class PostViewModel {
     var title: String
     var date: Date?
     var attributedString: NSAttributedString = .init()
-    
+    var t: String
     var isLoading: Bool = true
         
     @ObservationIgnored
@@ -19,6 +19,7 @@ final class PostViewModel {
     private let width: CGFloat
     
     init(post: PostModel, width: CGFloat) {
+        t = post.content
         title = post.title
         date = post.date
         htmlString = post.content

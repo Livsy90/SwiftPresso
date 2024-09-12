@@ -35,6 +35,12 @@ import UIKit
             return .init()
         }
         
+        let attributedStringColor = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        attributedString.addAttributes(
+            attributedStringColor,
+            range: NSMakeRange(0, attributedString.length)
+        )
+        
         return attributedString
     }
     

@@ -7,7 +7,7 @@ struct PostView: View {
     let textColor: Color
     
     var body: some View {
-        ScrollView {
+        VStack {
             HStack {
                 Text(viewModel.title)
                     .padding()
@@ -26,26 +26,26 @@ struct PostView: View {
                 
                 Spacer()
             }
-            TextView(
-                attributedText: $viewModel.attributedString,
-                textStyle: .callout,
-                textColor: .label
-            )
-            .padding()
-            .foregroundStyle(textColor)
+            tv
+                .padding()
         }
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .background {
             backgroundColor
         }
-        .overlay {
-            ProgressView()
-                .opacity(viewModel.isLoading ? 1 : 0)
-        }
         .onAppear {
             viewModel.onAppear()
         }
     }
+    
+    private var tv: some View {
+        TextView(
+            attributedText: $viewModel.attributedString,
+            textStyle: .callout,
+            textColor: .label
+        )
+    }
+    
 }
 
 struct TextView: UIViewRepresentable {
@@ -62,6 +62,8 @@ struct TextView: UIViewRepresentable {
         textView.isSelectable = true
         textView.isUserInteractionEnabled = false
         textView.textColor = .blue
+        textView.backgroundColor = .clear
+        textView.attributedText = attributedText
 
         return textView
     }
