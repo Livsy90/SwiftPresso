@@ -5,7 +5,7 @@ final class Preferences {
     
     static let shared: Preferences = .init()
     
-    var configuration: SwiftPressoConfiguration {
+    var configuration: SwiftPressoSettings {
         get {
             queue.sync {
                 _configuration
@@ -23,7 +23,7 @@ final class Preferences {
         qos: .default,
         attributes: .concurrent
     )
-    private var _configuration = SwiftPressoConfiguration.init(host: "")
+    private var _configuration = SwiftPressoSettings.init(host: "")
     
     private init() {}
     

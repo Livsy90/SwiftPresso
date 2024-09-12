@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ShimmerPlacehodler: View {
+struct ShimmerPlaceholder: View {
     
     let backgroundColor: Color
     

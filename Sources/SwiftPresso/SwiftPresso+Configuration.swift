@@ -63,9 +63,12 @@ public enum SwiftPresso {
         /// To expand menu items by default.
         public static var isMenuExpanded: Bool { Preferences.shared.configuration.isMenuExpanded }
         
+        /// Using webview as post view.
+        public static var isShowPostInWebView: Bool { Preferences.shared.configuration.isShowPostInWebView }
+        
         /// Initial configuration.
         /// - Parameter configuration: configuration model.
-        public static func configure(with configuration: SwiftPressoConfiguration) {
+        public static func configure(with configuration: SwiftPressoSettings) {
             Preferences.shared.configuration = configuration
         }
         

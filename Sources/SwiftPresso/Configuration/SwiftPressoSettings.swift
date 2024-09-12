@@ -1,9 +1,10 @@
 import SwiftUI
 
-public struct SwiftPressoConfiguration {
+public struct SwiftPressoSettings {
     public let host: String
     public let postsPerPage: Int
     public let httpScheme: HTTPScheme
+    public let isShowPostInWebView: Bool
     public let isExcludeWebHeaderAndFooter: Bool
     public let isMenuExpanded: Bool
     public let backgroundColor: Color
@@ -25,6 +26,7 @@ public struct SwiftPressoConfiguration {
         host: String,
         httpScheme: HTTPScheme = .https,
         postsPerPage: Int = 50,
+        isShowPostInWebView: Bool = false,
         menuBackgroundColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
         backgroundColor: Color = Color(uiColor: .systemBackground),
@@ -62,10 +64,11 @@ public struct SwiftPressoConfiguration {
         self.homeTitle = homeTitle
         self.searchTitle = searchTitle
         self.isMenuExpanded = isMenuExpanded
+        self.isShowPostInWebView = isShowPostInWebView
     }
 }
 
-extension SwiftPressoConfiguration: ExpressibleByStringLiteral {
+extension SwiftPressoSettings: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self = .init(host: value)
     }

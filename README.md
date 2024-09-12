@@ -40,15 +40,13 @@ With this configuration, you can determine the API host value, the HTTP method, 
 ```swift
 @main
 struct DemoApp: App {
-    
-    private let backgroundColor = Color(.black)
-    
+        
     var body: some Scene {
         WindowGroup {
             SwiftPresso.View.postList(
                 .init(
                     host: "livsycode.com",
-                    backgroundColor: backgroundColor,
+                    backgroundColor: .black,
                     tagMenuTitle: "Series"
                 )
             )

@@ -1,9 +1,11 @@
 import SwiftUI
+import ApricotNavigation
 
 struct PostListView<Placeholder: View>: View {
     
     let loadingPlaceholder: () -> Placeholder
     
+    @Environment(Router.self) private var router
     @State private var viewModel: PostListViewModel
     @State private var searchText = ""
     @State private var isSearching = false
@@ -32,6 +34,8 @@ struct PostListView<Placeholder: View>: View {
     private let menuBackgroundColor: Color
     private let menuTextColor: Color
     
+    private let isShowPostInWebView: Bool
+    
     init(
         backgroundColor: Color,
         interfaceColor: Color,
@@ -39,6 +43,7 @@ struct PostListView<Placeholder: View>: View {
         menuBackgroundColor: Color,
         menuTextColor: Color,
         homeIcon: Image,
+        isShowPostInWebView: Bool,
         isShowPageMenu: Bool,
         isShowTagMenu: Bool,
         isShowCategoryMenu: Bool,
@@ -65,6 +70,8 @@ struct PostListView<Placeholder: View>: View {
         
         self.homeIcon = homeIcon
         
+        self.isShowPostInWebView = isShowPostInWebView
+        
         self.pageMenuTitle = pageMenuTitle
         self.tagMenuTitle = tagMenuTitle
         self.categoryMenuTitle = categoryMenuTitle
@@ -77,7 +84,6 @@ struct PostListView<Placeholder: View>: View {
     }
     
     var body: some View {
-        NavigationStack {
             List {
                 ForEach(viewModel.postList, id: \.self) { post in
                     PostListRow(
@@ -189,12 +195,11 @@ struct PostListView<Placeholder: View>: View {
                         .id(UUID())
                 }
             )
-        }
-        .tint(interfaceColor)
-        .sheet(isPresented: $isShowMenu) {
-            menu()
-                .presentationDetents([.medium])
-        }
+            .tint(interfaceColor)
+            .sheet(isPresented: $isShowMenu) {
+                menu()
+                    .presentationDetents([.medium])
+            }
     }
     
     private func placeholder() -> some View {
@@ -251,8 +256,11 @@ struct PostListView<Placeholder: View>: View {
                                     withAnimation {
                                         isShowMenu = false
                                     }
-                                    if let url = page.link {
+                                    if isShowPostInWebView {
+                                        guard let url = page.link else { return }
                                         urlToOpen = url
+                                    } else {
+                                        router.navigate(to: Destination.postDetails(post: page))
                                     }
                                 } label: {
                                     VStack {
@@ -380,8 +388,10 @@ private struct PostListRow<Placeholder: View>: View {
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
     
+    @Environment(Router.self) private var router
+    
     var body: some View {
-        if let link = post.link {
+        if SwiftPresso.Configuration.isShowPostInWebView, let link = post.link {
             LinkView(
                 url: link,
                 title: post.title,
@@ -394,10 +404,17 @@ private struct PostListRow<Placeholder: View>: View {
             )
             .padding(.vertical, 8)
         } else {
-            Text(post.title)
-                .padding(.vertical, 8)
+            Button {
+                router.navigate(to: Destination.postDetails(post: post))
+            } label: {
+                Text(post.title)
+                    .padding(.vertical, 8)
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(textColor)
+            }
         }
     }
+    
 }
 
 #Preview {

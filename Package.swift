@@ -13,7 +13,8 @@ let package = Package(
             targets: ["SwiftPresso"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Livsy90/SkavokNetworking.git", .upToNextMajor(from: "1.0.0"))
+        .package(url: "https://github.com/Livsy90/SkavokNetworking.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/Livsy90/ApricotNavigation.git", .upToNextMajor(from: "1.0.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -21,7 +22,8 @@ let package = Package(
         .target(
             name: "SwiftPresso",
             dependencies: [
-                "SkavokNetworking"
+                "SkavokNetworking",
+                "ApricotNavigation"
             ]
         ),
         .testTarget(
