@@ -25,10 +25,22 @@ final class PostViewModel {
     }
     
     func onAppear() {
-        attributedContent = AttributedString(mapper.attributedStringFrom(htmlText: htmlString, width: width))
-        attributedContent.foregroundColor = SwiftPresso.Configuration.textColor
-        attributedContent.font = .body
-        isLoading = false
+        var attributedContent = self.attributedContent
+        DispatchQueue.global(qos: .userInitiated).async {
+            attributedContent = AttributedString(
+                self.mapper.attributedStringFrom(
+                    htmlText: self.htmlString,
+                    width:self.width
+                )
+            )
+            attributedContent.foregroundColor = SwiftPresso.Configuration.textColor
+            attributedContent.font = .body
+            
+            DispatchQueue.main.async {
+                self.attributedContent = attributedContent
+                self.isLoading = false
+            }
+        }
     }
     
 }
