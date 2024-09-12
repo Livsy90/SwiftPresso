@@ -12,7 +12,6 @@ struct PostView: View {
             textStyle: .callout
         )
         .padding()
-        .navigationTitle(viewModel.title)
         .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .background {
@@ -39,10 +38,6 @@ struct TextView: UIViewRepresentable {
         textView.backgroundColor = .clear
         textView.attributedText = attributedText
         textView.showsVerticalScrollIndicator = false
-//        textView.didTappedOnAttachment = { image in
-//            print(image)
-//        }
-        textView.textAlignment = .left
         
         return textView
     }
@@ -107,15 +102,25 @@ struct TextView: UIViewRepresentable {
         }
         
         private func isTapOnAttachment(_ point: CGPoint) -> Bool {
-            let range = NSRange(location: 0, length: attributedText.length)
+            let range = NSRange(
+                location: 0,
+                length: attributedText.length
+            )
             var found = false
-            attributedText.enumerateAttribute(.attachment, in: range, options: []) { (value, effectiveRange, stop) in
+            attributedText.enumerateAttribute(
+                .attachment,
+                in: range,
+                options: []
+            ) { (value, effectiveRange, stop) in
                 guard let attachment = value as? NSTextAttachment else {
                     return
                 }
                 
                 tappedImage = attachment.image
-                let rect = layoutManager.boundingRect(forGlyphRange: effectiveRange, in: textContainer)
+                let rect = layoutManager.boundingRect(
+                    forGlyphRange: effectiveRange,
+                    in: textContainer
+                )
                 if rect.contains(point) {
                     found = true
                     stop.pointee = true

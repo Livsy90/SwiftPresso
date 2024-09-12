@@ -4,11 +4,7 @@ import SwiftUI
 @Observable
 final class PostViewModel {
     
-    var attributedContent: AttributedString = .init()
-    var title: String
-    var date: Date?
     var attributedString: NSAttributedString = .init()
-    
     var isLoading: Bool = true
     
     @ObservationIgnored
@@ -17,6 +13,8 @@ final class PostViewModel {
     
     private let htmlString: String
     private let width: CGFloat
+    private let title: String
+    private let date: Date?
     
     init(post: PostModel, width: CGFloat) {
         title = post.title

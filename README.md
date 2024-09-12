@@ -59,6 +59,9 @@ To choose between these options, you can set the configuration value.
 SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: true))
 ```
 
+### Important: if you prefer the first option, remember to edit your Info file to add a permission string about photo library usage, since SwiftPresso allows users to save images to a camera roll. Select “Privacy - Photo Library Additions Usage Description” to add this string.
+
+
 To use built-in WebView, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel, open Settings -> Permalinks, and change your permalink scheme like this:
 
 ```
