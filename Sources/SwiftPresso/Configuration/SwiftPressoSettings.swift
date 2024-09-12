@@ -4,7 +4,7 @@ public struct SwiftPressoSettings {
     public let host: String
     public let postsPerPage: Int
     public let httpScheme: HTTPScheme
-    public let isShowPostInWebView: Bool
+    public let isShowContentInWebView: Bool
     public let isExcludeWebHeaderAndFooter: Bool
     public let isMenuExpanded: Bool
     public let backgroundColor: Color
@@ -26,7 +26,7 @@ public struct SwiftPressoSettings {
         host: String,
         httpScheme: HTTPScheme = .https,
         postsPerPage: Int = 50,
-        isShowPostInWebView: Bool = false,
+        isShowContentInWebView: Bool = false,
         menuBackgroundColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
         backgroundColor: Color = Color(uiColor: .systemBackground),
@@ -64,7 +64,7 @@ public struct SwiftPressoSettings {
         self.homeTitle = homeTitle
         self.searchTitle = searchTitle
         self.isMenuExpanded = isMenuExpanded
-        self.isShowPostInWebView = isShowPostInWebView
+        self.isShowContentInWebView = isShowContentInWebView
     }
 }
 

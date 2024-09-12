@@ -22,6 +22,7 @@ struct PostView: View {
                 Text(viewModel.date?.formatted(date: .numeric, time: .omitted) ?? "")
                     .padding()
                     .foregroundStyle(textColor)
+                    .font(.footnote)
                 
                 Spacer()
             }

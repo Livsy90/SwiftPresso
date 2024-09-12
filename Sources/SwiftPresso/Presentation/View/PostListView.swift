@@ -34,7 +34,7 @@ struct PostListView<Placeholder: View>: View {
     private let menuBackgroundColor: Color
     private let menuTextColor: Color
     
-    private let isShowPostInWebView: Bool
+    private let isShowContentInWebView: Bool
     
     init(
         backgroundColor: Color,
@@ -43,7 +43,7 @@ struct PostListView<Placeholder: View>: View {
         menuBackgroundColor: Color,
         menuTextColor: Color,
         homeIcon: Image,
-        isShowPostInWebView: Bool,
+        isShowContentInWebView: Bool,
         isShowPageMenu: Bool,
         isShowTagMenu: Bool,
         isShowCategoryMenu: Bool,
@@ -70,7 +70,7 @@ struct PostListView<Placeholder: View>: View {
         
         self.homeIcon = homeIcon
         
-        self.isShowPostInWebView = isShowPostInWebView
+        self.isShowContentInWebView = isShowContentInWebView
         
         self.pageMenuTitle = pageMenuTitle
         self.tagMenuTitle = tagMenuTitle
@@ -88,6 +88,7 @@ struct PostListView<Placeholder: View>: View {
                 ForEach(viewModel.postList, id: \.self) { post in
                     PostListRow(
                         post: post,
+                        isShowContentInWebView: isShowContentInWebView,
                         webViewBackgroundColor: backgroundColor,
                         interfaceColor: interfaceColor,
                         textColor: textColor,
@@ -256,7 +257,7 @@ struct PostListView<Placeholder: View>: View {
                                     withAnimation {
                                         isShowMenu = false
                                     }
-                                    if isShowPostInWebView {
+                                    if isShowContentInWebView {
                                         guard let url = page.link else { return }
                                         urlToOpen = url
                                     } else {
@@ -381,6 +382,7 @@ struct PostListView<Placeholder: View>: View {
 private struct PostListRow<Placeholder: View>: View {
     
     let post: PostModel
+    let isShowContentInWebView: Bool
     let webViewBackgroundColor: Color
     let interfaceColor: Color
     let textColor: Color
@@ -391,7 +393,7 @@ private struct PostListRow<Placeholder: View>: View {
     @Environment(Router.self) private var router
     
     var body: some View {
-        if SwiftPresso.Configuration.isShowPostInWebView, let link = post.link {
+        if isShowContentInWebView, let link = post.link {
             LinkView(
                 url: link,
                 title: post.title,
@@ -418,5 +420,5 @@ private struct PostListRow<Placeholder: View>: View {
 }
 
 #Preview {
-    SwiftPresso.View.postList("livsycode.com")
+    SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: true))
 }

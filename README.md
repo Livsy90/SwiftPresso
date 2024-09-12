@@ -15,12 +15,6 @@ You can also use SwiftPresso HTML mapper to transform HTML text into NSAttribute
 
 ## Built-in View
 
-To use built-in SwiftPresso View, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel and open Settings -> Permalinks.
-
-```
-yourhostname/%category%/%postname%/
-```
-
 You can call the SwiftPresso factory method to use the built-in post-list view and inject the desired configuration. 
 
 ```swift
@@ -55,7 +49,27 @@ struct DemoApp: App {
 }
 ```
 
-While the default implementation contains the shimmer placeholder, which will be used while loading data from the post list and a single post, you can also use the second method to provide a custom one.
+There are two ways to display post content:
+* Using HTML content mapped to an `AttributedString`.
+* Using WebView.
+
+To choose between these options, you can set the configuration value. 
+
+```swift
+SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: true))
+```
+
+To use built-in WebView, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel, open Settings -> Permalinks, and change your permalink scheme like this:
+
+```
+yourhostname/%category%/%postname%/
+```
+
+### Important: this will affect your SEO settings, so do this cautiously.
+
+## Loading indicator
+
+While the default implementation contains the shimmer loading indicator, which will be used while loading data for the post list and a single post, you can also use the second method to provide a custom one.
 
 ```swift
 @main
@@ -63,7 +77,7 @@ struct DemoApp: App {
         
     var body: some Scene {
         WindowGroup {
-            SwiftPresso.View.postListWithCustomPlaceholder("livsycode.com") {
+            SwiftPresso.View.postList("livsycode.com") {
                 ProgressView()
             }
         }
@@ -73,7 +87,7 @@ struct DemoApp: App {
 
 ## Configuration
 
-While using the built-in post list view has its own configuration under the cut, using SwiftPresso entities separately must be preceded by manually configuring the data. To do this, you can use the SwiftPresso configure method.
+If you use SwiftPresso built-in views, there is no need to worry about the configuration method calling. However, using SwiftPresso entities separately must be preceded by manually configuring the data. To do this, you can use the SwiftPresso configure method.
 
 ```swift
 SwiftPresso.Configuration.configure(with: .init(host: "livsycode.com", httpScheme: .https))
@@ -97,11 +111,7 @@ class ViewModel {
 Alternatively, you can use the SwiftPresso factory methods. 
 
 ```swift
-class ViewModel {
-    
-    var postListProvider = SwiftPresso.Provider.postListProvider()
-    
-}
+let postListProvider = SwiftPresso.Provider.postListProvider()
 ```
 
 To use property wrappers inside an Observable class scope, you can mark properties with the @ObservationIgnored Macro.
