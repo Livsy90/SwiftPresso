@@ -34,10 +34,15 @@ struct TextView: UIViewRepresentable {
         let textView = TextViewInternal()
         
         textView.isSelectable = true
+        textView.isEditable = false
         textView.isUserInteractionEnabled = true
         textView.backgroundColor = .clear
         textView.attributedText = attributedText
         textView.showsVerticalScrollIndicator = false
+//        textView.didTappedOnAttachment = { image in
+//            print(image)
+//        }
+        textView.textAlignment = .left
         
         return textView
     }
@@ -97,8 +102,6 @@ struct TextView: UIViewRepresentable {
         
         override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
             super.touchesCancelled(touches, with: event)
-            
-            // `UITextView` will cancel the touch then starting selection
             
             isTouchMoved = false
         }
