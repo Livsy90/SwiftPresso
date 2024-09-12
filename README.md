@@ -6,7 +6,7 @@ With just one line of code, you can convert your WordPress website to an iOS app
 
 If you prefer full control, you can create your own entities and use SwiftPresso only to manage networking and domain models.
 
-You can also use SwiftPresso HTML mapper to transform HTML text into NSAttributedString.
+You can also use SwiftPresso HTML mapper to transform HTML text into `NSAttributedString`.
 
 ## Installation
 
@@ -50,7 +50,7 @@ struct DemoApp: App {
 ```
 
 There are two ways to display post content:
-* Using HTML content mapped to an `AttributedString`.
+* Using HTML content mapped to an `NSAttributedString`.
 * Using WebView.
 
 To choose between these options, you can set the configuration value. 
@@ -60,7 +60,7 @@ SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: t
 ```
 
 ### Important: 
-If you prefer the first option, remember to edit your Info file to add a permission string about photo library usage, since SwiftPresso allows users to save images to a camera roll. Select “Privacy - Photo Library Additions Usage Description” to add this string.
+If you prefer the first option, remember to edit your Info.plist file to add a permission string about photo library usage, since SwiftPresso allows users to save images to a camera roll. Select “Privacy - Photo Library Additions Usage Description” to add this string.
 
 
 To use built-in WebView, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel, open Settings -> Permalinks, and change your permalink scheme like this:
