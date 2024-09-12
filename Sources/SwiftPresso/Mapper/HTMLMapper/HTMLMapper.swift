@@ -3,7 +3,7 @@ import SwiftUI
 
 struct HTMLMapper: HTMLMapperProtocol {
     
-    /// Create an ``NSMutableAttributedString`` value from an HTML string. If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a clickable link.
+    /// Create an ``NSMutableAttributedString`` value from an HTML string. If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a link.
     /// - Parameters:
     ///   - htmlText: HTML text.
     ///   - width: Width of the view where this text will be presented.

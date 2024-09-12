@@ -1,7 +1,7 @@
 import SwiftUI
 import ApricotNavigation
 
-struct PostListRow<Placeholder: View>: View {
+struct PostListRowView<Placeholder: View>: View {
     
     let post: PostModel
     let isShowContentInWebView: Bool

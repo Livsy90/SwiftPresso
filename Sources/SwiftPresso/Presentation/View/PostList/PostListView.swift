@@ -86,7 +86,7 @@ struct PostListView<Placeholder: View>: View {
     var body: some View {
             List {
                 ForEach(viewModel.postList, id: \.self) { post in
-                    PostListRow(
+                    PostListRowView(
                         post: post,
                         isShowContentInWebView: isShowContentInWebView,
                         webViewBackgroundColor: backgroundColor,
