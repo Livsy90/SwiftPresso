@@ -11,7 +11,7 @@ extension View {
     ) -> some View {
         
         modifier(
-            SPWebViewLinkModifier(
+            WebViewLinkModifier(
                 backgroundColor: backgroundColor,
                 interfaceColor: interfaceColor,
                 onTag: onTag,
@@ -31,7 +31,7 @@ extension View {
     ) -> some View {
         
         modifier(
-            SPWebViewModifier(
+            WebViewModifier(
                 urlToOpen: url,
                 backgroundColor: backgroundColor,
                 interfaceColor: interfaceColor,
@@ -44,7 +44,7 @@ extension View {
     
 }
 
-private struct SPWebViewModifier<Placeholder: View>: ViewModifier {
+private struct WebViewModifier<Placeholder: View>: ViewModifier {
     
     @Binding var urlToOpen: URL?
     let backgroundColor: Color
@@ -85,7 +85,7 @@ private struct SPWebViewModifier<Placeholder: View>: ViewModifier {
     
 }
 
-private struct SPWebViewLinkModifier<Placeholder: View>: ViewModifier {
+private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
     
     let backgroundColor: Color
     let interfaceColor: Color
