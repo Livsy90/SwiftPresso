@@ -94,4 +94,5 @@ struct WebViewWrapperView<Content: View>: View {
                 .ignoresSafeArea()
         }
     }
+    
 }

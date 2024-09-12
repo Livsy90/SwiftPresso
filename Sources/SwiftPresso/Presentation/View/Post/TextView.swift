@@ -1,36 +1,12 @@
 import SwiftUI
 
-struct PostView: View {
-    
-    @State var viewModel: PostViewModel
-    let backgroundColor: Color
-    let textColor: Color
-    
-    var body: some View {
-        TextView(
-            attributedText: $viewModel.attributedString,
-            textStyle: .callout
-        )
-        .padding()
-        .ignoresSafeArea(edges: .bottom)
-        .toolbarBackground(backgroundColor, for: .navigationBar)
-        .background {
-            backgroundColor
-        }
-        .onAppear {
-            viewModel.onAppear()
-        }
-    }
-    
-}
-
 struct TextView: UIViewRepresentable {
     
     @Binding var attributedText: NSAttributedString
     let textStyle: UIFont.TextStyle
     
     func makeUIView(context: Context) -> UITextView {
-        let textView = TextViewInternal()
+        let textView = GestureHandlingTextView()
         
         textView.isSelectable = true
         textView.isEditable = false
@@ -46,12 +22,11 @@ struct TextView: UIViewRepresentable {
         uiView.attributedText = attributedText
     }
     
-    final class TextViewInternal: UITextView {
+    final class GestureHandlingTextView: UITextView {
         
         var didTappedOnAreaBesidesAttachment: (() -> Void)? = nil
         var didTappedOnAttachment: ((UIImage) -> Void)? = nil
         
-        // A single tap won't move.
         private var isTouchMoved = false
         private var tappedImage: UIImage?
         
@@ -62,12 +37,14 @@ struct TextView: UIViewRepresentable {
         }
         
         override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-            
             if let tapGestureRecognizer = gestureRecognizer as? UITapGestureRecognizer,
                tapGestureRecognizer.numberOfTapsRequired == 2 {
                 let index = indexOfTap(recognizer: tapGestureRecognizer)
-                if let _ = attributedText?.attribute(NSAttributedString.Key.attachment, at: index, effectiveRange: nil) as? NSTextAttachment {
-                    
+                if let _ = attributedText?.attribute(
+                    NSAttributedString.Key.attachment,
+                    at: index,
+                    effectiveRange: nil
+                ) as? NSTextAttachment {
                     return false
                 }
             }
@@ -131,32 +108,4 @@ struct TextView: UIViewRepresentable {
         }
     }
     
-}
-
-extension UITextView {
-    func indexOfTap(recognizer: UITapGestureRecognizer) -> Int {
-        var location: CGPoint = recognizer.location(in: self)
-        location.x -= textContainerInset.left
-        location.y -= textContainerInset.top
-        
-        let charIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        
-        return charIndex
-    }
-    
-}
-
-#Preview {
-    let testString = "Text"
-    let strung = randomString(length: 9000)
-    let post = PostModel(id: 1, date: .now, title: "Title", excerpt: "", imgURL: nil, link: nil, content: strung, author: 0, tags: [])
-    return PostView(
-        viewModel: .init(post: post, width: 375),
-        backgroundColor: SwiftPresso.Configuration.backgroundColor,
-        textColor: SwiftPresso.Configuration.textColor
-    )
-}
-func randomString(length: Int) -> String {
-    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    return String((0..<length).map{ _ in letters.randomElement()! })
 }
