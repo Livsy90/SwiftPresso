@@ -64,7 +64,7 @@ public enum SwiftPresso {
         public static var isMenuExpanded: Bool { Preferences.shared.configuration.isMenuExpanded }
         
         /// Using webview as post view.
-        public static var isShowPostInWebView: Bool { Preferences.shared.configuration.isShowPostInWebView }
+        public static var isShowContentInWebView: Bool { Preferences.shared.configuration.isShowContentInWebView }
         
         /// Initial configuration.
         /// - Parameter configuration: configuration model.
