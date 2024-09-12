@@ -26,8 +26,13 @@ struct PostView: View {
                 
                 Spacer()
             }
-            tv
-                .padding()
+            
+            TextView(
+                attributedText: $viewModel.attributedString,
+                textStyle: .callout,
+                textColor: .label
+            )
+            .padding()
         }
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .background {
@@ -36,14 +41,6 @@ struct PostView: View {
         .onAppear {
             viewModel.onAppear()
         }
-    }
-    
-    private var tv: some View {
-        TextView(
-            attributedText: $viewModel.attributedString,
-            textStyle: .callout,
-            textColor: .label
-        )
     }
     
 }
@@ -60,7 +57,7 @@ struct TextView: UIViewRepresentable {
         textView.font = UIFont.preferredFont(forTextStyle: textStyle)
         textView.autocapitalizationType = .sentences
         textView.isSelectable = true
-        textView.isUserInteractionEnabled = false
+        textView.isUserInteractionEnabled = true
         textView.textColor = .blue
         textView.backgroundColor = .clear
         textView.attributedText = attributedText
@@ -77,10 +74,15 @@ struct TextView: UIViewRepresentable {
 
 #Preview {
     let testString = "Text"
-    let post = PostModel(id: 1, date: .now, title: "Title", excerpt: "", imgURL: nil, link: nil, content: "Content", author: 0, tags: [])
+    let strung = randomString(length: 9000)
+    let post = PostModel(id: 1, date: .now, title: "Title", excerpt: "", imgURL: nil, link: nil, content: strung, author: 0, tags: [])
     return PostView(
         viewModel: .init(post: post, width: 375),
         backgroundColor: SwiftPresso.Configuration.backgroundColor,
         textColor: SwiftPresso.Configuration.textColor
     )
+}
+func randomString(length: Int) -> String {
+  let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  return String((0..<length).map{ _ in letters.randomElement()! })
 }

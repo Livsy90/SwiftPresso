@@ -22,15 +22,14 @@ struct PostListCoordinator<Placeholder: View>: View {
                 .navigationDestination(for: Destination.self) { destination in
                     switch destination {
                     case .postDetails(let post):
-                        ScrollView {
-                            PostView(
-                                viewModel: .init(post: post, width: size.width),
-                                backgroundColor: configuration.backgroundColor,
-                                textColor: configuration.textColor
-                            )
-                        }
+                        PostView(
+                            viewModel: .init(post: post, width: size.width),
+                            backgroundColor: configuration.backgroundColor,
+                            textColor: configuration.textColor
+                        )
                     }
                 }
+                .accentColor(configuration.interfaceColor)
                 .tint(configuration.interfaceColor)
                 .environment(router)
         }
