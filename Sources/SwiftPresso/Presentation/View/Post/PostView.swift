@@ -17,6 +17,10 @@ struct PostView: View {
         .background {
             backgroundColor
         }
+        .overlay {
+            ProgressView()
+                .opacity(viewModel.isLoading ? 1 : 0)
+        }
         .onAppear {
             viewModel.onAppear()
         }
