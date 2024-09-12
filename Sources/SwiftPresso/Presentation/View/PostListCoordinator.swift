@@ -29,7 +29,6 @@ struct PostListCoordinator<Placeholder: View>: View {
                         )
                     }
                 }
-                .accentColor(configuration.interfaceColor)
                 .tint(configuration.interfaceColor)
                 .environment(router)
         }

@@ -195,10 +195,10 @@ struct PostListView<Placeholder: View>: View {
                         .id(UUID())
                 }
             )
-            .tint(interfaceColor)
             .sheet(isPresented: $isShowMenu) {
                 menu()
-                    .presentationDetents([.medium])
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible)
             }
     }
     
