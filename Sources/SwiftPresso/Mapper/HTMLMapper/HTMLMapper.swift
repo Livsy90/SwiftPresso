@@ -30,12 +30,6 @@ struct HTMLMapper: HTMLMapperProtocol {
             return .init()
         }
         
-        let attributedStringColor = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        attributedString.addAttributes(
-            attributedStringColor,
-            range: NSMakeRange(0, attributedString.length)
-        )
-        
         return attributedString
     }
     
