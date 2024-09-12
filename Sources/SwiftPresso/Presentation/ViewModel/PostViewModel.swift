@@ -7,6 +7,7 @@ final class PostViewModel {
     var attributedContent: AttributedString = .init()
     var title: String
     var date: Date?
+    var attributedString: NSAttributedString = .init()
     
     var isLoading: Bool = true
         
@@ -25,19 +26,14 @@ final class PostViewModel {
     }
     
     func onAppear() {
-        var attributedContent = self.attributedContent
+        var attributedString = self.attributedString
         DispatchQueue.global(qos: .userInitiated).async {
-            attributedContent = AttributedString(
-                self.mapper.attributedStringFrom(
-                    htmlText: self.htmlString,
-                    width:self.width
-                )
+            attributedString = self.mapper.attributedStringFrom(
+                htmlText: self.htmlString,
+                width:self.width
             )
-            attributedContent.foregroundColor = SwiftPresso.Configuration.textColor
-            attributedContent.font = .body
-            
             DispatchQueue.main.async {
-                self.attributedContent = attributedContent
+                self.attributedString = attributedString
                 self.isLoading = false
             }
         }

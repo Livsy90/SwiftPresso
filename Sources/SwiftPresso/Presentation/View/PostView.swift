@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PostView: View {
     
-    let viewModel: PostViewModel
+    @State var viewModel: PostViewModel
     let backgroundColor: Color
     let textColor: Color
     
@@ -26,10 +26,13 @@ struct PostView: View {
                 
                 Spacer()
             }
-            
-            Text(viewModel.attributedContent)
-                .padding()
-                .foregroundStyle(textColor)
+            TextView(
+                attributedText: $viewModel.attributedString,
+                textStyle: .callout,
+                textColor: .label
+            )
+            .padding()
+            .foregroundStyle(textColor)
         }
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .background {
@@ -43,6 +46,31 @@ struct PostView: View {
             viewModel.onAppear()
         }
     }
+}
+
+struct TextView: UIViewRepresentable {
+
+    @Binding var attributedText: NSAttributedString
+    let textStyle: UIFont.TextStyle
+    let textColor: UIColor
+
+    func makeUIView(context: Context) -> UITextView {
+        let textView = UITextView()
+
+        textView.font = UIFont.preferredFont(forTextStyle: textStyle)
+        textView.autocapitalizationType = .sentences
+        textView.isSelectable = true
+        textView.isUserInteractionEnabled = false
+        textView.textColor = .blue
+
+        return textView
+    }
+
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        uiView.attributedText = attributedText
+        uiView.font = UIFont.preferredFont(forTextStyle: textStyle)
+    }
+    
 }
 
 #Preview {
