@@ -265,7 +265,7 @@ class ViewModel {
 
 ## HTML Mapper
 
-The HTML mapper can trasform a HTML text into the NSAtributted String.  If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a clickable link.
+The HTML mapper can transform an HTML text into an `NSAttributedString`.
 
 ```swift
 let mapper = SwiftPresso.Mapper.htmlMapper()
