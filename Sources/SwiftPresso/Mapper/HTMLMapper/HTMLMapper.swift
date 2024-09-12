@@ -1,21 +1,21 @@
 import Foundation
-import UIKit
+import SwiftUI
 
- struct HTMLMapper: HTMLMapperProtocol {
-     
-     /// Create an ``NSMutableAttributedString`` value from an HTML string. If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a clickable link.
-     /// - Parameters:
-     ///   - htmlText: HTML text.
-     ///   - width: Width of the view where this text will be presented.
-     /// - Returns: An ``NSMutableAttributedString`` value.
-     func attributedStringFrom(
+struct HTMLMapper: HTMLMapperProtocol {
+    
+    /// Create an ``NSMutableAttributedString`` value from an HTML string. If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a clickable link.
+    /// - Parameters:
+    ///   - htmlText: HTML text.
+    ///   - width: Width of the view where this text will be presented.
+    /// - Returns: An ``NSMutableAttributedString`` value.
+    func attributedStringFrom(
         htmlText: String,
         width: CGFloat
     ) -> NSMutableAttributedString {
         
-        let modifiedFont = formatStringWithYTVideo(
-            text: htmlText,
-            width: width
+        let modifiedFont = String(
+            format: "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(UIFont.preferredFont(forTextStyle: .callout).pointSize)\">%@</span>",
+            formatStringWithYTVideo(text: htmlText, width: width)
         )
         
         guard
@@ -35,19 +35,19 @@ import UIKit
             return .init()
         }
         
-        let attributedStringColor = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        let attributedStringColor = [NSAttributedString.Key.foregroundColor: UIColor( SwiftPresso.Configuration.textColor)]
         attributedString.addAttributes(
             attributedStringColor,
             range: NSMakeRange(0, attributedString.length)
         )
         
-        return attributedString
+        return configured(attrStr: attributedString)
     }
     
-     private func formatStringWithYTVideo(
+    private func formatStringWithYTVideo(
         text: String,
         width: CGFloat
-     ) -> String {
+    ) -> String {
         let iframeTexts = matches(for: ".*iframe.*", in: text)
         var newText = text
         
@@ -91,6 +91,54 @@ import UIKit
         } catch {
             return []
         }
+    }
+    
+    private func configured(attrStr: NSMutableAttributedString) -> NSMutableAttributedString {
+        attrStr.enumerateAttribute(
+            NSAttributedString.Key.attachment,
+            in: NSMakeRange(0, attrStr.length), options: .init(rawValue: 0),
+            using: { value, range, stop in
+                
+            if let attachement = value as? NSTextAttachment {
+                let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
+                let screenSize: CGRect = UIScreen.main.bounds
+                let newImage = image.resize(scaledToWidth: screenSize.width - 50)
+                let newAttribut = NSTextAttachment()
+                
+                newAttribut.image = newImage
+                attrStr.addAttribute(NSAttributedString.Key.attachment, value: newAttribut, range: range)
+            }
+        })
+        return attrStr
+    }
+    
+}
+
+private extension UIImage {
+    
+    func resize(targetSize: CGSize) -> UIImage {
+        return UIGraphicsImageRenderer(size:targetSize).image { _ in
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+    }
+    
+    func resize(scaledToWidth desiredWidth: CGFloat) -> UIImage {
+        let oldWidth = size.width
+        let scaleFactor = desiredWidth / oldWidth
+        
+        let newHeight = size.height * scaleFactor
+        let newWidth = oldWidth * scaleFactor
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        
+        return resize(targetSize: newSize)
+    }
+    
+    func resize(scaledToHeight desiredHeight: CGFloat) -> UIImage {
+        let scaleFactor = desiredHeight / size.height
+        let newWidth = size.width * scaleFactor
+        let newSize = CGSize(width: newWidth, height: desiredHeight)
+        
+        return resize(targetSize: newSize)
     }
     
 }

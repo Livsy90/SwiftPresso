@@ -420,5 +420,5 @@ private struct PostListRow<Placeholder: View>: View {
 }
 
 #Preview {
-    SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: true))
+    SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: false))
 }
