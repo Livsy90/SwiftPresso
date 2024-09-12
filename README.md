@@ -2,7 +2,7 @@
 
 SwiftPresso connects your Wordpress website and your Swift app.
 
-With just one line of code, you can convert your WordPress website to an iOS app. SwiftPresso provides a customizable SwiftUI View to display your website posts.
+With just one line of code, you can convert your WordPress website to an iOS app. SwiftPresso provides customizable SwiftUI Views to display your website content.
 
 If you prefer full control, you can create your own entities and use SwiftPresso only to manage networking and domain models.
 
@@ -59,7 +59,8 @@ To choose between these options, you can set the configuration value.
 SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: true))
 ```
 
-### Important: if you prefer the first option, remember to edit your Info file to add a permission string about photo library usage, since SwiftPresso allows users to save images to a camera roll. Select “Privacy - Photo Library Additions Usage Description” to add this string.
+### Important: 
+If you prefer the first option, remember to edit your Info file to add a permission string about photo library usage, since SwiftPresso allows users to save images to a camera roll. Select “Privacy - Photo Library Additions Usage Description” to add this string.
 
 
 To use built-in WebView, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel, open Settings -> Permalinks, and change your permalink scheme like this:
@@ -68,7 +69,8 @@ To use built-in WebView, you can configure your website permalinks in a specific
 yourhostname/%category%/%postname%/
 ```
 
-### Important: this will affect your SEO settings, so do this cautiously.
+### Important:
+This will affect your SEO settings, so do this cautiously.
 
 ## Loading indicator
 
