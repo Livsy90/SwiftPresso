@@ -82,13 +82,8 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
                     )
                     .gesture(
                         DragGesture().onEnded { event in
-                            print(event.location.x)
-                            print(abs(event.translation.height))
-                            print(abs(event.translation.width))
-                            print(event.location.x - event.startLocation.x)
-                            print(event.translation.width)
                             if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
-                                if event.translation.width > 0 {
+                                if event.translation.width > 0, !isCanGoBack {
                                     urlToOpen = nil
                                 }
                             }
@@ -115,15 +110,7 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
     @State private var isCanGoForward = false
     
     func body(content: Content) -> some View {
-        let drag = DragGesture().onEnded { event in
-            if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
-                if event.translation.width < 0, !isCanGoBack {
-                    urlToOpen = nil
-                }
-            }
-        }
-        return content
-            .gesture(drag)
+        content
             .environment(\.openURL, OpenURLAction { url in
                 urlToOpen = url
                 return .handled
@@ -149,13 +136,8 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
                     )
                     .gesture(
                         DragGesture().onEnded { event in
-                            print(event.location.x)
-                            print(abs(event.translation.height))
-                            print(abs(event.translation.width))
-                            print(event.location.x - event.startLocation.x)
-                            print(event.translation.width)
                             if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
-                                if event.translation.width > 0 {
+                                if event.translation.width > 0, !isCanGoBack {
                                     urlToOpen = nil
                                 }
                             }
