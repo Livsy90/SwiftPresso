@@ -104,6 +104,9 @@ struct WebView: UIViewRepresentable {
                 UIApplication.shared.open(url)
                 decisionHandler(.cancel)
             } else {
+                if navigationAction.targetFrame == nil {
+                    webView.load(navigationAction.request)
+                }
                 decisionHandler(.allow)
             }
         }
