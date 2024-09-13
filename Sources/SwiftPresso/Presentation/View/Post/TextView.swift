@@ -24,7 +24,7 @@ struct TextView: View {
     private var autocorrection: UITextAutocorrectionType = .default
     private var truncationMode: NSLineBreakMode = .byTruncatingTail
     private var isSecure: Bool = false
-    private var isEditable: Bool = true
+    private var isEditable: Bool = false
     private var isSelectable: Bool = true
     private var isScrollingEnabled: Bool = false
     private var enablesReturnKeyAutomatically: Bool?
