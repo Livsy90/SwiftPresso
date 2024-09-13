@@ -151,7 +151,7 @@ struct PostListView<Placeholder: View>: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(backgroundColor, for: .navigationBar)
             .toolbar {   
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .principal) {
                     navigationBarPrincipalItem()
                 }
                 
@@ -214,10 +214,12 @@ struct PostListView<Placeholder: View>: View {
     }
     
     private func navigationBarPrincipalItem() -> some View {
-        Text(viewModel.mode.title)
-            .fontWeight(.semibold)
-            .foregroundStyle(interfaceColor)
-            .frame(width: UIScreen.current?.bounds.size.width ?? .zero)
+        HStack {
+            Text(viewModel.mode.title)
+                .fontWeight(.semibold)
+                .foregroundStyle(interfaceColor)
+                .frame(width: (UIScreen.current?.bounds.size.width ?? 44) - 44, alignment: .center)
+        }
     }
     
     @ViewBuilder
