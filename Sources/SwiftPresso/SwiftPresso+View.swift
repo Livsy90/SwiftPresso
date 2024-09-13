@@ -20,7 +20,7 @@ extension SwiftPresso {
             Configuration.configure(with: configuration)
             
             return PostListView(
-                backgroundColor: .red,
+                backgroundColor: Configuration.backgroundColor,
                 interfaceColor: Configuration.interfaceColor,
                 textColor: Configuration.textColor,
                 menuBackgroundColor: Configuration.menuBackgroundColor,
