@@ -60,7 +60,16 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
     @State private var isCanGoForward = false
     
     func body(content: Content) -> some View {
-        content
+        let drag = DragGesture().onEnded { event in
+            if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
+                withAnimation {
+                    if event.translation.width < 0, !isCanGoBack {
+                        urlToOpen = nil
+                    }
+                }
+            }
+        }
+        return content
             .fullScreenCover(
                 isPresented: $urlToOpen.boolValue(),
                 onDismiss: {
@@ -80,6 +89,7 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
                         onTag: onTag,
                         onCategory: onCategory
                     )
+                    .gesture(drag)
                 })
     }
     
@@ -101,7 +111,16 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
     @State private var isCanGoForward = false
     
     func body(content: Content) -> some View {
-        content
+        let drag = DragGesture().onEnded { event in
+            if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
+                withAnimation {
+                    if event.translation.width < 0, !isCanGoBack {
+                        urlToOpen = nil
+                    }
+                }
+            }
+        }
+        return content
             .environment(\.openURL, OpenURLAction { url in
                 urlToOpen = url
                 return .handled
@@ -125,6 +144,7 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
                         onTag: onTag,
                         onCategory: onCategory
                     )
+                    .gesture(drag)
                 })
     }
     
