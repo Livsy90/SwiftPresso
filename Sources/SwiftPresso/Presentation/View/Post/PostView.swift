@@ -17,7 +17,7 @@ struct PostView: View {
             postID: $nextPostID,
             textStyle: .callout
         )
-        .padding()
+        .padding([.horizontal, .bottom])
         .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
@@ -35,6 +35,7 @@ struct PostView: View {
         }
         .background {
             backgroundColor
+                .ignoresSafeArea()
         }
         .overlay {
             ProgressView()
