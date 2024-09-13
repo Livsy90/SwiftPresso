@@ -2,7 +2,7 @@ public struct SwiftPressoInjectedValues {
     
     private static var current = SwiftPressoInjectedValues()
     
-    static subscript<K>(key: K.Type) -> K.Value where K : SwiftPressoInjectionKey {
+    static subscript<K>(key: K.Type) -> K.Value where K: SwiftPressoInjectionKey {
         get {
             key.currentValue
         }

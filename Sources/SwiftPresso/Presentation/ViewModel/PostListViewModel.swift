@@ -45,9 +45,17 @@ final class PostListViewModel {
     
     private let postPerPage: Int
     
-    private let postListProvider = SwiftPresso.Provider.postListProvider()
-    private let categoryListProvider = SwiftPresso.Provider.categoryListProvider()
-    private let tagListProvider = SwiftPresso.Provider.tagListProvider()
+    @ObservationIgnored
+    @SwiftPressoInjected(\.postList)
+    private var postListProvider: PostListProviderProtocol
+    
+    @ObservationIgnored
+    @SwiftPressoInjected(\.categoryList)
+    private var categoryListProvider: CategoryListProviderProtocol
+    
+    @ObservationIgnored
+    @SwiftPressoInjected(\.tagList)
+    private var tagListProvider: TagListProviderProtocol
     
     @ObservationIgnored
     @SwiftPressoInjected(\.pageList)
