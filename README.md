@@ -120,7 +120,7 @@ To use SwiftPresso providers, you can inject them via SwiftPresso property wrapp
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.categoryList)
+    @SwiftPressoInjected(\.categoryListProvider)
     var categoryListProvider: CategoryListProviderProtocol
     
 }
@@ -139,7 +139,7 @@ To use property wrappers inside an Observable class scope, you can mark properti
 class ViewModel {
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.categoryList)
+    @SwiftPressoInjected(\.categoryListProvider)
     var categoryListProvider: CategoryListProviderProtocol
     
 }
@@ -169,7 +169,7 @@ You can configure several parameters to perform the request:
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.postList)
+    @SwiftPressoInjected(\.postListProvider)
     var postListProvider: PostListProviderProtocol
     
     func getData() async {
@@ -202,7 +202,7 @@ The single post provider has two methods for retrieving a specific post model.
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.post)
+    @SwiftPressoInjected(\.postProvider)
     var postProvider: PostProviderProtocol
         
     func getData() async {
@@ -222,7 +222,7 @@ As the post list provider, the page list provider also has two methods for retri
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.pageList)
+    @SwiftPressoInjected(\.pageListProvider)
     var pageListProvider: PageListProviderProtocol
         
     func getData() async {
@@ -242,7 +242,7 @@ The page provider also has two methods for retrieving a page model.
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.page)
+    @SwiftPressoInjected(\.pageProvider)
     var pageProvider: PageProviderProtocol
         
     func getData() async {
@@ -260,7 +260,7 @@ The category and the tag list providers provide an array of models, which is a C
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.categoryList)
+    @SwiftPressoInjected(\.categoryListProvider)
     var categoryListProvider: CategoryListProviderProtocol
     
     func getData() async {
@@ -273,7 +273,7 @@ class ViewModel {
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.tagList)
+    @SwiftPressoInjected(\.tagListProvider)
     var tagListProvider: TagListProviderProtocol
         
     func getData() async {

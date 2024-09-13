@@ -1,5 +1,5 @@
 extension SwiftPressoInjectedValues {
-    public var post: any PostProviderProtocol {
+    public var postProvider: any PostProviderProtocol {
         get {
             Self[PostProviderKey.self]
         }

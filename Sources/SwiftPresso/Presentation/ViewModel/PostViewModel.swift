@@ -16,7 +16,7 @@ final class PostViewModel {
     private var mapper: any HTMLMapperProtocol
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.post)
+    @SwiftPressoInjected(\.postProvider)
     private var postProvider: any PostProviderProtocol
     
     private let htmlString: String
