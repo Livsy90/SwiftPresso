@@ -12,14 +12,17 @@ struct PostView: View {
     @State private var alertMessage: String?
     
     var body: some View {
-        ScrollView {
+        VStack {
             TextView(
                 attributedText: $viewModel.attributedString,
                 postID: $nextPostID,
                 textStyle: .callout
             )
             .padding([.horizontal, .bottom])
-            .frame(height: viewModel.size.height)
+            .frame(width: viewModel.size.width ,height: viewModel.size.height)
+        }
+        .readSize { size in
+            viewModel.size = size
         }
         .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
@@ -72,6 +75,9 @@ struct PostView: View {
 }
 
 #Preview {
+    let text = """
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+"""
     let post = PostModel(
         id: 1,
         date: .now,
@@ -79,13 +85,13 @@ struct PostView: View {
         excerpt: "",
         imgURL: nil,
         link: URL(string: "https://livsycode.com/"),
-        content: "Text",
+        content: text,
         author: 0,
         tags: []
     )
     
     return PostView(
-        viewModel: .init(post: post, size: UIScreen.main.bounds.size),
+        viewModel: .init(post: post),
         backgroundColor: SwiftPresso.Configuration.backgroundColor,
         textColor: SwiftPresso.Configuration.textColor
     )

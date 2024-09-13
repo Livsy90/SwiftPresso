@@ -16,14 +16,11 @@ struct PostListCoordinator<Placeholder: View>: View {
     var body: some View {
         NavigationStack(path: $router.navigationPath) {
             postList()
-                .readSize { newValue in
-                    size = newValue
-                }
                 .navigationDestination(for: Destination.self) { destination in
                     switch destination {
                     case .postDetails(let post):
                         PostView(
-                            viewModel: .init(post: post, size: size),
+                            viewModel: .init(post: post),
                             backgroundColor: configuration.backgroundColor,
                             textColor: configuration.textColor
                         )

@@ -7,7 +7,7 @@ final class PostViewModel {
     var attributedString: NSAttributedString = .init()
     var isLoading: Bool = true
     var url: URL?
-    var size: CGSize
+    var size: CGSize = UIScreen.main.bounds.size
     
     @ObservationIgnored
     @SwiftPressoInjected(\.htmlMapper)
@@ -21,12 +21,11 @@ final class PostViewModel {
     private let title: String
     private let date: Date?
     
-    init(post: PostModel, size: CGSize) {
+    init(post: PostModel) {
         title = post.title
         date = post.date
         url = post.link
         htmlString = post.content
-        self.size = size
     }
     
     func onAppear() {
