@@ -13,13 +13,26 @@ struct PostView: View {
     
     var body: some View {
         TextView(
-            attributedText: $viewModel.attributedString, 
+            attributedText: $viewModel.attributedString,
             postID: $nextPostID,
             textStyle: .callout
         )
         .padding()
         .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
+        .toolbar {
+            if let url = viewModel.url {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ShareLink(item: url) {
+                        Image(systemName: "square.and.arrow.up")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 22)
+                    }
+                }
+            }
+        }
         .background {
             backgroundColor
         }
@@ -52,7 +65,7 @@ struct PostView: View {
         title: "Title",
         excerpt: "",
         imgURL: nil,
-        link: nil,
+        link: URL(string: "https://livsycode.com/"),
         content: "Text",
         author: 0,
         tags: []
@@ -63,4 +76,5 @@ struct PostView: View {
         backgroundColor: SwiftPresso.Configuration.backgroundColor,
         textColor: SwiftPresso.Configuration.textColor
     )
+    .environment(Router())
 }

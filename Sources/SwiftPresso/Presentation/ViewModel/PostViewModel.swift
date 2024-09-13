@@ -6,6 +6,7 @@ final class PostViewModel {
     
     var attributedString: NSAttributedString = .init()
     var isLoading: Bool = true
+    var url: URL?
     
     @ObservationIgnored
     @SwiftPressoInjected(\.htmlMapper)
@@ -23,6 +24,7 @@ final class PostViewModel {
     init(post: PostModel, width: CGFloat) {
         title = post.title
         date = post.date
+        url = post.link
         htmlString = post.content
         self.width = width
     }
