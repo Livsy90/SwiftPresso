@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "apricotnavigation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Livsy90/ApricotNavigation.git",
+      "state" : {
+        "revision" : "22005ad8225519210edc720fad711c428e1c73fa",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "skavoknetworking",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Livsy90/SkavokNetworking.git",
+      "state" : {
+        "revision" : "612c2b9517a5df7674c4e9b80bbac3a224cbc0f9",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
