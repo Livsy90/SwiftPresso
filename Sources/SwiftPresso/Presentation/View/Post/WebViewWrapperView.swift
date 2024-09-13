@@ -80,6 +80,7 @@ struct WebViewWrapperView<Content: View>: View {
                         }
                     )
                     .opacity(isLoading ? 0 : 1)
+                    .ignoresSafeArea(edges: .bottom)
                 }
                 placeHolder()
                     .opacity(isLoading ? 1 : 0)

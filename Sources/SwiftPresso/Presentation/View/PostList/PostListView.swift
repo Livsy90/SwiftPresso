@@ -16,6 +16,7 @@ struct PostListView<Placeholder: View>: View {
     @State private var isPageMenuExpanded: Bool
     @State private var isTagMenuExpanded: Bool
     @State private var isCategoryMenuExpanded: Bool
+    @State private var chosenPage: PostModel?
     
     private let backgroundColor: Color
     private let interfaceColor: Color
@@ -196,11 +197,14 @@ struct PostListView<Placeholder: View>: View {
                         .id(UUID())
                 }
             )
-            .sheet(isPresented: $isShowMenu) {
+            .sheet(isPresented: $isShowMenu, onDismiss: {
+                openPageIfNeeded(chosenPage)
+                chosenPage = nil
+            }, content: {
                 menu()
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
-            }
+            })
     }
     
     private func placeholder() -> some View {
@@ -255,12 +259,7 @@ struct PostListView<Placeholder: View>: View {
                             ForEach(viewModel.pageList, id: \.self) { page in
                                 Button {
                                     isShowMenu = false
-                                    if isShowContentInWebView {
-                                        guard let url = page.link else { return }
-                                      //  urlToOpen = url
-                                    } else {
-                                        router.navigate(to: Destination.postDetails(post: page))
-                                    }
+                                    chosenPage = page
                                 } label: {
                                     VStack {
                                         HStack {
@@ -371,8 +370,19 @@ struct PostListView<Placeholder: View>: View {
         .background(menuBackgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+    
+    private func openPageIfNeeded(_ page: PostModel?) {
+        guard let page else { return }
+        
+        if isShowContentInWebView {
+            guard let url = page.link else { return }
+            urlToOpen = url
+        } else {
+            router.navigate(to: Destination.postDetails(post: page))
+        }
+    }
 }
 
 #Preview {
-    SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: false))
+    SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: true))
 }
