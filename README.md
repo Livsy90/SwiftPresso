@@ -8,6 +8,12 @@ If you prefer full control, you can create your own entities and use SwiftPresso
 
 You can also use SwiftPresso HTML mapper to transform HTML text into `NSAttributedString`.
 
+<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo1.png" width ="300">
+
+<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo2.png" width ="300">
+
+<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo3.png" width ="300">
+
 ## Installation
 
 ### SPM:
