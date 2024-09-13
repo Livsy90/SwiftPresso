@@ -43,6 +43,7 @@ struct PostView: View {
                 onEditingChanged: nil,
                 onCommit: nil
             )
+            .opacity(viewModel.isInitialLoading ? 0 : 1)
         }
         .padding()
         .ignoresSafeArea(edges: .bottom)
@@ -73,7 +74,7 @@ struct PostView: View {
                 ProgressView()
                     .controlSize(.large)
             }
-            .opacity(viewModel.isLoading ? 1 : 0)
+            .opacity(viewModel.isLoading || viewModel.isInitialLoading ? 1 : 0)
         }
         .onAppear {
             viewModel.onAppear()

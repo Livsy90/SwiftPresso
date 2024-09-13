@@ -5,7 +5,8 @@ import SwiftUI
 final class PostViewModel {
     
     var attributedString: NSAttributedString = .init()
-    var isLoading: Bool = true
+    var isInitialLoading: Bool = true
+    var isLoading: Bool = false
     var url: URL?
     var title: String
     var date: Date?
@@ -36,7 +37,9 @@ final class PostViewModel {
             )
             DispatchQueue.main.async {
                 self.attributedString = attributedString
-                self.isLoading = false
+                withAnimation {
+                    self.isInitialLoading = false
+                }
             }
         }
     }

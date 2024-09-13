@@ -406,6 +406,17 @@ private extension SwiftUITextView {
 
             return .init(menu: defaultMenu)
         }
+        
+        func textView(_ textView: UITextView, primaryActionFor textItem: UITextItem, defaultAction: UIAction) -> UIAction? {
+            if case .link(let url) = textItem.content {
+                let components = url.pathComponents
+                if let idComponent = components.last, let id = Int(idComponent)  {
+                    postID = id
+                }
+            }
+            
+            return nil
+        }
 
     }
 
