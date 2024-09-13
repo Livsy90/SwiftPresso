@@ -82,6 +82,8 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
                     )
                     .gesture(
                         DragGesture().onEnded { value in
+                            
+                            print(value.location.y - value.startLocation.y)
                             if value.location.y - value.startLocation.y > 150 {
                                 urlToOpen = nil
                             }
@@ -142,6 +144,7 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
                     )
                     .gesture(
                         DragGesture().onEnded { value in
+                            print(value.location.y - value.startLocation.y)
                             if value.location.y - value.startLocation.y > 150 {
                                 urlToOpen = nil
                             }
