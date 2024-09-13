@@ -41,7 +41,6 @@ struct TextView: UIViewRepresentable {
                 let components = url.pathComponents
                 if let idComponent = components.last, let id = Int(idComponent)  {
                     postID = id
-                   return nil
                 }
             }
             
