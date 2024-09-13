@@ -257,7 +257,7 @@ struct PostListView<Placeholder: View>: View {
                                     isShowMenu = false
                                     if isShowContentInWebView {
                                         guard let url = page.link else { return }
-                                        urlToOpen = url
+                                      //  urlToOpen = url
                                     } else {
                                         router.navigate(to: Destination.postDetails(post: page))
                                     }
