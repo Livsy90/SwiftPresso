@@ -145,12 +145,12 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
                         onCategory: onCategory
                     )
                     .gesture(
-                        DragGesture().onEnded { value in
+                        DragGesture().onEnded { event in
                             print(event.location.x)
                             print(abs(event.translation.height))
                             print(abs(event.translation.width))
                             print(event.location.x - event.startLocation.x)
-                            if value.location.y - value.startLocation.y > 150 {
+                            if event.location.y - event.startLocation.y > 150 {
                                 urlToOpen = nil
                             }
                         }
