@@ -223,9 +223,7 @@ struct PostListView<Placeholder: View>: View {
     private func navigationBarTrailingItem() -> some View {
         if isShowTagMenu || isShowPageMenu || isShowCategoryMenu {
             Button {
-                withAnimation {
-                    isShowMenu = true
-                }
+                isShowMenu = true
             } label: {
                 Image(systemName: "ellipsis")
             }
@@ -243,7 +241,6 @@ struct PostListView<Placeholder: View>: View {
                 homeIcon
             }
             .opacity(viewModel.isRefreshable ? 1 : 0)
-            .animation(.default, value: viewModel.isRefreshable)
             .symbolEffect(.bounce, value: viewModel.isRefreshable)
             .disabled(viewModel.isLoading)
         }
