@@ -18,7 +18,6 @@ struct TextView: View {
     private var foregroundColor: UIColor = .label
     private var autocapitalization: UITextAutocapitalizationType = .sentences
     private var multilineTextAlignment: NSTextAlignment = .left
-    private var font: UIFont = .preferredFont(forTextStyle: .body)
     private var returnKeyType: UIReturnKeyType?
     private var clearsOnInsertion: Bool = false
     private var autocorrection: UITextAutocorrectionType = .default
@@ -61,7 +60,6 @@ struct TextView: View {
             internalText,
             postID: $postID,
             foregroundColor: foregroundColor,
-            font: font,
             multilineTextAlignment: multilineTextAlignment,
             autocapitalization: autocapitalization,
             returnKeyType: returnKeyType,
@@ -130,12 +128,6 @@ extension TextView {
         case .center:
             view.multilineTextAlignment = .center
         }
-        return view
-    }
-
-    func font(_ font: UIFont) -> TextView {
-        var view = self
-        view.font = font
         return view
     }
 
@@ -218,7 +210,6 @@ private struct SwiftUITextView: UIViewRepresentable {
     private let foregroundColor: UIColor
     private let autocapitalization: UITextAutocapitalizationType
     private let multilineTextAlignment: NSTextAlignment
-    private let font: UIFont
     private let returnKeyType: UIReturnKeyType?
     private let clearsOnInsertion: Bool
     private let autocorrection: UITextAutocorrectionType
@@ -234,7 +225,6 @@ private struct SwiftUITextView: UIViewRepresentable {
         _ attributedString: Binding<NSAttributedString>,
         postID: Binding<Int?>,
         foregroundColor: UIColor,
-        font: UIFont,
         multilineTextAlignment: NSTextAlignment,
         autocapitalization: UITextAutocapitalizationType,
         returnKeyType: UIReturnKeyType?,
@@ -261,7 +251,6 @@ private struct SwiftUITextView: UIViewRepresentable {
         self.onEditingChanged = onEditingChanged
 
         self.foregroundColor = foregroundColor
-        self.font = font
         self.multilineTextAlignment = multilineTextAlignment
         self.autocapitalization = autocapitalization
         self.returnKeyType = returnKeyType
@@ -291,7 +280,6 @@ private struct SwiftUITextView: UIViewRepresentable {
 
     func updateUIView(_ view: UIKitTextView, context: Context) {
         view.attributedText = attributedString
-        view.font = font
         view.textAlignment = multilineTextAlignment
         view.textColor = foregroundColor
         view.autocapitalizationType = autocapitalization
@@ -426,7 +414,11 @@ private final class UIKitTextView: UITextView {
     
     override var keyCommands: [UIKeyCommand]? {
         return (super.keyCommands ?? []) + [
-            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(escape(_:)))
+            UIKeyCommand(
+                input: UIKeyCommand.inputEscape,
+                modifierFlags: [],
+                action: #selector(escape(_:))
+            )
         ]
     }
     

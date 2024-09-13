@@ -293,6 +293,16 @@ func map(post: PostModel) -> NSAttributedString {
 }
 ```
 
+```swift
+@ObservationIgnored
+@SwiftPressoInjected(\.htmlMapper)
+var mapper: HTMLMapperProtocol
+
+func map(post: PostModel) -> NSAttributedString {
+    mapper.attributedStringFrom(htmlText: post.content, width: 375)
+}
+```
+
 # Screenshots
 
 ### Post list
