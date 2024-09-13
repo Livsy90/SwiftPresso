@@ -38,8 +38,15 @@ struct PostView: View {
                 .ignoresSafeArea()
         }
         .overlay {
-            ProgressView()
-                .opacity(viewModel.isLoading ? 1 : 0)
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(.ultraThinMaterial)
+                    .frame(width: 80, height: 80)
+                
+                ProgressView()
+                    .controlSize(.large)
+            }
+            .opacity(viewModel.isLoading ? 1 : 0)
         }
         .onAppear {
             viewModel.onAppear()
@@ -49,8 +56,10 @@ struct PostView: View {
             Task {
                 do {
                     let post = try await viewModel.post(with: newValue)
+                    nextPostID = nil
                     router.navigate(to: Destination.postDetails(post: post))
                 } catch {
+                    nextPostID = nil
                     alertMessage = error.localizedDescription
                 }
             }

@@ -36,7 +36,7 @@ struct TextView: UIViewRepresentable {
             _postID = postID
         }
         
-        func textView(_ textView: UITextView, primaryActionFor textItem: UITextItem, defaultAction: UIAction) -> UIAction? {
+        func textView(_ textView: UITextView, menuConfigurationFor textItem: UITextItem, defaultMenu: UIMenu) -> UITextItem.MenuConfiguration? {
             if case .link(let url) = textItem.content {
                 let components = url.pathComponents
                 if let idComponent = components.last, let id = Int(idComponent)  {
@@ -44,9 +44,10 @@ struct TextView: UIViewRepresentable {
                    return nil
                 }
             }
-            
-            return defaultAction
+
+            return .init(menu: defaultMenu)
         }
+        
     }
     
     final class GestureHandlingTextView: UITextView {
