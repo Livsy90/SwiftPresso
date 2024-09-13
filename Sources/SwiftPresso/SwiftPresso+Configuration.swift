@@ -72,10 +72,6 @@ public enum SwiftPresso {
             Preferences.shared.configuration = configuration
         }
         
-        public static func reload() {
-            SwiftPressoInjectedValues.recreate()
-        }
-        
     }
     
 }
