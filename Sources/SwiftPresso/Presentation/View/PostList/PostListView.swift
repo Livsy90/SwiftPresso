@@ -150,7 +150,11 @@ struct PostListView<Placeholder: View>: View {
             .navigationTitle(viewModel.mode.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(backgroundColor, for: .navigationBar)
-            .toolbar {                
+            .toolbar {   
+                ToolbarItem(placement: .topBarLeading) {
+                    navigationBarPrincipalItem()
+                }
+                
                 ToolbarItem(placement: .topBarLeading) {
                     navigationBarLeadingItem()
                 }
@@ -213,7 +217,7 @@ struct PostListView<Placeholder: View>: View {
         Text(viewModel.mode.title)
             .fontWeight(.semibold)
             .foregroundStyle(interfaceColor)
-            .frame(maxWidth: .infinity)
+            .frame(width: UIScreen.current?.bounds.size.width ?? .zero)
     }
     
     @ViewBuilder
