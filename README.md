@@ -8,12 +8,6 @@ If you prefer full control, you can create your own entities and use SwiftPresso
 
 You can also use SwiftPresso HTML mapper to transform HTML text into `NSAttributedString`.
 
-<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo1.png" width ="300">
-
-<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo2.png" width ="300">
-
-<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo3.png" width ="300">
-
 ## Installation
 
 ### SPM:
@@ -298,3 +292,16 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(htmlText: post.content, width: 375)
 }
 ```
+
+# Screenshots
+
+### Post list
+<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo2.png" width ="300">
+
+## Post
+
+<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo1.png" width ="300">
+
+## Menu
+
+<img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo3.png" width ="300">
