@@ -1,10 +1,13 @@
 import SkavokNetworking
 
 struct PostListService {
-    private let networkClient: ApiClientProtocol
-    private let configurator: PostListConfiguratorProtocol
+    private let networkClient: any ApiClientProtocol
+    private let configurator: any PostListConfiguratorProtocol
     
-    init(networkClient: ApiClientProtocol, configurator: PostListConfiguratorProtocol) {
+    init(
+        networkClient: some ApiClientProtocol,
+        configurator: some PostListConfiguratorProtocol
+    ) {
         self.networkClient = networkClient
         self.configurator = configurator
     }

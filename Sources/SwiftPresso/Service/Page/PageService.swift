@@ -1,10 +1,13 @@
 import SkavokNetworking
 
 struct PageService {
-    private let networkClient: ApiClientProtocol
-    private let configurator: PageConfiguratorProtocol
+    private let networkClient: any ApiClientProtocol
+    private let configurator: any PageConfiguratorProtocol
     
-    init(networkClient: ApiClientProtocol, configurator: PageConfiguratorProtocol) {
+    init(
+        networkClient: some ApiClientProtocol,
+        configurator: some PageConfiguratorProtocol
+    ) {
         self.networkClient = networkClient
         self.configurator = configurator
     }

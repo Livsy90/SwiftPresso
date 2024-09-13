@@ -1,8 +1,8 @@
 struct CategoryListProvider: CategoryListProviderProtocol {
         
-    private let service: CategoryListServiceProtocol
+    private let service: any CategoryListServiceProtocol
     
-    init(service: CategoryListServiceProtocol) {
+    init(service: some CategoryListServiceProtocol) {
         self.service = service
     }
     

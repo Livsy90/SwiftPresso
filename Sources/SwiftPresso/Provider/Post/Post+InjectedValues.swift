@@ -1,5 +1,5 @@
 extension SwiftPressoInjectedValues {
-    public var post: PostProviderProtocol {
+    public var post: any PostProviderProtocol {
         get {
             Self[PostProviderKey.self]
         }
@@ -10,5 +10,5 @@ extension SwiftPressoInjectedValues {
 }
 
 private enum PostProviderKey: SwiftPressoInjectionKey {
-    static var currentValue: PostProviderProtocol = SwiftPresso.Provider.postProvider()
+    static var currentValue: any PostProviderProtocol = SwiftPresso.Provider.postProvider()
 }

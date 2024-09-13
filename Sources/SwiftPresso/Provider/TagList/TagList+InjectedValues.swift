@@ -1,5 +1,5 @@
 extension SwiftPressoInjectedValues {
-    public var tagList: TagListProviderProtocol {
+    public var tagListProvider: any TagListProviderProtocol {
         get {
             Self[TagListProviderKey.self]
         }
@@ -10,5 +10,5 @@ extension SwiftPressoInjectedValues {
 }
 
 private enum TagListProviderKey: SwiftPressoInjectionKey {
-    static var currentValue: TagListProviderProtocol = SwiftPresso.Provider.tagListProvider()
+    static var currentValue: any TagListProviderProtocol = SwiftPresso.Provider.tagListProvider()
 }

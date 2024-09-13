@@ -1,8 +1,8 @@
 struct TagListProvider: TagListProviderProtocol {
         
-    private let service: TagListServiceProtocol
+    private let service: any TagListServiceProtocol
     
-    init(service: TagListServiceProtocol) {
+    init(service: some TagListServiceProtocol) {
         self.service = service
     }
     

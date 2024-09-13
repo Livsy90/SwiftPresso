@@ -1,5 +1,5 @@
 extension SwiftPressoInjectedValues {
-    public var htmlMapper: HTMLMapperProtocol {
+    public var htmlMapper: any HTMLMapperProtocol {
         get {
             Self[PageProviderKey.self]
         }
@@ -10,6 +10,6 @@ extension SwiftPressoInjectedValues {
 }
 
 private enum PageProviderKey: SwiftPressoInjectionKey {
-    static var currentValue: HTMLMapperProtocol = SwiftPresso.Mapper.htmlMapper()
+    static var currentValue: any HTMLMapperProtocol = SwiftPresso.Mapper.htmlMapper()
 }
 

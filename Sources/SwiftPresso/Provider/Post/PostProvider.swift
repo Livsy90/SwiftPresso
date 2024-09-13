@@ -1,9 +1,9 @@
 struct PostProvider: PostProviderProtocol {
         
-    private let service: PostServiceProtocol
-    private let mapper: WPPostMapperProtocol
+    private let service: any PostServiceProtocol
+    private let mapper: any WPPostMapperProtocol
     
-    init(service: PostServiceProtocol, mapper: WPPostMapperProtocol) {
+    init(service: some PostServiceProtocol, mapper: some WPPostMapperProtocol) {
         self.service = service
         self.mapper = mapper
     }

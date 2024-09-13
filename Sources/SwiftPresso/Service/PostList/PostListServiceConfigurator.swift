@@ -12,6 +12,7 @@ struct PostListServiceConfigurator {
             static let search = "search"
         }
     }
+    
 }
 
 // MARK: - FeedServiceConfigurator

@@ -6,7 +6,7 @@ enum APIClientFactory {
         url: URL, 
         httpScheme: HTTPScheme,
         httpAdditionalHeaders: [AnyHashable: Any]?
-    ) -> APIClient {
+    ) -> some ApiClientProtocol {
         
         let sessionConfiguration: URLSessionConfiguration = .default
         sessionConfiguration.httpAdditionalHeaders = httpAdditionalHeaders

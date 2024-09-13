@@ -1,10 +1,13 @@
 import SkavokNetworking
 
 struct CategoryListService {
-    private let networkClient: ApiClientProtocol
-    private let configurator: CategoryListConfiguratorProtocol
+    private let networkClient: any ApiClientProtocol
+    private let configurator: any CategoryListConfiguratorProtocol
     
-    init(networkClient: ApiClientProtocol, configurator: CategoryListConfiguratorProtocol) {
+    init(
+        networkClient: some ApiClientProtocol,
+        configurator: some CategoryListConfiguratorProtocol
+    ) {
         self.networkClient = networkClient
         self.configurator = configurator
     }

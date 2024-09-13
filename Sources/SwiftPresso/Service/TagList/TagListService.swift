@@ -1,10 +1,13 @@
 import SkavokNetworking
 
 struct TagListService {
-    private let networkClient: ApiClientProtocol
-    private let configurator: TagListConfiguratorProtocol
+    private let networkClient: any ApiClientProtocol
+    private let configurator: any TagListConfiguratorProtocol
     
-    init(networkClient: ApiClientProtocol, configurator: TagListConfiguratorProtocol) {
+    init(
+        networkClient: some ApiClientProtocol,
+        configurator: some TagListConfiguratorProtocol
+    ) {
         self.networkClient = networkClient
         self.configurator = configurator
     }

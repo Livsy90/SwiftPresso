@@ -1,9 +1,12 @@
 struct PageListProvider: PageListProviderProtocol {
         
-    private let service: PageListServiceProtocol
-    private let mapper: WPPostMapperProtocol
+    private let service: any PageListServiceProtocol
+    private let mapper: any WPPostMapperProtocol
     
-    init(service: PageListServiceProtocol, mapper: WPPostMapperProtocol) {
+    init(
+        service: some PageListServiceProtocol,
+        mapper: some WPPostMapperProtocol
+    ) {
         self.service = service
         self.mapper = mapper
     }

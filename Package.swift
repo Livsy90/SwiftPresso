@@ -31,3 +31,11 @@ let package = Package(
             dependencies: ["SwiftPresso"])
     ]
 )
+
+for target in package.targets {
+    var settings = target.swiftSettings ?? []
+    settings.append(contentsOf: [
+        .enableUpcomingFeature("ExistentialAny"),
+    ])
+    target.swiftSettings = settings
+}

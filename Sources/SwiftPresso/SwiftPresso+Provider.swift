@@ -7,7 +7,7 @@ extension SwiftPresso {
         
         /// Factory method for post list provider.
         /// - Returns: Returns the value of the provider of the post list.
-        public static func postListProvider() -> PostListProviderProtocol {
+        public static func postListProvider() -> some PostListProviderProtocol {
             guard !Preferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, use the 'SwiftPresso.Configuration.configure' method.")
             }
@@ -40,7 +40,7 @@ extension SwiftPresso {
         
         /// Factory method for post provider.
         /// - Returns: Returns the value of the provider of the post.
-        public static func postProvider() -> PostProviderProtocol {
+        public static func postProvider() -> some PostProviderProtocol {
             guard !Preferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, use the 'SwiftPresso.Configuration.configure' method.")
             }
@@ -73,7 +73,7 @@ extension SwiftPresso {
         
         /// Factory method for page list provider.
         /// - Returns: Returns the value of the page list provider.
-        public static func pageListProvider() -> PageListProviderProtocol {
+        public static func pageListProvider() -> some PageListProviderProtocol {
             guard !Preferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
@@ -106,7 +106,7 @@ extension SwiftPresso {
         
         /// Factory method for page provider.
         /// - Returns: Returns the value of the page provider.
-        public static func pageProvider() -> PageProviderProtocol {
+        public static func pageProvider() -> some PageProviderProtocol {
             guard !Preferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
@@ -139,7 +139,7 @@ extension SwiftPresso {
         
         /// Factory method for category list provider.
         /// - Returns: Returns the value of the category list provider.
-        public static func categoryListProvider() -> CategoryListProviderProtocol {
+        public static func categoryListProvider() -> some CategoryListProviderProtocol {
             guard !Preferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
@@ -170,7 +170,7 @@ extension SwiftPresso {
         
         /// Factory method for tag list provider.
         /// - Returns: Returns the value of the tag list provider.
-        public static func tagListProvider() -> TagListProviderProtocol {
+        public static func tagListProvider() -> some TagListProviderProtocol {
             guard !Preferences.shared.configuration.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }

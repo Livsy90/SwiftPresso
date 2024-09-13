@@ -4,7 +4,7 @@ extension SwiftPresso {
         
         ///  HTML mapper to transform HTML text into NSAttributedString.
         /// - Returns: An HTML mapper value.
-        public static func htmlMapper() -> HTMLMapperProtocol {
+        public static func htmlMapper() -> some HTMLMapperProtocol {
             HTMLMapper()
         }
         

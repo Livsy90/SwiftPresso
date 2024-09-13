@@ -46,20 +46,20 @@ final class PostListViewModel {
     private let postPerPage: Int
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.postList)
-    private var postListProvider: PostListProviderProtocol
+    @SwiftPressoInjected(\.postListProvider)
+    private var postListProvider: any PostListProviderProtocol
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.categoryList)
-    private var categoryListProvider: CategoryListProviderProtocol
+    @SwiftPressoInjected(\.categoryListProvider)
+    private var categoryListProvider: any CategoryListProviderProtocol
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.tagList)
-    private var tagListProvider: TagListProviderProtocol
+    @SwiftPressoInjected(\.tagListProvider)
+    private var tagListProvider: any TagListProviderProtocol
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.pageList)
-    private var pageListProvider: PageListProviderProtocol
+    @SwiftPressoInjected(\.pageListProvider)
+    private var pageListProvider: any PageListProviderProtocol
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true
