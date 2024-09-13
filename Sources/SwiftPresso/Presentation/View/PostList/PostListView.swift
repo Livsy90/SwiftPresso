@@ -254,9 +254,7 @@ struct PostListView<Placeholder: View>: View {
                         content: {
                             ForEach(viewModel.pageList, id: \.self) { page in
                                 Button {
-                                    withAnimation {
-                                        isShowMenu = false
-                                    }
+                                    isShowMenu = false
                                     if isShowContentInWebView {
                                         guard let url = page.link else { return }
                                         urlToOpen = url
@@ -298,9 +296,7 @@ struct PostListView<Placeholder: View>: View {
                         content: {
                             ForEach(viewModel.categories, id: \.self) { category in
                                 Button {
-                                    withAnimation {
-                                        isShowMenu = false
-                                    }
+                                    isShowMenu = false
                                     Task {
                                         await viewModel.onCategory(category.name)
                                     }
@@ -337,9 +333,7 @@ struct PostListView<Placeholder: View>: View {
                         content: {
                             ForEach(viewModel.tags, id: \.self) { tag in
                                 Button {
-                                    withAnimation {
-                                        isShowMenu = false
-                                    }
+                                    isShowMenu = false
                                     Task {
                                         await viewModel.onTag(tag.name)
                                     }
