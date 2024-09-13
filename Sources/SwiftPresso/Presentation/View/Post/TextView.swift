@@ -28,7 +28,7 @@ struct TextView: View {
     private var isSelectable: Bool = true
     private var isScrollingEnabled: Bool = false
     private var enablesReturnKeyAutomatically: Bool?
-    private var autoDetectionTypes: UIDataDetectorTypes = []
+    private var autoDetectionTypes: UIDataDetectorTypes = .all
 
     private var internalText: Binding<NSAttributedString> {
         Binding<NSAttributedString>(get: { self.attributedString }) {
