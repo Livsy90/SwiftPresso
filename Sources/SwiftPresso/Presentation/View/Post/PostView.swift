@@ -1,4 +1,5 @@
 import SwiftUI
+import ApricotNavigation
 
 struct PostView: View {
     
@@ -6,9 +7,14 @@ struct PostView: View {
     let backgroundColor: Color
     let textColor: Color
     
+    @Environment(Router.self) private var router
+    @State private var nextPostID: Int?
+    @State private var alertMessage: String?
+    
     var body: some View {
         TextView(
-            attributedText: $viewModel.attributedString,
+            attributedText: $viewModel.attributedString, 
+            postID: $nextPostID,
             textStyle: .callout
         )
         .padding()
@@ -23,6 +29,17 @@ struct PostView: View {
         }
         .onAppear {
             viewModel.onAppear()
+        }
+        .onChange(of: nextPostID) { _, newValue in
+            guard let newValue else { return }
+            Task {
+                do {
+                    let post = try await viewModel.post(with: newValue)
+                    router.navigate(to: Destination.postDetails(post: post))
+                } catch {
+                    alertMessage = error.localizedDescription
+                }
+            }
         }
     }
     

@@ -27,6 +27,7 @@ struct PostListCoordinator<Placeholder: View>: View {
                             backgroundColor: configuration.backgroundColor,
                             textColor: configuration.textColor
                         )
+                        .environment(router)
                     }
                 }
                 .accentColor(configuration.interfaceColor)

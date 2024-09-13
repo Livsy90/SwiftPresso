@@ -3,6 +3,7 @@ import SwiftUI
 struct TextView: UIViewRepresentable {
     
     @Binding var attributedText: NSAttributedString
+    @Binding var postID: Int?
     let textStyle: UIFont.TextStyle
     
     func makeUIView(context: Context) -> UITextView {
@@ -14,12 +15,38 @@ struct TextView: UIViewRepresentable {
         textView.backgroundColor = .clear
         textView.attributedText = attributedText
         textView.showsVerticalScrollIndicator = false
+        textView.delegate = context.coordinator
         
         return textView
     }
     
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.attributedText = attributedText
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(postID: $postID)
+    }
+
+    final class Coordinator: NSObject, UITextViewDelegate {
+        
+        @Binding var postID: Int?
+        
+        init(postID: Binding<Int?>) {
+            _postID = postID
+        }
+        
+        func textView(_ textView: UITextView, primaryActionFor textItem: UITextItem, defaultAction: UIAction) -> UIAction? {
+            if case .link(let url) = textItem.content {
+                let components = url.pathComponents
+                if components.contains("category"), let idComponent = components.last, let id = Int(idComponent)  {
+                    postID = id
+                   return nil
+                }
+            }
+            
+            return defaultAction
+        }
     }
     
     final class GestureHandlingTextView: UITextView {

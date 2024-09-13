@@ -66,7 +66,7 @@ If you prefer the first option, remember to edit your Info.plist file to add a p
 To use built-in WebView, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel, open Settings -> Permalinks, and change your permalink scheme like this:
 
 ```
-yourhostname/%category%/%postname%/
+yourhostname/%category%/%postname%/%post_id%/
 ```
 
 ### Important:

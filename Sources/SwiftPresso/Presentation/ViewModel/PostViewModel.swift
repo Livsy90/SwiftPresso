@@ -11,6 +11,10 @@ final class PostViewModel {
     @SwiftPressoInjected(\.htmlMapper)
     private var mapper: HTMLMapperProtocol
     
+    @ObservationIgnored
+    @SwiftPressoInjected(\.post)
+    private var postProvider: PostProviderProtocol
+    
     private let htmlString: String
     private let width: CGFloat
     private let title: String
@@ -35,6 +39,15 @@ final class PostViewModel {
                 self.attributedString = attributedString
                 self.isLoading = false
             }
+        }
+    }
+    
+    func post(with id: Int) async throws -> PostModel {
+        do {
+            isLoading = true
+            return try await postProvider.getPost(id: id)
+        } catch {
+            throw error
         }
     }
     
