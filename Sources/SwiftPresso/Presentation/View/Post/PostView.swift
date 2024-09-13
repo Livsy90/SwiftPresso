@@ -12,7 +12,7 @@ struct PostView: View {
     @State private var alertMessage: String?
     
     var body: some View {
-        VStack {
+        ScrollView {
             TextView(
                 attributedText: $viewModel.attributedString,
                 postID: $nextPostID,
