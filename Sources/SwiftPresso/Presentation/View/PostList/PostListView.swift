@@ -134,6 +134,7 @@ struct PostListView<Placeholder: View>: View {
                     .padding(.horizontal)
                 }
             }
+            .scrollDismissesKeyboard(.interactively)
             .listStyle(.plain)
             .disabled(viewModel.isInitialLoading)
             .scrollContentBackground(.hidden)
