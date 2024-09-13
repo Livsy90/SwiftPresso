@@ -20,4 +20,8 @@ public struct SwiftPressoInjectedValues {
         }
     }
     
+    static func recreate() {
+        current = SwiftPressoInjectedValues()
+    }
+    
 }
