@@ -27,7 +27,7 @@ struct PostListProvider: PostListProviderProtocol {
             let mapped = mapper.mapPosts(posts)
             return mapped
         } catch {
-            throw WPPostMapperError.mapperError
+            throw error
         }
     }
     

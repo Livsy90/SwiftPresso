@@ -207,6 +207,7 @@ class ViewModel {
         
     func getData() async {
         let data = try? await postProvider.getPost(id: 55)
+        let rawData = try? await postProvider.getRawPost(id: 55)
     }
     
 }
@@ -246,6 +247,7 @@ class ViewModel {
         
     func getData() async {
         let data = try? await pageProvider.getPage(id: 22)
+        let rawData = try? await pageProvider.getRawPage(id: 22)
     }
     
 }

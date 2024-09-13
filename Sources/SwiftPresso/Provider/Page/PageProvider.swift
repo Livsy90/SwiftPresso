@@ -14,7 +14,7 @@ struct PageProvider: PageProviderProtocol {
             let mapped = mapper.mapPost(page)
             return mapped
         } catch {
-            throw WPPostMapperError.mapperError
+            throw error
         }
     }
     
@@ -22,7 +22,7 @@ struct PageProvider: PageProviderProtocol {
         do {
             return try await service.requestPage(id: id)
         } catch {
-            throw WPPostMapperError.mapperError
+            throw error
         }
     }
     

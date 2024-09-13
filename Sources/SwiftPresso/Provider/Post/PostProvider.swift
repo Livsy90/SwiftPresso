@@ -14,7 +14,7 @@ struct PostProvider: PostProviderProtocol {
             let mapped = mapper.mapPost(post)
             return mapped
         } catch {
-            throw WPPostMapperError.mapperError
+            throw error
         }
     }
     
@@ -22,7 +22,7 @@ struct PostProvider: PostProviderProtocol {
         do {
             return try await service.requestPost(id: id)
         } catch {
-            throw WPPostMapperError.mapperError
+            throw error
         }
     }
     

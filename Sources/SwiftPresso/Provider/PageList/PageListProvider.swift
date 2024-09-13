@@ -13,7 +13,7 @@ struct PageListProvider: PageListProviderProtocol {
             let pages = try await service.requestPages()
             return mapper.mapPosts(pages)
         } catch {
-            throw WPPostMapperError.mapperError
+            throw error
         }
     }
     
@@ -22,7 +22,7 @@ struct PageListProvider: PageListProviderProtocol {
             let pages = try await service.requestPages()
             return pages
         } catch {
-            throw WPPostMapperError.mapperError
+            throw error
         }
     }
     
