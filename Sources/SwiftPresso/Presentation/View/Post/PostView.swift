@@ -49,8 +49,11 @@ struct PostView: View {
         .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
-            if let url = viewModel.url {
-                ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                ProgressView()
+                    .opacity(viewModel.isLoading || viewModel.isInitialLoading ? 1 : 0)
+                
+                if let url = viewModel.url {
                     ShareLink(item: url) {
                         Image(systemName: "square.and.arrow.up")
                             .renderingMode(.template)
@@ -64,17 +67,6 @@ struct PostView: View {
         .background {
             backgroundColor
                 .ignoresSafeArea()
-        }
-        .overlay {
-            ZStack {
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(.ultraThinMaterial)
-                    .frame(width: 80, height: 80)
-                
-                ProgressView()
-                    .controlSize(.large)
-            }
-            .opacity(viewModel.isLoading || viewModel.isInitialLoading ? 1 : 0)
         }
         .onAppear {
             viewModel.onAppear()
