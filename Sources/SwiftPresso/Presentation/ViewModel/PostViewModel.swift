@@ -43,8 +43,11 @@ final class PostViewModel {
     }
     
     func post(with id: Int) async throws -> PostModel {
+        defer {
+            isLoading = false
+        }
+        isLoading = true
         do {
-            isLoading = true
             return try await postProvider.getPost(id: id)
         } catch {
             throw error

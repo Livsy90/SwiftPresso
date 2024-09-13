@@ -60,17 +60,30 @@ SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: t
 ```
 
 ### Important: 
-If you prefer the first option, remember to edit your Info.plist file to add a permission string about photo library usage, since SwiftPresso allows users to save images to a camera roll. Select “Privacy - Photo Library Additions Usage Description” to add this string.
+If you prefer the first option, remember to edit your Info.plist file to add a permission string about photo library usage since SwiftPresso allows users to save images to a camera roll. Select “Privacy - Photo Library Additions Usage Description” to add this string.
 
+# Permalinks
 
-To use built-in WebView, you can configure your website permalinks in a specific way. To do this, go to the WordPress admin panel, open Settings -> Permalinks, and change your permalink scheme like this:
+If there are links to other posts within your posts, you can easily open them without leaving the app. You can enable this feature by changing the permalink structure in the WordPress admin settings. To do this, go to the WordPress admin panel and open Settings -> Permalinks. The application needs information about the post ID at the end of the URL to know which post a link is leading to. Thus, you can prescribe, for example, such a scheme:
 
 ```
-yourhostname/%category%/%postname%/%post_id%/
+/%category%/%postname%/%post_id%/
+```
+
+Using WebView gives this option by default. However, for a tap on a link leading to a tag or category to return you to a list of posts already filtered by this tag or category, you need to change the permalinks so they contain a "tag" or "category" path component. Like this, for example:
+
+```
+/%category%/%postname%/
+```
+
+Or like in the example above:
+
+```
+/%category%/%postname%/%post_id%/
 ```
 
 ### Important:
-This will affect your SEO settings, so do this cautiously.
+Changing permalinks will affect your SEO settings, so do this cautiously.
 
 ## Loading indicator
 
