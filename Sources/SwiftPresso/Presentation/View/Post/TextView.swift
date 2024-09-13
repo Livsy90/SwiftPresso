@@ -12,6 +12,7 @@ struct TextView: UIViewRepresentable {
         textView.isSelectable = true
         textView.isEditable = false
         textView.isUserInteractionEnabled = true
+        textView.isScrollEnabled = false
         textView.backgroundColor = .clear
         textView.attributedText = attributedText
         textView.showsVerticalScrollIndicator = false

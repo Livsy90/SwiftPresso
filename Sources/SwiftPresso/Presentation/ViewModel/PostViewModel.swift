@@ -7,6 +7,7 @@ final class PostViewModel {
     var attributedString: NSAttributedString = .init()
     var isLoading: Bool = true
     var url: URL?
+    var size: CGSize
     
     @ObservationIgnored
     @SwiftPressoInjected(\.htmlMapper)
@@ -17,16 +18,15 @@ final class PostViewModel {
     private var postProvider: PostProviderProtocol
     
     private let htmlString: String
-    private let width: CGFloat
     private let title: String
     private let date: Date?
     
-    init(post: PostModel, width: CGFloat) {
+    init(post: PostModel, size: CGSize) {
         title = post.title
         date = post.date
         url = post.link
         htmlString = post.content
-        self.width = width
+        self.size = size
     }
     
     func onAppear() {
@@ -35,7 +35,7 @@ final class PostViewModel {
         DispatchQueue.global(qos: .userInitiated).async {
             attributedString = self.mapper.attributedStringFrom(
                 htmlText: html,
-                width:self.width
+                width: self.size.width
             )
             DispatchQueue.main.async {
                 self.attributedString = attributedString

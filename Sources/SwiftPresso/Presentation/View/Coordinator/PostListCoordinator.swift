@@ -23,7 +23,7 @@ struct PostListCoordinator<Placeholder: View>: View {
                     switch destination {
                     case .postDetails(let post):
                         PostView(
-                            viewModel: .init(post: post, width: size.width),
+                            viewModel: .init(post: post, size: size),
                             backgroundColor: configuration.backgroundColor,
                             textColor: configuration.textColor
                         )

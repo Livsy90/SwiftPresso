@@ -12,12 +12,15 @@ struct PostView: View {
     @State private var alertMessage: String?
     
     var body: some View {
-        TextView(
-            attributedText: $viewModel.attributedString,
-            postID: $nextPostID,
-            textStyle: .callout
-        )
-        .padding([.horizontal, .bottom])
+        ScrollView {
+            TextView(
+                attributedText: $viewModel.attributedString,
+                postID: $nextPostID,
+                textStyle: .callout
+            )
+            .padding([.horizontal, .bottom])
+            .frame(height: viewModel.size.height)
+        }
         .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
@@ -82,7 +85,7 @@ struct PostView: View {
     )
     
     return PostView(
-        viewModel: .init(post: post, width: 375),
+        viewModel: .init(post: post, size: UIScreen.main.bounds.size),
         backgroundColor: SwiftPresso.Configuration.backgroundColor,
         textColor: SwiftPresso.Configuration.textColor
     )
