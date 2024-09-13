@@ -62,14 +62,13 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
     func body(content: Content) -> some View {
         let drag = DragGesture().onEnded { event in
             if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
-                withAnimation {
-                    if event.translation.width < 0, !isCanGoBack {
-                        urlToOpen = nil
-                    }
+                if event.translation.width < 0, !isCanGoBack {
+                    urlToOpen = nil
                 }
             }
         }
         return content
+            .gesture(drag)
             .fullScreenCover(
                 isPresented: $urlToOpen.boolValue(),
                 onDismiss: {
@@ -89,7 +88,6 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
                         onTag: onTag,
                         onCategory: onCategory
                     )
-                    .gesture(drag)
                 })
     }
     
@@ -113,14 +111,13 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
     func body(content: Content) -> some View {
         let drag = DragGesture().onEnded { event in
             if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
-                withAnimation {
-                    if event.translation.width < 0, !isCanGoBack {
-                        urlToOpen = nil
-                    }
+                if event.translation.width < 0, !isCanGoBack {
+                    urlToOpen = nil
                 }
             }
         }
         return content
+            .gesture(drag)
             .environment(\.openURL, OpenURLAction { url in
                 urlToOpen = url
                 return .handled
@@ -144,7 +141,6 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
                         onTag: onTag,
                         onCategory: onCategory
                     )
-                    .gesture(drag)
                 })
     }
     
