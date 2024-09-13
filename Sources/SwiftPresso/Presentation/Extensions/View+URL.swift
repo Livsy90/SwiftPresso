@@ -86,6 +86,7 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
                             print(abs(event.translation.height))
                             print(abs(event.translation.width))
                             print(event.location.x - event.startLocation.x)
+                            print(event.translation.width)
                             if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
                                 if event.translation.width < 0 {
                                     urlToOpen = nil
@@ -152,6 +153,7 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
                             print(abs(event.translation.height))
                             print(abs(event.translation.width))
                             print(event.location.x - event.startLocation.x)
+                            print(event.translation.width)
                             if event.location.x < 200 && abs(event.translation.height) < 50 && abs(event.translation.width) > 50 {
                                 if event.translation.width < 0 {
                                     urlToOpen = nil
