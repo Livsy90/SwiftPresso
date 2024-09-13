@@ -147,13 +147,10 @@ struct PostListView<Placeholder: View>: View {
                     await viewModel.reload()
                 }
             }
+            .navigationTitle(viewModel.mode.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(backgroundColor, for: .navigationBar)
-            .toolbar {
-                ToolbarItemGroup(placement: .principal) {
-                    navigationBarPrincipalItem()
-                }
-                
+            .toolbar {                
                 ToolbarItem(placement: .topBarLeading) {
                     navigationBarLeadingItem()
                 }
