@@ -30,10 +30,11 @@ final class PostViewModel {
     
     func onAppear() {
         var attributedString = self.attributedString
+        let width = UIScreen.current?.bounds.size.width ?? .zero
         DispatchQueue.global(qos: .userInitiated).async {
             attributedString = self.mapper.attributedStringFrom(
                 htmlText: self.htmlString,
-                width: UIScreen.current?.bounds.size.width ?? .zero
+                width: width
             )
             DispatchQueue.main.async {
                 self.attributedString = attributedString

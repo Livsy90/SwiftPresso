@@ -3,6 +3,8 @@ import SwiftUI
 
 struct HTMLMapper: HTMLMapperProtocol {
     
+    private var screenWidth = UIScreen.main.bounds.size.width
+    
     /// Create an ``NSMutableAttributedString`` value from an HTML string. If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a link.
     /// - Parameters:
     ///   - htmlText: HTML text.
@@ -12,7 +14,7 @@ struct HTMLMapper: HTMLMapperProtocol {
         htmlText: String,
         width: CGFloat
     ) -> NSMutableAttributedString {
-        
+        screenWidth = width
         let modifiedFont = String(
             format: "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(UIFont.preferredFont(forTextStyle: .callout).pointSize)\">%@</span>",
             formatStringWithYTVideo(text: htmlText, width: width)
@@ -101,8 +103,7 @@ struct HTMLMapper: HTMLMapperProtocol {
                 
             if let attachement = value as? NSTextAttachment {
                 let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
-                let screenSize: CGRect = UIScreen.main.bounds
-                let newImage = image.resize(scaledToWidth: screenSize.width - 50)
+                let newImage = image.resize(scaledToWidth: screenWidth - 44)
                 let newAttribut = NSTextAttachment()
                 
                 newAttribut.image = newImage
