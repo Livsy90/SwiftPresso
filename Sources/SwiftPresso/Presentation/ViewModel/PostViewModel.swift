@@ -7,7 +7,8 @@ final class PostViewModel {
     var attributedString: NSAttributedString = .init()
     var isLoading: Bool = true
     var url: URL?
-    var size: CGSize = UIScreen.main.bounds.size
+    var title: String
+    var date: Date?
     
     @ObservationIgnored
     @SwiftPressoInjected(\.htmlMapper)
@@ -18,8 +19,6 @@ final class PostViewModel {
     private var postProvider: PostProviderProtocol
     
     private let htmlString: String
-    private let title: String
-    private let date: Date?
     
     init(post: PostModel) {
         title = post.title
@@ -29,12 +28,11 @@ final class PostViewModel {
     }
     
     func onAppear() {
-        let html = htmlTitle().appending(htmlDate()).appending(htmlString)
         var attributedString = self.attributedString
         DispatchQueue.global(qos: .userInitiated).async {
             attributedString = self.mapper.attributedStringFrom(
-                htmlText: html,
-                width: self.size.width
+                htmlText: self.htmlString,
+                width: UIScreen.current?.bounds.size.width ?? .zero
             )
             DispatchQueue.main.async {
                 self.attributedString = attributedString
@@ -53,14 +51,6 @@ final class PostViewModel {
         } catch {
             throw error
         }
-    }
-    
-    private func htmlTitle() -> String {
-        "<h1>\(title)</h1>"
-    }
-    
-    private func htmlDate() -> String {
-        "<h5>\(date?.formatted(date: .numeric, time: .omitted) ?? "")</h5>"
     }
     
 }

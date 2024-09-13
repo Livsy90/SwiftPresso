@@ -13,17 +13,38 @@ struct PostView: View {
     
     var body: some View {
         ScrollView {
+            HStack {
+                Text(viewModel.title)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(textColor)
+                Spacer()
+            }
+            
+            Divider()
+                .padding()
+            
+            if let date = viewModel.date {
+                HStack {
+                    Text(date.formatted(date: .abbreviated, time: .omitted))
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(textColor)
+                    Spacer()
+                }
+                .padding(.bottom)
+            }
+            
             TextView(
-                attributedText: $viewModel.attributedString,
+                "", 
                 postID: $nextPostID,
-                textStyle: .callout
+                attributedString: $viewModel.attributedString,
+                shouldEditInRange: nil,
+                onEditingChanged: nil,
+                onCommit: nil
             )
-            .padding([.horizontal, .bottom])
-            .frame(width: viewModel.size.width ,height: viewModel.size.height)
         }
-        .readSize { size in
-            viewModel.size = size
-        }
+        .padding()
         .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
