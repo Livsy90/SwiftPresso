@@ -24,20 +24,11 @@ struct PostListCoordinator<Placeholder: View>: View {
     
     var body: some View {
         NavigationStack(path: $router.navigationPath) {
-            postList()
+            postListView()
                 .navigationDestination(for: Destination.self) { destination in
                     switch destination {
                     case .postDetails(let post):
-                        PostView(
-                            viewModel: .init(post: post, width: size.width),
-                            tagName: $tagName,
-                            categoryName: $categoryName,
-                            backgroundColor: configuration.backgroundColor,
-                            textColor: configuration.textColor,
-                            placeholder: {
-                                placeholderView()
-                            }
-                        )
+                        postView(post)
                     }
                 }
         }
@@ -57,16 +48,50 @@ struct PostListCoordinator<Placeholder: View>: View {
         }
     }
     
-    @ViewBuilder
-    private func postList() -> some View {
-        if let placeholder {
-            PostListView(viewModel: .init(postPerPage: configuration.postsPerPage), externalTagName: $tagName, externalCategoryName: $categoryName, backgroundColor: configuration.backgroundColor, interfaceColor: configuration.interfaceColor, textColor: configuration.textColor, menuBackgroundColor: configuration.menuBackgroundColor, menuTextColor: configuration.menuTextColor, homeIcon: configuration.homeIcon, isShowContentInWebView: configuration.isShowContentInWebView, isShowPageMenu: configuration.isShowPageMenu, isShowTagMenu: configuration.isShowTagMenu, isShowCategoryMenu: configuration.isShowCategoryMenu, isMenuExpanded: configuration.isMenuExpanded, pageMenuTitle: configuration.pageMenuTitle, tagMenuTitle: configuration.tagMenuTitle, categoryMenuTitle: configuration.categoryMenuTitle) {
-                placeholder()
-            }
-        } else {
-            PostListView(viewModel: .init(postPerPage: configuration.postsPerPage), externalTagName: $tagName, externalCategoryName: $categoryName, backgroundColor: configuration.backgroundColor, interfaceColor: configuration.interfaceColor, textColor: configuration.textColor, menuBackgroundColor: configuration.menuBackgroundColor, menuTextColor: configuration.menuTextColor, homeIcon: configuration.homeIcon, isShowContentInWebView: configuration.isShowContentInWebView, isShowPageMenu: configuration.isShowPageMenu, isShowTagMenu: configuration.isShowTagMenu, isShowCategoryMenu: configuration.isShowCategoryMenu, isMenuExpanded: configuration.isMenuExpanded, pageMenuTitle: configuration.pageMenuTitle, tagMenuTitle: configuration.tagMenuTitle, categoryMenuTitle: configuration.categoryMenuTitle) {
-                ShimmerPlaceholder(backgroundColor: configuration.backgroundColor)
-            }
+}
+
+extension PostListCoordinator where Placeholder == EmptyView {
+    init(configuration: SwiftPressoSettings, placeholder: (() -> Placeholder)?) {
+        self.configuration = configuration
+        self.placeholder = placeholder
+    }
+}
+
+private extension PostListCoordinator {
+    
+    func postListView() -> some View {
+        PostListView(
+            viewModel: .init(postPerPage: configuration.postsPerPage),
+            externalTagName: $tagName,
+            externalCategoryName: $categoryName,
+            backgroundColor: configuration.backgroundColor,
+            interfaceColor: configuration.interfaceColor,
+            textColor: configuration.textColor,
+            menuBackgroundColor: configuration.menuBackgroundColor,
+            menuTextColor: configuration.menuTextColor,
+            homeIcon: configuration.homeIcon,
+            isShowContentInWebView: configuration.isShowContentInWebView,
+            isShowPageMenu: configuration.isShowPageMenu,
+            isShowTagMenu: configuration.isShowTagMenu,
+            isShowCategoryMenu: configuration.isShowCategoryMenu,
+            isMenuExpanded: configuration.isMenuExpanded,
+            pageMenuTitle: configuration.pageMenuTitle,
+            tagMenuTitle: configuration.tagMenuTitle,
+            categoryMenuTitle: configuration.categoryMenuTitle
+        ) {
+            placeholderView()
+        }
+    }
+    
+    func postView(_ post: PostModel) -> some View {
+        PostView(
+            viewModel: .init(post: post, width: size.width),
+            tagName: $tagName,
+            categoryName: $categoryName,
+            backgroundColor: configuration.backgroundColor,
+            textColor: configuration.textColor
+        ) {
+            placeholderView()
         }
     }
     
@@ -79,13 +104,6 @@ struct PostListCoordinator<Placeholder: View>: View {
         }
     }
     
-}
-
-extension PostListCoordinator where Placeholder == EmptyView {
-    init(configuration: SwiftPressoSettings, placeholder: (() -> Placeholder)?) {
-        self.configuration = configuration
-        self.placeholder = placeholder
-    }
 }
 
 #Preview {
