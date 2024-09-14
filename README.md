@@ -175,7 +175,7 @@ var isMenuExpanded: Bool
 /// Using webview as post view.
 var isShowContentInWebView: Bool
 
-/// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with a clickable link.
+/// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
 var isParseHTMLWithYouTubePreviews: Bool
 
 ```
