@@ -99,10 +99,10 @@ struct PostListView<Placeholder: View>: View {
                         interfaceColor: interfaceColor,
                         textColor: textColor,
                         onTag: { tagName in
-                            viewModel.onTag(tagName)
+                            showPostListByTag(tagName)
                         },
                         onCategory: { categoryName in
-                            viewModel.onCategory(categoryName)
+                            showPostListByCategory(categoryName)
                         },
                         placeholder: {
                             loadingPlaceholder()
@@ -172,11 +172,11 @@ struct PostListView<Placeholder: View>: View {
             }
             .onChange(of: externalTagName, { _, newValue in
                 guard let newValue else { return }
-                viewModel.onTag(newValue)
+                showPostListByTag(newValue)
             })
             .onChange(of: externalCategoryName, { _, newValue in
                 guard let newValue else { return }
-                viewModel.onCategory(newValue)
+                showPostListByCategory(newValue)
             })
             .readSize { size in
                 self.size = size
@@ -186,14 +186,10 @@ struct PostListView<Placeholder: View>: View {
                 backgroundColor: backgroundColor,
                 interfaceColor: interfaceColor,
                 onTag: { tagName in
-                    searchText.removeAll()
-                    isSearching = false
-                    viewModel.onTag(tagName)
+                    showPostListByTag(tagName)
                 },
                 onCategory: { categoryName in
-                    searchText.removeAll()
-                    isSearching = false
-                    viewModel.onCategory(categoryName)
+                    showPostListByCategory(categoryName)
                 },
                 placeholder: {
                     loadingPlaceholder()
@@ -296,7 +292,7 @@ struct PostListView<Placeholder: View>: View {
                             ForEach(viewModel.categories, id: \.self) { category in
                                 Button {
                                     isShowMenu = false
-                                    viewModel.onCategory(category.name)
+                                    showPostListByCategory(category.name)
                                 } label: {
                                     VStack {
                                         HStack {
@@ -331,7 +327,7 @@ struct PostListView<Placeholder: View>: View {
                             ForEach(viewModel.tags, id: \.self) { tag in
                                 Button {
                                     isShowMenu = false
-                                    viewModel.onTag(tag.name)
+                                    showPostListByTag(tag.name)
                                 } label: {
                                     VStack {
                                         HStack {
@@ -377,6 +373,19 @@ struct PostListView<Placeholder: View>: View {
             router.navigate(to: Destination.postDetails(post: page))
         }
     }
+    
+    private func showPostListByTag(_ tagName: String) {
+        searchText.removeAll()
+        isSearching = false
+        viewModel.onTag(tagName)
+    }
+    
+    private func showPostListByCategory(_ categoryName: String) {
+        searchText.removeAll()
+        isSearching = false
+        viewModel.onCategory(categoryName)
+    }
+    
 }
 
 #Preview {

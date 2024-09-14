@@ -59,7 +59,8 @@ struct PostView<Placeholder: View>: View {
             )
             .opacity(viewModel.isShowContent ? 1 : 0)
         }
-        .padding()
+        .scrollIndicators(.hidden)
+        .padding([.horizontal, .top])
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {

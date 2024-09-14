@@ -28,6 +28,7 @@ struct TextView: View {
     private var isEditable: Bool = false
     private var isSelectable: Bool = true
     private var isScrollingEnabled: Bool = false
+    private var showsVerticalScrollIndicator: Bool = true
     private var enablesReturnKeyAutomatically: Bool?
     private var autoDetectionTypes: UIDataDetectorTypes = .all
 
@@ -77,6 +78,7 @@ struct TextView: View {
             isEditable: isEditable,
             isSelectable: isSelectable,
             isScrollingEnabled: isScrollingEnabled,
+            showsVerticalScrollIndicator: showsVerticalScrollIndicator,
             enablesReturnKeyAutomatically: enablesReturnKeyAutomatically,
             autoDetectionTypes: autoDetectionTypes,
             calculatedHeight: $calculatedHeight,
@@ -189,6 +191,12 @@ extension TextView {
         view.enablesReturnKeyAutomatically = value
         return view
     }
+    
+    func showsVerticalScrollIndicator(_ value: Bool) -> TextView {
+        var view = self
+        view.showsVerticalScrollIndicator = value
+        return view
+    }
 
     func truncationMode(_ mode: Text.TruncationMode) -> TextView {
         var view = self
@@ -227,6 +235,7 @@ private struct SwiftUITextView: UIViewRepresentable {
     private let isEditable: Bool
     private let isSelectable: Bool
     private let isScrollingEnabled: Bool
+    private let showsVerticalScrollIndicator: Bool
     private let enablesReturnKeyAutomatically: Bool?
     private var autoDetectionTypes: UIDataDetectorTypes = []
 
@@ -246,6 +255,7 @@ private struct SwiftUITextView: UIViewRepresentable {
         isEditable: Bool,
         isSelectable: Bool,
         isScrollingEnabled: Bool,
+        showsVerticalScrollIndicator: Bool,
         enablesReturnKeyAutomatically: Bool?,
         autoDetectionTypes: UIDataDetectorTypes,
         calculatedHeight: Binding<CGFloat>,
@@ -274,6 +284,7 @@ private struct SwiftUITextView: UIViewRepresentable {
         self.isEditable = isEditable
         self.isSelectable = isSelectable
         self.isScrollingEnabled = isScrollingEnabled
+        self.showsVerticalScrollIndicator = showsVerticalScrollIndicator
         self.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically
         self.autoDetectionTypes = autoDetectionTypes
 
@@ -300,6 +311,7 @@ private struct SwiftUITextView: UIViewRepresentable {
         view.isEditable = isEditable
         view.isSelectable = isSelectable
         view.isScrollEnabled = isScrollingEnabled
+        view.showsVerticalScrollIndicator = showsVerticalScrollIndicator
         view.dataDetectorTypes = autoDetectionTypes
 
         if let value = enablesReturnKeyAutomatically {
@@ -332,7 +344,12 @@ private struct SwiftUITextView: UIViewRepresentable {
     }
 
     fileprivate static func recalculateHeight(view: UIView, result: Binding<CGFloat>) {
-        let newSize = view.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
+        let newSize = view.sizeThatFits(
+            CGSize(
+                width: view.frame.width,
+                height: .greatestFiniteMagnitude
+            )
+        )
 
         guard result.wrappedValue != newSize.height else { return }
         DispatchQueue.main.async {
