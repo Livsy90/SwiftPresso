@@ -94,14 +94,10 @@ struct PostListView<Placeholder: View>: View {
                         interfaceColor: interfaceColor,
                         textColor: textColor,
                         onTag: { tagName in
-                            Task {
-                                await viewModel.onTag(tagName)
-                            }
+                            viewModel.onTag(tagName)
                         },
                         onCategory: { categoryName in
-                            Task {
-                                await viewModel.onCategory(categoryName)
-                            }
+                            viewModel.onCategory(categoryName)
                         },
                         placeholder: {
                             loadingPlaceholder()
@@ -109,9 +105,7 @@ struct PostListView<Placeholder: View>: View {
                     )
                     .listRowBackground(Color.clear)
                     .onAppear {
-                        Task {
-                            await viewModel.updateIfNeeded(id: post.id)
-                        }
+                        viewModel.updateIfNeeded(id: post.id)
                     }
                 }
                 
@@ -144,9 +138,7 @@ struct PostListView<Placeholder: View>: View {
                     .edgesIgnoringSafeArea(.all)
             }
             .refreshable {
-                Task {
-                    await viewModel.reload()
-                }
+                viewModel.reload()
             }
             .navigationTitle(viewModel.mode.title)
             .navigationBarTitleDisplayMode(.inline)
@@ -166,15 +158,11 @@ struct PostListView<Placeholder: View>: View {
             }
             .searchable(text: $searchText, isPresented: $isSearching)
             .onSubmit(of: .search) {
-                Task {
-                    await viewModel.search(searchText)
-                }
+                viewModel.search(searchText)
             }
             .onChange(of: searchText) { _, newValue in
                 guard newValue.isEmpty else { return }
-                Task {
-                    await viewModel.loadDefault()
-                }
+                viewModel.loadDefault()
             }
             .readSize { size in
                 self.size = size
@@ -186,16 +174,12 @@ struct PostListView<Placeholder: View>: View {
                 onTag: { tagName in
                     searchText.removeAll()
                     isSearching = false
-                    Task {
-                        await viewModel.onTag(tagName)
-                    }
+                    viewModel.onTag(tagName)
                 },
                 onCategory: { categoryName in
                     searchText.removeAll()
                     isSearching = false
-                    Task {
-                        await viewModel.onCategory(categoryName)
-                    }
+                    viewModel.onCategory(categoryName)
                 },
                 placeholder: {
                     loadingPlaceholder()
@@ -243,9 +227,7 @@ struct PostListView<Placeholder: View>: View {
     private func navigationBarLeadingItem() -> some View {
         HStack {
             Button {
-                Task {
-                    await viewModel.loadDefault()
-                }
+                viewModel.loadDefault()
             } label: {
                 homeIcon
             }
@@ -302,9 +284,7 @@ struct PostListView<Placeholder: View>: View {
                             ForEach(viewModel.categories, id: \.self) { category in
                                 Button {
                                     isShowMenu = false
-                                    Task {
-                                        await viewModel.onCategory(category.name)
-                                    }
+                                    viewModel.onCategory(category.name)
                                 } label: {
                                     VStack {
                                         HStack {
@@ -339,9 +319,7 @@ struct PostListView<Placeholder: View>: View {
                             ForEach(viewModel.tags, id: \.self) { tag in
                                 Button {
                                     isShowMenu = false
-                                    Task {
-                                        await viewModel.onTag(tag.name)
-                                    }
+                                    viewModel.onTag(tag.name)
                                 } label: {
                                     VStack {
                                         HStack {

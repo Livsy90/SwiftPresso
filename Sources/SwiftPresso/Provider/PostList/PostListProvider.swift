@@ -3,7 +3,10 @@ struct PostListProvider: PostListProviderProtocol {
     private let service: any PostListServiceProtocol
     private let mapper: any WPPostMapperProtocol
     
-    init(service: some PostListServiceProtocol, mapper: some WPPostMapperProtocol) {
+    init(
+        service: some PostListServiceProtocol,
+        mapper: some WPPostMapperProtocol
+    ) {
         self.service = service
         self.mapper = mapper
     }

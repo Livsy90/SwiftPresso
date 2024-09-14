@@ -65,6 +65,8 @@ final class PostListViewModel {
     private var shouldShowFullScreenPlaceholder = true
     private var isError: Bool = false
     
+    private var postListTask: Task<Void, Never>?
+    
     init(postPerPage: Int) {
         self.postPerPage = postPerPage
         
@@ -90,42 +92,42 @@ final class PostListViewModel {
 
 extension PostListViewModel {
     
-    func updateIfNeeded(id: Int) async {
+    func updateIfNeeded(id: Int) {
         guard let last = postList.last, id == last.id, !isLoading else { return }
-        await loadPosts()
+        loadPosts()
     }
     
-    func search(_ text: String) async {
+    func search(_ text: String) {
         mode = .search(text)
         reset()
-        await loadPosts()
+        loadPosts()
     }
     
-    func loadDefault() async {
+    func loadDefault() {
         isRefreshable = false
         mode = .common
         reset()
-        await loadPosts()
+        loadPosts()
     }
     
-    func reload() async {
+    func reload() {
         shouldShowFullScreenPlaceholder = true
         reset()
-        await loadPosts()
+        loadPosts()
     }
     
-    func onTag(_ name: String) async {
+    func onTag(_ name: String) {
         isRefreshable = true
         mode = .tag(name.replacingOccurrences(of: "-", with: " ").capitalized)
         reset()
-        await loadPosts()
+        loadPosts()
     }
     
-    func onCategory(_ name: String) async {
+    func onCategory(_ name: String) {
         isRefreshable = true
         mode = .category(name.replacingOccurrences(of: "-", with: " ").capitalized)
         reset()
-        await loadPosts()
+        loadPosts()
     }
     
 }
@@ -134,7 +136,14 @@ extension PostListViewModel {
 
 private extension PostListViewModel {
     
-    func loadPosts() async {
+    func loadPosts() {
+        postListTask?.cancel()
+        postListTask = Task {
+            await _loadPosts()
+        }
+    }
+    
+    func _loadPosts() async {
         isLoading = true
         switch mode {
         case .common:
@@ -171,6 +180,7 @@ private extension PostListViewModel {
         tag: Int? = nil
     ) async -> [PostModel] {
         do {
+            try Task.checkCancellation()
             return try await postListProvider.getPosts(
                 pageNumber: pageNumber,
                 perPage: postPerPage,
@@ -187,6 +197,7 @@ private extension PostListViewModel {
     
     func getTags() async -> [CategoryModel] {
         do {
+            try Task.checkCancellation()
             return try await tagListProvider.getTags()
         } catch {
             isError = true
@@ -196,6 +207,7 @@ private extension PostListViewModel {
     
     func getCategories() async -> [CategoryModel]  {
         do {
+            try Task.checkCancellation()
             return try await categoryListProvider.getCategories()
         } catch {
             isError = true
@@ -205,6 +217,7 @@ private extension PostListViewModel {
     
     func getPages() async -> [PostModel]  {
         do {
+            try Task.checkCancellation()
             return try await pageListProvider.getPages()
         } catch {
             isError = true
