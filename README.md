@@ -410,7 +410,7 @@ func map(post: PostModel) -> NSAttributedString {
 
 # Screenshots
 
-### Post list
+## Post list
 <img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo2.png" width ="300">
 
 ## Post
