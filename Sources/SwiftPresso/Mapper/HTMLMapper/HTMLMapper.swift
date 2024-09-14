@@ -9,7 +9,7 @@ struct HTMLMapper: HTMLMapperProtocol {
     ///   - fontStyle: Text font style.
     ///   - width: Width of images and YouTube previews.
     ///   - isHandleYouTubeVideos:
-    /// - Returns: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with a clickable link.
+    /// - Returns: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
     func attributedStringFrom(
         htmlText: String,
         color: UIColor,
