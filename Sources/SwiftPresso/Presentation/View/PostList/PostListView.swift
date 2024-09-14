@@ -176,10 +176,6 @@ struct PostListView<Placeholder: View>: View {
                     await viewModel.loadDefault()
                 }
             }
-            .onChange(of: viewModel.isLoading, { _, newValue in
-                guard newValue else { return  }
-                isSearching = false
-            })
             .readSize { size in
                 self.size = size
             }
@@ -214,6 +210,7 @@ struct PostListView<Placeholder: View>: View {
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             })
+            .disabled(viewModel.isInitialLoading)
     }
     
     private func placeholder() -> some View {
