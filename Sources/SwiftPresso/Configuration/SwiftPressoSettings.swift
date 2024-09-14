@@ -21,6 +21,7 @@ public struct SwiftPressoSettings {
     public let categoryMenuTitle: String
     public let menuBackgroundColor: Color
     public let menuTextColor: Color
+    public let isParseHTMLWithYouTubePreviews: Bool
     
     public init(
         host: String,
@@ -41,7 +42,7 @@ public struct SwiftPressoSettings {
         pageMenuTitle: String = "Pages",
         tagMenuTitle: String = "Tags",
         categoryMenuTitle: String = "Category",
-        
+        isParseHTMLWithYouTubePreviews: Bool = true,
         isExcludeWebHeaderAndFooter: Bool = true,
         isMenuExpanded: Bool = true
     ) {
@@ -65,6 +66,7 @@ public struct SwiftPressoSettings {
         self.searchTitle = searchTitle
         self.isMenuExpanded = isMenuExpanded
         self.isShowContentInWebView = isShowContentInWebView
+        self.isParseHTMLWithYouTubePreviews = isParseHTMLWithYouTubePreviews
     }
 }
 

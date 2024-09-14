@@ -31,10 +31,13 @@ final class PostViewModel {
     func onAppear() {
         var attributedString = self.attributedString
         let width = UIScreen.current?.bounds.size.width ?? .zero
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             attributedString = self.mapper.attributedStringFrom(
                 htmlText: self.htmlString,
-                width: width
+                color: UIColor(SwiftPresso.Configuration.textColor),
+                fontStyle: .callout,
+                width: width,
+                isHandleYouTubeVideos: SwiftPresso.Configuration.isParseHTMLWithYouTubePreviews
             )
             DispatchQueue.main.async {
                 self.attributedString = attributedString

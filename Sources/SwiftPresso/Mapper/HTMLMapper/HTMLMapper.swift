@@ -1,26 +1,40 @@
-import Foundation
-import SwiftUI
+import UIKit
 
 struct HTMLMapper: HTMLMapperProtocol {
-    
-    private let screenWidth = UIScreen.main.bounds.size.width
-    
-    /// Create an ``NSMutableAttributedString`` value from an HTML string. If the HTML text contains a link to a YouTube video, it will display as a preview of that video with a link.
+        
+    /// Create an ``NSMutableAttributedString`` value from an HTML string.
     /// - Parameters:
-    ///   - htmlText: HTML text.
-    ///   - width: Width of the view where this text will be presented.
-    /// - Returns: An ``NSMutableAttributedString`` value.
+    ///   - htmlText: HTML text to parse.
+    ///   - color: Text color.
+    ///   - fontStyle: Text font style.
+    ///   - width: Width of images and YouTube previews.
+    ///   - isHandleYouTubeVideos:
+    /// - Returns: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with a clickable link.
     func attributedStringFrom(
         htmlText: String,
-        width: CGFloat
+        color: UIColor,
+        fontStyle: UIFont.TextStyle,
+        width: CGFloat,
+        isHandleYouTubeVideos: Bool
     ) -> NSMutableAttributedString {
-        let modifiedFont = String(
-            format: "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(UIFont.preferredFont(forTextStyle: .callout).pointSize)\">%@</span>",
-            formatStringWithYTVideo(text: htmlText, width: width)
+        var text = htmlText
+        
+        if isHandleYouTubeVideos {
+            text = formatStringWithYTVideo(
+                text: text,
+                width: width
+            )
+        }
+        
+        let format = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(UIFont.preferredFont(forTextStyle: fontStyle).pointSize)\">%@</span>"
+        
+        let modifiedFontString = String(
+            format: format,
+            text
         )
         
         guard
-            let data = modifiedFont.data(
+            let data = modifiedFontString.data(
                 using: .unicode,
                 allowLossyConversion: true
             ),
@@ -36,13 +50,13 @@ struct HTMLMapper: HTMLMapperProtocol {
             return .init()
         }
         
-        let attributedStringColor = [NSAttributedString.Key.foregroundColor: UIColor( SwiftPresso.Configuration.textColor)]
+        let attributedStringColor = [NSAttributedString.Key.foregroundColor: color]
         attributedString.addAttributes(
             attributedStringColor,
             range: NSMakeRange(0, attributedString.length)
         )
         
-        return configured(attrStr: attributedString)
+        return configured(attrStr: attributedString, width: width)
     }
     
     private func formatStringWithYTVideo(
@@ -94,7 +108,7 @@ struct HTMLMapper: HTMLMapperProtocol {
         }
     }
     
-    private func configured(attrStr: NSMutableAttributedString) -> NSMutableAttributedString {
+    private func configured(attrStr: NSMutableAttributedString, width: CGFloat) -> NSMutableAttributedString {
         attrStr.enumerateAttribute(
             NSAttributedString.Key.attachment,
             in: NSMakeRange(0, attrStr.length), options: .init(rawValue: 0),
@@ -102,7 +116,7 @@ struct HTMLMapper: HTMLMapperProtocol {
                 
             if let attachement = value as? NSTextAttachment {
                 let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
-                let newImage = image.resize(scaledToWidth: screenWidth - 44)
+                let newImage = image.resize(scaledToWidth: width)
                 let newAttribut = NSTextAttachment()
                 
                 newAttribut.image = newImage

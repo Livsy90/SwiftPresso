@@ -66,6 +66,9 @@ public enum SwiftPresso {
         /// Using webview as post view.
         public static var isShowContentInWebView: Bool { Preferences.shared.configuration.isShowContentInWebView }
         
+        /// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with a clickable link.
+        public static var isParseHTMLWithYouTubePreviews: Bool { Preferences.shared.configuration.isParseHTMLWithYouTubePreviews }
+        
         /// Initial configuration.
         /// - Parameter configuration: configuration model.
         public static func configure(with configuration: SwiftPressoSettings) {
