@@ -92,11 +92,11 @@ struct WebView: UIViewRepresentable {
             
             let components = url.pathComponents
             
-            if components.contains("tag"), let tagName = components.last {
+            if components.contains(SwiftPresso.Configuration.apiTagPathComponent), let tagName = components.last {
                 parent.onTag(tagName)
             }
             
-            if components.contains("category"), let categoryName = components.last {
+            if components.contains(SwiftPresso.Configuration.apiCategoryPathComponent), let categoryName = components.last {
                 parent.onCategory(categoryName)
             }
             

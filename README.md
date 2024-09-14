@@ -70,7 +70,7 @@ If there are links to other posts within your posts, you can open them without l
 /%category%/%postname%/%post_id%/
 ```
 
-Using WebView gives this option by default. However, for a tap on a link leading to a tag or category to return you to a list of posts already filtered by this tag or category, you need to change the permalinks so they contain a `tag` or `category` path component. Like this, for example:
+Using WebView gives this option by default. However, for a tap on a link leading to a tag or category to return you to a list of posts already filtered by this tag or category, you need to change the permalinks to contain a tag and a category path component. Like this, for example.
 
 ```
 /%category%/%postname%/
@@ -80,6 +80,18 @@ Or like in the example above:
 
 ```
 /%category%/%postname%/%post_id%/
+```
+
+You can customize tag and category components as well.
+
+```swift
+SwiftPresso.View.postList(
+    .init(
+        host: "livsycode.com",
+        apiTagPathComponent: "series",
+        apiCategoryPathComponent: "topics"
+    )
+)
 ```
 
 ### Important:
@@ -123,6 +135,12 @@ var postsPerPage: Int
 
 /// API HTTP scheme.
 var httpScheme: HTTPScheme
+
+/// API Tag path component.
+var apiTagPathComponent: String { Preferences.shared.configuration.apiTagPathComponent }
+        
+/// API Category path component.
+var apiCategoryPathComponent: String { Preferences.shared.configuration.apiCategoryPathComponent }
 
 /// Remove web page's header and footer.
 var isExcludeWebHeaderAndFooter: Bool

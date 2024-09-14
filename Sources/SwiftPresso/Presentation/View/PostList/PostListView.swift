@@ -3,13 +3,16 @@ import ApricotNavigation
 
 struct PostListView<Placeholder: View>: View {
     
-    let loadingPlaceholder: () -> Placeholder
+    private let loadingPlaceholder: () -> Placeholder
     @State private var size: CGSize = .zero
     @Environment(Router.self) private var router
     @State private var viewModel: PostListViewModel
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var urlToOpen: URL?
+    
+    @Binding private var externalTagName: String?
+    @Binding private var externalCategoryName: String?
     
     @State private var isShowMenu = false
     
@@ -38,6 +41,9 @@ struct PostListView<Placeholder: View>: View {
     private let isShowContentInWebView: Bool
     
     init(
+        viewModel: PostListViewModel,
+        externalTagName: Binding<String?>,
+        externalCategoryName: Binding<String?>,
         backgroundColor: Color,
         interfaceColor: Color,
         textColor: Color,
@@ -52,12 +58,11 @@ struct PostListView<Placeholder: View>: View {
         pageMenuTitle: String,
         tagMenuTitle: String,
         categoryMenuTitle: String,
-        postPerPage: Int,
         loadingPlaceholder: @escaping () -> Placeholder
     ) {
-        
-        self.viewModel = PostListViewModel(postPerPage: postPerPage)
-        
+        self.viewModel = viewModel
+        _externalTagName = externalTagName
+        _externalCategoryName = externalCategoryName
         self.backgroundColor = backgroundColor
         self.interfaceColor = interfaceColor
         self.textColor = textColor
@@ -165,6 +170,14 @@ struct PostListView<Placeholder: View>: View {
                     self.viewModel.loadDefault()
                 }
             }
+            .onChange(of: externalTagName, { _, newValue in
+                guard let newValue else { return }
+                viewModel.onTag(newValue)
+            })
+            .onChange(of: externalCategoryName, { _, newValue in
+                guard let newValue else { return }
+                viewModel.onCategory(newValue)
+            })
             .readSize { size in
                 self.size = size
             }

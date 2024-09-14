@@ -15,6 +15,12 @@ public enum SwiftPresso {
         /// API HTTP scheme.
         public static var httpScheme: HTTPScheme { Preferences.shared.configuration.httpScheme }
         
+        /// API Tag path component.
+        public static var apiTagPathComponent: String { Preferences.shared.configuration.apiTagPathComponent }
+        
+        /// API Category path component.
+        public static var apiCategoryPathComponent: String { Preferences.shared.configuration.apiCategoryPathComponent }
+        
         /// Remove web page's header and footer.
         public static var isExcludeWebHeaderAndFooter: Bool { Preferences.shared.configuration.isExcludeWebHeaderAndFooter }
         

@@ -4,6 +4,8 @@ public struct SwiftPressoSettings {
     public let host: String
     public let postsPerPage: Int
     public let httpScheme: HTTPScheme
+    public let apiTagPathComponent: String
+    public let apiCategoryPathComponent: String
     public let isShowContentInWebView: Bool
     public let isExcludeWebHeaderAndFooter: Bool
     public let isMenuExpanded: Bool
@@ -27,6 +29,8 @@ public struct SwiftPressoSettings {
         host: String,
         httpScheme: HTTPScheme = .https,
         postsPerPage: Int = 50,
+        apiTagPathComponent: String = "tag",
+        apiCategoryPathComponent: String = "category",
         isShowContentInWebView: Bool = false,
         menuBackgroundColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
@@ -67,6 +71,8 @@ public struct SwiftPressoSettings {
         self.isMenuExpanded = isMenuExpanded
         self.isShowContentInWebView = isShowContentInWebView
         self.isParseHTMLWithYouTubePreviews = isParseHTMLWithYouTubePreviews
+        self.apiTagPathComponent = apiTagPathComponent
+        self.apiCategoryPathComponent = apiCategoryPathComponent
     }
 }
 

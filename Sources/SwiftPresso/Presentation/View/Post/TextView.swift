@@ -5,6 +5,8 @@ struct TextView: View {
     @Environment(\.layoutDirection) private var layoutDirection
     @Binding private var attributedString: NSAttributedString
     @Binding private var postID: Int?
+    @Binding private var tagName: String?
+    @Binding private var categoryName: String?
     @State private var calculatedHeight: CGFloat = 44
     @State private var isEmpty: Bool = false
 
@@ -39,14 +41,17 @@ struct TextView: View {
     init(
         _ title: String,
         postID: Binding<Int?>,
+        tagName: Binding<String?>,
+        categoryName: Binding<String?>,
         attributedString: Binding<NSAttributedString>,
         shouldEditInRange: ((Range<String.Index>, String) -> Bool)? = nil,
         onEditingChanged: (() -> Void)? = nil,
         onCommit: (() -> Void)? = nil
     ) {
         self.title = title
-
         _postID = postID
+        _tagName = tagName
+        _categoryName = categoryName
         _attributedString = attributedString
         _isEmpty = State(initialValue: self.attributedString.string.isEmpty)
 
@@ -59,6 +64,8 @@ struct TextView: View {
         SwiftUITextView(
             internalText,
             postID: $postID,
+            tagName: $tagName,
+            categoryName: $categoryName,
             foregroundColor: foregroundColor,
             multilineTextAlignment: multilineTextAlignment,
             autocapitalization: autocapitalization,
@@ -200,6 +207,8 @@ extension TextView {
 private struct SwiftUITextView: UIViewRepresentable {
 
     @Binding private var postID: Int?
+    @Binding private var tagName: String?
+    @Binding private var categoryName: String?
     @Binding private var attributedString: NSAttributedString
     @Binding private var calculatedHeight: CGFloat
 
@@ -224,6 +233,8 @@ private struct SwiftUITextView: UIViewRepresentable {
     init(
         _ attributedString: Binding<NSAttributedString>,
         postID: Binding<Int?>,
+        tagName: Binding<String?>,
+        categoryName: Binding<String?>,
         foregroundColor: UIColor,
         multilineTextAlignment: NSTextAlignment,
         autocapitalization: UITextAutocapitalizationType,
@@ -245,6 +256,8 @@ private struct SwiftUITextView: UIViewRepresentable {
         _attributedString = attributedString
         _calculatedHeight = calculatedHeight
         _postID = postID
+        _tagName = tagName
+        _categoryName = categoryName
 
         self.onCommit = onCommit
         self.shouldEditInRange = shouldEditInRange
@@ -308,6 +321,8 @@ private struct SwiftUITextView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator(
             postID: $postID,
+            tagName: $tagName,
+            categoryName: $categoryName,
             attributedString: $attributedString,
             calculatedHeight: $calculatedHeight,
             shouldEditInRange: shouldEditInRange,
@@ -336,12 +351,16 @@ private extension SwiftUITextView {
         var shouldEditInRange: ((Range<String.Index>, String) -> Bool)?
         
         @Binding private var postID: Int?
+        @Binding private var tagName: String?
+        @Binding private var categoryName: String?
         private var originalText: NSAttributedString = .init()
         private var attributedString: Binding<NSAttributedString>
         private var calculatedHeight: Binding<CGFloat>
 
         init(
             postID: Binding<Int?>,
+            tagName: Binding<String?>,
+            categoryName: Binding<String?>,
             attributedString: Binding<NSAttributedString>,
             calculatedHeight: Binding<CGFloat>,
             shouldEditInRange: ((Range<String.Index>, String) -> Bool)?,
@@ -349,6 +368,8 @@ private extension SwiftUITextView {
             onCommit: (() -> Void)?
         ) {
             _postID = postID
+            _tagName = tagName
+            _categoryName = categoryName
             self.attributedString = attributedString
             self.calculatedHeight = calculatedHeight
             self.shouldEditInRange = shouldEditInRange
@@ -390,6 +411,16 @@ private extension SwiftUITextView {
                     postID = id
                    return nil
                 }
+                
+                if components.contains(SwiftPresso.Configuration.apiTagPathComponent), let tagName = components.last {
+                    self.tagName = tagName
+                    return nil
+                }
+                
+                if components.contains(SwiftPresso.Configuration.apiCategoryPathComponent), let categoryName = components.last {
+                    self.categoryName = categoryName
+                    return nil
+                }
             }
 
             return .init(menu: defaultMenu)
@@ -400,6 +431,14 @@ private extension SwiftUITextView {
                 let components = url.pathComponents
                 if let idComponent = components.last, let id = Int(idComponent)  {
                     postID = id
+                }
+                
+                if components.contains("tag"), let tagName = components.last {
+                    self.tagName = tagName
+                }
+                
+                if components.contains("category"), let categoryName = components.last {
+                    self.categoryName = categoryName
                 }
             }
             

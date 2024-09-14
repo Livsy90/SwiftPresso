@@ -4,6 +4,9 @@ import ApricotNavigation
 struct PostView<Placeholder: View>: View {
     
     @State var viewModel: PostViewModel
+    @Binding var tagName: String?
+    @Binding var categoryName: String?
+    
     let backgroundColor: Color
     let textColor: Color
     let placeholder: () -> Placeholder
@@ -46,6 +49,8 @@ struct PostView<Placeholder: View>: View {
             TextView(
                 "", 
                 postID: $nextPostID,
+                tagName: $tagName,
+                categoryName: $categoryName,
                 attributedString: $viewModel.attributedString,
                 shouldEditInRange: nil,
                 onEditingChanged: nil,
@@ -114,6 +119,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     
     return PostView(
         viewModel: .init(post: post, width: 375),
+        tagName: .constant(nil),
+        categoryName: .constant(nil),
         backgroundColor: SwiftPresso.Configuration.backgroundColor,
         textColor: SwiftPresso.Configuration.textColor,
         placeholder: {
