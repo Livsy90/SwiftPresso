@@ -86,15 +86,12 @@ struct PostView<Placeholder: View>: View {
             viewModel.onAppear()
         }
         .onChange(of: nextPostID) { _, newValue in
-            let id = newValue
-            nextPostID = nil
-            guard let id else { return }
+            guard let newValue else { return }
             Task {
                 do {
-                    let post = try await viewModel.post(with: id)
+                    let post = try await viewModel.post(with: newValue)
                     router.navigate(to: Destination.postDetails(post: post))
                 } catch {
-                    nextPostID = nil
                     alertMessage = error.localizedDescription
                 }
             }

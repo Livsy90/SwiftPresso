@@ -41,10 +41,12 @@ struct PostListCoordinator<Placeholder: View>: View {
         .onChange(of: tagName) { _, newValue in
             guard newValue != nil else { return }
             router.navigateToRoot()
+            tagName = nil
         }
         .onChange(of: categoryName) { _, newValue in
             guard newValue != nil else { return }
             router.navigateToRoot()
+            categoryName = nil
         }
     }
     
