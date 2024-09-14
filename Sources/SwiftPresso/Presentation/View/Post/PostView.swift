@@ -25,9 +25,11 @@ struct PostView<Placeholder: View>: View {
                     .foregroundStyle(textColor)
                 Spacer()
             }
+            .opacity(viewModel.isShowContent ? 1 : 0)
             
             Divider()
                 .padding()
+                .opacity(viewModel.isShowContent ? 1 : 0)
             
             if let date = viewModel.date {
                 HStack {
@@ -38,6 +40,7 @@ struct PostView<Placeholder: View>: View {
                     Spacer()
                 }
                 .padding(.bottom)
+                .opacity(viewModel.isShowContent ? 1 : 0)
             }
             
             TextView(
