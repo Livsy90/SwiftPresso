@@ -147,25 +147,53 @@ private extension PostListViewModel {
         isLoading = true
         switch mode {
         case .common:
-            self.postList += await getPostList(pageNumber: pageNumber)
+            do {
+                var postList = self.postList
+                postList += try await getPostList(pageNumber: pageNumber)
+                try Task.checkCancellation()
+                self.postList = postList
+            } catch {
+                isError = true
+            }
             
         case .tag(let name):
-            self.postList += await getPostList(
-                pageNumber: pageNumber,
-                tag: id(by: name)
-            )
+            do {
+                var postList = self.postList
+                self.postList += try await getPostList(
+                    pageNumber: pageNumber,
+                    tag: id(by: name)
+                )
+                try Task.checkCancellation()
+                self.postList = postList
+            } catch {
+                isError = true
+            }
             
         case .category(let name):
-            self.postList += await getPostList(
-                pageNumber: pageNumber,
-                category: id(by: name)
-            )
+            do {
+                var postList = self.postList
+                self.postList += try await getPostList(
+                    pageNumber: pageNumber,
+                    category: id(by: name)
+                )
+                try Task.checkCancellation()
+                self.postList = postList
+            } catch {
+                isError = true
+            }
             
         case .search(let searchTerms):
-            self.postList += await getPostList(
-                pageNumber: pageNumber,
-                searchTerms: searchTerms
-            )
+            do {
+                var postList = self.postList
+                self.postList += try await getPostList(
+                    pageNumber: pageNumber,
+                    searchTerms: searchTerms
+                )
+                try Task.checkCancellation()
+                self.postList = postList
+            } catch {
+                isError = true
+            }
         }
         
         pageNumber += 1
@@ -178,9 +206,8 @@ private extension PostListViewModel {
         searchTerms: String? = nil,
         category: Int? = nil,
         tag: Int? = nil
-    ) async -> [PostModel] {
+    ) async throws -> [PostModel] {
         do {
-            try Task.checkCancellation()
             return try await postListProvider.getPosts(
                 pageNumber: pageNumber,
                 perPage: postPerPage,
@@ -190,14 +217,12 @@ private extension PostListViewModel {
                 includeIDs: nil
             )
         } catch {
-            isError = true
-            return []
+            throw error
         }
     }
     
     func getTags() async -> [CategoryModel] {
         do {
-            try Task.checkCancellation()
             return try await tagListProvider.getTags()
         } catch {
             isError = true
@@ -207,7 +232,6 @@ private extension PostListViewModel {
     
     func getCategories() async -> [CategoryModel]  {
         do {
-            try Task.checkCancellation()
             return try await categoryListProvider.getCategories()
         } catch {
             isError = true
@@ -217,7 +241,6 @@ private extension PostListViewModel {
     
     func getPages() async -> [PostModel]  {
         do {
-            try Task.checkCancellation()
             return try await pageListProvider.getPages()
         } catch {
             isError = true
