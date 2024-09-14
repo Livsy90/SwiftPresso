@@ -113,7 +113,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     )
     
     return PostView(
-        viewModel: .init(post: post),
+        viewModel: .init(post: post, width: 375),
         backgroundColor: SwiftPresso.Configuration.backgroundColor,
         textColor: SwiftPresso.Configuration.textColor,
         placeholder: {

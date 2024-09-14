@@ -4,7 +4,7 @@ import ApricotNavigation
 struct PostListView<Placeholder: View>: View {
     
     let loadingPlaceholder: () -> Placeholder
-    
+    @State private var size: CGSize = .zero
     @Environment(Router.self) private var router
     @State private var viewModel: PostListViewModel
     @State private var searchText = ""
@@ -176,6 +176,9 @@ struct PostListView<Placeholder: View>: View {
                     await viewModel.loadDefault()
                 }
             }
+            .readSize { size in
+                self.size = size
+            }
             .webView(
                 url: $urlToOpen,
                 backgroundColor: backgroundColor,
@@ -219,7 +222,8 @@ struct PostListView<Placeholder: View>: View {
             Text(viewModel.mode.title)
                 .fontWeight(.semibold)
                 .foregroundStyle(interfaceColor)
-                .frame(width: (UIScreen.current?.bounds.size.width ?? 44) - 44, alignment: .center)
+                .frame(width: size.width, alignment: .center)
+                .padding(.horizontal)
         }
     }
     

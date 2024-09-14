@@ -21,23 +21,24 @@ final class PostViewModel {
     private var postProvider: any PostProviderProtocol
     
     private let htmlString: String
+    private let width: CGFloat
     
-    init(post: PostModel) {
+    init(post: PostModel, width: CGFloat) {
         title = post.title
         date = post.date
         url = post.link
         htmlString = post.content
+        self.width = width
     }
     
     func onAppear() {
         var attributedString = self.attributedString
-        let width = (UIScreen.current?.bounds.size.width ?? .zero) - 44
         DispatchQueue.global(qos: .userInteractive).async {
             attributedString = self.mapper.attributedStringFrom(
                 htmlText: self.htmlString,
                 color: UIColor(SwiftPresso.Configuration.textColor),
                 fontStyle: .callout,
-                width: width,
+                width: self.width,
                 isHandleYouTubeVideos: SwiftPresso.Configuration.isParseHTMLWithYouTubePreviews
             )
             DispatchQueue.main.async {
