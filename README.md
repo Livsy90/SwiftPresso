@@ -203,7 +203,7 @@ Alternatively, you can use the SwiftPresso factory methods.
 let postListProvider = SwiftPresso.Provider.postListProvider()
 ```
 
-To use property wrappers inside an Observable class scope, you can mark properties with the @ObservationIgnored Macro.
+To use property wrappers inside an `Observable` class scope, you can mark properties with the `@ObservationIgnored` Macro.
 
 ```swift
 @Observable
