@@ -41,9 +41,7 @@ final class PostViewModel {
             )
             DispatchQueue.main.async {
                 self.attributedString = attributedString
-                withAnimation {
-                    self.isInitialLoading = false
-                }
+                self.isInitialLoading = false
             }
         }
     }
