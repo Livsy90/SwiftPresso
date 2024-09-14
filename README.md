@@ -291,7 +291,13 @@ The HTML mapper can transform an HTML text into an `NSAttributedString`. If an H
 let mapper = SwiftPresso.Mapper.htmlMapper()
 
 func map(post: PostModel) -> NSAttributedString {
-    mapper.attributedStringFrom(htmlText: post.content, width: 375)
+    mapper.attributedStringFrom(
+        htmlText: post.content,
+        color: .black,
+        fontStyle: .callout,
+        width: 375,
+        isHandleYouTubeVideos: true
+    )
 }
 ```
 
@@ -301,7 +307,13 @@ func map(post: PostModel) -> NSAttributedString {
 var mapper: HTMLMapperProtocol
 
 func map(post: PostModel) -> NSAttributedString {
-    mapper.attributedStringFrom(htmlText: post.content, width: 375)
+    mapper.attributedStringFrom(
+        htmlText: post.content,
+        color: .black,
+        fontStyle: .callout,
+        width: 375,
+        isHandleYouTubeVideos: true
+    )
 }
 ```
 
