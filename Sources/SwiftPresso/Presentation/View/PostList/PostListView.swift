@@ -130,7 +130,6 @@ struct PostListView<Placeholder: View>: View {
             }
             .scrollDismissesKeyboard(.interactively)
             .listStyle(.plain)
-            .disabled(viewModel.isInitialLoading)
             .scrollContentBackground(.hidden)
             .background {
                 Rectangle()
@@ -222,7 +221,6 @@ struct PostListView<Placeholder: View>: View {
             } label: {
                 Image(systemName: "ellipsis")
             }
-            .disabled(viewModel.isLoading)
         }
     }
     
@@ -235,7 +233,6 @@ struct PostListView<Placeholder: View>: View {
             }
             .opacity(viewModel.isRefreshable ? 1 : 0)
             .symbolEffect(.bounce, value: viewModel.isRefreshable)
-            .disabled(viewModel.isLoading)
         }
     }
     
