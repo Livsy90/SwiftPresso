@@ -177,6 +177,7 @@ struct PostListView<Placeholder: View>: View {
                 }
             }
             .onChange(of: viewModel.isLoading, { _, newValue in
+                guard newValue else { return  }
                 isSearching = !newValue
             })
             .readSize { size in
