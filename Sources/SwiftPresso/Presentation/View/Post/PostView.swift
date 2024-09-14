@@ -90,8 +90,10 @@ struct PostView<Placeholder: View>: View {
             Task {
                 do {
                     let post = try await viewModel.post(with: newValue)
+                    nextPostID = nil
                     router.navigate(to: Destination.postDetails(post: post))
                 } catch {
+                    nextPostID = nil
                     alertMessage = error.localizedDescription
                 }
             }
