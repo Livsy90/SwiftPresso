@@ -6,6 +6,7 @@ final class PostViewModel {
     
     var attributedString: NSAttributedString = .init()
     var isInitialLoading: Bool = true
+    var isShowContent: Bool = false
     var isLoading: Bool = false
     var url: URL?
     var title: String
@@ -42,6 +43,9 @@ final class PostViewModel {
             DispatchQueue.main.async {
                 self.attributedString = attributedString
                 self.isInitialLoading = false
+                withAnimation {
+                    self.isShowContent = true
+                }
             }
         }
     }

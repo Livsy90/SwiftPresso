@@ -48,7 +48,7 @@ struct PostView<Placeholder: View>: View {
                 onEditingChanged: nil,
                 onCommit: nil
             )
-            .opacity(viewModel.isInitialLoading ? 0 : 1)
+            .opacity(viewModel.isShowContent ? 1 : 0)
         }
         .padding()
         .ignoresSafeArea(edges: .bottom)
