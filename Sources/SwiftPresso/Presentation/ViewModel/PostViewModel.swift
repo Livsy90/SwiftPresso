@@ -38,7 +38,7 @@ final class PostViewModel {
                 htmlText: self.htmlString,
                 color: UIColor(SwiftPresso.Configuration.textColor),
                 fontStyle: .callout,
-                width: self.width,
+                width: self.width - 44,
                 isHandleYouTubeVideos: SwiftPresso.Configuration.isParseHTMLWithYouTubePreviews
             )
             DispatchQueue.main.async {

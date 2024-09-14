@@ -383,7 +383,7 @@ struct PostListView<Placeholder: View>: View {
     SwiftPresso.View.postList(
         .init(
             host: "livsycode.com",
-            isShowContentInWebView: true
+            isShowContentInWebView: false
         )
     )
 }
