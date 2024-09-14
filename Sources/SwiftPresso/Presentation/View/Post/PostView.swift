@@ -1,11 +1,12 @@
 import SwiftUI
 import ApricotNavigation
 
-struct PostView: View {
+struct PostView<Placeholder: View>: View {
     
     @State var viewModel: PostViewModel
     let backgroundColor: Color
     let textColor: Color
+    let placeholder: () -> Placeholder
     
     @Environment(Router.self) private var router
     @State private var nextPostID: Int?
@@ -13,6 +14,10 @@ struct PostView: View {
     
     var body: some View {
         ScrollView {
+            if viewModel.isInitialLoading {
+                placeholder()
+            }
+            
             HStack {
                 Text(viewModel.title)
                     .font(.largeTitle)
@@ -107,7 +112,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     return PostView(
         viewModel: .init(post: post),
         backgroundColor: SwiftPresso.Configuration.backgroundColor,
-        textColor: SwiftPresso.Configuration.textColor
+        textColor: SwiftPresso.Configuration.textColor,
+        placeholder: {
+            ShimmerPlaceholder(backgroundColor: .clear)
+        }
     )
     .environment(Router())
 }

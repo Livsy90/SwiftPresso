@@ -22,7 +22,10 @@ struct PostListCoordinator<Placeholder: View>: View {
                         PostView(
                             viewModel: .init(post: post),
                             backgroundColor: configuration.backgroundColor,
-                            textColor: configuration.textColor
+                            textColor: configuration.textColor,
+                            placeholder: {
+                                placeholderView()
+                            }
                         )
                     }
                 }
@@ -38,6 +41,15 @@ struct PostListCoordinator<Placeholder: View>: View {
             SwiftPresso.View._postListWithCustomPlaceholder(configuration, placeholder: placeholder)
         } else {
             SwiftPresso.View._postList(configuration)
+        }
+    }
+    
+    @ViewBuilder
+    private func placeholderView() -> some View {
+        if let placeholder {
+            placeholder()
+        } else {
+            ShimmerPlaceholder(backgroundColor: configuration.backgroundColor)
         }
     }
     
