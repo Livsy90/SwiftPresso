@@ -60,7 +60,6 @@ struct PostView<Placeholder: View>: View {
             .opacity(viewModel.isShowContent ? 1 : 0)
         }
         .padding()
-        .ignoresSafeArea(edges: .bottom)
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
