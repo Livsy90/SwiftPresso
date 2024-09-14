@@ -6,6 +6,7 @@ protocol PostListServiceProtocol {
         perPage: Int,
         searchTerms: String?,
         categories: [Int]?,
-        tags: [Int]?
+        tags: [Int]?,
+        includeIDs: [Int]?
     ) async throws -> [WPPost]
 }

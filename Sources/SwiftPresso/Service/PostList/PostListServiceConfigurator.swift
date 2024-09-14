@@ -10,6 +10,7 @@ struct PostListServiceConfigurator {
             static let categories = "categories"
             static let tags = "tags"
             static let search = "search"
+            static let include = "include"
         }
     }
     
@@ -24,7 +25,8 @@ extension PostListServiceConfigurator: PostListConfiguratorProtocol {
         perPage: Int,
         searchTerms: String?,
         categories: [Int]?,
-        tags: [Int]?
+        tags: [Int]?,
+        includeIDs: [Int]?
     ) -> Request<[WPPost]> {
         
         var parameters: [(String, String)] = [
@@ -43,6 +45,10 @@ extension PostListServiceConfigurator: PostListConfiguratorProtocol {
         
         if let tags, !tags.isEmpty {
             parameters.append((Constants.Keys.tags, tags.map { String($0) }.joined(separator: ",")))
+        }
+        
+        if let includeIDs, !includeIDs.isEmpty {
+            parameters.append((Constants.Keys.include, includeIDs.map { String($0) }.joined(separator: ",")))
         }
         
         let path = Endpoint.path(for: .posts)

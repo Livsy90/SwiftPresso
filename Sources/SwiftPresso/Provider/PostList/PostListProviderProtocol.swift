@@ -4,7 +4,8 @@ public protocol PostListProviderProtocol {
         perPage: Int,
         searchTerms: String?,
         categories: [Int]?,
-        tags: [Int]?
+        tags: [Int]?,
+        includeIDs: [Int]?
     ) async throws -> [PostModel]
     
     func getRawPosts(
@@ -12,6 +13,7 @@ public protocol PostListProviderProtocol {
         perPage: Int,
         searchTerms: String?,
         categories: [Int]?,
-        tags: [Int]?
+        tags: [Int]?,
+        includeIDs: [Int]?
     ) async throws -> [WPPost]
 }

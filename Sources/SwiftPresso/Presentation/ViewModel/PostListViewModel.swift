@@ -176,7 +176,8 @@ private extension PostListViewModel {
                 perPage: postPerPage,
                 searchTerms: searchTerms,
                 categories: CollectionOfOne(category).compactMap { $0 },
-                tags: CollectionOfOne(tag).compactMap { $0 }
+                tags: CollectionOfOne(tag).compactMap { $0 },
+                includeIDs: nil
             )
         } catch {
             isError = true

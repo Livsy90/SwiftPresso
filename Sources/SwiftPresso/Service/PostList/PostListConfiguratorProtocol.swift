@@ -6,6 +6,7 @@ protocol PostListConfiguratorProtocol {
         perPage: Int,
         searchTerms: String?,
         categories: [Int]?,
-        tags: [Int]?
+        tags: [Int]?,
+        includeIDs: [Int]?
     ) -> Request<[WPPost]>
 }

@@ -236,6 +236,7 @@ You can configure several parameters to perform the request:
 * Search terms.
 * Categories
 * Tags.
+* Post IDs.
 
 ```swift
 class ViewModel {
@@ -249,7 +250,8 @@ class ViewModel {
             perPage: 20,
             searchTerms: "some text...",
             categories: [1,2,3],
-            tags: [1,2,3]
+            tags: [1,2,3],
+            includeIDs: [1,22]
         )
         
         let rawData = try? await postListProvider.getRawPosts(
@@ -257,7 +259,8 @@ class ViewModel {
             perPage: 20,
             searchTerms: "some text...",
             categories: [1,2,3],
-            tags: [1,2,3]
+            tags: [1,2,3],
+            includeIDs: [1,22]
         )
     }
     

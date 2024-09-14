@@ -20,7 +20,8 @@ extension PostListService: PostListServiceProtocol {
         perPage: Int,
         searchTerms: String?,
         categories: [Int]?,
-        tags: [Int]?
+        tags: [Int]?,
+        includeIDs: [Int]?
     ) async throws -> [WPPost] {
         
         let request: Request<[WPPost]> = configurator.feedRequest(
@@ -28,7 +29,8 @@ extension PostListService: PostListServiceProtocol {
             perPage: perPage,
             searchTerms: searchTerms,
             categories: categories,
-            tags: tags
+            tags: tags,
+            includeIDs: includeIDs
         )
         return try await networkClient.send(request).value
     }
