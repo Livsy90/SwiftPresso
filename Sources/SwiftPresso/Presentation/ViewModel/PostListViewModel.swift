@@ -153,7 +153,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 self.postList = postList
             } catch {
-                //isError = true
+                isError = true
             }
             
         case .tag(let name):
@@ -166,7 +166,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 self.postList = postList
             } catch {
-                //isError = true
+                isError = true
             }
             
         case .category(let name):
@@ -179,7 +179,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 self.postList = postList
             } catch {
-                //isError = true
+                isError = true
             }
             
         case .search(let searchTerms):
@@ -192,7 +192,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 self.postList = postList
             } catch {
-                //isError = true
+                isError = true
             }
         }
         

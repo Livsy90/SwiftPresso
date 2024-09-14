@@ -162,7 +162,9 @@ struct PostListView<Placeholder: View>: View {
             }
             .onChange(of: searchText) { _, newValue in
                 guard newValue.isEmpty else { return }
-                viewModel.loadDefault()
+                DispatchQueue.main.async {
+                    self.viewModel.loadDefault()
+                }
             }
             .readSize { size in
                 self.size = size
