@@ -86,14 +86,11 @@ struct PostView<Placeholder: View>: View {
             viewModel.onAppear()
         }
         .onChange(of: nextPostID) { _, newValue in
-            
-            print(newValue)
-            guard let newValue else { return }
+            let id = newValue
+            nextPostID = nil
+            guard let id else { return }
             Task {
                 do {
-                    print("...\(newValue)")
-                    let id = newValue
-                    nextPostID = nil
                     let post = try await viewModel.post(with: id)
                     router.navigate(to: Destination.postDetails(post: post))
                 } catch {
