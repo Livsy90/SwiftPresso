@@ -73,7 +73,7 @@ final class PostListViewModel {
         Task {
             async let postList = await getPostList(pageNumber: 1)
             async let pageList = await getPages()
-            self.postList = await postList
+            self.postList = try await postList
             self.pageList = await pageList
             shouldShowFullScreenPlaceholder = false
             
