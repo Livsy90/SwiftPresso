@@ -148,7 +148,7 @@ private extension PostListViewModel {
         switch mode {
         case .common:
             do {
-                var postList = self.postList
+                let postList = self.postList
                 postList += try await getPostList(pageNumber: pageNumber)
                 try Task.checkCancellation()
                 self.postList = postList
@@ -158,7 +158,7 @@ private extension PostListViewModel {
             
         case .tag(let name):
             do {
-                var postList = self.postList
+                let postList = self.postList
                 self.postList += try await getPostList(
                     pageNumber: pageNumber,
                     tag: id(by: name)
@@ -171,7 +171,7 @@ private extension PostListViewModel {
             
         case .category(let name):
             do {
-                var postList = self.postList
+                let postList = self.postList
                 self.postList += try await getPostList(
                     pageNumber: pageNumber,
                     category: id(by: name)
@@ -184,7 +184,7 @@ private extension PostListViewModel {
             
         case .search(let searchTerms):
             do {
-                var postList = self.postList
+                let postList = self.postList
                 self.postList += try await getPostList(
                     pageNumber: pageNumber,
                     searchTerms: searchTerms
