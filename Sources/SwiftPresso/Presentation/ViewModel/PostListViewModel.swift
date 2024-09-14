@@ -208,6 +208,9 @@ private extension PostListViewModel {
         tag: Int? = nil
     ) async throws -> [PostModel] {
         do {
+            defer {
+                isError = false
+            }
             return try await postListProvider.getPosts(
                 pageNumber: pageNumber,
                 perPage: postPerPage,
