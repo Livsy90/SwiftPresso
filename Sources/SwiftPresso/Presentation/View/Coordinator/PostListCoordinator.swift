@@ -51,10 +51,12 @@ struct PostListCoordinator<Placeholder: View>: View {
 }
 
 extension PostListCoordinator where Placeholder == EmptyView {
+    
     init(configuration: SwiftPressoSettings, placeholder: (() -> Placeholder)?) {
         self.configuration = configuration
         self.placeholder = placeholder
     }
+    
 }
 
 private extension PostListCoordinator {
@@ -96,7 +98,7 @@ private extension PostListCoordinator {
     }
     
     @ViewBuilder
-    private func placeholderView() -> some View {
+    func placeholderView() -> some View {
         if let placeholder {
             placeholder()
         } else {
