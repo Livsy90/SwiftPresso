@@ -113,6 +113,77 @@ SwiftPresso.Configuration.configure(with: .init(host: "livsycode.com", httpSchem
 
 The SwiftPresso Configuration stores values to manage API requests and handle UI appearance.
 
+```swift
+
+/// API host.
+var host: String
+
+/// Posts per page in the post list.
+var postsPerPage: Int
+
+/// API HTTP scheme.
+var httpScheme: HTTPScheme
+
+/// Remove web page's header and footer.
+var isExcludeWebHeaderAndFooter: Bool
+
+/// Post list and web view background color.
+var backgroundColor: Color
+
+/// Post list and web view interface color.
+var interfaceColor: Color
+
+/// Post list and web view text color.
+var textColor: Color
+
+/// Determines the visibility of the page menu.
+var isShowPageMenu: Bool
+
+/// Determines the visibility of the tag menu.
+var isShowTagMenu: Bool
+
+/// Determines the visibility of the category menu.
+var isShowCategoryMenu: Bool
+
+/// Home icon.
+var homeIcon: Image
+
+/// Determines the title of the page menu.
+var pageMenuTitle: String
+
+/// Determines the title of the tag menu.
+var tagMenuTitle: String
+
+/// Determines the title of the category menu.
+var categoryMenuTitle: String
+
+/// Home screen navigation title.
+var homeTitle: String?
+
+/// Search screen navigation title.
+var searchTitle: String?
+
+/// Menu background color.
+var menuBackgroundColor: Color
+
+/// Menu text color.
+var menuTextColor: Color
+
+/// To expand menu items by default.
+var isMenuExpanded: Bool
+
+/// Using webview as post view.
+var isShowContentInWebView: Bool
+
+/// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with a clickable link.
+var isParseHTMLWithYouTubePreviews: Bool
+
+```
+
+```swift
+let color = SwiftPresso.Configuration.backgroundColor
+```
+
 ## Data Providers
 
 To use SwiftPresso providers, you can inject them via SwiftPresso property wrappers. 
