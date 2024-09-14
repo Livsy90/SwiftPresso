@@ -29,6 +29,7 @@ struct PostView<Placeholder: View>: View {
                     .textSelection(.enabled)
                 Spacer()
             }
+            .padding()
             .opacity(viewModel.isShowContent ? 1 : 0)
             
             Divider()
@@ -43,7 +44,7 @@ struct PostView<Placeholder: View>: View {
                         .foregroundStyle(textColor)
                     Spacer()
                 }
-                .padding(.bottom)
+                .padding([.bottom, .horizontal])
                 .opacity(viewModel.isShowContent ? 1 : 0)
             }
             
@@ -58,9 +59,8 @@ struct PostView<Placeholder: View>: View {
                 onCommit: nil
             )
             .opacity(viewModel.isShowContent ? 1 : 0)
+            .padding(.horizontal)
         }
-        .scrollIndicators(.hidden)
-        .padding([.horizontal, .top])
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
