@@ -26,6 +26,7 @@ struct PostView<Placeholder: View>: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundStyle(textColor)
+                    .textSelection(.enabled)
                 Spacer()
             }
             .opacity(viewModel.isShowContent ? 1 : 0)
