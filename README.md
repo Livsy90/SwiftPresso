@@ -373,7 +373,6 @@ func map(post: PostModel) -> NSAttributedString {
 ```
 
 ```swift
-@ObservationIgnored
 @SwiftPressoInjected(\.htmlMapper)
 var mapper: HTMLMapperProtocol
 
