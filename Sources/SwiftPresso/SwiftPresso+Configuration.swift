@@ -6,12 +6,6 @@ public extension SwiftPresso {
     /// SwiftPresso configuration.
     enum Configuration {
         
-        /// Initial configuration.
-        /// - Parameter configuration: configuration model.
-        public static func configure(with configuration: Preferences.Configuration) {
-            Preferences.shared.configuration = configuration
-        }
-        
         public enum API {
             
             /// API host.
@@ -36,13 +30,13 @@ public extension SwiftPresso {
             /// Remove web page's header and footer.
             public static var isExcludeWebHeaderAndFooter: Bool { Preferences.shared.configuration.isExcludeWebHeaderAndFooter }
             
-            /// Post list and web view background color.
+            /// Post list and post view background color.
             public static var backgroundColor: Color { Preferences.shared.configuration.backgroundColor }
             
-            /// Post list and web view interface color.
+            /// Post list and post view interface color.
             public static var interfaceColor: Color { Preferences.shared.configuration.interfaceColor }
             
-            /// Post list and web view text color.
+            /// Post list and post view text color.
             public static var textColor: Color { Preferences.shared.configuration.textColor }
             
             /// Determines the visibility of the page menu.
@@ -54,7 +48,7 @@ public extension SwiftPresso {
             /// Determines the visibility of the category menu.
             public static var isShowCategoryMenu: Bool { Preferences.shared.configuration.isShowCategoryMenu }
             
-            /// Home icon.
+            /// The icon for the navigation bar button that restores the interface to its default state.
             public static var homeIcon: Image { Preferences.shared.configuration.homeIcon }
             
             /// Determines the title of the page menu.
@@ -66,11 +60,11 @@ public extension SwiftPresso {
             /// Determines the title of the category menu.
             public static var categoryMenuTitle: String { Preferences.shared.configuration.categoryMenuTitle }
             
-            /// Home screen navigation title.
-            public static var homeTitle: String? { Preferences.shared.configuration.homeTitle }
+            /// Navigation title for default state.
+            public static var homeTitle: String { Preferences.shared.configuration.homeTitle }
             
-            /// Search screen navigation title.
-            public static var searchTitle: String? { Preferences.shared.configuration.searchTitle }
+            /// Navigation title for search state.
+            public static var searchTitle: String { Preferences.shared.configuration.searchTitle }
             
             /// Menu background color.
             public static var menuBackgroundColor: Color { Preferences.shared.configuration.menuBackgroundColor }
@@ -81,7 +75,7 @@ public extension SwiftPresso {
             /// To expand menu items by default.
             public static var isMenuExpanded: Bool { Preferences.shared.configuration.isMenuExpanded }
             
-            /// Using webview as post view.
+            /// Using WKWebView as post view.
             public static var isShowContentInWebView: Bool { Preferences.shared.configuration.isShowContentInWebView }
             
             /// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.

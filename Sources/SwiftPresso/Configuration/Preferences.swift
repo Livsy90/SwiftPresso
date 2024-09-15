@@ -23,7 +23,7 @@ public final class Preferences {
         qos: .default,
         attributes: .concurrent
     )
-    private var _configuration = Configuration.init(host: "")
+    private var _configuration: Configuration = .initial
     
     private init() {}
     
@@ -31,7 +31,7 @@ public final class Preferences {
 
 extension Preferences {
     
-    public struct Configuration {
+    struct Configuration {
         
         let host: String
         let postsPerPage: Int
@@ -48,8 +48,8 @@ extension Preferences {
         let isShowTagMenu: Bool
         let isShowCategoryMenu: Bool
         let homeIcon: Image
-        let homeTitle: String?
-        let searchTitle: String?
+        let homeTitle: String
+        let searchTitle: String
         let pageMenuTitle: String
         let tagMenuTitle: String
         let categoryMenuTitle: String
@@ -57,30 +57,30 @@ extension Preferences {
         let menuTextColor: Color
         let isParseHTMLWithYouTubePreviews: Bool
         
-        public init(
+        init(
             host: String,
-            httpScheme: HTTPScheme = .https,
-            postsPerPage: Int = 50,
-            tagPathComponent: String = "tag",
-            categoryPathComponent: String = "category",
-            isShowContentInWebView: Bool = false,
-            menuBackgroundColor: Color = .primary,
-            menuTextColor: Color = Color(uiColor: .systemBackground),
-            backgroundColor: Color = Color(uiColor: .systemBackground),
-            interfaceColor: Color = .primary,
-            textColor: Color = .primary,
-            homeIcon: Image = Image(systemName: "house"),
-            homeTitle: String? = nil,
-            searchTitle: String? = nil,
-            isShowPageMenu: Bool = true,
-            isShowTagMenu: Bool = true,
-            isShowCategoryMenu: Bool = true,
-            pageMenuTitle: String = "Pages",
-            tagMenuTitle: String = "Tags",
-            categoryMenuTitle: String = "Category",
-            isParseHTMLWithYouTubePreviews: Bool = true,
-            isExcludeWebHeaderAndFooter: Bool = true,
-            isMenuExpanded: Bool = true
+            httpScheme: HTTPScheme,
+            postsPerPage: Int,
+            tagPathComponent: String,
+            categoryPathComponent: String,
+            isShowContentInWebView: Bool,
+            menuBackgroundColor: Color,
+            menuTextColor: Color,
+            backgroundColor: Color,
+            interfaceColor: Color,
+            textColor: Color,
+            homeIcon: Image,
+            homeTitle: String,
+            searchTitle: String,
+            isShowPageMenu: Bool,
+            isShowTagMenu: Bool,
+            isShowCategoryMenu: Bool,
+            pageMenuTitle: String,
+            tagMenuTitle: String,
+            categoryMenuTitle: String,
+            isParseHTMLWithYouTubePreviews: Bool,
+            isExcludeWebHeaderAndFooter: Bool,
+            isMenuExpanded: Bool
         ) {
             self.host = host
             self.backgroundColor = backgroundColor
@@ -110,8 +110,32 @@ extension Preferences {
     
 }
 
-extension Preferences.Configuration: ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        self = .init(host: value)
-    }
+extension Preferences.Configuration {
+    
+    static var initial: Preferences.Configuration = .init(
+        host: "",
+        httpScheme: .https,
+        postsPerPage: .zero,
+        tagPathComponent: "",
+        categoryPathComponent: "",
+        isShowContentInWebView: true,
+        menuBackgroundColor: .primary,
+        menuTextColor: Color(uiColor: .systemBackground),
+        backgroundColor: Color(uiColor: .systemBackground),
+        interfaceColor: .primary,
+        textColor: .primary,
+        homeIcon: Image(systemName: "house"),
+        homeTitle: "Home",
+        searchTitle: "Search",
+        isShowPageMenu: true,
+        isShowTagMenu: true,
+        isShowCategoryMenu: true,
+        pageMenuTitle: "Pages",
+        tagMenuTitle: "Tags",
+        categoryMenuTitle: "Categories",
+        isParseHTMLWithYouTubePreviews: true,
+        isExcludeWebHeaderAndFooter: true,
+        isMenuExpanded: true
+    )
+    
 }

@@ -7,18 +7,15 @@ enum Destination: Hashable {
 
 struct PostListCoordinator<Placeholder: View>: View {
     
-    private let configuration: Preferences.Configuration
+    typealias Configuration = SwiftPresso.Configuration
+    
     private let placeholder: (() -> Placeholder)?
     @State private var router: Router = .init()
     @State private var size: CGSize = .zero
     @State private var tagName: String? = nil
     @State private var categoryName: String? = nil
     
-    init(
-        configuration: Preferences.Configuration,
-        placeholder: (() -> Placeholder)?
-    ) {
-        self.configuration = configuration
+    init(placeholder: (() -> Placeholder)?) {
         self.placeholder = placeholder
     }
     
@@ -32,8 +29,8 @@ struct PostListCoordinator<Placeholder: View>: View {
                     }
                 }
         }
-        .accentColor(configuration.interfaceColor)
-        .tint(configuration.interfaceColor)
+        .accentColor(Configuration.UI.interfaceColor)
+        .tint(Configuration.UI.interfaceColor)
         .environment(router)
         .readSize { size in
             self.size = size
@@ -54,11 +51,7 @@ struct PostListCoordinator<Placeholder: View>: View {
 
 extension PostListCoordinator where Placeholder == EmptyView {
     
-    init(
-        configuration: Preferences.Configuration,
-        placeholder: (() -> Placeholder)?
-    ) {
-        self.configuration = configuration
+    init(placeholder: (() -> Placeholder)?) {
         self.placeholder = placeholder
     }
     
@@ -68,23 +61,23 @@ private extension PostListCoordinator {
     
     func postListView() -> some View {
         PostListView(
-            viewModel: .init(postPerPage: configuration.postsPerPage),
+            viewModel: .init(postPerPage: Configuration.API.postsPerPage),
             externalTagName: $tagName,
             externalCategoryName: $categoryName,
-            backgroundColor: configuration.backgroundColor,
-            interfaceColor: configuration.interfaceColor,
-            textColor: configuration.textColor,
-            menuBackgroundColor: configuration.menuBackgroundColor,
-            menuTextColor: configuration.menuTextColor,
-            homeIcon: configuration.homeIcon,
-            isShowContentInWebView: configuration.isShowContentInWebView,
-            isShowPageMenu: configuration.isShowPageMenu,
-            isShowTagMenu: configuration.isShowTagMenu,
-            isShowCategoryMenu: configuration.isShowCategoryMenu,
-            isMenuExpanded: configuration.isMenuExpanded,
-            pageMenuTitle: configuration.pageMenuTitle,
-            tagMenuTitle: configuration.tagMenuTitle,
-            categoryMenuTitle: configuration.categoryMenuTitle
+            backgroundColor: Configuration.UI.backgroundColor,
+            interfaceColor: Configuration.UI.interfaceColor,
+            textColor: Configuration.UI.textColor,
+            menuBackgroundColor: Configuration.UI.menuBackgroundColor,
+            menuTextColor: Configuration.UI.menuTextColor,
+            homeIcon: Configuration.UI.homeIcon,
+            isShowContentInWebView: Configuration.UI.isShowContentInWebView,
+            isShowPageMenu: Configuration.UI.isShowPageMenu,
+            isShowTagMenu: Configuration.UI.isShowTagMenu,
+            isShowCategoryMenu: Configuration.UI.isShowCategoryMenu,
+            isMenuExpanded: Configuration.UI.isMenuExpanded,
+            pageMenuTitle: Configuration.UI.pageMenuTitle,
+            tagMenuTitle: Configuration.UI.tagMenuTitle,
+            categoryMenuTitle: Configuration.UI.categoryMenuTitle
         ) {
             placeholderView()
         }
@@ -95,8 +88,8 @@ private extension PostListCoordinator {
             viewModel: .init(post: post, width: size.width),
             tagName: $tagName,
             categoryName: $categoryName,
-            backgroundColor: configuration.backgroundColor,
-            textColor: configuration.textColor
+            backgroundColor: Configuration.UI.backgroundColor,
+            textColor: Configuration.UI.textColor
         ) {
             placeholderView()
         }
@@ -107,12 +100,12 @@ private extension PostListCoordinator {
         if let placeholder {
             placeholder()
         } else {
-            ShimmerPlaceholder(backgroundColor: configuration.backgroundColor)
+            ShimmerPlaceholder(backgroundColor: Configuration.UI.backgroundColor)
         }
     }
     
 }
 
 #Preview {
-    SwiftPresso.View.postList("livsycode.com")
+    SwiftPresso.View.postList(host: "livsycode.com")
 }

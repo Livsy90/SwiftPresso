@@ -23,7 +23,7 @@ struct DemoApp: App {
         
     var body: some Scene {
         WindowGroup {
-            SwiftPresso.View.postList("livsycode.com")
+            SwiftPresso.View.postList(host: "livsycode.com")
         }
     }
 }
@@ -32,21 +32,10 @@ struct DemoApp: App {
 With this configuration, you can determine the API host value, the HTTP method, and various UI parameters.
 
 ```swift
-@main
-struct DemoApp: App {
-        
-    var body: some Scene {
-        WindowGroup {
-            SwiftPresso.View.postList(
-                .init(
-                    host: "livsycode.com",
-                    backgroundColor: .black,
-                    tagMenuTitle: "Series"
-                )
-            )
-        }
-    }
-}
+    SwiftPresso.View.postList(
+        host: "livsycode.com",
+        isShowContentInWebView: true
+    )
 ```
 
 There are two ways to display post content:
@@ -85,13 +74,11 @@ Or like in the example above:
 You can customize tag and category components as well.
 
 ```swift
-SwiftPresso.View.postList(
-    .init(
+    SwiftPresso.View.postList(
         host: "livsycode.com",
         tagPathComponent: "series",
         categoryPathComponent: "topics"
     )
-)
 ```
 
 ### Important:
@@ -117,25 +104,71 @@ struct DemoApp: App {
 
 ## Configuration
 
-If you use SwiftPresso built-in views, there is no need to worry about the configuration method calling. However, using SwiftPresso entities separately must be preceded by manually configuring the data. To do this, you can use the SwiftPresso configure method.
+If you use SwiftPresso built-in views, there is no need to worry about the configuration method calling. However, using SwiftPresso entities separately must be preceded by manually configuring the data. To do this, you can use the configure method.
 
 ```swift
-SwiftPresso.Configuration.configure(with: .init(host: "livsycode.com", httpScheme: .https))
+    /// Initial configuration.
+    /// - Parameters:
+    ///   - host: API host.
+    ///   - httpScheme: API HTTP scheme.
+    ///   - postsPerPage: Posts per page in the post list request.
+    ///   - tagPathComponent: API Tag path component.
+    ///   - categoryPathComponent: API Category path component.
+    ///   - isShowContentInWebView: Using WKWebView as post view.
+    ///   - backgroundColor: Post list and post view background color.
+    ///   - interfaceColor: Post list and post view interface color.
+    ///   - textColor: Post list and post view text color.
+    ///   - menuBackgroundColor: Menu background color.
+    ///   - menuTextColor: Menu text color.
+    ///   - homeIcon: The icon for the navigation bar button that restores the interface to its default state.
+    ///   - homeTitle: Navigation title for default state.
+    ///   - searchTitle: Navigation title for search state.
+    ///   - isShowPageMenu: Determines the visibility of the page menu.
+    ///   - isShowTagMenu: Determines the visibility of the tag menu.
+    ///   - isShowCategoryMenu: Determines the visibility of the category menu.
+    ///   - pageMenuTitle: Determines the title of the page menu.
+    ///   - tagMenuTitle: Determines the title of the tag menu.
+    ///   - categoryMenuTitle: Determines the title of the category menu.
+    ///   - isParseHTMLWithYouTubePreviews: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
+    ///   - isExcludeWebHeaderAndFooter: Remove web page's header and footer.
+    ///   - isMenuExpanded: To expand menu items by default.
+    public static func configure(
+        host: String,
+        httpScheme: HTTPScheme = .https,
+        postsPerPage: Int = 50,
+        tagPathComponent: String = "tag",
+        categoryPathComponent: String = "category",
+        isShowContentInWebView: Bool = false,
+        backgroundColor: Color = Color(uiColor: .systemBackground),
+        interfaceColor: Color = .primary,
+        textColor: Color = .primary,
+        menuBackgroundColor: Color = .primary,
+        menuTextColor: Color = Color(uiColor: .systemBackground),
+        homeIcon: Image = Image(systemName: "house"),
+        homeTitle: String = "Home",
+        searchTitle: String = "Search",
+        isShowPageMenu: Bool = true,
+        isShowTagMenu: Bool = true,
+        isShowCategoryMenu: Bool = true,
+        pageMenuTitle: String = "Pages",
+        tagMenuTitle: String = "Tags",
+        categoryMenuTitle: String = "Category",
+        isParseHTMLWithYouTubePreviews: Bool = true,
+        isExcludeWebHeaderAndFooter: Bool = true,
+        isMenuExpanded: Bool = true
+    ) { ... }
 ```
 
-The SwiftPresso Configuration stores values to manage API requests and handle UI appearance.
+```swift
+SwiftPresso.configure(host: "livsycode.com", httpScheme: .https)
+```
+
+The `SwiftPresso.Configuration` stores values to manage API requests and handle UI appearance.
 
 ```swift
 public extension SwiftPresso {
     
-    /// SwiftPresso configuration.
     enum Configuration {
-        
-        /// Initial configuration.
-        /// - Parameter configuration: configuration model.
-        public static func configure(with configuration: Preferences.Configuration) {
-            Preferences.shared.configuration = configuration
-        }
         
         public enum API {
             
@@ -161,13 +194,13 @@ public extension SwiftPresso {
             /// Remove web page's header and footer.
             public static var isExcludeWebHeaderAndFooter: Bool
             
-            /// Post list and web view background color.
+            /// Post list and post view background color.
             public static var backgroundColor: Color
             
-            /// Post list and web view interface color.
+            /// Post list and post view interface color.
             public static var interfaceColor: Color
             
-            /// Post list and web view text color.
+            /// Post list and post view text color.
             public static var textColor: Color
             
             /// Determines the visibility of the page menu.
@@ -179,7 +212,7 @@ public extension SwiftPresso {
             /// Determines the visibility of the category menu.
             public static var isShowCategoryMenu: Bool
             
-            /// Home icon.
+            /// The icon for the navigation bar button that restores the interface to its default state.
             public static var homeIcon: Image
             
             /// Determines the title of the page menu.
@@ -191,11 +224,11 @@ public extension SwiftPresso {
             /// Determines the title of the category menu.
             public static var categoryMenuTitle: String
             
-            /// Home screen navigation title.
-            public static var homeTitle: String?
+            /// Navigation title for default state.
+            public static var homeTitle: String
             
-            /// Search screen navigation title.
-            public static var searchTitle: String?
+            /// Navigation title for search state.
+            public static var searchTitle: String
             
             /// Menu background color.
             public static var menuBackgroundColor: Color
@@ -220,11 +253,9 @@ public extension SwiftPresso {
 
 ```
 
-### Usage
-
 ```swift
 let color = SwiftPresso.Configuration.UI.backgroundColor
-let host = SwiftPresso.Configuration.API.backgroundColor
+let host = SwiftPresso.Configuration.API.host
 ```
 
 ## Data Providers
