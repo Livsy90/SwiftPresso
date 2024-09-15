@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 struct HTMLMapper: HTMLMapperProtocol {
         
@@ -13,7 +13,7 @@ struct HTMLMapper: HTMLMapperProtocol {
     func attributedStringFrom(
         htmlText: String,
         color: UIColor,
-        fontStyle: UIFont.TextStyle,
+        font: Font,
         width: CGFloat,
         isHandleYouTubeVideos: Bool
     ) -> NSMutableAttributedString {
@@ -26,7 +26,7 @@ struct HTMLMapper: HTMLMapperProtocol {
             )
         }
         
-        let format = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(UIFont.preferredFont(forTextStyle: fontStyle).pointSize)\">%@</span>"
+        let format = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(UIFont.preferredFont(from: font).pointSize)\">%@</span>"
         
         let modifiedFontString = String(
             format: format,

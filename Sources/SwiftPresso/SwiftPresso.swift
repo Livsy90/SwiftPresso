@@ -13,6 +13,9 @@ public enum SwiftPresso {
     ///   - backgroundColor: Post list and post view background color.
     ///   - interfaceColor: Post list and post view interface color.
     ///   - textColor: Post list and post view text color.
+    ///   - postListFont: Post list font.
+    ///   - postBodyFont: Post body font.
+    ///   - postTitleFont: Post title font.
     ///   - menuBackgroundColor: Menu background color.
     ///   - menuTextColor: Menu text color.
     ///   - homeIcon: The icon for the navigation bar button that restores the interface to its default state.
@@ -34,6 +37,9 @@ public enum SwiftPresso {
         tagPathComponent: String = "tag",
         categoryPathComponent: String = "category",
         isShowContentInWebView: Bool = false,
+        postListFont: Font = .title2,
+        postBodyFont: Font = .body,
+        postTitleFont: Font = .largeTitle,
         backgroundColor: Color = Color(uiColor: .systemBackground),
         interfaceColor: Color = .primary,
         textColor: Color = .primary,
@@ -59,6 +65,9 @@ public enum SwiftPresso {
             postsPerPage: postsPerPage,
             tagPathComponent: tagPathComponent,
             categoryPathComponent: categoryPathComponent,
+            postListFont: postListFont,
+            postBodyFont: postBodyFont,
+            postTitleFont: postTitleFont,
             isShowContentInWebView: isShowContentInWebView,
             menuBackgroundColor: menuBackgroundColor,
             menuTextColor: menuTextColor,

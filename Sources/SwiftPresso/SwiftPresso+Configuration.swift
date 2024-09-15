@@ -33,6 +33,15 @@ public extension SwiftPresso {
             /// Post list and post view background color.
             public static var backgroundColor: Color { Preferences.shared.configuration.backgroundColor }
             
+            /// Post list font.
+            public static var postListFont: Font { Preferences.shared.configuration.postListFont }
+            
+            /// Post body font.
+            public static var postBodyFont: Font { Preferences.shared.configuration.postBodyFont }
+            
+            /// Post title font.
+            public static var postTitleFont: Font { Preferences.shared.configuration.postTitleFont }
+            
             /// Post list and post view interface color.
             public static var interfaceColor: Color { Preferences.shared.configuration.interfaceColor }
             

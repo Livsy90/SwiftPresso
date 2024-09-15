@@ -3,9 +3,8 @@ import ApricotNavigation
 
 struct PostListView<Placeholder: View>: View {
     
-    private let loadingPlaceholder: () -> Placeholder
-    @State private var size: CGSize = .zero
     @Environment(Router.self) private var router
+    @State private var size: CGSize = .zero
     @State private var viewModel: PostListViewModel
     @State private var searchText = ""
     @State private var isSearching = false
@@ -24,6 +23,7 @@ struct PostListView<Placeholder: View>: View {
     private let backgroundColor: Color
     private let interfaceColor: Color
     private let textColor: Color
+    private let font: Font
     
     private let homeIcon: Image
     
@@ -39,6 +39,7 @@ struct PostListView<Placeholder: View>: View {
     private let menuTextColor: Color
     
     private let isShowContentInWebView: Bool
+    private let loadingPlaceholder: () -> Placeholder
     
     init(
         viewModel: PostListViewModel,
@@ -47,6 +48,7 @@ struct PostListView<Placeholder: View>: View {
         backgroundColor: Color,
         interfaceColor: Color,
         textColor: Color,
+        font: Font,
         menuBackgroundColor: Color,
         menuTextColor: Color,
         homeIcon: Image,
@@ -66,6 +68,7 @@ struct PostListView<Placeholder: View>: View {
         self.backgroundColor = backgroundColor
         self.interfaceColor = interfaceColor
         self.textColor = textColor
+        self.font = font
         
         self.menuBackgroundColor = menuBackgroundColor
         self.menuTextColor = menuTextColor
@@ -98,6 +101,7 @@ struct PostListView<Placeholder: View>: View {
                     webViewBackgroundColor: backgroundColor,
                     interfaceColor: interfaceColor,
                     textColor: textColor,
+                    font: font,
                     onTag: { tagName in
                         showPostListByTag(tagName)
                     },

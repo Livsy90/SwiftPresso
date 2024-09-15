@@ -9,6 +9,8 @@ struct PostView<Placeholder: View>: View {
     
     let backgroundColor: Color
     let textColor: Color
+    let titleFont: Font
+    let bodyFont: Font
     let placeholder: () -> Placeholder
     
     @Environment(Router.self) private var router
@@ -122,6 +124,8 @@ struct PostView<Placeholder: View>: View {
         categoryName: .constant(nil),
         backgroundColor: SwiftPresso.Configuration.UI.backgroundColor,
         textColor: SwiftPresso.Configuration.UI.textColor,
+        titleFont: SwiftPresso.Configuration.UI.postTitleFont,
+        bodyFont: SwiftPresso.Configuration.UI.postBodyFont,
         placeholder: {
             ShimmerPlaceholder(backgroundColor: .clear)
         }

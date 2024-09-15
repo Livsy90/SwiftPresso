@@ -67,6 +67,7 @@ private extension PostListCoordinator {
             backgroundColor: Configuration.UI.backgroundColor,
             interfaceColor: Configuration.UI.interfaceColor,
             textColor: Configuration.UI.textColor,
+            font: Configuration.UI.postListFont,
             menuBackgroundColor: Configuration.UI.menuBackgroundColor,
             menuTextColor: Configuration.UI.menuTextColor,
             homeIcon: Configuration.UI.homeIcon,
@@ -89,7 +90,9 @@ private extension PostListCoordinator {
             tagName: $tagName,
             categoryName: $categoryName,
             backgroundColor: Configuration.UI.backgroundColor,
-            textColor: Configuration.UI.textColor
+            textColor: Configuration.UI.textColor,
+            titleFont: Configuration.UI.postTitleFont,
+            bodyFont: Configuration.UI.postBodyFont
         ) {
             placeholderView()
         }

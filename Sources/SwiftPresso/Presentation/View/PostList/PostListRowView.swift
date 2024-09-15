@@ -8,6 +8,7 @@ struct PostListRowView<Placeholder: View>: View {
     let webViewBackgroundColor: Color
     let interfaceColor: Color
     let textColor: Color
+    let font: Font
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
@@ -22,6 +23,7 @@ struct PostListRowView<Placeholder: View>: View {
                 webViewBackgroundColor: webViewBackgroundColor,
                 interfaceColor: interfaceColor,
                 textColor: textColor,
+                font: font,
                 onTag: onTag,
                 onCategory: onCategory,
                 placeholder: placeholder
@@ -33,7 +35,8 @@ struct PostListRowView<Placeholder: View>: View {
             } label: {
                 Text(post.title)
                     .padding(.vertical, 8)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(font)
+                    .fontWeight(.semibold)
                     .foregroundStyle(textColor)
             }
         }

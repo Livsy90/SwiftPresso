@@ -107,7 +107,7 @@ struct DemoApp: App {
 If you use SwiftPresso built-in views, there is no need to worry about the configuration method calling. However, using SwiftPresso entities separately must be preceded by manually configuring the data. To do this, you can use the configure method.
 
 ```swift
-    /// Initial configuration.
+        /// Initial configuration.
     /// - Parameters:
     ///   - host: API host.
     ///   - httpScheme: API HTTP scheme.
@@ -118,6 +118,9 @@ If you use SwiftPresso built-in views, there is no need to worry about the confi
     ///   - backgroundColor: Post list and post view background color.
     ///   - interfaceColor: Post list and post view interface color.
     ///   - textColor: Post list and post view text color.
+    ///   - postListFont: Post list font.
+    ///   - postBodyFont: Post body font.
+    ///   - postTitleFont: Post title font.
     ///   - menuBackgroundColor: Menu background color.
     ///   - menuTextColor: Menu text color.
     ///   - homeIcon: The icon for the navigation bar button that restores the interface to its default state.
@@ -132,13 +135,16 @@ If you use SwiftPresso built-in views, there is no need to worry about the confi
     ///   - isParseHTMLWithYouTubePreviews: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
     ///   - isExcludeWebHeaderAndFooter: Remove web page's header and footer.
     ///   - isMenuExpanded: To expand menu items by default.
-     static func configure(
+    static func configure(
         host: String,
         httpScheme: HTTPScheme = .https,
         postsPerPage: Int = 50,
         tagPathComponent: String = "tag",
         categoryPathComponent: String = "category",
         isShowContentInWebView: Bool = false,
+        postListFont: Font = .title3,
+        postBodyFont: Font = .body,
+        postTitleFont: Font = .largeTitle,
         backgroundColor: Color = Color(uiColor: .systemBackground),
         interfaceColor: Color = .primary,
         textColor: Color = .primary,
@@ -202,6 +208,15 @@ The `SwiftPresso.Configuration` stores values to manage API requests and handle 
             
             /// Post list and post view text color.
              static var textColor: Color { get }
+             
+            /// Post list font.
+            public static var postListFont: Font { get }
+            
+            /// Post body font.
+            public static var postBodyFont: Font { get }
+            
+            /// Post title font.
+            public static var postTitleFont: Font { get }
             
             /// Determines the visibility of the page menu.
              static var isShowPageMenu: Bool { get }
@@ -442,7 +457,7 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(
         htmlText: post.content,
         color: .black,
-        fontStyle: .callout,
+        font: .body,
         width: 375,
         isHandleYouTubeVideos: true
     )
@@ -457,7 +472,7 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(
         htmlText: post.content,
         color: .black,
-        fontStyle: .callout,
+        font: .body,
         width: 375,
         isHandleYouTubeVideos: true
     )

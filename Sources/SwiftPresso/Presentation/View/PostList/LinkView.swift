@@ -7,6 +7,8 @@ struct LinkView<Placehodler: View>: View {
     let webViewBackgroundColor: Color
     let interfaceColor: Color
     let textColor: Color
+    let font: Font
+    
     
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
@@ -16,7 +18,8 @@ struct LinkView<Placehodler: View>: View {
         ZStack {
             Link("", destination: url)
             Text(title)
-                .font(.system(size: 22, weight: .semibold))
+                .font(font)
+                .fontWeight(.semibold)
                 .foregroundStyle(textColor)
         }
         .webViewLinkRow(

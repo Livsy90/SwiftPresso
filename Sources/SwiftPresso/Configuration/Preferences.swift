@@ -38,6 +38,10 @@ extension Preferences {
         let httpScheme: HTTPScheme
         let tagPathComponent: String
         let categoryPathComponent: String
+        
+        let postListFont: Font
+        let postBodyFont: Font
+        let postTitleFont: Font
         let isShowContentInWebView: Bool
         let isExcludeWebHeaderAndFooter: Bool
         let isMenuExpanded: Bool
@@ -63,6 +67,9 @@ extension Preferences {
             postsPerPage: Int,
             tagPathComponent: String,
             categoryPathComponent: String,
+            postListFont: Font,
+            postBodyFont: Font,
+            postTitleFont: Font,
             isShowContentInWebView: Bool,
             menuBackgroundColor: Color,
             menuTextColor: Color,
@@ -105,6 +112,9 @@ extension Preferences {
             self.isParseHTMLWithYouTubePreviews = isParseHTMLWithYouTubePreviews
             self.tagPathComponent = tagPathComponent
             self.categoryPathComponent = categoryPathComponent
+            self.postListFont = postListFont
+            self.postBodyFont = postBodyFont
+            self.postTitleFont = postTitleFont
         }
     }
     
@@ -118,6 +128,9 @@ extension Preferences.Configuration {
         postsPerPage: .zero,
         tagPathComponent: "",
         categoryPathComponent: "",
+        postListFont: .title3,
+        postBodyFont: .body,
+        postTitleFont: .largeTitle,
         isShowContentInWebView: true,
         menuBackgroundColor: .primary,
         menuTextColor: Color(uiColor: .systemBackground),

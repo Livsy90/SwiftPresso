@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 public protocol HTMLMapperProtocol {
     
@@ -13,7 +13,7 @@ public protocol HTMLMapperProtocol {
     func attributedStringFrom(
         htmlText: String,
         color: UIColor,
-        fontStyle: UIFont.TextStyle,
+        font: Font,
         width: CGFloat,
         isHandleYouTubeVideos: Bool
     ) -> NSMutableAttributedString
