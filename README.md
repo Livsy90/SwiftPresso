@@ -213,7 +213,7 @@ The `SwiftPresso.Configuration` stores values to manage API requests and handle 
             public static var postListFont: Font { get }
             
             /// Post body font.
-            public static var postBodyFont: Font { get }
+            public static var postBodyFont: UIFont.TextStyle { get }
             
             /// Post title font.
             public static var postTitleFont: Font { get }
@@ -457,7 +457,7 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(
         htmlText: post.content,
         color: .black,
-        font: .body,
+        textStyle: .body,
         width: 375,
         isHandleYouTubeVideos: true
     )
@@ -472,7 +472,7 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(
         htmlText: post.content,
         color: .black,
-        font: .body,
+        textStyle: .body,
         width: 375,
         isHandleYouTubeVideos: true
     )

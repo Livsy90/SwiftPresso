@@ -37,7 +37,7 @@ final class PostViewModel {
             attributedString = self.mapper.attributedStringFrom(
                 htmlText: self.htmlString,
                 color: UIColor(SwiftPresso.Configuration.UI.textColor),
-                font: SwiftPresso.Configuration.UI.postBodyFont,
+                textStyle: SwiftPresso.Configuration.UI.postBodyFont,
                 width: self.width - 44,
                 isHandleYouTubeVideos: SwiftPresso.Configuration.UI.isParseHTMLWithYouTubePreviews
             )

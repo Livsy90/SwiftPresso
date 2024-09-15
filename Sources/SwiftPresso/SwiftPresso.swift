@@ -38,7 +38,7 @@ public enum SwiftPresso {
         categoryPathComponent: String = "category",
         isShowContentInWebView: Bool = false,
         postListFont: Font = .title2,
-        postBodyFont: Font = .body,
+        postBodyFont: UIFont.TextStyle = .body,
         postTitleFont: Font = .largeTitle,
         backgroundColor: Color = Color(uiColor: .systemBackground),
         interfaceColor: Color = .primary,

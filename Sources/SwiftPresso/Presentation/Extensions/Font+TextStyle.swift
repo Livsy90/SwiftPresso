@@ -1,7 +1,7 @@
 import SwiftUI
 
-extension UIFont {
-    class func preferredFont(from font: Font) -> UIFont {
+extension Font {
+    static func uiFont(from font: Font) -> UIFont {
         let style: UIFont.TextStyle = switch font {
         case .largeTitle:   .largeTitle
         case .title:        .title1
@@ -15,6 +15,6 @@ extension UIFont {
         case .footnote:     .footnote
         default:            .body
         }
-        return  UIFont.preferredFont(forTextStyle: style)
+        return UIFont.preferredFont(forTextStyle: style)
     }
 }
