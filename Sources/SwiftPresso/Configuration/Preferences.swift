@@ -42,6 +42,7 @@ extension Preferences {
         let postListFont: Font
         let postBodyFont: UIFont
         let postTitleFont: Font
+        let isShowFeaturedImage: Bool
         let isShowContentInWebView: Bool
         let isExcludeWebHeaderAndFooter: Bool
         let isMenuExpanded: Bool
@@ -70,6 +71,7 @@ extension Preferences {
             postListFont: Font,
             postBodyFont: UIFont,
             postTitleFont: Font,
+            isShowFeaturedImage: Bool,
             isShowContentInWebView: Bool,
             menuBackgroundColor: Color,
             menuTextColor: Color,
@@ -115,6 +117,7 @@ extension Preferences {
             self.postListFont = postListFont
             self.postBodyFont = postBodyFont
             self.postTitleFont = postTitleFont
+            self.isShowFeaturedImage = isShowFeaturedImage
         }
     }
     
@@ -131,6 +134,7 @@ extension Preferences.Configuration {
         postListFont: .title3,
         postBodyFont: .systemFont(ofSize: 17),
         postTitleFont: .largeTitle,
+        isShowFeaturedImage: true,
         isShowContentInWebView: true,
         menuBackgroundColor: .primary,
         menuTextColor: Color(uiColor: .systemBackground),

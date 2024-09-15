@@ -9,6 +9,7 @@ final class PostViewModel {
     var isShowContent: Bool = false
     var isLoading: Bool = false
     var url: URL?
+    var featuredImageURL: URL?
     var title: String
     var date: Date?
     
@@ -27,6 +28,7 @@ final class PostViewModel {
         title = post.title
         date = post.date
         url = post.link
+        featuredImageURL = post.imgURL
         htmlString = post.content
         self.width = width
     }

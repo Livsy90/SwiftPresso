@@ -91,7 +91,8 @@ private extension PostListCoordinator {
             categoryName: $categoryName,
             backgroundColor: Configuration.UI.backgroundColor,
             textColor: Configuration.UI.textColor,
-            titleFont: Configuration.UI.postTitleFont
+            titleFont: Configuration.UI.postTitleFont,
+            isShowFeaturedImage: Configuration.UI.isShowFeaturedImage
         ) {
             placeholderView()
         }

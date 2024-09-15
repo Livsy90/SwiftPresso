@@ -21,7 +21,7 @@ struct ShimmerPlaceholder: View {
     
 }
 
-private struct ShimmerView: View {
+struct ShimmerView: View {
     
     @State private var startPoint: UnitPoint = .init(x: -1.8, y: -1.2)
     @State private var endPoint: UnitPoint = .init(x: 0, y: -0.2)

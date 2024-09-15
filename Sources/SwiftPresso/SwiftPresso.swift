@@ -10,6 +10,7 @@ public enum SwiftPresso {
     ///   - tagPathComponent: API Tag path component.
     ///   - categoryPathComponent: API Category path component.
     ///   - isShowContentInWebView: Using WKWebView as post view.
+    ///   - isShowFeaturedImage: Post featured image visibility.
     ///   - backgroundColor: Post list and post view background color.
     ///   - interfaceColor: Post list and post view interface color.
     ///   - textColor: Post list and post view text color.
@@ -37,6 +38,7 @@ public enum SwiftPresso {
         tagPathComponent: String = "tag",
         categoryPathComponent: String = "category",
         isShowContentInWebView: Bool = false,
+        isShowFeaturedImage: Bool = true,
         postListFont: Font = .title2,
         postBodyFont: UIFont = .systemFont(ofSize: 17),
         postTitleFont: Font = .largeTitle,
@@ -68,6 +70,7 @@ public enum SwiftPresso {
             postListFont: postListFont,
             postBodyFont: postBodyFont,
             postTitleFont: postTitleFont,
+            isShowFeaturedImage: isShowFeaturedImage,
             isShowContentInWebView: isShowContentInWebView,
             menuBackgroundColor: menuBackgroundColor,
             menuTextColor: menuTextColor,

@@ -51,6 +51,9 @@ public extension SwiftPresso {
             /// Determines the visibility of the page menu.
             public static var isShowPageMenu: Bool { Preferences.shared.configuration.isShowPageMenu }
             
+            /// Post featured image visibility.
+            public static var isShowFeaturedImage: Bool { Preferences.shared.configuration.isShowFeaturedImage }
+            
             /// Determines the visibility of the tag menu.
             public static var isShowTagMenu: Bool { Preferences.shared.configuration.isShowTagMenu }
             

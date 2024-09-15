@@ -107,7 +107,6 @@ struct DemoApp: App {
 If you use SwiftPresso built-in views, there is no need to worry about the configuration method calling. However, using SwiftPresso entities separately must be preceded by manually configuring the data. To do this, you can use the configure method.
 
 ```swift
-        /// Initial configuration.
     /// - Parameters:
     ///   - host: API host.
     ///   - httpScheme: API HTTP scheme.
@@ -115,6 +114,7 @@ If you use SwiftPresso built-in views, there is no need to worry about the confi
     ///   - tagPathComponent: API Tag path component.
     ///   - categoryPathComponent: API Category path component.
     ///   - isShowContentInWebView: Using WKWebView as post view.
+    ///   - isShowFeaturedImage: Post featured image visibility.
     ///   - backgroundColor: Post list and post view background color.
     ///   - interfaceColor: Post list and post view interface color.
     ///   - textColor: Post list and post view text color.
@@ -142,8 +142,9 @@ If you use SwiftPresso built-in views, there is no need to worry about the confi
         tagPathComponent: String = "tag",
         categoryPathComponent: String = "category",
         isShowContentInWebView: Bool = false,
-        postListFont: Font = .title3,
-        postBodyFont: Font = .body,
+        isShowFeaturedImage: Bool = true,
+        postListFont: Font = .title2,
+        postBodyFont: UIFont = .systemFont(ofSize: 17),
         postTitleFont: Font = .largeTitle,
         backgroundColor: Color = Color(uiColor: .systemBackground),
         interfaceColor: Color = .primary,
@@ -217,6 +218,9 @@ The `SwiftPresso.Configuration` stores values to manage API requests and handle 
             
             /// Post title font.
             public static var postTitleFont: Font { get }
+            
+             /// Post featured image visibility.
+            public static var isShowFeaturedImage: Bool { get }
             
             /// Determines the visibility of the page menu.
              static var isShowPageMenu: Bool { get }

@@ -10,6 +10,7 @@ struct PostView<Placeholder: View>: View {
     let backgroundColor: Color
     let textColor: Color
     let titleFont: Font
+    let isShowFeaturedImage: Bool
     let placeholder: () -> Placeholder
     
     @Environment(Router.self) private var router
@@ -46,6 +47,21 @@ struct PostView<Placeholder: View>: View {
                     Spacer()
                 }
                 .padding([.bottom, .horizontal])
+                .opacity(viewModel.isShowContent ? 1 : 0)
+            }
+            
+            if isShowFeaturedImage, let featuredImageURL = viewModel.featuredImageURL {
+                AsyncImage(url: featuredImageURL) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                } placeholder: {
+                    ShimmerView()
+                        .frame(height: 250)
+                        .padding()
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
                 .opacity(viewModel.isShowContent ? 1 : 0)
             }
             
@@ -124,6 +140,7 @@ struct PostView<Placeholder: View>: View {
         backgroundColor: SwiftPresso.Configuration.UI.backgroundColor,
         textColor: SwiftPresso.Configuration.UI.textColor,
         titleFont: SwiftPresso.Configuration.UI.postTitleFont,
+        isShowFeaturedImage: SwiftPresso.Configuration.UI.isShowFeaturedImage,
         placeholder: {
             ShimmerPlaceholder(backgroundColor: .clear)
         }
