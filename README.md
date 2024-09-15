@@ -132,7 +132,7 @@ If you use SwiftPresso built-in views, there is no need to worry about the confi
     ///   - isParseHTMLWithYouTubePreviews: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
     ///   - isExcludeWebHeaderAndFooter: Remove web page's header and footer.
     ///   - isMenuExpanded: To expand menu items by default.
-    public static func configure(
+     static func configure(
         host: String,
         httpScheme: HTTPScheme = .https,
         postsPerPage: Int = 50,
@@ -166,84 +166,84 @@ SwiftPresso.configure(host: "livsycode.com", httpScheme: .https)
 The `SwiftPresso.Configuration` stores values to manage API requests and handle UI appearance.
 
 ```swift
-public extension SwiftPresso {
+ extension SwiftPresso {
     
     enum Configuration {
         
-        public enum API {
+         enum API {
             
             /// API host.
-            public static var host: String
+             static var host: String { get }
             
             /// Posts per page in the post list request.
-            public static var postsPerPage: Int
+             static var postsPerPage: Int { get }
             
             /// API HTTP scheme.
-            public static var httpScheme: HTTPScheme
+             static var httpScheme: HTTPScheme { get }
             
             /// API Tag path component.
-            public static var tagPathComponent: String
+             static var tagPathComponent: String { get }
             
             /// API Category path component.
-            public static var categoryPathComponent: String
+             static var categoryPathComponent: String { get }
             
         }
         
-        public enum UI {
+         enum UI {
             
             /// Remove web page's header and footer.
-            public static var isExcludeWebHeaderAndFooter: Bool
+             static var isExcludeWebHeaderAndFooter: Bool { get }
             
             /// Post list and post view background color.
-            public static var backgroundColor: Color
+             static var backgroundColor: Color { get }
             
             /// Post list and post view interface color.
-            public static var interfaceColor: Color
+             static var interfaceColor: Color { get }
             
             /// Post list and post view text color.
-            public static var textColor: Color
+             static var textColor: Color { get }
             
             /// Determines the visibility of the page menu.
-            public static var isShowPageMenu: Bool
+             static var isShowPageMenu: Bool { get }
             
             /// Determines the visibility of the tag menu.
-            public static var isShowTagMenu: Bool
+             static var isShowTagMenu: Bool { get }
             
             /// Determines the visibility of the category menu.
-            public static var isShowCategoryMenu: Bool
+             static var isShowCategoryMenu: Bool { get }
             
             /// The icon for the navigation bar button that restores the interface to its default state.
-            public static var homeIcon: Image
+             static var homeIcon: Image { get }
             
             /// Determines the title of the page menu.
-            public static var pageMenuTitle: String
+             static var pageMenuTitle: String { get }
             
             /// Determines the title of the tag menu.
-            public static var tagMenuTitle: String
+             static var tagMenuTitle: String { get }
             
             /// Determines the title of the category menu.
-            public static var categoryMenuTitle: String
+             static var categoryMenuTitle: String { get }
             
             /// Navigation title for default state.
-            public static var homeTitle: String
+             static var homeTitle: String { get }
             
             /// Navigation title for search state.
-            public static var searchTitle: String
+             static var searchTitle: String { get }
             
             /// Menu background color.
-            public static var menuBackgroundColor: Color
+             static var menuBackgroundColor: Color { get }
             
             /// Menu text color.
-            public static var menuTextColor: Color
+             static var menuTextColor: Color { get }
             
             /// To expand menu items by default.
-            public static var isMenuExpanded: Bool
+             static var isMenuExpanded: Bool { get }
             
             /// Using WKWebView as post view.
-            public static var isShowContentInWebView: Bool
+             static var isShowContentInWebView: Bool { get }
             
             /// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
-            public static var isParseHTMLWithYouTubePreviews: Bool
+             static var isParseHTMLWithYouTubePreviews: Bool { get }
             
         }
         
@@ -254,8 +254,8 @@ public extension SwiftPresso {
 ```
 
 ```swift
-let color = SwiftPresso.Configuration.UI.backgroundColor
 let host = SwiftPresso.Configuration.API.host
+let color = SwiftPresso.Configuration.UI.backgroundColor
 ```
 
 ## Data Providers
