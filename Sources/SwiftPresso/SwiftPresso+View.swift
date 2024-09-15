@@ -31,18 +31,18 @@ public extension SwiftPresso {
             isMenuExpanded: Bool = true
         ) -> some SwiftUI.View {
             
-            Configuration.configure(
+            configure(
                 host: host,
                 httpScheme: httpScheme,
                 postsPerPage: postsPerPage,
                 tagPathComponent: tagPathComponent,
                 categoryPathComponent: categoryPathComponent,
                 isShowContentInWebView: isShowContentInWebView,
-                menuBackgroundColor: menuBackgroundColor,
-                menuTextColor: menuTextColor,
                 backgroundColor: backgroundColor,
                 interfaceColor: interfaceColor,
-                textColor: textColor,
+                textColor: textColor, 
+                menuBackgroundColor: menuBackgroundColor,
+                menuTextColor: menuTextColor,
                 homeIcon: homeIcon,
                 homeTitle: homeTitle,
                 searchTitle: searchTitle,
@@ -87,18 +87,18 @@ public extension SwiftPresso {
             placeholder: @escaping () -> Placeholder
         ) -> some SwiftUI.View {
             
-            Configuration.configure(
+            configure(
                 host: host,
                 httpScheme: httpScheme,
                 postsPerPage: postsPerPage,
                 tagPathComponent: tagPathComponent,
                 categoryPathComponent: categoryPathComponent,
                 isShowContentInWebView: isShowContentInWebView,
+                backgroundColor: backgroundColor,
+                interfaceColor: interfaceColor, 
+                textColor: textColor, 
                 menuBackgroundColor: menuBackgroundColor,
                 menuTextColor: menuTextColor,
-                backgroundColor: backgroundColor,
-                interfaceColor: interfaceColor,
-                textColor: textColor,
                 homeIcon: homeIcon,
                 homeTitle: homeTitle,
                 searchTitle: searchTitle,
