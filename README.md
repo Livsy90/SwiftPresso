@@ -457,7 +457,7 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(
         htmlText: post.content,
         color: .black,
-        textStyle: .body,
+        font: .systemFont(ofSize: 17),
         width: 375,
         isHandleYouTubeVideos: true
     )
@@ -472,7 +472,7 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(
         htmlText: post.content,
         color: .black,
-        textStyle: .body,
+        font: .systemFont(ofSize: 17),
         width: 375,
         isHandleYouTubeVideos: true
     )

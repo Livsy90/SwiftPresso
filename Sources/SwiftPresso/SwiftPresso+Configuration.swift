@@ -37,7 +37,7 @@ public extension SwiftPresso {
             public static var postListFont: Font { Preferences.shared.configuration.postListFont }
             
             /// Post body font.
-            public static var postBodyFont: UIFont.TextStyle { Preferences.shared.configuration.postBodyFont }
+            public static var postBodyFont: UIFont { Preferences.shared.configuration.postBodyFont }
             
             /// Post title font.
             public static var postTitleFont: Font { Preferences.shared.configuration.postTitleFont }

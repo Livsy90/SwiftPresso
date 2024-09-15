@@ -40,7 +40,7 @@ extension Preferences {
         let categoryPathComponent: String
         
         let postListFont: Font
-        let postBodyFont: UIFont.TextStyle
+        let postBodyFont: UIFont
         let postTitleFont: Font
         let isShowContentInWebView: Bool
         let isExcludeWebHeaderAndFooter: Bool
@@ -68,7 +68,7 @@ extension Preferences {
             tagPathComponent: String,
             categoryPathComponent: String,
             postListFont: Font,
-            postBodyFont: UIFont.TextStyle,
+            postBodyFont: UIFont,
             postTitleFont: Font,
             isShowContentInWebView: Bool,
             menuBackgroundColor: Color,
@@ -129,7 +129,7 @@ extension Preferences.Configuration {
         tagPathComponent: "",
         categoryPathComponent: "",
         postListFont: .title3,
-        postBodyFont: .body,
+        postBodyFont: .systemFont(ofSize: 17),
         postTitleFont: .largeTitle,
         isShowContentInWebView: true,
         menuBackgroundColor: .primary,

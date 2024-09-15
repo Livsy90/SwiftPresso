@@ -6,14 +6,14 @@ struct HTMLMapper: HTMLMapperProtocol {
     /// - Parameters:
     ///   - htmlText: HTML text to parse.
     ///   - color: Text color.
-    ///   - textStyle: Text font style.
+    ///   - font: Text font style.
     ///   - width: Width of images and YouTube previews.
     ///   - isHandleYouTubeVideos:
     /// - Returns: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
     func attributedStringFrom(
         htmlText: String,
         color: UIColor,
-        textStyle: UIFont.TextStyle,
+        font: UIFont,
         width: CGFloat,
         isHandleYouTubeVideos: Bool
     ) -> NSMutableAttributedString {
@@ -26,7 +26,7 @@ struct HTMLMapper: HTMLMapperProtocol {
             )
         }
         
-        let format = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(UIFont.preferredFont(forTextStyle: textStyle).pointSize)\">%@</span>"
+        let format = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(font.pointSize)\">%@</span>"
         
         let modifiedFontString = String(
             format: format,
