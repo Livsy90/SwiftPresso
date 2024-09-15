@@ -36,10 +36,10 @@ final class PostViewModel {
         DispatchQueue.global(qos: .userInteractive).async {
             attributedString = self.mapper.attributedStringFrom(
                 htmlText: self.htmlString,
-                color: UIColor(SwiftPresso.Configuration.textColor),
+                color: UIColor(SwiftPresso.Configuration.UI.textColor),
                 fontStyle: .callout,
                 width: self.width - 44,
-                isHandleYouTubeVideos: SwiftPresso.Configuration.isParseHTMLWithYouTubePreviews
+                isHandleYouTubeVideos: SwiftPresso.Configuration.UI.isParseHTMLWithYouTubePreviews
             )
             DispatchQueue.main.async {
                 self.attributedString = attributedString

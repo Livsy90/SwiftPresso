@@ -429,12 +429,12 @@ private extension SwiftUITextView {
                    return nil
                 }
                 
-                if components.contains(SwiftPresso.Configuration.apiTagPathComponent), let tagName = components.last {
+                if components.contains(SwiftPresso.Configuration.API.tagPathComponent), let tagName = components.last {
                     self.tagName = tagName
                     return nil
                 }
                 
-                if components.contains(SwiftPresso.Configuration.apiCategoryPathComponent), let categoryName = components.last {
+                if components.contains(SwiftPresso.Configuration.API.categoryPathComponent), let categoryName = components.last {
                     self.categoryName = categoryName
                     return nil
                 }

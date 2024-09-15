@@ -1,9 +1,9 @@
 import Foundation
 
-extension SwiftPresso {
+public extension SwiftPresso {
     
     /// Network providers factory methods.
-    public enum Provider {
+    enum Provider {
         
         /// Factory method for post list provider.
         /// - Returns: Returns the value of the provider of the post list.

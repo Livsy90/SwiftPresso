@@ -7,7 +7,7 @@ enum Destination: Hashable {
 
 struct PostListCoordinator<Placeholder: View>: View {
     
-    private let configuration: SwiftPressoSettings
+    private let configuration: Preferences.Configuration
     private let placeholder: (() -> Placeholder)?
     @State private var router: Router = .init()
     @State private var size: CGSize = .zero
@@ -15,7 +15,7 @@ struct PostListCoordinator<Placeholder: View>: View {
     @State private var categoryName: String? = nil
     
     init(
-        configuration: SwiftPressoSettings,
+        configuration: Preferences.Configuration,
         placeholder: (() -> Placeholder)?
     ) {
         self.configuration = configuration
@@ -54,7 +54,10 @@ struct PostListCoordinator<Placeholder: View>: View {
 
 extension PostListCoordinator where Placeholder == EmptyView {
     
-    init(configuration: SwiftPressoSettings, placeholder: (() -> Placeholder)?) {
+    init(
+        configuration: Preferences.Configuration,
+        placeholder: (() -> Placeholder)?
+    ) {
         self.configuration = configuration
         self.placeholder = placeholder
     }

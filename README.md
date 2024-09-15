@@ -88,8 +88,8 @@ You can customize tag and category components as well.
 SwiftPresso.View.postList(
     .init(
         host: "livsycode.com",
-        apiTagPathComponent: "series",
-        apiCategoryPathComponent: "topics"
+        tagPathComponent: "series",
+        categoryPathComponent: "topics"
     )
 )
 ```
@@ -126,80 +126,105 @@ SwiftPresso.Configuration.configure(with: .init(host: "livsycode.com", httpSchem
 The SwiftPresso Configuration stores values to manage API requests and handle UI appearance.
 
 ```swift
-
-/// API host.
-var host: String
-
-/// Posts per page in the post list.
-var postsPerPage: Int
-
-/// API HTTP scheme.
-var httpScheme: HTTPScheme
-
-/// API Tag path component.
-var apiTagPathComponent: String { Preferences.shared.configuration.apiTagPathComponent }
+public extension SwiftPresso {
+    
+    /// SwiftPresso configuration.
+    enum Configuration {
         
-/// API Category path component.
-var apiCategoryPathComponent: String { Preferences.shared.configuration.apiCategoryPathComponent }
-
-/// Remove web page's header and footer.
-var isExcludeWebHeaderAndFooter: Bool
-
-/// Post list and web view background color.
-var backgroundColor: Color
-
-/// Post list and web view interface color.
-var interfaceColor: Color
-
-/// Post list and web view text color.
-var textColor: Color
-
-/// Determines the visibility of the page menu.
-var isShowPageMenu: Bool
-
-/// Determines the visibility of the tag menu.
-var isShowTagMenu: Bool
-
-/// Determines the visibility of the category menu.
-var isShowCategoryMenu: Bool
-
-/// Home icon.
-var homeIcon: Image
-
-/// Determines the title of the page menu.
-var pageMenuTitle: String
-
-/// Determines the title of the tag menu.
-var tagMenuTitle: String
-
-/// Determines the title of the category menu.
-var categoryMenuTitle: String
-
-/// Home screen navigation title.
-var homeTitle: String?
-
-/// Search screen navigation title.
-var searchTitle: String?
-
-/// Menu background color.
-var menuBackgroundColor: Color
-
-/// Menu text color.
-var menuTextColor: Color
-
-/// To expand menu items by default.
-var isMenuExpanded: Bool
-
-/// Using webview as post view.
-var isShowContentInWebView: Bool
-
-/// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
-var isParseHTMLWithYouTubePreviews: Bool
+        /// Initial configuration.
+        /// - Parameter configuration: configuration model.
+        public static func configure(with configuration: Preferences.Configuration) {
+            Preferences.shared.configuration = configuration
+        }
+        
+        public enum API {
+            
+            /// API host.
+            public static var host: String
+            
+            /// Posts per page in the post list request.
+            public static var postsPerPage: Int
+            
+            /// API HTTP scheme.
+            public static var httpScheme: HTTPScheme
+            
+            /// API Tag path component.
+            public static var tagPathComponent: String
+            
+            /// API Category path component.
+            public static var categoryPathComponent: String
+            
+        }
+        
+        public enum UI {
+            
+            /// Remove web page's header and footer.
+            public static var isExcludeWebHeaderAndFooter: Bool
+            
+            /// Post list and web view background color.
+            public static var backgroundColor: Color
+            
+            /// Post list and web view interface color.
+            public static var interfaceColor: Color
+            
+            /// Post list and web view text color.
+            public static var textColor: Color
+            
+            /// Determines the visibility of the page menu.
+            public static var isShowPageMenu: Bool
+            
+            /// Determines the visibility of the tag menu.
+            public static var isShowTagMenu: Bool
+            
+            /// Determines the visibility of the category menu.
+            public static var isShowCategoryMenu: Bool
+            
+            /// Home icon.
+            public static var homeIcon: Image
+            
+            /// Determines the title of the page menu.
+            public static var pageMenuTitle: String
+            
+            /// Determines the title of the tag menu.
+            public static var tagMenuTitle: String
+            
+            /// Determines the title of the category menu.
+            public static var categoryMenuTitle: String
+            
+            /// Home screen navigation title.
+            public static var homeTitle: String?
+            
+            /// Search screen navigation title.
+            public static var searchTitle: String?
+            
+            /// Menu background color.
+            public static var menuBackgroundColor: Color
+            
+            /// Menu text color.
+            public static var menuTextColor: Color
+            
+            /// To expand menu items by default.
+            public static var isMenuExpanded: Bool
+            
+            /// Using WKWebView as post view.
+            public static var isShowContentInWebView: Bool
+            
+            /// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
+            public static var isParseHTMLWithYouTubePreviews: Bool
+            
+        }
+        
+    }
+    
+}
 
 ```
 
+### Usage
+
 ```swift
-let color = SwiftPresso.Configuration.backgroundColor
+let color = SwiftPresso.Configuration.UI.backgroundColor
+let host = SwiftPresso.Configuration.API.backgroundColor
 ```
 
 ## Data Providers

@@ -13,13 +13,13 @@ final class PostListViewModel {
         var title: String {
             switch self {
             case .common:
-                SwiftPresso.Configuration.homeTitle ?? "Home"
+                SwiftPresso.Configuration.UI.homeTitle ?? "Home"
             case .tag(let title):
                 title
             case .category(let title):
                 title
             case .search:
-                SwiftPresso.Configuration.searchTitle ?? "Search"
+                SwiftPresso.Configuration.UI.searchTitle ?? "Search"
             }
         }
     }

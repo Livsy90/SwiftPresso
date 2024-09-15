@@ -120,8 +120,8 @@ struct PostView<Placeholder: View>: View {
         viewModel: .init(post: post, width: 375),
         tagName: .constant(nil),
         categoryName: .constant(nil),
-        backgroundColor: SwiftPresso.Configuration.backgroundColor,
-        textColor: SwiftPresso.Configuration.textColor,
+        backgroundColor: SwiftPresso.Configuration.UI.backgroundColor,
+        textColor: SwiftPresso.Configuration.UI.textColor,
         placeholder: {
             ShimmerPlaceholder(backgroundColor: .clear)
         }
