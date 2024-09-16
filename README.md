@@ -104,7 +104,7 @@ struct DemoApp: App {
 
 ## Configuration
 
-If you use SwiftPresso built-in views, there is no need to worry about the configuration method calling. However, using SwiftPresso entities separately must be preceded by manually configuring the data. To do this, you can use the configure method.
+If you use SwiftPresso built-in views, you don't need to worry about the configuration method calling. However, when utilizing SwiftPresso entities individually, you must manually configure the data. To do this, you can use the configure method.
 
 ```swift
     /// - Parameters:
