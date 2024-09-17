@@ -81,11 +81,11 @@ Or like in the example above:
 You can customize tag and category components as well.
 
 ```swift
-    SwiftPresso.View.postList(
-        host: "livsycode.com",
-        tagPathComponent: "series",
-        categoryPathComponent: "topics"
-    )
+SwiftPresso.View.postList(
+    host: "livsycode.com",
+    tagPathComponent: "series",
+    categoryPathComponent: "topics"
+)
 ```
 
 ### Important:
