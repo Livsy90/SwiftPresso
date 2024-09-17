@@ -180,43 +180,43 @@ SwiftPresso.configure(host: "livsycode.com", httpScheme: .https)
 The `SwiftPresso.Configuration` stores values to manage API requests and handle UI appearance.
 
 ```swift
- extension SwiftPresso {
+extension SwiftPresso {
     
     enum Configuration {
         
-         enum API {
+        enum API {
             
             /// API host.
-             static var host: String { get }
+            static var host: String { get }
             
             /// Posts per page in the post list request.
-             static var postsPerPage: Int { get }
+            static var postsPerPage: Int { get }
             
             /// API HTTP scheme.
-             static var httpScheme: HTTPScheme { get }
+            static var httpScheme: HTTPScheme { get }
             
             /// API Tag path component.
-             static var tagPathComponent: String { get }
+            static var tagPathComponent: String { get }
             
             /// API Category path component.
-             static var categoryPathComponent: String { get }
+            static var categoryPathComponent: String { get }
             
         }
         
-         enum UI {
+        enum UI {
             
             /// Remove web page's header and footer.
-             static var isExcludeWebHeaderAndFooter: Bool { get }
+            static var isExcludeWebHeaderAndFooter: Bool { get }
             
             /// Post list and post view background color.
-             static var backgroundColor: Color { get }
+            static var backgroundColor: Color { get }
             
             /// Post list and post view interface color.
-             static var interfaceColor: Color { get }
+            static var interfaceColor: Color { get }
             
             /// Post list and post view text color.
-             static var textColor: Color { get }
-             
+            static var textColor: Color { get }
+            
             /// Post list font.
             static var postListFont: Font { get }
             
@@ -226,50 +226,50 @@ The `SwiftPresso.Configuration` stores values to manage API requests and handle 
             /// Post title font.
             static var postTitleFont: Font { get }
             
-             /// Post featured image visibility.
+            /// Post featured image visibility.
             static var isShowFeaturedImage: Bool { get }
             
             /// Determines the visibility of the page menu.
-             static var isShowPageMenu: Bool { get }
+            static var isShowPageMenu: Bool { get }
             
             /// Determines the visibility of the tag menu.
-             static var isShowTagMenu: Bool { get }
+            static var isShowTagMenu: Bool { get }
             
             /// Determines the visibility of the category menu.
-             static var isShowCategoryMenu: Bool { get }
+            static var isShowCategoryMenu: Bool { get }
             
             /// The icon for the navigation bar button that restores the interface to its default state.
-             static var homeIcon: Image { get }
+            static var homeIcon: Image { get }
             
             /// Determines the title of the page menu.
-             static var pageMenuTitle: String { get }
+            static var pageMenuTitle: String { get }
             
             /// Determines the title of the tag menu.
-             static var tagMenuTitle: String { get }
+            static var tagMenuTitle: String { get }
             
             /// Determines the title of the category menu.
-             static var categoryMenuTitle: String { get }
+            static var categoryMenuTitle: String { get }
             
             /// Navigation title for default state.
-             static var homeTitle: String { get }
+            static var homeTitle: String { get }
             
             /// Navigation title for search state.
-             static var searchTitle: String { get }
+            static var searchTitle: String { get }
             
             /// Menu background color.
-             static var menuBackgroundColor: Color { get }
+            static var menuBackgroundColor: Color { get }
             
             /// Menu text color.
-             static var menuTextColor: Color { get }
+            static var menuTextColor: Color { get }
             
             /// To expand menu items by default.
-             static var isMenuExpanded: Bool { get }
+            static var isMenuExpanded: Bool { get }
             
             /// Using WKWebView as post view.
-             static var isShowContentInWebView: Bool { get }
+            static var isShowContentInWebView: Bool { get }
             
             /// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
-             static var isParseHTMLWithYouTubePreviews: Bool { get }
+            static var isParseHTMLWithYouTubePreviews: Bool { get }
             
         }
         
