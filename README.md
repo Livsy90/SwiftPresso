@@ -218,16 +218,16 @@ The `SwiftPresso.Configuration` stores values to manage API requests and handle 
              static var textColor: Color { get }
              
             /// Post list font.
-            public static var postListFont: Font { get }
+            static var postListFont: Font { get }
             
             /// Post body font.
-            public static var postBodyFont: UIFont.TextStyle { get }
+            static var postBodyFont: UIFont.TextStyle { get }
             
             /// Post title font.
-            public static var postTitleFont: Font { get }
+            static var postTitleFont: Font { get }
             
              /// Post featured image visibility.
-            public static var isShowFeaturedImage: Bool { get }
+            static var isShowFeaturedImage: Bool { get }
             
             /// Determines the visibility of the page menu.
              static var isShowPageMenu: Bool { get }
