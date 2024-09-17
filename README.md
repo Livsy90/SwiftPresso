@@ -496,3 +496,8 @@ func map(post: PostModel) -> NSAttributedString {
 ## Menu
 
 <img src="https://github.com/Livsy90/SwiftPresso/blob/main/demo3.png" width ="300">
+
+# Requirements
+
+* iOS 17+
+* Xcode 15+
