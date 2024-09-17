@@ -11,6 +11,8 @@ If you prefer full control, you can create your own entities and use SwiftPresso
 
 You can also use SwiftPresso HTML mapper to transform HTML text into `NSAttributedString`.
 
+Article about SwiftPresso: https://livsycode.com/swift/connect-your-ios-app-to-wordpress-wit-swiftpresso/
+
 ## Installation
 
 ### SPM:
