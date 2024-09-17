@@ -180,6 +180,11 @@ SwiftPresso.configure(host: "livsycode.com", httpScheme: .https)
 The `SwiftPresso.Configuration` stores values to manage API requests and handle UI appearance.
 
 ```swift
+let host = SwiftPresso.Configuration.API.host
+let color = SwiftPresso.Configuration.UI.backgroundColor
+```
+
+```swift
 public enum Configuration {
     
     public enum API {
@@ -272,11 +277,6 @@ public enum Configuration {
     }
     
 }
-```
-
-```swift
-let host = SwiftPresso.Configuration.API.host
-let color = SwiftPresso.Configuration.UI.backgroundColor
 ```
 
 ## Data Providers
