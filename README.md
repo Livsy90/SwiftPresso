@@ -36,9 +36,11 @@ With this configuration, you can determine the API host value, the HTTP method, 
 
 ```swift
     SwiftPresso.View.postList(
-        host: "livsycode.com",
-        isShowContentInWebView: true
-    )
+    host: "livsycode.com",
+    backgroundColor: .blue,
+    interfaceColor: .white,
+    textColor: .white
+)
 ```
 
 There are two ways to display post content:
@@ -48,7 +50,7 @@ There are two ways to display post content:
 To choose between these options, you can set the configuration value. 
 
 ```swift
-SwiftPresso.View.postList(.init(host: "livsycode.com", isShowContentInWebView: true))
+SwiftPresso.View.postList(host: "livsycode.com", isShowContentInWebView: true)
 ```
 
 ### Important: 
