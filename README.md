@@ -37,7 +37,7 @@ struct DemoApp: App {
 With this configuration, you can determine the API host value, the HTTP method, and various UI parameters.
 
 ```swift
-    SwiftPresso.View.postList(
+SwiftPresso.View.postList(
     host: "livsycode.com",
     backgroundColor: .blue,
     interfaceColor: .white,
