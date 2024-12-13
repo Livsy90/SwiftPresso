@@ -1,5 +1,5 @@
-public struct WPPost: Codable {
-    public struct WPEmbeddedPost: Codable {
+public struct WPPost: Codable, Sendable {
+    public struct WPEmbeddedPost: Codable, Sendable {
         public let author: [WPAuthor]?
         public let wpFeaturedMedia: [WPMedia]?
         public let wpTerm: [[WPEmbeddedTerm]]?
@@ -11,7 +11,7 @@ public struct WPPost: Codable {
         }
     }
     
-    public struct WPAuthor: Codable {
+    public struct WPAuthor: Codable, Sendable {
         public let id: Int
         public let name: String?
         public let url: String?
@@ -26,12 +26,12 @@ public struct WPPost: Codable {
         }
     }
     
-    public struct WPProtectedText: Codable {
+    public struct WPProtectedText: Codable, Sendable {
         public let rendered: String
         public let protected: Bool?
     }
     
-    public struct WPEmbeddedTerm: Codable {
+    public struct WPEmbeddedTerm: Codable, Sendable {
         public let id: Int?
         public let link: String?
         public let name: String?
@@ -81,21 +81,21 @@ public struct WPPost: Codable {
     }
 }
 
-public struct WPText: Codable {
+public struct WPText: Codable, Sendable {
     public let rendered: String
 }
 
-public struct WPLinks: Codable {
-    public struct WPLink: Codable {
+public struct WPLinks: Codable, Sendable {
+    public struct WPLink: Codable, Sendable {
         public let href: String
     }
     
-    public struct WPEmbeddableLink: Codable {
+    public struct WPEmbeddableLink: Codable, Sendable {
         public let href: String?
         public let embeddable: Bool?
     }
     
-    public struct WPTerm: Codable {
+    public struct WPTerm: Codable, Sendable {
         public let taxonomy: String?
         public let embeddable: Bool?
         public let href: String?

@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-protocol CategoryListServiceProtocol {
+protocol CategoryListServiceProtocol: Sendable {
     func requestCategories() async throws -> [CategoryModel]
 }

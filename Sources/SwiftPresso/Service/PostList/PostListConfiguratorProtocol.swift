@@ -1,6 +1,6 @@
 import SkavokNetworking
 
-protocol PostListConfiguratorProtocol {
+protocol PostListConfiguratorProtocol: Sendable {
     func feedRequest(
         pageNumber: Int,
         perPage: Int,

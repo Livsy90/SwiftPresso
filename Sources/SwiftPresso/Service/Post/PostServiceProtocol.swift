@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-protocol PostServiceProtocol {
+protocol PostServiceProtocol: Sendable {
     func requestPost(id: Int) async throws -> WPPost
 }

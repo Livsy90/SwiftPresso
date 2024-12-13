@@ -1,7 +1,7 @@
 import SwiftUI
 import Foundation
 
-public final class Preferences {
+public final class Preferences: @unchecked Sendable {
     
     static let shared: Preferences = .init()
     
@@ -125,7 +125,7 @@ extension Preferences {
 
 extension Preferences.Configuration {
     
-    static var initial: Preferences.Configuration = .init(
+    static let initial: Preferences.Configuration = .init(
         host: "",
         httpScheme: .https,
         postsPerPage: .zero,

@@ -182,8 +182,10 @@ struct PostListView<Placeholder: View>: View {
             guard let newValue else { return }
             showPostListByCategory(newValue)
         })
-        .readSize { size in
-            self.size = size
+        .onGeometryChange(for: CGSize.self) { geometry in
+            return geometry.size
+        } action: { newValue in
+            size = newValue
         }
         .webView(
             url: $urlToOpen,

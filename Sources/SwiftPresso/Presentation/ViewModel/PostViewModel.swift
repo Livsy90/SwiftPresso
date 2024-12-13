@@ -14,12 +14,10 @@ final class PostViewModel {
     var date: Date?
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.htmlMapper)
-    private var mapper: any HTMLMapperProtocol
+    private var mapper: some HTMLMapperProtocol = SwiftPresso.Mapper.htmlMapper()
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.postProvider)
-    private var postProvider: any PostProviderProtocol
+    private var postProvider: some PostProviderProtocol = SwiftPresso.Provider.postProvider()
     
     private let htmlString: String
     private let width: CGFloat
@@ -33,18 +31,20 @@ final class PostViewModel {
         self.width = width
     }
     
+    @MainActor
     func onAppear() {
-        var attributedString = self.attributedString
-        DispatchQueue.global(qos: .userInteractive).async {
+        var attributedString = AttributedString(attributedString)
+        Task(priority: .background) {
             attributedString = self.mapper.attributedStringFrom(
                 htmlText: self.htmlString,
                 color: UIColor(SwiftPresso.Configuration.UI.textColor),
-                font: SwiftPresso.Configuration.UI.postBodyFont,
+                fontSize: SwiftPresso.Configuration.UI.postBodyFont.pointSize,
                 width: self.width - 44,
                 isHandleYouTubeVideos: SwiftPresso.Configuration.UI.isParseHTMLWithYouTubePreviews
             )
-            DispatchQueue.main.async {
-                self.attributedString = attributedString
+            
+            Task(priority: .high) {
+                self.attributedString = NSAttributedString(attributedString)
                 self.isInitialLoading = false
                 withAnimation {
                     self.isShowContent = true
@@ -53,6 +53,7 @@ final class PostViewModel {
         }
     }
     
+    @MainActor
     func post(with id: Int) async throws -> PostModel {
         defer {
             isLoading = false

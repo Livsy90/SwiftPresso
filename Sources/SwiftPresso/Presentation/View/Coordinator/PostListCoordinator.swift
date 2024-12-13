@@ -32,8 +32,10 @@ struct PostListCoordinator<Placeholder: View>: View {
         .accentColor(Configuration.UI.interfaceColor)
         .tint(Configuration.UI.interfaceColor)
         .environment(router)
-        .readSize { size in
-            self.size = size
+        .onGeometryChange(for: CGSize.self) { geometry in
+            return geometry.size
+        } action: { newValue in
+            size = newValue
         }
         .onChange(of: tagName) { _, newValue in
             guard newValue != nil else { return }

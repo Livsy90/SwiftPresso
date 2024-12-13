@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-protocol PageListConfiguratorProtocol {
+protocol PageListConfiguratorProtocol: Sendable {
     func pagesRequest() -> Request<[WPPost]>
 }

@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-protocol PostConfiguratorProtocol {
+protocol PostConfiguratorProtocol: Sendable {
     func postRequest(id: Int) -> Request<WPPost>
 }

@@ -281,34 +281,10 @@ public enum Configuration {
 
 ## Data Providers
 
-To use SwiftPresso providers, you can inject them via SwiftPresso property wrappers. 
-
-```swift
-class ViewModel {
-    
-    @SwiftPressoInjected(\.categoryListProvider)
-    var categoryListProvider: CategoryListProviderProtocol
-    
-}
-```
-
-Alternatively, you can use the SwiftPresso factory methods. 
+To use SwiftPresso providers, you can use the SwiftPresso factory methods. 
 
 ```swift
 let postListProvider = SwiftPresso.Provider.postListProvider()
-```
-
-To use property wrappers inside an `Observable` class, you can mark properties with the `@ObservationIgnored` Macro.
-
-```swift
-@Observable
-class ViewModel {
-    
-    @ObservationIgnored
-    @SwiftPressoInjected(\.categoryListProvider)
-    var categoryListProvider: CategoryListProviderProtocol
-    
-}
 ```
 
 There are six providers in SwiftPresso:
@@ -336,8 +312,7 @@ You can configure several parameters to perform the request:
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.postListProvider)
-    var postListProvider: PostListProviderProtocol
+    var postListProvider: some PostListProviderProtocol
     
     func getData() async {
         let data = try? await postListProvider.getPosts(
@@ -371,8 +346,7 @@ The single post provider has two methods for retrieving a specific post model.
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.postProvider)
-    var postProvider: PostProviderProtocol
+    var postProvider: some PostProviderProtocol
         
     func getData() async {
         let data = try? await postProvider.getPost(id: 55)
@@ -391,8 +365,7 @@ As the post list provider, the page list provider also has two methods for retri
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.pageListProvider)
-    var pageListProvider: PageListProviderProtocol
+    var pageListProvider: some PageListProviderProtocol
         
     func getData() async {
         let data = try? await pageListProvider.getPages()
@@ -411,8 +384,7 @@ The page provider also has two methods for retrieving a page model.
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.pageProvider)
-    var pageProvider: PageProviderProtocol
+    var pageProvider: some PageProviderProtocol
         
     func getData() async {
         let data = try? await pageProvider.getPage(id: 22)
@@ -429,8 +401,7 @@ The category and the tag list providers provide an array of models, which is a C
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.categoryListProvider)
-    var categoryListProvider: CategoryListProviderProtocol
+    var categoryListProvider: some CategoryListProviderProtocol
     
     func getData() async {
         let data = try? await categoryListProvider.getCategories()
@@ -442,8 +413,7 @@ class ViewModel {
 ```swift
 class ViewModel {
     
-    @SwiftPressoInjected(\.tagListProvider)
-    var tagListProvider: TagListProviderProtocol
+    var tagListProvider: some TagListProviderProtocol
         
     func getData() async {
         let data = try? await tagListProvider.getTags()
@@ -454,7 +424,7 @@ class ViewModel {
 
 ## HTML Mapper
 
-The HTML mapper can transform an HTML text into an `NSAttributedString`. If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with a clickable link.
+The HTML mapper can transform an HTML text into an `AttributedString`. If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with a clickable link.
 
 ```swift
 let mapper = SwiftPresso.Mapper.htmlMapper()
@@ -463,22 +433,7 @@ func map(post: PostModel) -> NSAttributedString {
     mapper.attributedStringFrom(
         htmlText: post.content,
         color: .black,
-        font: .systemFont(ofSize: 17),
-        width: 375,
-        isHandleYouTubeVideos: true
-    )
-}
-```
-
-```swift
-@SwiftPressoInjected(\.htmlMapper)
-var mapper: HTMLMapperProtocol
-
-func map(post: PostModel) -> NSAttributedString {
-    mapper.attributedStringFrom(
-        htmlText: post.content,
-        color: .black,
-        font: .systemFont(ofSize: 17),
+        fontSize: .systemFont(ofSize: 17).pointSize,
         width: 375,
         isHandleYouTubeVideos: true
     )
@@ -501,5 +456,5 @@ func map(post: PostModel) -> NSAttributedString {
 
 # Requirements
 
-* iOS 17+
-* Xcode 15+
+* iOS 18+
+* Xcode 16+

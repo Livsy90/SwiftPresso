@@ -1,4 +1,4 @@
-public protocol PostListProviderProtocol {
+public protocol PostListProviderProtocol: Sendable {
     func getPosts(
         pageNumber: Int,
         perPage: Int,

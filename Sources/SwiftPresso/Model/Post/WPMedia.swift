@@ -1,12 +1,12 @@
-public struct WPMedia: Codable {
-    public struct WPMediaDetails: Codable {
+public struct WPMedia: Codable, Sendable {
+    public struct WPMediaDetails: Codable, Sendable {
         public let width: Double?
         public let height: Double?
         public let file: String?
         public let sizes: WPMediaSizes?
     }
 
-    public struct WPMediaSizes: Codable {
+    public struct WPMediaSizes: Codable, Sendable {
         public let thumbnail: WPMediaSize?
         public let medium: WPMediaSize?
         public let mediumLarge: WPMediaSize?
@@ -19,7 +19,7 @@ public struct WPMedia: Codable {
         }
     }
 
-    public struct WPMediaSize: Codable {
+    public struct WPMediaSize: Codable, Sendable {
         public let file: String?
         public let width: Double?
         public let height: Double?

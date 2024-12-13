@@ -5,6 +5,7 @@ public extension SwiftPresso {
     /// View factory methods.
     enum View {
         
+        @MainActor
         public static func postList(
             host: String,
             httpScheme: HTTPScheme = .https,
@@ -62,6 +63,7 @@ public extension SwiftPresso {
             return PostListCoordinator(placeholder: nil)
         }
         
+        @MainActor
         public static func postList<Placeholder: SwiftUI.View>(
             host: String,
             httpScheme: HTTPScheme = .https,

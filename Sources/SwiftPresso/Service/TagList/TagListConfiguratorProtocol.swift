@@ -1,5 +1,5 @@
 import SkavokNetworking
 
-protocol TagListConfiguratorProtocol {
+protocol TagListConfiguratorProtocol: Sendable {
     func tagsRequest() -> Request<[CategoryModel]>
 }

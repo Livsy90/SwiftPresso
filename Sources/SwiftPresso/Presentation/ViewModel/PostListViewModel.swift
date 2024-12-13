@@ -2,6 +2,7 @@ import Observation
 import Foundation
 
 @Observable
+@MainActor
 final class PostListViewModel {
     
     enum ListMode {
@@ -46,20 +47,16 @@ final class PostListViewModel {
     private let postPerPage: Int
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.postListProvider)
-    private var postListProvider: any PostListProviderProtocol
+    private var postListProvider: some PostListProviderProtocol = SwiftPresso.Provider.postListProvider()
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.categoryListProvider)
-    private var categoryListProvider: any CategoryListProviderProtocol
+    private var categoryListProvider: some CategoryListProviderProtocol = SwiftPresso.Provider.categoryListProvider()
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.tagListProvider)
-    private var tagListProvider: any TagListProviderProtocol
+    private var tagListProvider: some TagListProviderProtocol = SwiftPresso.Provider.tagListProvider()
     
     @ObservationIgnored
-    @SwiftPressoInjected(\.pageListProvider)
-    private var pageListProvider: any PageListProviderProtocol
+    private var pageListProvider: some PageListProviderProtocol = SwiftPresso.Provider.pageListProvider()
     
     private var pageNumber = 1
     private var shouldShowFullScreenPlaceholder = true

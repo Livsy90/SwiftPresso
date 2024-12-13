@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 struct HTMLMapper: HTMLMapperProtocol {
         
@@ -6,17 +6,17 @@ struct HTMLMapper: HTMLMapperProtocol {
     /// - Parameters:
     ///   - htmlText: HTML text to parse.
     ///   - color: Text color.
-    ///   - font: Text font style.
+    ///   - fontSize: Text font size.
     ///   - width: Width of images and YouTube previews.
     ///   - isHandleYouTubeVideos:
     /// - Returns: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
     func attributedStringFrom(
         htmlText: String,
         color: UIColor,
-        font: UIFont,
+        fontSize: CGFloat,
         width: CGFloat,
         isHandleYouTubeVideos: Bool
-    ) -> NSMutableAttributedString {
+    ) -> AttributedString {
         var text = htmlText
         
         if isHandleYouTubeVideos {
@@ -26,7 +26,7 @@ struct HTMLMapper: HTMLMapperProtocol {
             )
         }
         
-        let format = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(font.pointSize)\">%@</span>"
+        let format = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(fontSize)\">%@</span>"
         
         let modifiedFontString = String(
             format: format,
@@ -56,7 +56,9 @@ struct HTMLMapper: HTMLMapperProtocol {
             range: NSMakeRange(0, attributedString.length)
         )
         
-        return configured(attrStr: attributedString, width: width)
+        let nsStr = configured(attrStr: attributedString, width: width)
+        
+        return AttributedString(nsStr)
     }
     
     private func formatStringWithYTVideo(
