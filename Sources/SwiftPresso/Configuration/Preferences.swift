@@ -1,5 +1,6 @@
 import SwiftUI
 import Foundation
+import Synchronization
 
 public final class Preferences: @unchecked Sendable {
     
@@ -7,23 +8,18 @@ public final class Preferences: @unchecked Sendable {
     
     var configuration: Configuration {
         get {
-            queue.sync {
-                _configuration
+            _configuration.withLock { value in
+                value
             }
         }
         set {
-            queue.async(flags: .barrier) {
-                self._configuration = newValue
+            _configuration.withLock { value in
+                value = newValue
             }
         }
     }
     
-    private let queue = DispatchQueue(
-        label: "com.swiftpresso.queue",
-        qos: .default,
-        attributes: .concurrent
-    )
-    private var _configuration: Configuration = .initial
+    private let _configuration: Mutex<Configuration> = .init(.initial)
     
     private init() {}
     
