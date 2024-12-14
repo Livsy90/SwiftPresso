@@ -4,6 +4,10 @@ import SwiftUI
 @Observable
 final class PostViewModel {
     
+    private enum Constants {
+        static let padding: CGFloat = 44
+    }
+    
     var attributedString: NSAttributedString = .init()
     var isInitialLoading: Bool = true
     var isShowContent: Bool = false
@@ -34,21 +38,19 @@ final class PostViewModel {
     @MainActor
     func onAppear() {
         var attributedString = AttributedString(attributedString)
-        Task(priority: .background) {
-            attributedString = self.mapper.attributedStringFrom(
-                htmlText: self.htmlString,
+        Task {
+            attributedString = mapper.attributedStringFrom(
+                htmlText: htmlString,
                 color: UIColor(SwiftPresso.Configuration.UI.textColor),
                 fontSize: SwiftPresso.Configuration.UI.postBodyFont.pointSize,
-                width: self.width - 44,
+                width: width - Constants.padding,
                 isHandleYouTubeVideos: SwiftPresso.Configuration.UI.isParseHTMLWithYouTubePreviews
             )
             
-            Task(priority: .high) {
-                self.attributedString = NSAttributedString(attributedString)
-                self.isInitialLoading = false
-                withAnimation {
-                    self.isShowContent = true
-                }
+            self.attributedString = NSAttributedString(attributedString)
+            isInitialLoading = false
+            withAnimation {
+                isShowContent = true
             }
         }
     }
