@@ -2,7 +2,7 @@ import SwiftUI
 import Foundation
 import Synchronization
 
-public final class Preferences: @unchecked Sendable {
+public final class Preferences: Sendable {
     
     static let shared: Preferences = .init()
     

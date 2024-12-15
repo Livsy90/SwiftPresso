@@ -7,7 +7,6 @@ struct PostListView<Placeholder: View>: View {
     @State private var size: CGSize = .zero
     @State private var viewModel: PostListViewModel
     @State private var searchText = ""
-    @State private var isSearching = false
     @State private var urlToOpen: URL?
     
     @Binding private var externalTagName: String?
@@ -164,7 +163,7 @@ struct PostListView<Placeholder: View>: View {
                 navigationBarTrailingItem()
             }
         }
-        .searchable(text: $searchText, isPresented: $isSearching)
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .onSubmit(of: .search) {
             viewModel.search(searchText)
         }
@@ -382,13 +381,11 @@ struct PostListView<Placeholder: View>: View {
     
     private func showPostListByTag(_ tagName: String) {
         searchText.removeAll()
-        isSearching = false
         viewModel.onTag(tagName)
     }
     
     private func showPostListByCategory(_ categoryName: String) {
         searchText.removeAll()
-        isSearching = false
         viewModel.onCategory(categoryName)
     }
     
