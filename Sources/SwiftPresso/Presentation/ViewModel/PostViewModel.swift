@@ -37,9 +37,8 @@ final class PostViewModel {
     
     @MainActor
     func onAppear() {
-        var attributedString = AttributedString(attributedString)
-        Task(priority: .low) {
-            attributedString = mapper.attributedStringFrom(
+        Task {
+            async let attributedString = mapper.attributedStringFrom(
                 htmlText: htmlString,
                 color: UIColor(SwiftPresso.Configuration.UI.textColor),
                 fontSize: SwiftPresso.Configuration.UI.postBodyFont.pointSize,
@@ -47,12 +46,10 @@ final class PostViewModel {
                 isHandleYouTubeVideos: SwiftPresso.Configuration.UI.isParseHTMLWithYouTubePreviews
             )
             
-            Task(priority: .high) {
-                self.attributedString = NSAttributedString(attributedString)
-                isInitialLoading = false
-                withAnimation {
-                    isShowContent = true
-                }
+            self.attributedString = await NSAttributedString(attributedString)
+            isInitialLoading = false
+            withAnimation {
+                isShowContent = true
             }
         }
     }
