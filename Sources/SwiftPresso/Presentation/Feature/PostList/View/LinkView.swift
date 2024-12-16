@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct LinkView<Placehodler: View>: View {
+struct LinkView<Placeholder: View>: View {
     
     let url: URL
     let title: String
@@ -12,7 +12,7 @@ struct LinkView<Placehodler: View>: View {
     
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
-    let placeholder: () -> Placehodler
+    let placeholder: () -> Placeholder
     
     var body: some View {
         ZStack {
