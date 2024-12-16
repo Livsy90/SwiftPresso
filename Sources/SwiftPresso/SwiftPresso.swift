@@ -55,7 +55,7 @@ public enum SwiftPresso {
         isShowCategoryMenu: Bool = true,
         pageMenuTitle: String = "Pages",
         tagMenuTitle: String = "Tags",
-        categoryMenuTitle: String = "Category",
+        categoryMenuTitle: String = "Categories",
         isParseHTMLWithYouTubePreviews: Bool = true,
         isExcludeWebHeaderAndFooter: Bool = true,
         isMenuExpanded: Bool = true
