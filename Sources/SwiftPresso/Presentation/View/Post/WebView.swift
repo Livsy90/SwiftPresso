@@ -19,7 +19,7 @@ struct WebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView  {
         let contentController = WKUserContentController()
         
-        if Preferences.shared.configuration.isExcludeWebHeaderAndFooter {
+        if Preferences.isExcludeWebHeaderAndFooter {
             let script = """
             var style = document.createElement('style');
             style.innerHTML = 'header {display: none;} footer {display: none;}';
@@ -104,7 +104,7 @@ struct WebView: UIViewRepresentable {
                 parent.onCategory(categoryName)
             }
             
-            if host != Preferences.shared.configuration.host {
+            if host != Preferences.host {
                 UIApplication.shared.open(url)
                 decisionHandler(.cancel)
             } else {

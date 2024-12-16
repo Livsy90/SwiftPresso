@@ -9,89 +9,89 @@ public extension SwiftPresso {
         public enum API {
             
             /// API host.
-            public static var host: String { Preferences.shared.configuration.host }
+            public static var host: String { Preferences.host }
             
             /// Posts per page in the post list request.
-            public static var postsPerPage: Int { Preferences.shared.configuration.postsPerPage }
+            public static var postsPerPage: Int { Preferences.postsPerPage }
             
             /// API HTTP scheme.
-            public static var httpScheme: HTTPScheme { Preferences.shared.configuration.httpScheme }
+            public static var httpScheme: HTTPScheme { Preferences.httpScheme }
             
             /// API Tag path component.
-            public static var tagPathComponent: String { Preferences.shared.configuration.tagPathComponent }
+            public static var tagPathComponent: String { Preferences.tagPathComponent }
             
             /// API Category path component.
-            public static var categoryPathComponent: String { Preferences.shared.configuration.categoryPathComponent }
+            public static var categoryPathComponent: String { Preferences.categoryPathComponent }
             
         }
         
         public enum UI {
             
             /// Remove web page's header and footer.
-            public static var isExcludeWebHeaderAndFooter: Bool { Preferences.shared.configuration.isExcludeWebHeaderAndFooter }
+            public static var isExcludeWebHeaderAndFooter: Bool { Preferences.isExcludeWebHeaderAndFooter }
             
             /// Post list and post view background color.
-            public static var backgroundColor: Color { Preferences.shared.configuration.backgroundColor }
+            public static var backgroundColor: Color { Preferences.backgroundColor }
             
             /// Post list font.
-            public static var postListFont: Font { Preferences.shared.configuration.postListFont }
+            public static var postListFont: Font { Preferences.postListFont }
             
             /// Post body font.
-            public static var postBodyFont: UIFont { Preferences.shared.configuration.postBodyFont }
+            public static var postBodyFont: UIFont { Preferences.postBodyFont }
             
             /// Post title font.
-            public static var postTitleFont: Font { Preferences.shared.configuration.postTitleFont }
+            public static var postTitleFont: Font { Preferences.postTitleFont }
             
             /// Post list and post view interface color.
-            public static var interfaceColor: Color { Preferences.shared.configuration.interfaceColor }
+            public static var interfaceColor: Color { Preferences.interfaceColor }
             
             /// Post list and post view text color.
-            public static var textColor: Color { Preferences.shared.configuration.textColor }
+            public static var textColor: Color { Preferences.textColor }
             
             /// Determines the visibility of the page menu.
-            public static var isShowPageMenu: Bool { Preferences.shared.configuration.isShowPageMenu }
+            public static var isShowPageMenu: Bool { Preferences.isShowPageMenu }
             
             /// Post featured image visibility.
-            public static var isShowFeaturedImage: Bool { Preferences.shared.configuration.isShowFeaturedImage }
+            public static var isShowFeaturedImage: Bool { Preferences.isShowFeaturedImage }
             
             /// Determines the visibility of the tag menu.
-            public static var isShowTagMenu: Bool { Preferences.shared.configuration.isShowTagMenu }
+            public static var isShowTagMenu: Bool { Preferences.isShowTagMenu }
             
             /// Determines the visibility of the category menu.
-            public static var isShowCategoryMenu: Bool { Preferences.shared.configuration.isShowCategoryMenu }
+            public static var isShowCategoryMenu: Bool { Preferences.isShowCategoryMenu }
             
             /// The icon for the navigation bar button that restores the interface to its default state.
-            public static var homeIcon: Image { Preferences.shared.configuration.homeIcon }
+            public static var homeIcon: Image { Preferences.homeIcon }
             
             /// Determines the title of the page menu.
-            public static var pageMenuTitle: String { Preferences.shared.configuration.pageMenuTitle }
+            public static var pageMenuTitle: String { Preferences.pageMenuTitle }
             
             /// Determines the title of the tag menu.
-            public static var tagMenuTitle: String { Preferences.shared.configuration.tagMenuTitle }
+            public static var tagMenuTitle: String { Preferences.tagMenuTitle }
             
             /// Determines the title of the category menu.
-            public static var categoryMenuTitle: String { Preferences.shared.configuration.categoryMenuTitle }
+            public static var categoryMenuTitle: String { Preferences.categoryMenuTitle }
             
             /// Navigation title for default state.
-            public static var homeTitle: String { Preferences.shared.configuration.homeTitle }
+            public static var homeTitle: String { Preferences.homeTitle }
             
             /// Navigation title for search state.
-            public static var searchTitle: String { Preferences.shared.configuration.searchTitle }
+            public static var searchTitle: String { Preferences.searchTitle }
             
             /// Menu background color.
-            public static var menuBackgroundColor: Color { Preferences.shared.configuration.menuBackgroundColor }
+            public static var menuBackgroundColor: Color { Preferences.menuBackgroundColor }
             
             /// Menu text color.
-            public static var menuTextColor: Color { Preferences.shared.configuration.menuTextColor }
+            public static var menuTextColor: Color { Preferences.menuTextColor }
             
             /// To expand menu items by default.
-            public static var isMenuExpanded: Bool { Preferences.shared.configuration.isMenuExpanded }
+            public static var isMenuExpanded: Bool { Preferences.isMenuExpanded }
             
             /// Using WKWebView as post view.
-            public static var isShowContentInWebView: Bool { Preferences.shared.configuration.isShowContentInWebView }
+            public static var isShowContentInWebView: Bool { Preferences.isShowContentInWebView }
             
             /// If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
-            public static var isParseHTMLWithYouTubePreviews: Bool { Preferences.shared.configuration.isParseHTMLWithYouTubePreviews }
+            public static var isParseHTMLWithYouTubePreviews: Bool { Preferences.isParseHTMLWithYouTubePreviews }
             
         }
         

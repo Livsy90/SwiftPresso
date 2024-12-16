@@ -61,34 +61,36 @@ public enum SwiftPresso {
         isMenuExpanded: Bool = true
     ) {
         
-        Preferences.shared.configuration = .init(
-            host: host,
-            httpScheme: httpScheme,
-            postsPerPage: postsPerPage,
-            tagPathComponent: tagPathComponent,
-            categoryPathComponent: categoryPathComponent,
-            postListFont: postListFont,
-            postBodyFont: postBodyFont,
-            postTitleFont: postTitleFont,
-            isShowFeaturedImage: isShowFeaturedImage,
-            isShowContentInWebView: isShowContentInWebView,
-            menuBackgroundColor: menuBackgroundColor,
-            menuTextColor: menuTextColor,
-            backgroundColor: backgroundColor,
-            interfaceColor: interfaceColor,
-            textColor: textColor,
-            homeIcon: homeIcon,
-            homeTitle: homeTitle,
-            searchTitle: searchTitle,
-            isShowPageMenu: isShowPageMenu,
-            isShowTagMenu: isShowTagMenu,
-            isShowCategoryMenu: isShowCategoryMenu,
-            pageMenuTitle: pageMenuTitle,
-            tagMenuTitle: tagMenuTitle,
-            categoryMenuTitle: categoryMenuTitle,
-            isParseHTMLWithYouTubePreviews: isParseHTMLWithYouTubePreviews,
-            isExcludeWebHeaderAndFooter: isExcludeWebHeaderAndFooter,
-            isMenuExpanded: isMenuExpanded
+        Preferences.shared.configure(with:
+                .init(
+                    host: host,
+                    httpScheme: httpScheme,
+                    postsPerPage: postsPerPage,
+                    tagPathComponent: tagPathComponent,
+                    categoryPathComponent: categoryPathComponent,
+                    postListFont: postListFont,
+                    postBodyFont: postBodyFont,
+                    postTitleFont: postTitleFont,
+                    isShowFeaturedImage: isShowFeaturedImage,
+                    isShowContentInWebView: isShowContentInWebView,
+                    menuBackgroundColor: menuBackgroundColor,
+                    menuTextColor: menuTextColor,
+                    backgroundColor: backgroundColor,
+                    interfaceColor: interfaceColor,
+                    textColor: textColor,
+                    homeIcon: homeIcon,
+                    homeTitle: homeTitle,
+                    searchTitle: searchTitle,
+                    isShowPageMenu: isShowPageMenu,
+                    isShowTagMenu: isShowTagMenu,
+                    isShowCategoryMenu: isShowCategoryMenu,
+                    pageMenuTitle: pageMenuTitle,
+                    tagMenuTitle: tagMenuTitle,
+                    categoryMenuTitle: categoryMenuTitle,
+                    isParseHTMLWithYouTubePreviews: isParseHTMLWithYouTubePreviews,
+                    isExcludeWebHeaderAndFooter: isExcludeWebHeaderAndFooter,
+                    isMenuExpanded: isMenuExpanded
+                )
         )
     }
     

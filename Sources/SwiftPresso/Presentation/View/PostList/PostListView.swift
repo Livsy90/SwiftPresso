@@ -221,7 +221,7 @@ struct PostListView<Placeholder: View>: View {
         HStack {
             Text(viewModel.mode.title)
                 .fontWeight(.semibold)
-                .foregroundStyle(interfaceColor)
+                .foregroundStyle(.primary)
                 .frame(width: size.width, alignment: .center)
                 .padding(.horizontal)
         }

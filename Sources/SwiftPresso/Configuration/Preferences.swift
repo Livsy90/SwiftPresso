@@ -2,11 +2,18 @@ import SwiftUI
 import Foundation
 import Synchronization
 
+@dynamicMemberLookup
 public final class Preferences: Sendable {
     
     static let shared: Preferences = .init()
     
-    var configuration: Configuration {
+    static subscript<T>(dynamicMember keyPath: KeyPath<Configuration, T>) -> T {
+        shared.configuration[keyPath: keyPath]
+    }
+    
+    private let _configuration: Mutex<Configuration> = .init(.initial)
+    
+    private var configuration: Configuration {
         get {
             _configuration.withLock { value in
                 value
@@ -18,10 +25,12 @@ public final class Preferences: Sendable {
             }
         }
     }
-    
-    private let _configuration: Mutex<Configuration> = .init(.initial)
-    
+
     private init() {}
+    
+    func configure(with configuration: Configuration) {
+        self.configuration = configuration
+    }
     
 }
 
