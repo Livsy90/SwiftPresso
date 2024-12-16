@@ -78,7 +78,11 @@ struct WebView: UIViewRepresentable {
             }
         }
         
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        func webView(
+            _ webView: WKWebView,
+            decidePolicyFor navigationAction: WKNavigationAction,
+            decisionHandler: @escaping @MainActor (WKNavigationActionPolicy) -> Void
+        ) {
             
             if let url = navigationAction.request.url, url.scheme?.lowercased() == "mailto" {
                 decisionHandler(.cancel)
