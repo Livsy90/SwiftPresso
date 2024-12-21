@@ -18,17 +18,13 @@ extension RegistrationService: RegistrationServiceProtocol {
     func register(
         username: String,
         email: String,
-        password: String,
-        appName: String,
-        appPassword: String
+        password: String
     ) async throws -> RegisterModel {
 
         let request: Request<RegisterModel> = configurator.registerRequest(
             username: username,
             email: email,
-            password: password,
-            appName: appName,
-            appPassword: appPassword
+            password: password
         )
         return try await networkClient.send(request).value
     }

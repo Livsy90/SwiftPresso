@@ -17,9 +17,7 @@ extension RegistrationServiceConfigurator: RegistrationConfiguratorProtocol {
     func registerRequest(
         username: String,
         email: String,
-        password: String,
-        appName: String,
-        appPassword: String
+        password: String
     ) -> Request<RegisterModel> {
         
         let parameters: [(String, String)] = [
@@ -30,12 +28,7 @@ extension RegistrationServiceConfigurator: RegistrationConfiguratorProtocol {
         
         let path = Endpoint.path(for: .users)
         
-        return Request(
-            path: path,
-            method: .post,
-            query: parameters,
-            headers: [appName: appPassword]
-        )
+        return Request(path: path, method: .post, query: parameters)
     }
     
 }

@@ -202,7 +202,7 @@ public extension SwiftPresso {
         /// Factory method for registration provider.
         /// - Returns: Returns the value of the registration provider.
         public static func registrationProvider(
-            appName: String,
+            adminUsername: String,
             appPassword: String
         ) -> some RegistrationProviderProtocol {
             guard !Preferences.host.isEmpty else {
@@ -217,10 +217,19 @@ public extension SwiftPresso {
                 fatalError("SwiftPresso: Invalid URL")
             }
             
+            let credentialString = "\(adminUsername):\(appPassword)"
+            
+            guard let data = credentialString.data(using: .utf8) else {
+                fatalError("SwiftPresso: Invalid credential")
+            }
+            let base64EncodedString = data.base64EncodedString()
+            
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
-                httpAdditionalHeaders: nil
+                httpAdditionalHeaders: [
+                    "authorization": "Basic \(base64EncodedString)"
+                ]
             )
             let configurator = RegistrationServiceConfigurator()
             let service = RegistrationService(
