@@ -40,10 +40,7 @@ public extension SwiftPresso {
         
         /// Factory method for post provider.
         /// - Returns: Returns the value of the provider of the post.
-        public static func postProvider(
-            appName: String,
-            appPassword: String
-        ) -> some PostProviderProtocol {
+        public static func postProvider() -> some PostProviderProtocol {
             guard !Preferences.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, use the 'SwiftPresso.Configuration.configure' method.")
             }
@@ -59,9 +56,7 @@ public extension SwiftPresso {
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
-                httpAdditionalHeaders: [
-                    appName: appPassword
-                ]
+                httpAdditionalHeaders: nil
             )
             let configurator = PostServiceConfigurator()
             let mapper = WPPostMapper()
@@ -206,7 +201,10 @@ public extension SwiftPresso {
         
         /// Factory method for registration provider.
         /// - Returns: Returns the value of the registration provider.
-        public static func registrationProvider() -> some RegistrationProviderProtocol {
+        public static func registrationProvider(
+            appName: String,
+            appPassword: String
+        ) -> some RegistrationProviderProtocol {
             guard !Preferences.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
@@ -222,7 +220,9 @@ public extension SwiftPresso {
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
-                httpAdditionalHeaders: nil
+                httpAdditionalHeaders: [
+                    appName: appPassword
+                ]
             )
             let configurator = RegistrationServiceConfigurator()
             let service = RegistrationService(
