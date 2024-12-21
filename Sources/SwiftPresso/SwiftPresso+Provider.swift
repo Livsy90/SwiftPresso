@@ -231,8 +231,8 @@ public extension SwiftPresso {
                     "authorization": "Basic \(base64EncodedString)"
                 ]
             )
-            let configurator = RegistrationServiceConfigurator()
-            let service = RegistrationService(
+            let configurator = UserServiceConfigurator()
+            let service = UserService(
                 networkClient: client,
                 configurator: configurator
             )

@@ -1,6 +1,6 @@
 import SkavokNetworking
 
-protocol RegistrationConfiguratorProtocol: Sendable {
+protocol UserConfiguratorProtocol: Sendable {
     func registerRequest(
         username: String,
         email: String,

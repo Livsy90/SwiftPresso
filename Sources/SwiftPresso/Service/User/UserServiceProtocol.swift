@@ -1,6 +1,6 @@
 import SkavokNetworking
 
-protocol RegistrationServiceProtocol: Sendable {
+protocol UserServiceProtocol: Sendable {
     func register(
         username: String,
         email: String,

@@ -1,8 +1,8 @@
 struct UserProvider: UserProviderProtocol {
     
-    private let service: any RegistrationServiceProtocol
+    private let service: any UserServiceProtocol
     
-    init(service: some RegistrationServiceProtocol) {
+    init(service: some UserServiceProtocol) {
         self.service = service
     }
     

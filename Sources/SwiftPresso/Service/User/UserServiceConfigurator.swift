@@ -1,6 +1,6 @@
 import SkavokNetworking
 
-struct RegistrationServiceConfigurator {
+struct UserServiceConfigurator {
     
     private enum Constants {
         enum Keys {
@@ -12,7 +12,7 @@ struct RegistrationServiceConfigurator {
     
 }
 
-extension RegistrationServiceConfigurator: RegistrationConfiguratorProtocol {
+extension UserServiceConfigurator: UserConfiguratorProtocol {
     
     func registerRequest(
         username: String,
