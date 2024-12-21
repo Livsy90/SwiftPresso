@@ -32,4 +32,14 @@ struct UserProvider: UserProviderProtocol {
         )
     }
     
+    func login(
+        username: String,
+        password: String
+    ) async throws -> LoginResponse {
+        try await service.login(
+            username: username,
+            password: password
+        )
+    }
+    
 }
