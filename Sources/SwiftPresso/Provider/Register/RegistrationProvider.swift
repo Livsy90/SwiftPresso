@@ -9,12 +9,16 @@ struct RegistrationProvider: RegistrationProviderProtocol {
     func register(
         username: String,
         email: String,
-        password: String
+        password: String,
+        appName: String,
+        appPassword: String
     ) async throws -> RegisterModel {
         try await service.register(
             username: username,
             email: email,
-            password: password
+            password: password,
+            appName: appName,
+            appPassword: appPassword
         )
     }
     

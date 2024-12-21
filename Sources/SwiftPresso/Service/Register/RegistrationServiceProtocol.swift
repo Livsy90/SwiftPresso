@@ -4,6 +4,8 @@ protocol RegistrationServiceProtocol: Sendable {
     func register(
         username: String,
         email: String,
-        password: String
+        password: String,
+        appName: String,
+        appPassword: String
     ) async throws -> RegisterModel
 }

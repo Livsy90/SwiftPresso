@@ -220,9 +220,7 @@ public extension SwiftPresso {
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
-                httpAdditionalHeaders: [
-                    appName: appPassword
-                ]
+                httpAdditionalHeaders: nil
             )
             let configurator = RegistrationServiceConfigurator()
             let service = RegistrationService(
