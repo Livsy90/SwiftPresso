@@ -79,7 +79,7 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
         
         return Request(
             path: path,
-            method: .get,
+            method: .post,
             body: bodyModel
         )
     }
