@@ -199,9 +199,12 @@ public extension SwiftPresso {
             )
         }
         
-        /// Factory method for registration provider.
-        /// - Returns: Returns the value of the registration provider.
-        public static func registrationProvider(
+        /// Factory method for user provider.
+        /// - Returns: Returns the value of the user provider.
+        /// - Parameters:
+        ///   - adminUsername: The name of the user with administrator rights.
+        ///   - appPassword: The application password.
+        public static func userProvider(
             adminUsername: String,
             appPassword: String
         ) -> some UserProviderProtocol {
