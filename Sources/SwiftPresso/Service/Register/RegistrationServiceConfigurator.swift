@@ -18,7 +18,7 @@ extension RegistrationServiceConfigurator: RegistrationConfiguratorProtocol {
         username: String,
         email: String,
         password: String
-    ) -> Request<RegisterModel> {
+    ) -> Request<UserResponse> {
         
         let parameters: [(String, String)] = [
             (Constants.Keys.username, username),

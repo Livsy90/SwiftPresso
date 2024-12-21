@@ -3,5 +3,5 @@ public protocol RegistrationProviderProtocol: Sendable {
         username: String,
         email: String,
         password: String
-    ) async throws -> RegisterModel
+    ) async throws -> UserResponse
 }

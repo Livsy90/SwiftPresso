@@ -5,5 +5,5 @@ protocol RegistrationConfiguratorProtocol: Sendable {
         username: String,
         email: String,
         password: String
-    ) -> Request<RegisterModel>
+    ) -> Request<UserResponse>
 }

@@ -19,9 +19,9 @@ extension RegistrationService: RegistrationServiceProtocol {
         username: String,
         email: String,
         password: String
-    ) async throws -> RegisterModel {
+    ) async throws -> UserResponse {
 
-        let request: Request<RegisterModel> = configurator.registerRequest(
+        let request: Request<UserResponse> = configurator.registerRequest(
             username: username,
             email: email,
             password: password

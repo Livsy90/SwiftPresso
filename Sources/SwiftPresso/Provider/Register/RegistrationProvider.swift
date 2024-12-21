@@ -10,7 +10,7 @@ struct RegistrationProvider: RegistrationProviderProtocol {
         username: String,
         email: String,
         password: String
-    ) async throws -> RegisterModel {
+    ) async throws -> UserResponse {
         try await service.register(
             username: username,
             email: email,
