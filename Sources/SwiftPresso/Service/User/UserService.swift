@@ -57,8 +57,8 @@ extension UserService: UserServiceProtocol {
         return try await networkClient.send(request).value
     }
     
-    func userInfo() async throws -> UserInfo {
-        let request: Request<UserInfo> = configurator.userInfo()
+    func userInfo(username: String) async throws -> UserInfo {
+        let request: Request<UserInfo> = configurator.userInfo(username: username)
         return try await networkClient.send(request).value
     }
     

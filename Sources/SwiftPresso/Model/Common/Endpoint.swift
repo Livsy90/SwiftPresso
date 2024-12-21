@@ -4,7 +4,6 @@ enum Endpoint {
     case tags
     case pages
     case users
-    case userInfo
     case userEdit(Int)
     case login
     
@@ -35,8 +34,6 @@ extension Endpoint {
             "pages"
         case .users:
             "users"
-        case .userInfo:
-            "users/me"
         case .userEdit(let id):
             "users/\(id)"
         case .login:

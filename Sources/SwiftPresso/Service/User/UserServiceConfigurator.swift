@@ -8,6 +8,7 @@ struct UserServiceConfigurator {
             static let password = "password"
             static let email = "email"
             static let description = "description"
+            static let search = "search"
         }
     }
     
@@ -84,12 +85,16 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
         )
     }
     
-    func userInfo() -> Request<UserInfo> {
-        let path = Endpoint.path(for: .userInfo)
+    func userInfo(username: String) -> Request<UserInfo> {
+        let path = Endpoint.path(for: .users)
+        let parameters: [(String, String)] = [
+            (Constants.Keys.search, username)
+        ]
         
         return Request(
             path: path,
-            method: .get
+            method: .get,
+            query: parameters
         )
     }
     
