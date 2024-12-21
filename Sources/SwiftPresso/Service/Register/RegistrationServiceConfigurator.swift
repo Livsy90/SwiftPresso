@@ -26,7 +26,7 @@ extension RegistrationServiceConfigurator: RegistrationConfiguratorProtocol {
             (Constants.Keys.email, email)
         ]
         
-        let path = Endpoint.path(for: .register)
+        let path = Endpoint.path(for: .users)
         
         return Request(path: path, method: .post, query: parameters)
     }
