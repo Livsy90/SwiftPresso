@@ -28,7 +28,7 @@ extension RegistrationServiceConfigurator: RegistrationConfiguratorProtocol {
         
         let path = Endpoint.path(for: .register)
         
-        return Request(path: path, query: parameters)
+        return Request(path: path, method: .post, query: parameters)
     }
     
 }
