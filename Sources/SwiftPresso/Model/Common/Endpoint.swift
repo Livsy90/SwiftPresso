@@ -3,6 +3,7 @@ enum Endpoint: String {
     case categories
     case tags
     case pages
+    case register
     
     static func path(for endpoint: Endpoint) -> String {
         "/wp-json/wp/v2/\(endpoint.rawValue)"
