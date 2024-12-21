@@ -1,5 +1,5 @@
 public struct RegisterModel: Codable, Sendable {
-    public var code: String
+    public var code: Int
     public var id: Int
     public var message: String
 }

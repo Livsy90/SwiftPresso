@@ -40,7 +40,10 @@ public extension SwiftPresso {
         
         /// Factory method for post provider.
         /// - Returns: Returns the value of the provider of the post.
-        public static func postProvider() -> some PostProviderProtocol {
+        public static func postProvider(
+            appName: String,
+            appPassword: String
+        ) -> some PostProviderProtocol {
             guard !Preferences.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, use the 'SwiftPresso.Configuration.configure' method.")
             }
@@ -56,7 +59,9 @@ public extension SwiftPresso {
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
-                httpAdditionalHeaders: nil
+                httpAdditionalHeaders: [
+                    appName: appPassword
+                ]
             )
             let configurator = PostServiceConfigurator()
             let mapper = WPPostMapper()
