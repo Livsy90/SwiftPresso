@@ -14,7 +14,7 @@ enum Endpoint {
     private static func _path(_ endpoint: Self) -> String {
         switch endpoint {
         case .login:
-            "jwt-auth/v1/"
+            "/jwt-auth/v1/"
         default:
             "/wp-json/wp/v2/"
         }
