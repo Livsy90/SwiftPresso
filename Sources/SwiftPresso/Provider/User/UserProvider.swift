@@ -18,4 +18,18 @@ struct UserProvider: UserProviderProtocol {
         )
     }
     
+    func edit(
+        id: Int,
+        email: String?,
+        password: String?,
+        description: String?
+    ) async throws -> UserResponse {
+        try await service.edit(
+            id: id,
+            email: email,
+            password: password,
+            description: description
+        )
+    }
+    
 }
