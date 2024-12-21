@@ -84,4 +84,13 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
         )
     }
     
+    func userInfo() -> Request<UserInfo> {
+        let path = Endpoint.path(for: .userInfo)
+        
+        return Request(
+            path: path,
+            method: .get
+        )
+    }
+    
 }

@@ -42,4 +42,8 @@ struct UserProvider: UserProviderProtocol {
         )
     }
     
+    func userInfo() async throws -> UserInfo {
+        try await service.userInfo()
+    }
+    
 }

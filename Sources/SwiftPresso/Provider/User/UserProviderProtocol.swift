@@ -16,4 +16,6 @@ public protocol UserProviderProtocol: Sendable {
         username: String,
         password: String
     ) async throws -> LoginResponse
+    
+    func userInfo() async throws -> UserInfo
 }
