@@ -1,4 +1,4 @@
-struct RegistrationProvider: RegistrationProviderProtocol {
+struct UserProvider: UserProviderProtocol {
     
     private let service: any RegistrationServiceProtocol
     

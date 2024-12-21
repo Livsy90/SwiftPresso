@@ -1,4 +1,4 @@
-public protocol RegistrationProviderProtocol: Sendable {
+public protocol UserProviderProtocol: Sendable {
     func register(
         username: String,
         email: String,

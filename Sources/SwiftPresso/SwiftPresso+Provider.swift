@@ -204,7 +204,7 @@ public extension SwiftPresso {
         public static func registrationProvider(
             adminUsername: String,
             appPassword: String
-        ) -> some RegistrationProviderProtocol {
+        ) -> some UserProviderProtocol {
             guard !Preferences.host.isEmpty else {
                 fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
             }
@@ -237,7 +237,7 @@ public extension SwiftPresso {
                 configurator: configurator
             )
             
-            return RegistrationProvider(
+            return UserProvider(
                 service: service
             )
         }
