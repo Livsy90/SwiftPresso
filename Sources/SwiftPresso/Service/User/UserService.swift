@@ -29,4 +29,21 @@ extension UserService: UserServiceProtocol {
         return try await networkClient.send(request).value
     }
     
+    func edit(
+        id: Int,
+        email: String?,
+        password: String?,
+        description: String?
+    ) async throws -> UserResponse {
+        
+        let request: Request<UserResponse> = configurator.editRequest(
+            id: id,
+            email: email,
+            password: password,
+            description: description
+        )
+        return try await networkClient.send(request).value
+    }
+    
+    
 }

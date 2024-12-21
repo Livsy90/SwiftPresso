@@ -6,4 +6,11 @@ protocol UserConfiguratorProtocol: Sendable {
         email: String,
         password: String
     ) -> Request<UserResponse>
+    
+    func editRequest(
+        id: Int,
+        email: String?,
+        password: String?,
+        description: String?
+    ) -> Request<UserResponse>
 }
