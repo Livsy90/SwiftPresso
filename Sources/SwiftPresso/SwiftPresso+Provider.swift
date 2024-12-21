@@ -8,18 +8,6 @@ public extension SwiftPresso {
         /// Factory method for post list provider.
         /// - Returns: Returns the value of the provider of the post list.
         public static func postListProvider() -> some PostListProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, use the 'SwiftPresso.Configuration.configure' method.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
@@ -41,18 +29,6 @@ public extension SwiftPresso {
         /// Factory method for post provider.
         /// - Returns: Returns the value of the provider of the post.
         public static func postProvider() -> some PostProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, use the 'SwiftPresso.Configuration.configure' method.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
@@ -74,18 +50,6 @@ public extension SwiftPresso {
         /// Factory method for page list provider.
         /// - Returns: Returns the value of the page list provider.
         public static func pageListProvider() -> some PageListProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
@@ -107,18 +71,6 @@ public extension SwiftPresso {
         /// Factory method for page provider.
         /// - Returns: Returns the value of the page provider.
         public static func pageProvider() -> some PageProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
@@ -140,18 +92,6 @@ public extension SwiftPresso {
         /// Factory method for category list provider.
         /// - Returns: Returns the value of the category list provider.
         public static func categoryListProvider() -> some CategoryListProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
@@ -171,18 +111,6 @@ public extension SwiftPresso {
         /// Factory method for tag list provider.
         /// - Returns: Returns the value of the tag list provider.
         public static func tagListProvider() -> some TagListProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
@@ -208,18 +136,6 @@ public extension SwiftPresso {
             adminUsername: String,
             appPassword: String
         ) -> some UserProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
             let credentialString = "\(adminUsername):\(appPassword)"
             
             guard let data = credentialString.data(using: .utf8) else {
@@ -245,35 +161,41 @@ public extension SwiftPresso {
             )
         }
         
-        public static func authProvider() -> some UserProviderProtocol {
-            guard !Preferences.host.isEmpty else {
-                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
-            }
-            
-            var components = URLComponents()
-            components.scheme = Preferences.httpScheme.rawValue
-            components.host = Preferences.host
-            
-            guard let url = components.url else {
-                fatalError("SwiftPresso: Invalid URL")
-            }
-            
+        public static func authProvider() -> some AuthProviderProtocol {
             let client = APIClientFactory.client(
                 url: url,
                 httpScheme: Preferences.httpScheme,
                 httpAdditionalHeaders: nil
             )
-            let configurator = UserServiceConfigurator()
-            let service = UserService(
+            let configurator = AuthServiceConfigurator()
+            let service = AuthService(
                 networkClient: client,
                 configurator: configurator
             )
             
-            return UserProvider(
+            return AuthProvider(
                 service: service
             )
         }
         
     }
         
+}
+
+private extension SwiftPresso {
+    static var url: URL {
+        guard !Preferences.host.isEmpty else {
+            fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
+        }
+        
+        var components = URLComponents()
+        components.scheme = Preferences.httpScheme.rawValue
+        components.host = Preferences.host
+        
+        guard let url = components.url else {
+            fatalError("SwiftPresso: Invalid URL")
+        }
+        
+        return url
+    }
 }
