@@ -5,9 +5,19 @@ enum Endpoint {
     case pages
     case users
     case userEdit(Int)
+    case login
     
-    static func path(for endpoint: Endpoint) -> String {
-        "/wp-json/wp/v2/\(endpoint.apiPath)"
+    static func path(for endpoint: Self) -> String {
+        _path(endpoint) + endpoint.apiPath
+    }
+    
+    private static func _path(_ endpoint: Self) -> String {
+        switch endpoint {
+        case .login:
+            "jwt-auth/v1/"
+        default:
+            "/wp-json/wp/v2/"
+        }
     }
 }
 
@@ -26,6 +36,8 @@ extension Endpoint {
             "users"
         case .userEdit(let id):
             "users/\(id)"
+        case .login:
+            "token"
         }
     }
 }

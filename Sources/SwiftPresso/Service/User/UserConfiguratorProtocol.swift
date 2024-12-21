@@ -13,4 +13,9 @@ protocol UserConfiguratorProtocol: Sendable {
         password: String?,
         description: String?
     ) -> Request<UserResponse>
+    
+    func loginRequest(
+        username: String,
+        password: String
+    ) -> Request<LoginResponse>
 }

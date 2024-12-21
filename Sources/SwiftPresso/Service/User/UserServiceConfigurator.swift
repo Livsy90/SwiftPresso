@@ -66,4 +66,22 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
         )
     }
     
+    func loginRequest(
+        username: String,
+        password: String
+    ) -> Request<LoginResponse> {
+        
+        let path = Endpoint.path(for: .users)
+        let bodyModel = LoginRequest(
+            username: username,
+            password: password
+        )
+        
+        return Request(
+            path: path,
+            method: .post,
+            body: bodyModel
+        )
+    }
+    
 }
