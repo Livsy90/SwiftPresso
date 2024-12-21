@@ -199,6 +199,37 @@ public extension SwiftPresso {
             )
         }
         
+        /// Factory method for registration provider.
+        /// - Returns: Returns the value of the registration provider.
+        public static func registrationProvider() -> some RegistrationProviderProtocol {
+            guard !Preferences.host.isEmpty else {
+                fatalError("The host value must not be empty. To configure it, set the 'SwiftPresso.Configuration.configure' value.")
+            }
+            
+            var components = URLComponents()
+            components.scheme = Preferences.httpScheme.rawValue
+            components.host = Preferences.host
+            
+            guard let url = components.url else {
+                fatalError("SwiftPresso: Invalid URL")
+            }
+            
+            let client = APIClientFactory.client(
+                url: url,
+                httpScheme: Preferences.httpScheme,
+                httpAdditionalHeaders: nil
+            )
+            let configurator = RegistrationServiceConfigurator()
+            let service = RegistrationService(
+                networkClient: client,
+                configurator: configurator
+            )
+            
+            return RegistrationProvider(
+                service: service
+            )
+        }
+        
     }
     
 }
