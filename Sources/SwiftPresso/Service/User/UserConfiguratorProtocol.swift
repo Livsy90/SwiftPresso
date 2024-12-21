@@ -19,5 +19,5 @@ protocol UserConfiguratorProtocol: Sendable {
         password: String
     ) -> Request<LoginResponse>
     
-    func userInfo(username: String) -> Request<UserInfo>
+    func userInfo(token: String) -> Request<UserInfo>
 }
