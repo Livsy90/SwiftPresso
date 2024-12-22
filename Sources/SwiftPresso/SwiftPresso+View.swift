@@ -123,8 +123,10 @@ public extension SwiftPresso {
         }
         
         @MainActor
-        public static func authView() -> some SwiftUI.View {
-            ProfileView()
+        public static func profileView<BottomContent: SwiftUI.View>(
+            bottomContent: (() -> BottomContent)? = nil
+        ) -> some SwiftUI.View {
+            ProfileView(bottomContent: bottomContent)
         }
         
     }

@@ -16,6 +16,7 @@ final class ProfileViewModel {
     var email: String = ""
     var error: Error?
     var mode: Mode = .auth
+    var isLoading: Bool = false
     
     @ObservationIgnored
     private var authProvider: some AuthProviderProtocol = SwiftPresso.Provider.authProvider()
@@ -28,6 +29,9 @@ final class ProfileViewModel {
     
     func onSignIn() {
         Task {
+            withAnimation {
+                isLoading = true
+            }
             do {
                 let loginResponse = try await authProvider.login(
                     username: username,
@@ -53,11 +57,17 @@ final class ProfileViewModel {
             } catch {
                 self.error = error
             }
+            withAnimation {
+                isLoading = false
+            }
         }
     }
     
     func onSignUp() {
         Task {
+            withAnimation {
+                isLoading = true
+            }
             do {
                 let userResponse = try await userProvider.register(
                     username: username,
@@ -75,10 +85,16 @@ final class ProfileViewModel {
             } catch {
                 self.error = error
             }
+            withAnimation {
+                isLoading = false
+            }
         }
     }
     
     func onExit() {
+        username.removeAll()
+        password.removeAll()
+        email.removeAll()
         mode = .auth
         KeychainHelper.shared.delete(
             service: .token,

@@ -1,7 +1,7 @@
 import SwiftUI
 import AuthenticationServices
 
-public struct ProfileView: View {
+public struct ProfileView<Content: View>: View {
     
     @State private var viewModel = ProfileViewModel()
     
@@ -17,6 +17,8 @@ public struct ProfileView: View {
         }
     }
     
+    let bottomContent: (() -> Content)?
+    
     @State private var authKind = AuthKind.signIn
     @FocusState private var isUsernameFocused
     @FocusState private var isPasswordFocused
@@ -24,49 +26,63 @@ public struct ProfileView: View {
     
     public var body: some View {
         NavigationStack {
-            ScrollView {
-                ZStack {
-                    authView
-                        .opacity(viewModel.mode == .auth ? 1 : 0)
-                    profileView
-                        .opacity(viewModel.mode == .profile ? 1 : 0)
+            ZStack {
+                ScrollView {
+                    ZStack {
+                        authView
+                            .opacity(viewModel.mode == .auth ? 1 : 0)
+                        profileView
+                            .opacity(viewModel.mode == .profile ? 1 : 0)
+                    }
+                    
+                    if let bottomContent {
+                        bottomContent()
+                    }
                 }
-            }
-            .scrollDismissesKeyboard(.immediately)
-            .background {
+                .scrollDismissesKeyboard(.immediately)
+                .background {
+                    Rectangle()
+                        .fill(Preferences.backgroundColor)
+                        .ignoresSafeArea()
+                }
+                .alert(isPresented: $viewModel.error.boolValue()) {
+                    Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if viewModel.mode == .profile {
+                            Button("Exit") {
+                                viewModel.onExit()
+                            }
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if viewModel.mode == .profile {
+                            Button("More") {
+                                
+                            }
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if viewModel.mode == .auth {
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "info.circle")
+                            }
+                        }
+                    }
+                }
+                
                 Rectangle()
-                    .fill(Preferences.backgroundColor)
+                    .fill(.ultraThinMaterial)
                     .ignoresSafeArea()
-            }
-            .alert(isPresented: $viewModel.error.boolValue()) {
-                Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    if viewModel.mode == .profile {
-                        Button("Exit") {
-                            viewModel.onExit()
-                        }
+                    .overlay {
+                        ProgressView()
                     }
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    if viewModel.mode == .profile {
-                        Button("More") {
-                            
-                        }
-                    }
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    if viewModel.mode == .auth {
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "info.circle")
-                        }
-                    }
-                }
+                    .opacity(viewModel.isLoading ? 1 : 0)
             }
         }
     }
