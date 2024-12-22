@@ -26,6 +26,9 @@ final class ProfileViewModel {
     var error: Error?
     var mode: Mode = .auth
     var isLoading: Bool = false
+    var isAuthAvailable: Bool {
+        !username.isEmpty && !password.isEmpty && !email.isEmpty
+    }
     
     @ObservationIgnored
     private var authProvider: some AuthProviderProtocol = SwiftPresso.Provider.authProvider()

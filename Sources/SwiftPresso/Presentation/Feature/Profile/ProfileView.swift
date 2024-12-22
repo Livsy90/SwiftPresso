@@ -38,14 +38,14 @@ public struct ProfileView<Content: View>: View {
                     
                     if viewModel.mode == .profile {
                         bottomContent()
+                        
+                        Button("Delete Account", role: .destructive) {
+                            isDeleteAlertPresented = true
+                        }
+                        .padding()
+                        .padding(.bottom, 80)
                     }
-                    
-                    Button("Delete Account", role: .destructive) {
-                        isDeleteAlertPresented = true
-                    }
-                    .padding()
                 }
-                .scrollDismissesKeyboard(.immediately)
                 .background {
                     Rectangle()
                         .fill(Preferences.backgroundColor)
@@ -55,12 +55,12 @@ public struct ProfileView<Content: View>: View {
                     Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
                 }
                 .alert("Are you sure?", isPresented: $isDeleteAlertPresented, actions: {
-                    Button("Yes") {
+                    Button("Yes", role: .destructive) {
                         viewModel.onDelete()
                         isDeleteAlertPresented = false
                     }
                     
-                    Button("No") {
+                    Button("Cancel", role: .cancel) {
                         isDeleteAlertPresented = false
                     }
                 })
@@ -116,12 +116,6 @@ public struct ProfileView<Content: View>: View {
     
     private var authFormView: some View {
         VStack {
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 100)
-                .padding()
-            
             fields
             
             Button {
