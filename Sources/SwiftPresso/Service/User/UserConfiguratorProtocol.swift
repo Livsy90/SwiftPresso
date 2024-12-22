@@ -14,5 +14,5 @@ protocol UserConfiguratorProtocol: Sendable {
         description: String?
     ) -> Request<UserResponse>
     
-    func deleteRequest(id: Int) -> Request<UserResponse>
+    func deleteRequest(id: Int) -> Request<DeleteUserResponse>
 }

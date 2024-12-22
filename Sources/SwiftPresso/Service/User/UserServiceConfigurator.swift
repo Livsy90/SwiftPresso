@@ -68,7 +68,7 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
         )
     }
     
-    func deleteRequest(id: Int) -> Request<UserResponse> {
+    func deleteRequest(id: Int) -> Request<DeleteUserResponse> {
         let parameters: [(String, String)] = [
             (Constants.Keys.reassign, "false"),
             (Constants.Keys.force, "true"),

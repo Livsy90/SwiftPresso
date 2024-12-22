@@ -134,8 +134,9 @@ final class ProfileViewModel {
             guard let user else { return }
             do {
                 let response = try await userProvider.delete(id: user.id)
-                onExit()
-                print(response)
+                if response.isDeleted {
+                    onExit()
+                }
             } catch {
                 self.error = error
             }

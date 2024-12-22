@@ -40,11 +40,10 @@ public struct ProfileView<Content: View>: View {
                         bottomContent()
                     }
                     
-                    Button {
+                    Button("Delete Account", role: .destructive) {
                         isDeleteAlertPresented = true
-                    } label: {
-                        Image(systemName: "trash")
                     }
+                    .padding()
                 }
                 .scrollDismissesKeyboard(.immediately)
                 .background {
