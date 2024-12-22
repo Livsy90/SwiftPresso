@@ -96,13 +96,13 @@ private extension ProfileViewModel {
     func configureMode() {
         if let data = KeychainHelper.shared.read(service: .user, account: Preferences.keychainKey) {
             let jsonDecoder = JSONDecoder()
-            do {
-                let user = try jsonDecoder.decode(UserResponse.self, from: data)
-                username = user.username
-                mode = .profile
-            } catch {
-                self.error = error
+            let user = try? jsonDecoder.decode(UserResponse.self, from: data)
+            guard let user else {
+                mode = .auth
+                return
             }
+            username = user.username
+            mode = .profile
         } else {
             mode = .auth
         }

@@ -18,6 +18,9 @@ public struct ProfileView: View {
     }
     
     @State private var authKind = AuthKind.signIn
+    @FocusState private var isUsernameFocused
+    @FocusState private var isPasswordFocused
+    @FocusState private var isEmailFocused
     
     public var body: some View {
         NavigationStack {
@@ -29,7 +32,7 @@ public struct ProfileView: View {
                         .opacity(viewModel.mode == .profile ? 1 : 0)
                 }
             }
-            .scrollDismissesKeyboard(.automatic)
+            .scrollDismissesKeyboard(.immediately)
             .background {
                 Rectangle()
                     .fill(Preferences.backgroundColor)
@@ -51,6 +54,16 @@ public struct ProfileView: View {
                     if viewModel.mode == .profile {
                         Button("More") {
                             
+                        }
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    if viewModel.mode == .auth {
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "info.circle")
                         }
                     }
                 }
@@ -87,13 +100,19 @@ public struct ProfileView: View {
             
             fields
             
-            Button(authKind.text) {
+            Button {
                 switch authKind {
                 case .signIn:
                     viewModel.onSignIn()
                 case .signUp:
                     viewModel.onSignUp()
                 }
+                isUsernameFocused = false
+                isEmailFocused = false
+                isPasswordFocused = false
+            } label: {
+                Text(authKind.text)
+                    .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
@@ -103,6 +122,8 @@ public struct ProfileView: View {
     private var fields: some View {
         VStack {
             TextField("Username", text: $viewModel.username)
+                .focused($isUsernameFocused)
+                .autocapitalization(.none)
                 .font(.subheadline)
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -113,6 +134,8 @@ public struct ProfileView: View {
                 .padding(.vertical)
             
             TextField("Password", text: $viewModel.password)
+                .focused($isPasswordFocused)
+                .autocapitalization(.none)
                 .font(.subheadline)
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -124,6 +147,8 @@ public struct ProfileView: View {
             
             if case .signUp = authKind {
                 TextField("Email", text: $viewModel.email)
+                    .focused($isEmailFocused)
+                    .autocapitalization(.none)
                     .font(.subheadline)
                     .padding()
                     .frame(maxWidth: .infinity)
