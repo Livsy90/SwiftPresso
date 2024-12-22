@@ -33,11 +33,6 @@ public struct ProfileView<Content: View>: View {
                         .padding(.bottom, 80)
                     }
                 }
-                .background {
-                    Rectangle()
-                        .fill(Preferences.backgroundColor)
-                        .ignoresSafeArea()
-                }
                 .alert(isPresented: $viewModel.error.boolValue()) {
                     Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
                 }
@@ -52,6 +47,7 @@ public struct ProfileView<Content: View>: View {
                     }
                 })
                 .navigationTitle(viewModel.mode.title)
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         if viewModel.mode == .profile {
@@ -78,6 +74,11 @@ public struct ProfileView<Content: View>: View {
                         ProgressView()
                     }
                     .opacity(viewModel.isLoading ? 1 : 0)
+            }
+            .background {
+                Rectangle()
+                    .fill(Preferences.backgroundColor)
+                    .ignoresSafeArea()
             }
         }
     }
@@ -136,7 +137,7 @@ public struct ProfileView<Content: View>: View {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.ultraThinMaterial)
                 }
-                .padding(10)
+                .padding(.vertical, 10)
             
             TextField("Password", text: $viewModel.password)
                 .textContentType(.password)
@@ -150,7 +151,7 @@ public struct ProfileView<Content: View>: View {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.ultraThinMaterial)
                 }
-                .padding(10)
+                .padding(.vertical, 10)
             
             if case .signUp = viewModel.authKind {
                 TextField("Email", text: $viewModel.email)
@@ -164,7 +165,7 @@ public struct ProfileView<Content: View>: View {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(.ultraThinMaterial)
                     }
-                    .padding(10)
+                    .padding(.vertical, 10)
             }
         }
     }
