@@ -22,8 +22,12 @@ public struct ProfileView: View {
     public var body: some View {
         NavigationStack {
             ScrollView {
-                primaryView
-                    .transition(.move(edge: .bottom))
+                ZStack {
+                    authView
+                        .opacity(viewModel.mode == .auth ? 1 : 0)
+                    profileView
+                        .opacity(viewModel.mode == .profile ? 1 : 0)
+                }
             }
             .scrollDismissesKeyboard(.automatic)
             .background {
@@ -51,16 +55,6 @@ public struct ProfileView: View {
                     }
                 }
             }
-        }
-    }
-    
-    @ViewBuilder
-    private var primaryView: some View {
-        switch viewModel.mode {
-        case .auth:
-            authView
-        case .profile:
-            profileView
         }
     }
     
