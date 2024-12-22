@@ -112,5 +112,6 @@ private extension PostListCoordinator {
 }
 
 #Preview {
-    SwiftPresso.View.postList(host: "livsycode.com")
+    SwiftPresso.configure(host: "livsycode.com")
+    return SwiftPresso.View.postList()
 }

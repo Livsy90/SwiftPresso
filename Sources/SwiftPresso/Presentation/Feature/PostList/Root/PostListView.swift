@@ -392,8 +392,6 @@ struct PostListView<Placeholder: View>: View {
 }
 
 #Preview {
-    SwiftPresso.View.postList(
-        host: "livsycode.com",
-        isShowContentInWebView: false
-    )
+    SwiftPresso.configure(host: "livsycode.com")
+    return SwiftPresso.View.postList()
 }
