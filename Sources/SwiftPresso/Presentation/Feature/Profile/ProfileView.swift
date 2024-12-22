@@ -133,6 +133,7 @@ public struct ProfileView<Content: View>: View {
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
+            .disabled(!viewModel.isAuthAvailable)
         }
     }
     
