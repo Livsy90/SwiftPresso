@@ -33,7 +33,7 @@ struct UserProvider: UserProviderProtocol {
     }
     
     func delete(id: Int) async throws -> UserResponse {
-        
+        try await service.delete(id: id)
     }
     
 }
