@@ -32,7 +32,7 @@ final class ProfileViewModel {
     @ObservationIgnored
     private var userProvider: some UserProviderProtocol = SwiftPresso.Provider.userProvider()
     
-    private var user: UserResponse? {
+    private var user: UserInfo? {
         guard let data = KeychainHelper.shared.read(
             service: .user,
             account: Preferences.keychainKey
@@ -41,7 +41,7 @@ final class ProfileViewModel {
         }
         
         let jsonDecoder = JSONDecoder()
-        let user = try? jsonDecoder.decode(UserResponse.self, from: data)
+        let user = try? jsonDecoder.decode(UserInfo.self, from: data)
         
         return user
     }
@@ -147,7 +147,7 @@ final class ProfileViewModel {
 private extension ProfileViewModel {
     func configureMode() {
         if let user {
-            username = user.username
+            username = user.name
             mode = .profile
         } else {
             mode = .auth
