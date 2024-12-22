@@ -201,5 +201,14 @@ extension ProfileView where Content == EmptyView {
 }
 
 #Preview {
-    ProfileView()
+    SwiftPresso.configure(
+        host: "livsycode.com",
+        appCredentials: .init(
+            username: "livsycode",
+            password: "livsycode"
+        ),
+        backgroundColor: .red,
+        interfaceColor: .green
+    )
+    return SwiftPresso.View.profileView()
 }
