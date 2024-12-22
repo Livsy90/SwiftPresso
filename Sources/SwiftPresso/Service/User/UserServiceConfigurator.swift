@@ -8,6 +8,7 @@ struct UserServiceConfigurator {
             static let password = "password"
             static let email = "email"
             static let description = "description"
+            static let reassign = "reassign"
         }
     }
     
@@ -67,11 +68,16 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
     }
     
     func deleteRequest(id: Int) -> Request<UserResponse> {
+        let parameters: [(String, String)] = [
+            (Constants.Keys.reassign, "false")
+        ]
+        
         let path = Endpoint.path(for: .userEdit(id))
         
         return Request(
             path: path,
-            method: .delete
+            method: .delete,
+            query: parameters
         )
     }
     
