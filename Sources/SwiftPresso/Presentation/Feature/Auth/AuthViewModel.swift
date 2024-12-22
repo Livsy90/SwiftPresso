@@ -35,6 +35,7 @@ final class AuthViewModel {
                     service: .userID,
                     account: Preferences.keychainKey
                 )
+                print(userResponse)
             } catch {
                 self.error = error
             }
@@ -54,6 +55,7 @@ final class AuthViewModel {
                     service: .userID,
                     account: Preferences.keychainKey
                 )
+                print(userResponse)
             } catch {
                 self.error = error
             }
