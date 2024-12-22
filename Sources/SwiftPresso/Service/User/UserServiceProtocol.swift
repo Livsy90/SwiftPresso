@@ -13,4 +13,6 @@ protocol UserServiceProtocol: Sendable {
         password: String?,
         description: String?
     ) async throws -> UserResponse
+    
+    func delete(id: Int) async throws -> UserResponse
 }

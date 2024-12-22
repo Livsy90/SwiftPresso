@@ -20,6 +20,7 @@ public struct ProfileView<Content: View>: View {
     let bottomContent: () -> Content
     
     @State private var authKind = AuthKind.signIn
+    @State private var isDeleteAlertPresented = false
     @FocusState private var isUsernameFocused
     @FocusState private var isPasswordFocused
     @FocusState private var isEmailFocused
@@ -35,7 +36,15 @@ public struct ProfileView<Content: View>: View {
                             .opacity(viewModel.mode == .profile ? 1 : 0)
                     }
                     
-                    bottomContent()
+                    if viewModel.mode == .profile {
+                        bottomContent()
+                    }
+                    
+                    Button {
+                        isDeleteAlertPresented = true
+                    } label: {
+                        Image(systemName: "trash")
+                    }
                 }
                 .scrollDismissesKeyboard(.immediately)
                 .background {
@@ -46,6 +55,17 @@ public struct ProfileView<Content: View>: View {
                 .alert(isPresented: $viewModel.error.boolValue()) {
                     Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
                 }
+                .alert("Are you sure?", isPresented: $isDeleteAlertPresented, actions: {
+                    Button("Yes") {
+                        viewModel.onDelete()
+                        isDeleteAlertPresented = false
+                    }
+                    
+                    Button("No") {
+                        isDeleteAlertPresented = false
+                    }
+                })
+                .navigationTitle(viewModel.mode.title)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         if viewModel.mode == .profile {
@@ -55,20 +75,11 @@ public struct ProfileView<Content: View>: View {
                         }
                     }
                     
-                    ToolbarItem(placement: .topBarTrailing) {
-                        if viewModel.mode == .profile {
-                            Button("More") {
-                                
-                            }
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        if viewModel.mode == .auth {
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "info.circle")
+                    ToolbarItem(placement: .keyboard) {
+                        HStack {
+                            Spacer()
+                            Button("Done") {
+                                dismissKeyboard()
                             }
                         }
                     }
@@ -121,12 +132,11 @@ public struct ProfileView<Content: View>: View {
                 case .signUp:
                     viewModel.onSignUp()
                 }
-                isUsernameFocused = false
-                isEmailFocused = false
-                isPasswordFocused = false
+                dismissKeyboard()
             } label: {
                 Text(authKind.text)
                     .frame(maxWidth: .infinity)
+                    .frame(height: 50)
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
@@ -187,6 +197,12 @@ public struct ProfileView<Content: View>: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
         }
+    }
+    
+    private func dismissKeyboard() {
+        isUsernameFocused = false
+        isEmailFocused = false
+        isPasswordFocused = false
     }
     
 }

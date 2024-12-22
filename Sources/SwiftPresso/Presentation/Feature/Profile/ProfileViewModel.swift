@@ -9,6 +9,15 @@ final class ProfileViewModel {
     enum Mode {
         case auth
         case profile
+        
+        var title: String {
+            switch self {
+            case .auth:
+                "Authorization"
+            case .profile:
+                "Profile"
+            }
+        }
     }
     
     var username: String = ""
@@ -22,6 +31,20 @@ final class ProfileViewModel {
     private var authProvider: some AuthProviderProtocol = SwiftPresso.Provider.authProvider()
     @ObservationIgnored
     private var userProvider: some UserProviderProtocol = SwiftPresso.Provider.userProvider()
+    
+    private var user: UserResponse? {
+        guard let data = KeychainHelper.shared.read(
+            service: .user,
+            account: Preferences.keychainKey
+        ) else {
+            return nil
+        }
+        
+        let jsonDecoder = JSONDecoder()
+        let user = try? jsonDecoder.decode(UserResponse.self, from: data)
+        
+        return user
+    }
     
     init() {
         configureMode()
@@ -106,21 +129,30 @@ final class ProfileViewModel {
         )
     }
     
+    func onDelete() {
+        Task {
+            guard let user else { return }
+            do {
+                let response = try await userProvider.delete(id: user.id)
+                onExit()
+                print(response)
+            } catch {
+                self.error = error
+            }
+        }
+    }
+    
 }
 
 private extension ProfileViewModel {
     func configureMode() {
-        if let data = KeychainHelper.shared.read(service: .user, account: Preferences.keychainKey) {
-            let jsonDecoder = JSONDecoder()
-            let user = try? jsonDecoder.decode(UserResponse.self, from: data)
-            guard let user else {
-                mode = .auth
-                return
-            }
+        if let user {
             username = user.username
             mode = .profile
         } else {
             mode = .auth
         }
     }
+    
+    
 }

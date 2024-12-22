@@ -66,4 +66,13 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
         )
     }
     
+    func deleteRequest(id: Int) -> Request<UserResponse> {
+        let path = Endpoint.path(for: .userEdit(id))
+        
+        return Request(
+            path: path,
+            method: .delete
+        )
+    }
+    
 }

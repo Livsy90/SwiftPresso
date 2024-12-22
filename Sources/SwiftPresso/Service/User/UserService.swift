@@ -45,4 +45,9 @@ extension UserService: UserServiceProtocol {
         return try await networkClient.send(request).value
     }
     
+    func delete(id: Int) async throws -> UserResponse {
+        let request: Request<UserResponse> = configurator.deleteRequest(id: id)
+        return try await networkClient.send(request).value
+    }
+    
 }

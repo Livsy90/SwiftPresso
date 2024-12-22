@@ -32,4 +32,8 @@ struct UserProvider: UserProviderProtocol {
         )
     }
     
+    func delete(id: Int) async throws -> UserResponse {
+        
+    }
+    
 }
