@@ -66,34 +66,4 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
         )
     }
     
-    func loginRequest(
-        username: String,
-        password: String
-    ) -> Request<LoginResponse> {
-        
-        let path = Endpoint.path(for: .login)
-        let bodyModel = LoginRequest(
-            username: username,
-            password: password
-        )
-        
-        return Request(
-            path: path,
-            method: .post,
-            body: bodyModel
-        )
-    }
-    
-    func userInfo(token: String) -> Request<UserInfo> {
-        let path = Endpoint.path(for: .userInfo)
-        
-        return Request(
-            path: path,
-            method: .get,
-            headers: [
-                "Authorization": "Bearer \(token)"
-            ]
-        )
-    }
-    
 }

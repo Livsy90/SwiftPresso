@@ -43,7 +43,7 @@ extension Preferences {
         let httpScheme: HTTPScheme
         let tagPathComponent: String
         let categoryPathComponent: String
-        
+        let appCredentials: AppCredentials
         let postListFont: Font
         let postBodyFont: UIFont
         let postTitleFont: Font
@@ -66,6 +66,7 @@ extension Preferences {
         let menuBackgroundColor: Color
         let menuTextColor: Color
         let isParseHTMLWithYouTubePreviews: Bool
+        let keychainKey: String
         
         init(
             host: String,
@@ -73,6 +74,7 @@ extension Preferences {
             postsPerPage: Int,
             tagPathComponent: String,
             categoryPathComponent: String,
+            appCredentials: AppCredentials,
             postListFont: Font,
             postBodyFont: UIFont,
             postTitleFont: Font,
@@ -94,7 +96,8 @@ extension Preferences {
             categoryMenuTitle: String,
             isParseHTMLWithYouTubePreviews: Bool,
             isExcludeWebHeaderAndFooter: Bool,
-            isMenuExpanded: Bool
+            isMenuExpanded: Bool,
+            keychainKey: String
         ) {
             self.host = host
             self.backgroundColor = backgroundColor
@@ -103,6 +106,7 @@ extension Preferences {
             self.isShowPageMenu = isShowPageMenu
             self.isShowTagMenu = isShowTagMenu
             self.isShowCategoryMenu = isShowCategoryMenu
+            self.appCredentials = appCredentials
             self.pageMenuTitle = pageMenuTitle
             self.tagMenuTitle = tagMenuTitle
             self.categoryMenuTitle = categoryMenuTitle
@@ -123,6 +127,7 @@ extension Preferences {
             self.postBodyFont = postBodyFont
             self.postTitleFont = postTitleFont
             self.isShowFeaturedImage = isShowFeaturedImage
+            self.keychainKey = keychainKey
         }
     }
     
@@ -136,6 +141,7 @@ extension Preferences.Configuration {
         postsPerPage: .zero,
         tagPathComponent: "",
         categoryPathComponent: "",
+        appCredentials: .init(username: "", password: ""),
         postListFont: .title3,
         postBodyFont: .systemFont(ofSize: 17),
         postTitleFont: .largeTitle,
@@ -157,7 +163,22 @@ extension Preferences.Configuration {
         categoryMenuTitle: "Categories",
         isParseHTMLWithYouTubePreviews: true,
         isExcludeWebHeaderAndFooter: true,
-        isMenuExpanded: true
+        isMenuExpanded: true,
+        keychainKey: "SwiftPresso"
     )
+    
+}
+
+extension Preferences {
+    
+    public struct AppCredentials: Sendable {
+        let username: String
+        let password: String
+        
+        public init(username: String, password: String) {
+            self.username = username
+            self.password = password
+        }
+    }
     
 }

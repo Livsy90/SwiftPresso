@@ -45,21 +45,4 @@ extension UserService: UserServiceProtocol {
         return try await networkClient.send(request).value
     }
     
-    func login(
-        username: String,
-        password: String
-    ) async throws -> LoginResponse {
-        
-        let request: Request<LoginResponse> = configurator.loginRequest(
-            username: username,
-            password: password
-        )
-        return try await networkClient.send(request).value
-    }
-    
-    func userInfo(token: String) async throws -> UserInfo {
-        let request: Request<UserInfo> = configurator.userInfo(token: token)
-        return try await networkClient.send(request).value
-    }
-    
 }

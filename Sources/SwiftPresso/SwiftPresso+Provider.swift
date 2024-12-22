@@ -129,17 +129,18 @@ public extension SwiftPresso {
         
         /// Factory method for user provider.
         /// - Returns: Returns the value of the user provider.
-        /// - Parameters:
-        ///   - adminUsername: The name of the user with administrator rights.
-        ///   - appPassword: The application password.
-        public static func userProvider(
-            adminUsername: String,
-            appPassword: String
-        ) -> some UserProviderProtocol {
-            let credentialString = "\(adminUsername):\(appPassword)"
+        public static func userProvider() -> some UserProviderProtocol {
+            guard
+                !Preferences.appCredentials.username.isEmpty,
+                !Preferences.appCredentials.password.isEmpty
+            else {
+                fatalError("SwiftPresso: Invalid App Credentials")
+            }
+            
+            let credentialString = "\(Preferences.appCredentials.username):\(Preferences.appCredentials.password)"
             
             guard let data = credentialString.data(using: .utf8) else {
-                fatalError("SwiftPresso: Invalid credential")
+                fatalError("SwiftPresso: Invalid App Credentials")
             }
             let base64EncodedString = data.base64EncodedString()
             

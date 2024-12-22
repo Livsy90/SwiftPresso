@@ -9,6 +9,7 @@ public enum SwiftPresso {
     ///   - postsPerPage: Posts per page in the post list request.
     ///   - tagPathComponent: API Tag path component.
     ///   - categoryPathComponent: API Category path component.
+    ///   - appCredentials: The App Credentials for User Management.
     ///   - isShowContentInWebView: Using WKWebView as post view.
     ///   - isShowFeaturedImage: Post featured image visibility.
     ///   - backgroundColor: Post list and post view background color.
@@ -31,12 +32,14 @@ public enum SwiftPresso {
     ///   - isParseHTMLWithYouTubePreviews: If an HTML text contains a link to a YouTube video, it will be displayed as a preview of that video with an active link.
     ///   - isExcludeWebHeaderAndFooter: Remove web page's header and footer.
     ///   - isMenuExpanded: To expand menu items by default.
+    ///   - keychainKey: A key for keychain.
     public static func configure(
         host: String,
         httpScheme: HTTPScheme = .https,
         postsPerPage: Int = 50,
         tagPathComponent: String = "tag",
         categoryPathComponent: String = "category",
+        appCredentials: Preferences.AppCredentials = .init(username: "", password: ""),
         isShowContentInWebView: Bool = false,
         isShowFeaturedImage: Bool = true,
         postListFont: Font = .title2,
@@ -58,7 +61,8 @@ public enum SwiftPresso {
         categoryMenuTitle: String = "Categories",
         isParseHTMLWithYouTubePreviews: Bool = true,
         isExcludeWebHeaderAndFooter: Bool = true,
-        isMenuExpanded: Bool = true
+        isMenuExpanded: Bool = true,
+        keychainKey: String = "SwiftPresso"
     ) {
         
         Preferences.shared.configure(with:
@@ -68,6 +72,7 @@ public enum SwiftPresso {
                     postsPerPage: postsPerPage,
                     tagPathComponent: tagPathComponent,
                     categoryPathComponent: categoryPathComponent,
+                    appCredentials: appCredentials,
                     postListFont: postListFont,
                     postBodyFont: postBodyFont,
                     postTitleFont: postTitleFont,
@@ -89,7 +94,8 @@ public enum SwiftPresso {
                     categoryMenuTitle: categoryMenuTitle,
                     isParseHTMLWithYouTubePreviews: isParseHTMLWithYouTubePreviews,
                     isExcludeWebHeaderAndFooter: isExcludeWebHeaderAndFooter,
-                    isMenuExpanded: isMenuExpanded
+                    isMenuExpanded: isMenuExpanded,
+                    keychainKey: keychainKey
                 )
         )
     }
