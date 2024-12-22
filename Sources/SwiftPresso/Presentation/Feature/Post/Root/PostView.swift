@@ -78,6 +78,9 @@ struct PostView<Placeholder: View>: View {
             .opacity(viewModel.isShowContent ? 1 : 0)
             .padding(.horizontal)
         }
+        .alert(isPresented: $alertMessage.boolValue()) {
+            Alert(title: Text(alertMessage ?? ""))
+        }
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {

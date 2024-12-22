@@ -124,7 +124,7 @@ public extension SwiftPresso {
         
         @MainActor
         public static func authView() -> some SwiftUI.View {
-            AuthView()
+            ProfileView()
         }
         
     }

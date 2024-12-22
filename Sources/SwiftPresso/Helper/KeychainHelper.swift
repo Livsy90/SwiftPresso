@@ -4,7 +4,7 @@ final class KeychainHelper: Sendable {
     
     enum ServiceKind: String {
         case token
-        case userID
+        case user
     }
     
     static let shared = KeychainHelper()

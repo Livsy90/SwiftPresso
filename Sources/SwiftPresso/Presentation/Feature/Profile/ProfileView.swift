@@ -1,11 +1,11 @@
 import SwiftUI
 import AuthenticationServices
 
-public struct AuthView: View {
+public struct ProfileView: View {
     
-    @State private var viewModel = AuthViewModel()
+    @State private var viewModel = ProfileViewModel()
     
-    public enum AuthKind: Int, CaseIterable {
+    private enum AuthKind: Int, CaseIterable {
         case signIn
         case signUp
         
@@ -20,19 +20,47 @@ public struct AuthView: View {
     @State private var authKind = AuthKind.signIn
     
     public var body: some View {
-        ScrollView {
-            VStack {
-                segmentedControl
-                    .padding(.bottom, 30)
-                authView
+        NavigationStack {
+            ScrollView {
+                primaryView
+                    .animation(.easeInOut, value: viewModel.mode)
             }
-            .padding()
+            .scrollDismissesKeyboard(.automatic)
+            .background {
+                Rectangle()
+                    .fill(Preferences.backgroundColor)
+                    .ignoresSafeArea()
+            }
+            .alert(isPresented: $viewModel.error.boolValue()) {
+                Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    if viewModel.mode == .profile {
+                        Button("Exit") {
+                            viewModel.onExit()
+                        }
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    if viewModel.mode == .profile {
+                        Button("More") {
+                            
+                        }
+                    }
+                }
+            }
         }
-        .scrollDismissesKeyboard(.interactively)
-        .background {
-            Rectangle()
-                .fill(.ultraThickMaterial)
-                .ignoresSafeArea()
+    }
+    
+    @ViewBuilder
+    private var primaryView: some View {
+        switch viewModel.mode {
+        case .auth:
+            authView
+        case .profile:
+            profileView
         }
     }
     
@@ -47,6 +75,15 @@ public struct AuthView: View {
     }
     
     private var authView: some View {
+        VStack {
+            segmentedControl
+                .padding(.bottom, 30)
+            authFormView
+        }
+        .padding()
+    }
+    
+    private var authFormView: some View {
         VStack {
             Image(systemName: "person.circle.fill")
                 .resizable()
@@ -105,8 +142,22 @@ public struct AuthView: View {
         }
     }
     
+    private var profileView: some View {
+        VStack {
+            Image(systemName: "person.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 100)
+                .padding()
+            
+            Text(viewModel.username)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+        }
+    }
+    
 }
 
 #Preview {
-    AuthView()
+    ProfileView()
 }
