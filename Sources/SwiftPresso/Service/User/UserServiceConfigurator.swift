@@ -9,6 +9,7 @@ struct UserServiceConfigurator {
             static let email = "email"
             static let description = "description"
             static let reassign = "reassign"
+            static let force = "force"
         }
     }
     
@@ -69,7 +70,8 @@ extension UserServiceConfigurator: UserConfiguratorProtocol {
     
     func deleteRequest(id: Int) -> Request<UserResponse> {
         let parameters: [(String, String)] = [
-            (Constants.Keys.reassign, "false")
+            (Constants.Keys.reassign, "false"),
+            (Constants.Keys.force, "true"),
         ]
         
         let path = Endpoint.path(for: .userEdit(id))
