@@ -12,10 +12,20 @@ final class ProfileViewModel {
         
         var title: String {
             switch self {
-            case .auth:
-                "Authorization"
-            case .profile:
-                "Profile"
+            case .auth: "Authorization"
+            case .profile: "Profile"
+            }
+        }
+    }
+    
+    enum AuthKind: Int, CaseIterable {
+        case signIn
+        case signUp
+        
+        var text: String {
+            switch self {
+            case .signIn: "Sign In"
+            case .signUp: "Sign Up"
             }
         }
     }
@@ -26,8 +36,9 @@ final class ProfileViewModel {
     var error: Error?
     var mode: Mode = .auth
     var isLoading: Bool = false
+    var authKind: AuthKind = .signIn
     var isAuthAvailable: Bool {
-        !username.isEmpty && !password.isEmpty && !email.isValidEmail
+        validate()
     }
     
     @ObservationIgnored
@@ -86,6 +97,7 @@ final class ProfileViewModel {
             withAnimation {
                 isLoading = false
             }
+            authKind = .signIn
         }
     }
     
@@ -114,6 +126,7 @@ final class ProfileViewModel {
             withAnimation {
                 isLoading = false
             }
+            authKind = .signIn
         }
     }
     
@@ -151,6 +164,7 @@ final class ProfileViewModel {
             withAnimation {
                 isLoading = false
             }
+            authKind = .signIn
         }
     }
     
@@ -166,12 +180,15 @@ private extension ProfileViewModel {
         }
     }
     
-    
-}
-
-private extension String {
-    var isValidEmail: Bool {
-        NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-            .evaluate(with: self)
+    func validate() -> Bool {
+        !username.isEmpty && !password.isEmpty && isValidEmail(email)
     }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
 }

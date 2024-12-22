@@ -5,21 +5,8 @@ public struct ProfileView<Content: View>: View {
     
     @State private var viewModel = ProfileViewModel()
     
-    private enum AuthKind: Int, CaseIterable {
-        case signIn
-        case signUp
-        
-        var text: String {
-            switch self {
-            case .signIn: "Sign In"
-            case .signUp: "Sign Up"
-            }
-        }
-    }
-    
     let bottomContent: () -> Content
     
-    @State private var authKind = AuthKind.signIn
     @State private var isDeleteAlertPresented = false
     @FocusState private var isUsernameFocused
     @FocusState private var isPasswordFocused
@@ -96,8 +83,8 @@ public struct ProfileView<Content: View>: View {
     }
     
     private var segmentedControl: some View {
-        Picker("", selection: $authKind) {
-            ForEach(AuthKind.allCases, id: \.self) { segment in
+        Picker("", selection: $viewModel.authKind) {
+            ForEach(ProfileViewModel.AuthKind.allCases, id: \.self) { segment in
                 Text(segment.text)
                     .tag(segment.rawValue)
             }
@@ -119,7 +106,7 @@ public struct ProfileView<Content: View>: View {
             fields
             
             Button {
-                switch authKind {
+                switch viewModel.authKind {
                 case .signIn:
                     viewModel.onSignIn()
                 case .signUp:
@@ -127,9 +114,9 @@ public struct ProfileView<Content: View>: View {
                 }
                 dismissKeyboard()
             } label: {
-                Text(authKind.text)
+                Text(viewModel.authKind.text)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 50)
+                    .frame(height: 45)
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
@@ -143,13 +130,12 @@ public struct ProfileView<Content: View>: View {
                 .focused($isUsernameFocused)
                 .autocapitalization(.none)
                 .font(.subheadline)
-                .padding()
                 .frame(maxWidth: .infinity)
                 .background {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.ultraThinMaterial)
                 }
-                .padding(.vertical)
+                .padding()
             
             TextField("Password", text: $viewModel.password)
                 .textContentType(.password)
@@ -157,27 +143,25 @@ public struct ProfileView<Content: View>: View {
                 .autocapitalization(.none)
                 .autocorrectionDisabled(true)
                 .font(.subheadline)
-                .padding()
                 .frame(maxWidth: .infinity)
                 .background {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.ultraThinMaterial)
                 }
-                .padding(.vertical)
+                .padding()
             
-            if case .signUp = authKind {
+            if case .signUp = viewModel.authKind {
                 TextField("Email", text: $viewModel.email)
                     .focused($isEmailFocused)
                     .autocapitalization(.none)
                     .autocorrectionDisabled(true)
                     .font(.subheadline)
-                    .padding()
                     .frame(maxWidth: .infinity)
                     .background {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(.ultraThinMaterial)
                     }
-                    .padding(.vertical)
+                    .padding()
             }
         }
     }
