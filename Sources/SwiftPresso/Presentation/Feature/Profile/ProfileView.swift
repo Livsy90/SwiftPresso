@@ -17,7 +17,7 @@ public struct ProfileView<Content: View>: View {
         }
     }
     
-    let bottomContent: (() -> Content)?
+    let bottomContent: () -> Content
     
     @State private var authKind = AuthKind.signIn
     @FocusState private var isUsernameFocused
@@ -35,9 +35,7 @@ public struct ProfileView<Content: View>: View {
                             .opacity(viewModel.mode == .profile ? 1 : 0)
                     }
                     
-                    if let bottomContent {
-                        bottomContent()
-                    }
+                    bottomContent()
                 }
                 .scrollDismissesKeyboard(.immediately)
                 .background {
@@ -191,6 +189,14 @@ public struct ProfileView<Content: View>: View {
         }
     }
     
+}
+
+extension ProfileView where Content == EmptyView {
+    init() {
+        self.bottomContent = {
+            EmptyView()
+        }
+    }
 }
 
 #Preview {

@@ -124,9 +124,14 @@ public extension SwiftPresso {
         
         @MainActor
         public static func profileView<BottomContent: SwiftUI.View>(
-            bottomContent: (() -> BottomContent)? = nil
+            bottomContent: @escaping () -> BottomContent
         ) -> some SwiftUI.View {
             ProfileView(bottomContent: bottomContent)
+        }
+        
+        @MainActor
+        public static func profileView() -> some SwiftUI.View {
+            ProfileView()
         }
         
     }
