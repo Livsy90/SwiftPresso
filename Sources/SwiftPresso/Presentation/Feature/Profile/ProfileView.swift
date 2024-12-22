@@ -116,7 +116,7 @@ public struct ProfileView<Content: View>: View {
             } label: {
                 Text(viewModel.authKind.text)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 45)
+                    .frame(height: 25)
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
