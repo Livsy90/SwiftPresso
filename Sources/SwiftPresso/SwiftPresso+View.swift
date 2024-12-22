@@ -122,6 +122,11 @@ public extension SwiftPresso {
             return PostListCoordinator(placeholder: placeholder)
         }
         
+        @MainActor
+        public static func authView() -> some SwiftUI.View {
+            AuthView()
+        }
+        
     }
     
 }
