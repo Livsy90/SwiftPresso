@@ -131,11 +131,12 @@ public struct ProfileView<Content: View>: View {
                 .autocapitalization(.none)
                 .font(.subheadline)
                 .frame(maxWidth: .infinity)
+                .padding(10)
                 .background {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.ultraThinMaterial)
                 }
-                .padding()
+                .padding(10)
             
             TextField("Password", text: $viewModel.password)
                 .textContentType(.password)
@@ -144,11 +145,12 @@ public struct ProfileView<Content: View>: View {
                 .autocorrectionDisabled(true)
                 .font(.subheadline)
                 .frame(maxWidth: .infinity)
+                .padding(10)
                 .background {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.ultraThinMaterial)
                 }
-                .padding()
+                .padding(10)
             
             if case .signUp = viewModel.authKind {
                 TextField("Email", text: $viewModel.email)
@@ -157,11 +159,12 @@ public struct ProfileView<Content: View>: View {
                     .autocorrectionDisabled(true)
                     .font(.subheadline)
                     .frame(maxWidth: .infinity)
+                    .padding(10)
                     .background {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(.ultraThinMaterial)
                     }
-                    .padding()
+                    .padding(10)
             }
         }
     }
