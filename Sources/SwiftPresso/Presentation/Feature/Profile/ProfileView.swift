@@ -152,8 +152,10 @@ public struct ProfileView<Content: View>: View {
                 .padding(.vertical)
             
             TextField("Password", text: $viewModel.password)
+                .textContentType(.password)
                 .focused($isPasswordFocused)
                 .autocapitalization(.none)
+                .autocorrectionDisabled(true)
                 .font(.subheadline)
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -167,6 +169,7 @@ public struct ProfileView<Content: View>: View {
                 TextField("Email", text: $viewModel.email)
                     .focused($isEmailFocused)
                     .autocapitalization(.none)
+                    .autocorrectionDisabled(true)
                     .font(.subheadline)
                     .padding()
                     .frame(maxWidth: .infinity)

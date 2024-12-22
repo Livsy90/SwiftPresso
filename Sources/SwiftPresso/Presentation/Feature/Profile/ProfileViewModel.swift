@@ -27,7 +27,7 @@ final class ProfileViewModel {
     var mode: Mode = .auth
     var isLoading: Bool = false
     var isAuthAvailable: Bool {
-        !username.isEmpty && !password.isEmpty && !email.isEmpty
+        !username.isEmpty && !password.isEmpty && !email.isValidEmail
     }
     
     @ObservationIgnored
@@ -121,7 +121,9 @@ final class ProfileViewModel {
         username.removeAll()
         password.removeAll()
         email.removeAll()
-        mode = .auth
+        withAnimation {
+            mode = .auth
+        }
         KeychainHelper.shared.delete(
             service: .token,
             account: Preferences.keychainKey
@@ -135,6 +137,9 @@ final class ProfileViewModel {
     func onDelete() {
         Task {
             guard let user else { return }
+            withAnimation {
+                isLoading = true
+            }
             do {
                 let response = try await userProvider.delete(id: user.id)
                 if response.isDeleted {
@@ -142,6 +147,9 @@ final class ProfileViewModel {
                 }
             } catch {
                 self.error = error
+            }
+            withAnimation {
+                isLoading = false
             }
         }
     }
@@ -159,4 +167,11 @@ private extension ProfileViewModel {
     }
     
     
+}
+
+private extension String {
+    var isValidEmail: Bool {
+        NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
+            .evaluate(with: self)
+    }
 }
