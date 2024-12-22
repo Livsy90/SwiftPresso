@@ -23,7 +23,7 @@ public struct ProfileView: View {
         NavigationStack {
             ScrollView {
                 primaryView
-                    .animation(.easeInOut, value: viewModel.mode)
+                    .transition(.move(edge: .bottom))
             }
             .scrollDismissesKeyboard(.automatic)
             .background {
