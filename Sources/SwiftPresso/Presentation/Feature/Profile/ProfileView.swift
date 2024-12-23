@@ -153,6 +153,12 @@ public struct ProfileView<Content: View>: View {
         }
     }
     
+    private func dismissKeyboard() {
+        isUsernameFocused = false
+        isEmailFocused = false
+        isPasswordFocused = false
+    }
+    
 }
 
 extension ProfileView where Content == EmptyView {
