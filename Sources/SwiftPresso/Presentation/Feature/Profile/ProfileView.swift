@@ -33,6 +33,7 @@ public struct ProfileView<Content: View>: View {
                         }
                         .padding()
                         .padding(.bottom, 80)
+                        .frame(maxHeight: .infinity, alignment: .bottom)
                     }
                 }
                 .alert(isPresented: $viewModel.error.boolValue()) {
