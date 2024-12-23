@@ -183,7 +183,15 @@ private extension ProfileViewModel {
     func validate() -> Bool {
         !username.isEmpty &&
         !password.isEmpty &&
-        authKind == .signUp ? isValidEmail(email) : true
+        validateEmail()
+    }
+    
+    func validateEmail() -> Bool {
+        if authKind == .signUp {
+            isValidEmail(email)
+        } else {
+            true
+        }
     }
     
     func isValidEmail(_ email: String) -> Bool {

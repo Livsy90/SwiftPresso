@@ -49,6 +49,7 @@ public struct ProfileView<Content: View>: View {
                         isDeleteAlertPresented = false
                     }
                 })
+                .keyboardDoneButton()
                 .navigationTitle(viewModel.mode.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -56,15 +57,6 @@ public struct ProfileView<Content: View>: View {
                         if viewModel.mode == .profile {
                             Button("Exit") {
                                 viewModel.onExit()
-                            }
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .keyboard) {
-                        HStack {
-                            Spacer()
-                            Button("Done") {
-                                dismissKeyboard()
                             }
                         }
                     }
@@ -159,12 +151,6 @@ public struct ProfileView<Content: View>: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
         }
-    }
-    
-    private func dismissKeyboard() {
-        isUsernameFocused = false
-        isEmailFocused = false
-        isPasswordFocused = false
     }
     
 }
