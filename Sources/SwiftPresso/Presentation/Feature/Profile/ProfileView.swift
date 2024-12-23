@@ -26,6 +26,8 @@ public struct ProfileView<Content: View>: View {
                     if viewModel.mode == .profile {
                         bottomContent()
                         
+                        Spacer()
+                        
                         Button("Delete Account", role: .destructive) {
                             isDeleteAlertPresented = true
                         }
@@ -129,43 +131,17 @@ public struct ProfileView<Content: View>: View {
         VStack {
             TextField("Username", text: $viewModel.username)
                 .focused($isUsernameFocused)
-                .autocapitalization(.none)
-                .font(.subheadline)
-                .frame(maxWidth: .infinity)
-                .padding(10)
-                .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.ultraThinMaterial)
-                }
-                .padding(.vertical, 10)
+                .authField()
             
             TextField("Password", text: $viewModel.password)
                 .textContentType(.password)
                 .focused($isPasswordFocused)
-                .autocapitalization(.none)
-                .autocorrectionDisabled(true)
-                .font(.subheadline)
-                .frame(maxWidth: .infinity)
-                .padding(10)
-                .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.ultraThinMaterial)
-                }
-                .padding(.vertical, 10)
+                .authField()
             
             if case .signUp = viewModel.authKind {
                 TextField("Email", text: $viewModel.email)
                     .focused($isEmailFocused)
-                    .autocapitalization(.none)
-                    .autocorrectionDisabled(true)
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity)
-                    .padding(10)
-                    .background {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(.ultraThinMaterial)
-                    }
-                    .padding(.vertical, 10)
+                    .authField()
             }
         }
     }
@@ -211,4 +187,26 @@ extension ProfileView where Content == EmptyView {
         interfaceColor: .green
     )
     return SwiftPresso.View.profileView()
+}
+
+private extension View {
+    func authField() -> some View {
+        modifier(AuthTextFieldViewModifier())
+    }
+}
+
+private struct AuthTextFieldViewModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .autocapitalization(.none)
+            .autocorrectionDisabled(true)
+            .font(.subheadline)
+            .frame(maxWidth: .infinity)
+            .padding(10)
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(.ultraThinMaterial)
+            }
+            .padding(.vertical, 10)
+    }
 }

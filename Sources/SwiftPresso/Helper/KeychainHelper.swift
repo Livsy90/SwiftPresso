@@ -1,17 +1,17 @@
 import Foundation
 
-public final class KeychainHelper: Sendable {
+final class KeychainHelper: Sendable {
     
-    public enum ServiceKind: String {
+    enum ServiceKind: String {
         case token
         case user
     }
     
-    public static let shared = KeychainHelper()
+    static let shared = KeychainHelper()
     
     private init() {}
     
-    public func save(_ data: Data, service: ServiceKind, account: String) {
+    func save(_ data: Data, service: ServiceKind, account: String) {
         
         let query = [
             kSecValueData: data,
@@ -38,7 +38,7 @@ public final class KeychainHelper: Sendable {
         }
     }
     
-    public func read(service: ServiceKind, account: String) -> Data? {
+    func read(service: ServiceKind, account: String) -> Data? {
         
         let query = [
             kSecAttrService: service.rawValue,
@@ -53,7 +53,7 @@ public final class KeychainHelper: Sendable {
         return (result as? Data)
     }
     
-    public func delete(service: ServiceKind, account: String) {
+    func delete(service: ServiceKind, account: String) {
         
         let query = [
             kSecAttrService: service.rawValue,
@@ -66,7 +66,7 @@ public final class KeychainHelper: Sendable {
     }
 }
 
-public extension KeychainHelper {
+extension KeychainHelper {
     
     func save<T>(_ item: T, service: ServiceKind, account: String) where T: Codable {
         

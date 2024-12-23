@@ -97,7 +97,7 @@ final class ProfileViewModel {
             withAnimation {
                 isLoading = false
             }
-            authKind = .signIn
+            setDefaultAuthKind()
         }
     }
     
@@ -126,7 +126,7 @@ final class ProfileViewModel {
             withAnimation {
                 isLoading = false
             }
-            authKind = .signIn
+            setDefaultAuthKind()
         }
     }
     
@@ -181,7 +181,9 @@ private extension ProfileViewModel {
     }
     
     func validate() -> Bool {
-        !username.isEmpty && !password.isEmpty && isValidEmail(email)
+        !username.isEmpty &&
+        !password.isEmpty &&
+        authKind == .signUp ? isValidEmail(email) : true
     }
     
     func isValidEmail(_ email: String) -> Bool {
@@ -189,6 +191,12 @@ private extension ProfileViewModel {
 
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: email)
+    }
+    
+    func setDefaultAuthKind() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
+            authKind = .signIn
+        }
     }
     
 }
