@@ -162,7 +162,7 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
             ShimmerPlaceholder(backgroundColor: .clear)
         },
         contentUnavailableView: {
-            ContentUnavailableView("Not Available", image: "exclamationmark.triangle")
+            ContentUnavailableView("Not Available", systemImage: "exclamationmark.triangle")
         }
     )
     .environment(Router())
