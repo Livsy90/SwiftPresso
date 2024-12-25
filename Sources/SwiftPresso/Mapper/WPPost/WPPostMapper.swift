@@ -2,6 +2,10 @@ import Foundation
 
 struct WPPostMapper: WPPostMapperProtocol {
     
+    private enum ClassListOption: String {
+        case password = "post-password-required"
+    }
+    
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
@@ -19,7 +23,8 @@ struct WPPostMapper: WPPostMapperProtocol {
             link: URL(string: wpPost.link),
             content: wpPost.content.rendered,
             author: wpPost.author,
-            tags: wpPost.tags ?? []
+            tags: wpPost.tags ?? [],
+            isPasswordProtected: wpPost.classList?.contains(ClassListOption.password.rawValue) ?? false
         )
     }
     

@@ -1,5 +1,6 @@
 enum Endpoint {
     case posts
+    case post(Int)
     case categories
     case tags
     case pages
@@ -27,6 +28,8 @@ extension Endpoint {
         switch self {
         case .posts:
             "posts"
+        case .post(let id):
+            "posts/\(id)"
         case .categories:
             "categories"
         case .tags:

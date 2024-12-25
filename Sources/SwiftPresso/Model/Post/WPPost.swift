@@ -66,6 +66,7 @@ public struct WPPost: Codable, Sendable {
     public let format: String?
     public let categories: [Int]?
     public let tags: [Int]?
+    public let classList: [String]?
     public let links: WPLinks?
     public var embedded: WPEmbeddedPost?
     
@@ -78,6 +79,7 @@ public struct WPPost: Codable, Sendable {
         case pingStatus = "ping_status"
         case links = "_links"
         case embedded = "_embedded"
+        case classList = "class_list"
     }
 }
 

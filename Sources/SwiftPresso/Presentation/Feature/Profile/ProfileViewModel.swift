@@ -41,10 +41,8 @@ final class ProfileViewModel {
         validate()
     }
     
-    @ObservationIgnored
-    private var authProvider: some AuthProviderProtocol = SwiftPresso.Provider.authProvider()
-    @ObservationIgnored
-    private var userProvider: some UserProviderProtocol = SwiftPresso.Provider.userProvider()
+    private let authProvider: some AuthProviderProtocol = SwiftPresso.Provider.authProvider()
+    private let userProvider: some UserProviderProtocol = SwiftPresso.Provider.userProvider()
     
     private var user: UserInfo? {
         guard let data = KeychainHelper.shared.read(

@@ -2,6 +2,7 @@ import Observation
 import SwiftUI
 
 @Observable
+@MainActor
 final class PostViewModel {
     
     private enum Constants {
@@ -16,54 +17,69 @@ final class PostViewModel {
     var featuredImageURL: URL?
     var title: String
     var date: Date?
+    var error: Error?
     
-    @ObservationIgnored
-    private var mapper: some HTMLMapperProtocol = SwiftPresso.Mapper.htmlMapper()
+    private let mapper: some HTMLMapperProtocol = SwiftPresso.Mapper.htmlMapper()
+    private let postProvider: some PostProviderProtocol = SwiftPresso.Provider.postProvider()
     
-    @ObservationIgnored
-    private var postProvider: some PostProviderProtocol = SwiftPresso.Provider.postProvider()
-    
-    private let htmlString: String
+    private var htmlString: String
     private let width: CGFloat
+    
+    private let isPasswordProtected: Bool
+    private let postID: Int
     
     init(post: PostModel, width: CGFloat) {
         title = post.title
         date = post.date
         url = post.link
         featuredImageURL = post.imgURL
+        isPasswordProtected = post.isPasswordProtected
+        postID = post.id
         htmlString = post.content
         self.width = width
     }
     
-    @MainActor
-    func onAppear() {
-        Task {
-            async let attributedString = mapper.attributedStringFrom(
-                htmlText: htmlString,
-                color: UIColor(SwiftPresso.Configuration.UI.textColor),
-                fontSize: SwiftPresso.Configuration.UI.postBodyFont.pointSize,
-                width: width - Constants.padding,
-                isHandleYouTubeVideos: SwiftPresso.Configuration.UI.isParseHTMLWithYouTubePreviews
-            )
-            
-            self.attributedString = await NSAttributedString(attributedString)
-            isInitialLoading = false
-            withAnimation {
-                isShowContent = true
-            }
+    func onAppear() async {
+        guard isPasswordProtected else {
+            await composeContent()
+            return
+        }
+        do {
+            let post = try await postProvider.getPost(id: postID, password: Preferences.contentPassword)
+            htmlString = post.content
+            featuredImageURL = post.imgURL
+            await composeContent()
+        } catch {
+            self.error = error
         }
     }
     
-    @MainActor
     func post(with id: Int) async throws -> PostModel {
         defer {
             isLoading = false
         }
         isLoading = true
-        do {
-            return try await postProvider.getPost(id: id)
-        } catch {
-            throw error
+        
+        return try await postProvider.getPost(id: id, password: Preferences.contentPassword)
+    }
+    
+}
+
+private extension PostViewModel {
+    
+    func composeContent() async {
+        async let attributedString = mapper.attributedStringFrom(
+            htmlText: htmlString,
+            color: UIColor(SwiftPresso.Configuration.UI.textColor),
+            fontSize: SwiftPresso.Configuration.UI.postBodyFont.pointSize,
+            width: width - Constants.padding,
+            isHandleYouTubeVideos: SwiftPresso.Configuration.UI.isParseHTMLWithYouTubePreviews
+        )
+        
+        self.attributedString = await NSAttributedString(attributedString)
+        isInitialLoading = false
+        withAnimation {
+            isShowContent = true
         }
     }
     

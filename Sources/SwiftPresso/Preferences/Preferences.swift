@@ -32,6 +32,10 @@ public final class Preferences: Sendable {
         self.configuration = configuration
     }
     
+    func configureContentPassword(_ password: String) {
+        configuration.contentPassword = password
+    }
+    
 }
 
 extension Preferences {
@@ -67,6 +71,7 @@ extension Preferences {
         let menuTextColor: Color
         let isParseHTMLWithYouTubePreviews: Bool
         let keychainKey: String
+        var contentPassword: String
         
         init(
             host: String,
@@ -97,7 +102,8 @@ extension Preferences {
             isParseHTMLWithYouTubePreviews: Bool,
             isExcludeWebHeaderAndFooter: Bool,
             isMenuExpanded: Bool,
-            keychainKey: String
+            keychainKey: String,
+            contentPassword: String
         ) {
             self.host = host
             self.backgroundColor = backgroundColor
@@ -128,6 +134,7 @@ extension Preferences {
             self.postTitleFont = postTitleFont
             self.isShowFeaturedImage = isShowFeaturedImage
             self.keychainKey = keychainKey
+            self.contentPassword = contentPassword
         }
     }
     
@@ -164,7 +171,8 @@ extension Preferences.Configuration {
         isParseHTMLWithYouTubePreviews: true,
         isExcludeWebHeaderAndFooter: true,
         isMenuExpanded: true,
-        keychainKey: "SwiftPresso"
+        keychainKey: "SwiftPresso",
+        contentPassword: ""
     )
     
 }

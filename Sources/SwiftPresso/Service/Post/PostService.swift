@@ -15,8 +15,8 @@ struct PostService {
 
 extension PostService: PostServiceProtocol {
     
-    func requestPost(id: Int) async throws -> WPPost {
-        let request: Request<WPPost> = configurator.postRequest(id: id)
+    func requestPost(id: Int, password: String?) async throws -> WPPost {
+        let request: Request<WPPost> = configurator.postRequest(id: id, password: password)
         return try await networkClient.send(request).value
     }
     

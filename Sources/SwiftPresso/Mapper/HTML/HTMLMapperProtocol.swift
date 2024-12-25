@@ -1,6 +1,6 @@
 import SwiftUI
 
-public protocol HTMLMapperProtocol {
+public protocol HTMLMapperProtocol: Sendable {
     
     /// Create an ``NSMutableAttributedString`` value from an HTML string.
     /// - Parameters:

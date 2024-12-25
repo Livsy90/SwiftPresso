@@ -10,6 +10,7 @@ public struct PostModel: Sendable {
     public let content: String
     public let author: Int
     public let tags: [Int]
+    public let isPasswordProtected: Bool
 }
 
 extension PostModel: Hashable {

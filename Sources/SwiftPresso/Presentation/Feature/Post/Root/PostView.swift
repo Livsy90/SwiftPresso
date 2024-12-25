@@ -103,7 +103,9 @@ struct PostView<Placeholder: View>: View {
                 .ignoresSafeArea()
         }
         .onAppear {
-            viewModel.onAppear()
+            Task {
+                await viewModel.onAppear()
+            }
         }
         .onChange(of: nextPostID) { _, newValue in
             guard let newValue else { return }
@@ -133,7 +135,8 @@ struct PostView<Placeholder: View>: View {
         link: URL(string: "https://livsycode.com/"),
         content: text,
         author: 0,
-        tags: []
+        tags: [],
+        isPasswordProtected: false
     )
     
     return PostView(

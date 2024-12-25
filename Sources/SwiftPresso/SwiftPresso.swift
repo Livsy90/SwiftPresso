@@ -62,7 +62,8 @@ public enum SwiftPresso {
         isParseHTMLWithYouTubePreviews: Bool = true,
         isExcludeWebHeaderAndFooter: Bool = true,
         isMenuExpanded: Bool = true,
-        keychainKey: String = "SwiftPresso"
+        keychainKey: String = "SwiftPresso",
+        contentPassword: String = ""
     ) {
         
         Preferences.shared.configure(with:
@@ -95,9 +96,14 @@ public enum SwiftPresso {
                     isParseHTMLWithYouTubePreviews: isParseHTMLWithYouTubePreviews,
                     isExcludeWebHeaderAndFooter: isExcludeWebHeaderAndFooter,
                     isMenuExpanded: isMenuExpanded,
-                    keychainKey: keychainKey
+                    keychainKey: keychainKey,
+                    contentPassword: contentPassword
                 )
         )
+    }
+    
+    func configureContentPassword(_ password: String?) {
+        Preferences.shared.configureContentPassword(password ?? "")
     }
     
 }

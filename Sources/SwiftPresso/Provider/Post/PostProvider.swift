@@ -8,9 +8,9 @@ struct PostProvider: PostProviderProtocol {
         self.mapper = mapper
     }
     
-    func getPost(id: Int) async throws -> PostModel {
+    func getPost(id: Int, password: String?) async throws -> PostModel {
         do {
-            let post = try await service.requestPost(id: id)
+            let post = try await service.requestPost(id: id, password: password)
             let mapped = mapper.mapPost(post)
             return mapped
         } catch {
@@ -18,9 +18,9 @@ struct PostProvider: PostProviderProtocol {
         }
     }
     
-    func getRawPost(id: Int) async throws -> WPPost {
+    func getRawPost(id: Int, password: String?) async throws -> WPPost {
         do {
-            return try await service.requestPost(id: id)
+            return try await service.requestPost(id: id, password: password)
         } catch {
             throw error
         }

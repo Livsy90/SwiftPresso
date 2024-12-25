@@ -1,4 +1,4 @@
 public protocol PostProviderProtocol: Sendable {
-    func getPost(id: Int) async throws -> PostModel
-    func getRawPost(id: Int) async throws -> WPPost
+    func getPost(id: Int, password: String?) async throws -> PostModel
+    func getRawPost(id: Int, password: String?) async throws -> WPPost
 }
