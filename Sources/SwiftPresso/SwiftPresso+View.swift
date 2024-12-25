@@ -7,14 +7,43 @@ public extension SwiftPresso {
         
         @MainActor
         public static func postList() -> some SwiftUI.View {
-            PostListCoordinator(placeholder: nil)
+            PostListCoordinator {
+                ShimmerPlaceholder(backgroundColor: Configuration.UI.backgroundColor)
+            } postContentUnavailableView: {
+                ContentUnavailableView("Not Available", image: "exclamationmark.triangle")
+            }
+
         }
         
         @MainActor
         public static func postList<Placeholder: SwiftUI.View>(
             placeholder: @escaping () -> Placeholder
         ) -> some SwiftUI.View {
-            PostListCoordinator(placeholder: placeholder)
+            PostListCoordinator(placeholder: placeholder) {
+                ContentUnavailableView("Not Available", image: "exclamationmark.triangle")
+            }
+        }
+        
+        @MainActor
+        public static func postList<Placeholder: SwiftUI.View, ContentUnavailable: SwiftUI.View>(
+            placeholder: @escaping () -> Placeholder,
+            postContentUnavailableView: @escaping () -> ContentUnavailable
+        ) -> some SwiftUI.View {
+            PostListCoordinator(
+                placeholder: placeholder,
+                postContentUnavailableView: postContentUnavailableView
+            )
+        }
+        
+        @MainActor
+        public static func postList<ContentUnavailable: SwiftUI.View>(
+            postContentUnavailableView: @escaping () -> ContentUnavailable
+        ) -> some SwiftUI.View {
+            PostListCoordinator {
+                ShimmerPlaceholder(backgroundColor: Configuration.UI.backgroundColor)
+            } postContentUnavailableView: {
+                postContentUnavailableView()
+            }
         }
         
         @MainActor

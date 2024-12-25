@@ -1,7 +1,7 @@
 import SwiftUI
 import ApricotNavigation
 
-struct PostView<Placeholder: View>: View {
+struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     
     @State var viewModel: PostViewModel
     @Binding var tagName: String?
@@ -12,10 +12,12 @@ struct PostView<Placeholder: View>: View {
     let titleFont: Font
     let isShowFeaturedImage: Bool
     let placeholder: () -> Placeholder
+    let contentUnavailableView: () -> ContentUnavailable
     
     @Environment(Router.self) private var router
     @State private var nextPostID: Int?
     @State private var alertMessage: String?
+    @State private var isUnavailable: Bool = false
     
     var body: some View {
         ScrollView {
@@ -65,21 +67,28 @@ struct PostView<Placeholder: View>: View {
                 .opacity(viewModel.isShowContent ? 1 : 0)
             }
             
-            TextView(
-                "", 
-                postID: $nextPostID,
-                tagName: $tagName,
-                categoryName: $categoryName,
-                attributedString: $viewModel.attributedString,
-                shouldEditInRange: nil,
-                onEditingChanged: nil,
-                onCommit: nil
-            )
-            .opacity(viewModel.isShowContent ? 1 : 0)
-            .padding(.horizontal)
+            if isUnavailable {
+                contentUnavailableView()
+            } else {
+                TextView(
+                    "",
+                    postID: $nextPostID,
+                    tagName: $tagName,
+                    categoryName: $categoryName,
+                    attributedString: $viewModel.attributedString,
+                    shouldEditInRange: nil,
+                    onEditingChanged: nil,
+                    onCommit: nil
+                )
+                .opacity(viewModel.isShowContent ? 1 : 0)
+                .padding(.horizontal)
+            }
         }
         .alert(isPresented: $alertMessage.boolValue()) {
             Alert(title: Text(alertMessage ?? ""))
+        }
+        .alert(isPresented: $viewModel.error.boolValue()) {
+            Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
         }
         .toolbarBackground(backgroundColor, for: .navigationBar)
         .toolbar {
@@ -104,7 +113,9 @@ struct PostView<Placeholder: View>: View {
         }
         .onAppear {
             Task {
-                await viewModel.onAppear()
+                await viewModel.onAppear {
+                    isUnavailable = true
+                }
             }
         }
         .onChange(of: nextPostID) { _, newValue in
@@ -149,6 +160,9 @@ struct PostView<Placeholder: View>: View {
         isShowFeaturedImage: SwiftPresso.Configuration.UI.isShowFeaturedImage,
         placeholder: {
             ShimmerPlaceholder(backgroundColor: .clear)
+        },
+        contentUnavailableView: {
+            ContentUnavailableView("Not Available", image: "exclamationmark.triangle")
         }
     )
     .environment(Router())

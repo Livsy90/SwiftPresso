@@ -5,19 +5,17 @@ enum Destination: Hashable {
     case postDetails(post: PostModel)
 }
 
-struct PostListCoordinator<Placeholder: View>: View {
+struct PostListCoordinator<Placeholder: View, ContentUnavailable: View>: View {
     
     typealias Configuration = SwiftPresso.Configuration
     
-    private let placeholder: (() -> Placeholder)?
+    let placeholder: (() -> Placeholder)
+    let postContentUnavailableView: (() -> ContentUnavailable)
+    
     @State private var router: Router = .init()
     @State private var size: CGSize = .zero
     @State private var tagName: String? = nil
     @State private var categoryName: String? = nil
-    
-    init(placeholder: (() -> Placeholder)?) {
-        self.placeholder = placeholder
-    }
     
     var body: some View {
         NavigationStack(path: $router.navigationPath) {
@@ -51,14 +49,6 @@ struct PostListCoordinator<Placeholder: View>: View {
     
 }
 
-extension PostListCoordinator where Placeholder == EmptyView {
-    
-    init(placeholder: (() -> Placeholder)?) {
-        self.placeholder = placeholder
-    }
-    
-}
-
 private extension PostListCoordinator {
     
     func postListView() -> some View {
@@ -82,7 +72,7 @@ private extension PostListCoordinator {
             tagMenuTitle: Configuration.UI.tagMenuTitle,
             categoryMenuTitle: Configuration.UI.categoryMenuTitle
         ) {
-            placeholderView()
+            placeholder()
         }
     }
     
@@ -94,19 +84,14 @@ private extension PostListCoordinator {
             backgroundColor: Configuration.UI.backgroundColor,
             textColor: Configuration.UI.textColor,
             titleFont: Configuration.UI.postTitleFont,
-            isShowFeaturedImage: Configuration.UI.isShowFeaturedImage
-        ) {
-            placeholderView()
-        }
-    }
-    
-    @ViewBuilder
-    func placeholderView() -> some View {
-        if let placeholder {
-            placeholder()
-        } else {
-            ShimmerPlaceholder(backgroundColor: Configuration.UI.backgroundColor)
-        }
+            isShowFeaturedImage: Configuration.UI.isShowFeaturedImage,
+            placeholder: {
+                placeholder()
+            },
+            contentUnavailableView: {
+                postContentUnavailableView()
+            }
+        )
     }
     
 }

@@ -39,11 +39,17 @@ final class PostViewModel {
         self.width = width
     }
     
-    func onAppear() async {
+    func onAppear(_ onNotAvailable: @escaping () -> Void) async {
         guard isPasswordProtected else {
             await composeContent()
             return
         }
+        
+        guard !Preferences.contentPassword.isEmpty else {
+            onNotAvailable()
+            return
+        }
+        
         do {
             let post = try await postProvider.getPost(id: postID, password: Preferences.contentPassword)
             htmlString = post.content
