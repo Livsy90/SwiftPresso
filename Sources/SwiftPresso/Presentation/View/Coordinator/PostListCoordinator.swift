@@ -24,6 +24,7 @@ struct PostListCoordinator<Placeholder: View, ContentUnavailable: View>: View {
                     switch destination {
                     case .postDetails(let post):
                         postView(post)
+                            .toolbar(.hidden, for: .tabBar)
                     }
                 }
         }
