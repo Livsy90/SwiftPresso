@@ -47,6 +47,7 @@ final class PostViewModel {
         
         guard !Preferences.contentPassword.isEmpty else {
             onNotAvailable()
+            showContent()
             return
         }
         
@@ -83,6 +84,10 @@ private extension PostViewModel {
         )
         
         self.attributedString = await NSAttributedString(attributedString)
+        showContent()
+    }
+    
+    func showContent() {
         isInitialLoading = false
         withAnimation {
             isShowContent = true
