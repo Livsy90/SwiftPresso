@@ -35,7 +35,14 @@ public struct ProfileView<Content: View>: View {
                     Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
                 }
                 .alert("Are you sure you want to delete your account?", isPresented: $isDeleteAlertPresented, actions: {
+                    Button("Yes", role: .destructive) {
+                        viewModel.onDelete()
+                        isDeleteAlertPresented = false
+                    }
                     
+                    Button("Cancel", role: .cancel) {
+                        isDeleteAlertPresented = false
+                    }
                 })
                 .alert("Are you sure you want to sign out?", isPresented: $isSignOutAlertPresented, actions: {
                     Button("Yes") {
