@@ -56,8 +56,9 @@ public struct ProfileView<Content: View>: View {
                             }
                         }
                     }
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
+                    ToolbarItem(placement: .topBarLeading) {
+                        if viewModel.mode == .profile
+                            Button {
                             isMoreMenuPresented.toggle()
                         } label: {
                             Image(systemName: "ellipsis")
@@ -70,8 +71,9 @@ public struct ProfileView<Content: View>: View {
                         }
                     }
                 }
-                
-                Rectangle()
+            }
+            
+            Rectangle()
                     .fill(Color.black.opacity(0.2))
                     .ignoresSafeArea()
                     .overlay {
