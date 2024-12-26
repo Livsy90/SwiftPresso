@@ -15,25 +15,30 @@ public struct ProfileView<Content: View>: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                ScrollView {
-                    ZStack {
-                        authView
-                            .opacity(viewModel.mode == .auth ? 1 : 0)
-                        profileView
-                            .opacity(viewModel.mode == .profile ? 1 : 0)
-                    }
-                    
-                    if viewModel.mode == .profile {
-                        bottomContent()
-                        
-                        Spacer()
-                        
-                        Button("Delete Account", role: .destructive) {
-                            isDeleteAlertPresented = true
+                GeometryReader { proxy in
+                    ScrollView {
+                        VStack {
+                            ZStack {
+                                authView
+                                    .opacity(viewModel.mode == .auth ? 1 : 0)
+                                profileView
+                                    .opacity(viewModel.mode == .profile ? 1 : 0)
+                            }
+                            
+                            if viewModel.mode == .profile {
+                                bottomContent()
+                                
+                                Spacer()
+                                
+                                Button("Delete Account", role: .destructive) {
+                                    isDeleteAlertPresented = true
+                                }
+                                .padding()
+                                .padding(.bottom, 80)
+                                .frame(maxHeight: .infinity, alignment: .bottom)
+                            }
                         }
-                        .padding()
-                        .padding(.bottom, 80)
-                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .frame(width: proxy.size.width, height: proxy.size.width)
                     }
                 }
                 .alert(isPresented: $viewModel.error.boolValue()) {
@@ -63,7 +68,7 @@ public struct ProfileView<Content: View>: View {
                 }
                 
                 Rectangle()
-                    .fill(.ultraThinMaterial)
+                    .fill(Color.black.opacity(0.2))
                     .ignoresSafeArea()
                     .overlay {
                         ProgressView()
