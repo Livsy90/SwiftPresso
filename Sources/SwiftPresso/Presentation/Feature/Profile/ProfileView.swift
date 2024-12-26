@@ -8,6 +8,7 @@ public struct ProfileView<Content: View>: View {
     let bottomContent: () -> Content
     
     @State private var isDeleteAlertPresented = false
+    @State private var isSignOutAlertPresented = false
     @State private var isMoreMenuPresented = false
     @FocusState private var isUsernameFocused
     @FocusState private var isPasswordFocused
@@ -33,15 +34,15 @@ public struct ProfileView<Content: View>: View {
                 .alert(isPresented: $viewModel.error.boolValue()) {
                     Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
                 }
-                .alert("Are you sure?", isPresented: $isDeleteAlertPresented, actions: {
-                    Button("Yes", role: .destructive) {
-                        viewModel.onDelete()
-                        isDeleteAlertPresented = false
+                .alert("Are you sure you want to delete your account?", isPresented: $isDeleteAlertPresented, actions: {
+                    
+                })
+                .alert("Are you sure you want to sign out?", isPresented: $isSignOutAlertPresented, actions: {
+                    Button("Yes") {
+                        viewModel.onExit()
                     }
                     
-                    Button("Cancel", role: .cancel) {
-                        isDeleteAlertPresented = false
-                    }
+                    Button("Cancel", role: .cancel) {}
                 })
                 .keyboardDoneButton()
                 .navigationTitle(viewModel.mode.title)
@@ -50,7 +51,7 @@ public struct ProfileView<Content: View>: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         if viewModel.mode == .profile {
                             Button {
-                                viewModel.onExit()
+                                isSignOutAlertPresented.toggle()
                             } label: {
                                 Image(systemName: "rectangle.portrait.and.arrow.right")
                             }
