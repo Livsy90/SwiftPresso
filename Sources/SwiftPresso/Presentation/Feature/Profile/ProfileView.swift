@@ -57,23 +57,23 @@ public struct ProfileView<Content: View>: View {
                         }
                     }
                     ToolbarItem(placement: .topBarLeading) {
-                        if viewModel.mode == .profile
+                        if viewModel.mode == .profile {
                             Button {
-                            isMoreMenuPresented.toggle()
-                        } label: {
-                            Image(systemName: "ellipsis")
-                        }
-                        .confirmationDialog("", isPresented: $isMoreMenuPresented, titleVisibility: .hidden) {
-                            Button("Delete Account", role: .destructive) {
                                 isMoreMenuPresented.toggle()
-                                isDeleteAlertPresented = true
+                            } label: {
+                                Image(systemName: "ellipsis")
+                            }
+                            .confirmationDialog("", isPresented: $isMoreMenuPresented, titleVisibility: .hidden) {
+                                Button("Delete Account", role: .destructive) {
+                                    isMoreMenuPresented.toggle()
+                                    isDeleteAlertPresented = true
+                                }
                             }
                         }
                     }
                 }
-            }
-            
-            Rectangle()
+                
+                Rectangle()
                     .fill(Color.black.opacity(0.2))
                     .ignoresSafeArea()
                     .overlay {
