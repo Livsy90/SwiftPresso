@@ -8,77 +8,81 @@ public struct ProfileView<Content: View>: View {
     let bottomContent: () -> Content
     
     @State private var isDeleteAlertPresented = false
+    @State private var isMoreMenuPresented = false
     @FocusState private var isUsernameFocused
     @FocusState private var isPasswordFocused
     @FocusState private var isEmailFocused
     
     public var body: some View {
-        GeometryReader { proxy in
-            NavigationStack {
-                ZStack {
-                    ScrollView {
-                        VStack {
-                            ZStack {
-                                authView
-                                    .opacity(viewModel.mode == .auth ? 1 : 0)
-                                profileView
-                                    .opacity(viewModel.mode == .profile ? 1 : 0)
-                            }
-                            
-                            if viewModel.mode == .profile {
-                                bottomContent()
-                                
-                                Spacer()
-                                
-                                Button("Delete Account", role: .destructive) {
-                                    isDeleteAlertPresented = true
-                                }
-                                .padding()
-                                .padding(.bottom, 80)
-                                .frame(maxHeight: .infinity, alignment: .bottom)
-                            }
-                        }
-                        .frame(width: proxy.size.width, height: proxy.size.width)
-                    }
-                    .alert(isPresented: $viewModel.error.boolValue()) {
-                        Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
-                    }
-                    .alert("Are you sure?", isPresented: $isDeleteAlertPresented, actions: {
-                        Button("Yes", role: .destructive) {
-                            viewModel.onDelete()
-                            isDeleteAlertPresented = false
+        NavigationStack {
+            ZStack {
+                ScrollView {
+                    VStack {
+                        ZStack {
+                            authView
+                                .opacity(viewModel.mode == .auth ? 1 : 0)
+                            profileView
+                                .opacity(viewModel.mode == .profile ? 1 : 0)
                         }
                         
-                        Button("Cancel", role: .cancel) {
-                            isDeleteAlertPresented = false
+                        if viewModel.mode == .profile {
+                            bottomContent()
                         }
-                    })
-                    .keyboardDoneButton()
-                    .navigationTitle(viewModel.mode.title)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            if viewModel.mode == .profile {
-                                Button("Exit") {
-                                    viewModel.onExit()
-                                }
+                    }
+                }
+                .alert(isPresented: $viewModel.error.boolValue()) {
+                    Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
+                }
+                .alert("Are you sure?", isPresented: $isDeleteAlertPresented, actions: {
+                    Button("Yes", role: .destructive) {
+                        viewModel.onDelete()
+                        isDeleteAlertPresented = false
+                    }
+                    
+                    Button("Cancel", role: .cancel) {
+                        isDeleteAlertPresented = false
+                    }
+                })
+                .keyboardDoneButton()
+                .navigationTitle(viewModel.mode.title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if viewModel.mode == .profile {
+                            Button {
+                                viewModel.onExit()
+                            } label: {
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
                             }
                         }
                     }
-                    
-                    Rectangle()
-                        .fill(Color.black.opacity(0.2))
-                        .ignoresSafeArea()
-                        .overlay {
-                            ProgressView()
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isMoreMenuPresented.toggle()
+                        } label: {
+                            Image(systemName: "ellipsis")
                         }
-                        .opacity(viewModel.isLoading ? 1 : 0)
+                        .confirmationDialog("", isPresented: $isMoreMenuPresented, titleVisibility: .hidden) {
+                            Button("Delete Account", role: .destructive) {
+                                isMoreMenuPresented.toggle()
+                                isDeleteAlertPresented = true
+                            }
+                        }
+                    }
                 }
-                .background {
-                    Rectangle()
-                        .fill(Preferences.backgroundColor)
-                        .ignoresSafeArea()
-                }
+                
+                Rectangle()
+                    .fill(Color.black.opacity(0.2))
+                    .ignoresSafeArea()
+                    .overlay {
+                        ProgressView()
+                    }
+                    .opacity(viewModel.isLoading ? 1 : 0)
+            }
+            .background {
+                Rectangle()
+                    .fill(Preferences.backgroundColor)
+                    .ignoresSafeArea()
             }
         }
     }
