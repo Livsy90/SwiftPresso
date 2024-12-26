@@ -13,9 +13,9 @@ public struct ProfileView<Content: View>: View {
     @FocusState private var isEmailFocused
     
     public var body: some View {
-        NavigationStack {
-            ZStack {
-                GeometryReader { proxy in
+        GeometryReader { proxy in
+            NavigationStack {
+                ZStack {
                     ScrollView {
                         VStack {
                             ZStack {
@@ -40,45 +40,45 @@ public struct ProfileView<Content: View>: View {
                         }
                         .frame(width: proxy.size.width, height: proxy.size.width)
                     }
-                }
-                .alert(isPresented: $viewModel.error.boolValue()) {
-                    Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
-                }
-                .alert("Are you sure?", isPresented: $isDeleteAlertPresented, actions: {
-                    Button("Yes", role: .destructive) {
-                        viewModel.onDelete()
-                        isDeleteAlertPresented = false
+                    .alert(isPresented: $viewModel.error.boolValue()) {
+                        Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
                     }
-                    
-                    Button("Cancel", role: .cancel) {
-                        isDeleteAlertPresented = false
-                    }
-                })
-                .keyboardDoneButton()
-                .navigationTitle(viewModel.mode.title)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        if viewModel.mode == .profile {
-                            Button("Exit") {
-                                viewModel.onExit()
+                    .alert("Are you sure?", isPresented: $isDeleteAlertPresented, actions: {
+                        Button("Yes", role: .destructive) {
+                            viewModel.onDelete()
+                            isDeleteAlertPresented = false
+                        }
+                        
+                        Button("Cancel", role: .cancel) {
+                            isDeleteAlertPresented = false
+                        }
+                    })
+                    .keyboardDoneButton()
+                    .navigationTitle(viewModel.mode.title)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            if viewModel.mode == .profile {
+                                Button("Exit") {
+                                    viewModel.onExit()
+                                }
                             }
                         }
                     }
+                    
+                    Rectangle()
+                        .fill(Color.black.opacity(0.2))
+                        .ignoresSafeArea()
+                        .overlay {
+                            ProgressView()
+                        }
+                        .opacity(viewModel.isLoading ? 1 : 0)
                 }
-                
-                Rectangle()
-                    .fill(Color.black.opacity(0.2))
-                    .ignoresSafeArea()
-                    .overlay {
-                        ProgressView()
-                    }
-                    .opacity(viewModel.isLoading ? 1 : 0)
-            }
-            .background {
-                Rectangle()
-                    .fill(Preferences.backgroundColor)
-                    .ignoresSafeArea()
+                .background {
+                    Rectangle()
+                        .fill(Preferences.backgroundColor)
+                        .ignoresSafeArea()
+                }
             }
         }
     }
