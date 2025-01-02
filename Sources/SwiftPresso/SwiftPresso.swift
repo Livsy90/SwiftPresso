@@ -63,7 +63,9 @@ public enum SwiftPresso {
         isExcludeWebHeaderAndFooter: Bool = true,
         isMenuExpanded: Bool = true,
         keychainKey: String = "SwiftPresso",
-        contentPassword: String = ""
+        contentPassword: String = "",
+        appName: String = "",
+        email: String = ""
     ) {
         
         Preferences.shared.configure(with:
@@ -97,7 +99,9 @@ public enum SwiftPresso {
                     isExcludeWebHeaderAndFooter: isExcludeWebHeaderAndFooter,
                     isMenuExpanded: isMenuExpanded,
                     keychainKey: keychainKey,
-                    contentPassword: contentPassword
+                    contentPassword: contentPassword,
+                    appName: appName,
+                    email: email
                 )
         )
     }

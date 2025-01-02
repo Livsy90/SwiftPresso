@@ -10,6 +10,7 @@ public struct ProfileView<Content: View>: View {
     @State private var isDeleteAlertPresented = false
     @State private var isSignOutAlertPresented = false
     @State private var isMoreMenuPresented = false
+    @State private var isFeedbackPresented = false
     @FocusState private var isUsernameFocused
     @FocusState private var isPasswordFocused
     @FocusState private var isEmailFocused
@@ -51,6 +52,9 @@ public struct ProfileView<Content: View>: View {
                     
                     Button("Cancel", role: .cancel) {}
                 })
+                .fullScreenCover(isPresented: $isFeedbackPresented) {
+                    feedbackView
+                }
                 .keyboardDoneButton()
                 .navigationTitle(viewModel.mode.title)
                 .navigationBarTitleDisplayMode(.inline)
@@ -72,6 +76,10 @@ public struct ProfileView<Content: View>: View {
                                 Image(systemName: "ellipsis")
                             }
                             .confirmationDialog("", isPresented: $isMoreMenuPresented, titleVisibility: .hidden) {
+                                Button("Feedback") {
+                                    isFeedbackPresented.toggle()
+                                }
+                                
                                 Button("Delete Account", role: .destructive) {
                                     isMoreMenuPresented.toggle()
                                     isDeleteAlertPresented = true
@@ -169,6 +177,32 @@ public struct ProfileView<Content: View>: View {
             Text(viewModel.username)
                 .font(.largeTitle)
                 .fontWeight(.bold)
+        }
+    }
+    
+    @ViewBuilder
+    var feedbackView: some View {
+        if MailComposeView.canSendMail {
+            MailComposeView(
+                subject: "Feedback \(Preferences.appName)",
+                toRecipients: [Preferences.email],
+                body: ""
+            )
+        } else {
+            NavigationStack {
+                ContentUnavailableView(
+                    "The Mail application is not configured.",
+                    systemImage: "exclamationmark.bubble",
+                    description: Text("")
+                )
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") {
+                            isFeedbackPresented = false
+                        }
+                    }
+                }
+            }
         }
     }
     

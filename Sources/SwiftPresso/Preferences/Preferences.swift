@@ -71,6 +71,8 @@ extension Preferences {
         let menuTextColor: Color
         let isParseHTMLWithYouTubePreviews: Bool
         let keychainKey: String
+        let appName: String
+        let email: String
         var contentPassword: String
         
         init(
@@ -103,7 +105,9 @@ extension Preferences {
             isExcludeWebHeaderAndFooter: Bool,
             isMenuExpanded: Bool,
             keychainKey: String,
-            contentPassword: String
+            contentPassword: String,
+            appName: String,
+            email: String
         ) {
             self.host = host
             self.backgroundColor = backgroundColor
@@ -135,6 +139,8 @@ extension Preferences {
             self.isShowFeaturedImage = isShowFeaturedImage
             self.keychainKey = keychainKey
             self.contentPassword = contentPassword
+            self.appName = appName
+            self.email = email
         }
     }
     
@@ -172,7 +178,9 @@ extension Preferences.Configuration {
         isExcludeWebHeaderAndFooter: true,
         isMenuExpanded: true,
         keychainKey: "SwiftPresso",
-        contentPassword: ""
+        contentPassword: "",
+        appName: "",
+        email: ""
     )
     
 }
