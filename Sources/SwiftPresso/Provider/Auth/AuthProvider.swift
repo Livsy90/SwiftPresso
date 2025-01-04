@@ -21,10 +21,11 @@ struct AuthProvider: AuthProviderProtocol {
             let username = SwiftPresso.UserData.login,
             let password = SwiftPresso.UserData.password
         else { return }
-        _ = try await service.login(
+        let response = try await service.login(
             username: username,
             password: password
         )
+        print(response)
     }
     
     func userInfo(token: String) async throws -> UserInfo {
