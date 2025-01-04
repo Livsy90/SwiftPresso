@@ -82,18 +82,15 @@ final class ProfileViewModel {
                 )
                 KeychainHelper.shared.save(
                     userResponse,
-                    service: .user,
-                    account: Preferences.keychainKey
+                    service: .user
                 )
                 KeychainHelper.shared.save(
                     username,
-                    service: .login,
-                    account: Preferences.keychainKey
+                    service: .login
                 )
                 KeychainHelper.shared.save(
                     password,
-                    service: .login,
-                    account: Preferences.keychainKey
+                    service: .password
                 )
                 withAnimation {
                     mode = .profile
@@ -121,8 +118,7 @@ final class ProfileViewModel {
                 )
                 KeychainHelper.shared.save(
                     userResponse,
-                    service: .user,
-                    account: Preferences.keychainKey
+                    service: .user
                 )
                 withAnimation {
                     mode = .profile
@@ -145,12 +141,10 @@ final class ProfileViewModel {
             mode = .auth
         }
         KeychainHelper.shared.delete(
-            service: .token,
-            account: Preferences.keychainKey
+            service: .token
         )
         KeychainHelper.shared.delete(
-            service: .user,
-            account: Preferences.keychainKey
+            service: .user
         )
     }
     
