@@ -5,13 +5,15 @@ final class KeychainHelper: Sendable {
     enum ServiceKind: String {
         case token
         case user
+        case login
+        case password
     }
     
     static let shared = KeychainHelper()
     
     private init() {}
     
-    func save(_ data: Data, service: ServiceKind, account: String) {
+    func save(_ data: Data, service: ServiceKind, account: String = Preferences.keychainKey) {
         
         let query = [
             kSecValueData: data,
@@ -38,7 +40,7 @@ final class KeychainHelper: Sendable {
         }
     }
     
-    func read(service: ServiceKind, account: String) -> Data? {
+    func read(service: ServiceKind, account: String = Preferences.keychainKey) -> Data? {
         
         let query = [
             kSecAttrService: service.rawValue,
@@ -53,7 +55,7 @@ final class KeychainHelper: Sendable {
         return (result as? Data)
     }
     
-    func delete(service: ServiceKind, account: String) {
+    func delete(service: ServiceKind, account: String = Preferences.keychainKey) {
         
         let query = [
             kSecAttrService: service.rawValue,
@@ -68,7 +70,7 @@ final class KeychainHelper: Sendable {
 
 extension KeychainHelper {
     
-    func save<T>(_ item: T, service: ServiceKind, account: String) where T: Codable {
+    func save<T>(_ item: T, service: ServiceKind, account: String = Preferences.keychainKey) where T: Codable {
         
         do {
             // Encode as JSON data and save in keychain
@@ -80,7 +82,7 @@ extension KeychainHelper {
         }
     }
     
-    func read<T>(service: ServiceKind, account: String, type: T.Type) -> T? where T: Codable {
+    func read<T>(service: ServiceKind, account: String = Preferences.keychainKey, type: T.Type) -> T? where T: Codable {
         
         // Read item data from keychain
         guard let data = read(service: service, account: account) else {

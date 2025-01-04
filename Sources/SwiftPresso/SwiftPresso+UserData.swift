@@ -24,6 +24,26 @@ public extension SwiftPresso {
             return get(Int.self, from: data)
         }
         
+        public static var login: String? {
+            guard let data = KeychainHelper.shared.read(
+                service: .login,
+                account: Preferences.keychainKey
+            ) else {
+                return nil
+            }
+            return get(String.self, from: data)
+        }
+        
+        public static var password: String? {
+            guard let data = KeychainHelper.shared.read(
+                service: .password,
+                account: Preferences.keychainKey
+            ) else {
+                return nil
+            }
+            return get(String.self, from: data)
+        }
+        
     }
     
 }

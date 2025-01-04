@@ -4,5 +4,7 @@ public protocol AuthProviderProtocol: Sendable {
         password: String
     ) async throws -> LoginResponse
     
+    func updateToken() async throws
+    
     func userInfo(token: String) async throws -> UserInfo
 }

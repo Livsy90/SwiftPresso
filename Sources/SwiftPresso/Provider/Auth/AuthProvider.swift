@@ -16,6 +16,17 @@ struct AuthProvider: AuthProviderProtocol {
         )
     }
     
+    func updateToken() async throws {
+        guard
+            let username = SwiftPresso.UserData.login,
+            let password = SwiftPresso.UserData.password
+        else { return }
+        _ = try await service.login(
+            username: username,
+            password: password
+        )
+    }
+    
     func userInfo(token: String) async throws -> UserInfo {
         try await service.userInfo(token: token)
     }

@@ -77,13 +77,22 @@ final class ProfileViewModel {
                     service: .token,
                     account: Preferences.keychainKey
                 )
-                
                 let userResponse = try await authProvider.userInfo(
                     token: loginResponse.token
                 )
                 KeychainHelper.shared.save(
                     userResponse,
                     service: .user,
+                    account: Preferences.keychainKey
+                )
+                KeychainHelper.shared.save(
+                    username,
+                    service: .login,
+                    account: Preferences.keychainKey
+                )
+                KeychainHelper.shared.save(
+                    password,
+                    service: .login,
                     account: Preferences.keychainKey
                 )
                 withAnimation {
