@@ -44,6 +44,7 @@ final class ProfileViewModel {
     private let authProvider: some AuthProviderProtocol = SwiftPresso.Provider.authProvider()
     private let userProvider: some UserProviderProtocol = SwiftPresso.Provider.userProvider()
     
+    private var isLoggedIn: Bool = false
     private var user: UserInfo? {
         guard let data = KeychainHelper.shared.read(
             service: .user,
@@ -60,6 +61,32 @@ final class ProfileViewModel {
     
     init() {
         configureMode()
+    }
+    
+    func updateTokenIfNeeded() async {
+        guard isLoggedIn else { return }
+        do {
+            let loginResponse = try await authProvider.login(
+                username: username,
+                password: password
+            )
+            KeychainHelper.shared.save(
+                loginResponse.token,
+                service: .token,
+                account: Preferences.keychainKey
+            )
+            
+            let userResponse = try await authProvider.userInfo(
+                token: loginResponse.token
+            )
+            KeychainHelper.shared.save(
+                userResponse,
+                service: .user,
+                account: Preferences.keychainKey
+            )
+        } catch {
+            self.error = error
+        }
     }
     
     func onSignIn() {
@@ -172,6 +199,7 @@ private extension ProfileViewModel {
     func configureMode() {
         if let user {
             username = user.name
+            isLoggedIn = true
             mode = .profile
         } else {
             mode = .auth

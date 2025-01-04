@@ -32,6 +32,9 @@ public struct ProfileView<Content: View>: View {
                         }
                     }
                 }
+                .task {
+                    await viewModel.updateTokenIfNeeded()
+                }
                 .alert(isPresented: $viewModel.error.boolValue()) {
                     Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
                 }
