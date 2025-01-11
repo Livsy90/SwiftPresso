@@ -146,8 +146,8 @@ struct PostListView<Placeholder: View>: View {
                 .fill(backgroundColor)
                 .edgesIgnoringSafeArea(.all)
         }
-        .refreshable {
-            viewModel.reload()
+        .refreshable { [weak viewModel] in
+            viewModel?.reload()
         }
         .navigationTitle(viewModel.mode.title)
         .navigationBarTitleDisplayMode(.inline)
