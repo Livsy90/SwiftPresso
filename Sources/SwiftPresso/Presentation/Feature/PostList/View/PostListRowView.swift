@@ -20,8 +20,33 @@ struct PostListRowView<Placeholder: View>: View {
             RoundedRectangle(cornerSize: .init(width: 16, height: 16), style: .continuous)
                 .fill(Preferences.accentColor)
                 .opacity(0.15)
-            rowBody
-                .padding()
+                .overlay {
+                    if post.isPasswordProtected {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Preferences.passwordProtectedIcon.image
+                                    .font(.footnote)
+                                    .tint(Preferences.accentColor)
+                                    .opacity(0.5)
+                                    .padding(8)
+                            }
+                            Spacer()
+                        }
+                    }
+                }
+            VStack {
+                rowBody
+                if let date = post.date {
+                    Text(date.formatted(date: .abbreviated, time: .omitted))
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Preferences.accentColor)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding()
         }
         .frame(maxWidth: .infinity)
         .frame(minHeight: 80)
@@ -49,6 +74,7 @@ struct PostListRowView<Placeholder: View>: View {
                     .font(font)
                     .fontWeight(.semibold)
                     .foregroundStyle(textColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }

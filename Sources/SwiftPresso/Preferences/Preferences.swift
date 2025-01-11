@@ -36,6 +36,10 @@ public final class Preferences: Sendable {
         configuration.contentPassword = password
     }
     
+    func configurePasswordIcon(_ icon: PasswordProtectedIcon) {
+        configuration.passwordProtectedIcon = icon
+    }
+    
 }
 
 extension Preferences {
@@ -74,6 +78,7 @@ extension Preferences {
         let appName: String
         let email: String
         var contentPassword: String
+        var passwordProtectedIcon: PasswordProtectedIcon
         
         init(
             host: String,
@@ -106,6 +111,7 @@ extension Preferences {
             isMenuExpanded: Bool,
             keychainKey: String,
             contentPassword: String,
+            passwordProtectedIcon: PasswordProtectedIcon,
             appName: String,
             email: String
         ) {
@@ -139,6 +145,7 @@ extension Preferences {
             self.isShowFeaturedImage = isShowFeaturedImage
             self.keychainKey = keychainKey
             self.contentPassword = contentPassword
+            self.passwordProtectedIcon = passwordProtectedIcon
             self.appName = appName
             self.email = email
         }
@@ -179,6 +186,7 @@ extension Preferences.Configuration {
         isMenuExpanded: true,
         keychainKey: "SwiftPresso",
         contentPassword: "",
+        passwordProtectedIcon: .lock,
         appName: "",
         email: ""
     )
@@ -194,6 +202,20 @@ extension Preferences {
         public init(username: String, password: String) {
             self.username = username
             self.password = password
+        }
+    }
+    
+}
+
+extension Preferences {
+    
+    public enum PasswordProtectedIcon: String, Sendable {
+        case lock = "lock.fill"
+        case openLock = "lock.open.fill"
+        case star = "star"
+        
+        var image: Image {
+            Image(systemName: rawValue)
         }
     }
     

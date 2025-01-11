@@ -64,6 +64,7 @@ public enum SwiftPresso {
         isMenuExpanded: Bool = true,
         keychainKey: String = "SwiftPresso",
         contentPassword: String = "",
+        passwordProtectedIcon: Preferences.PasswordProtectedIcon = .lock,
         appName: String = "",
         email: String = ""
     ) {
@@ -100,14 +101,19 @@ public enum SwiftPresso {
                     isMenuExpanded: isMenuExpanded,
                     keychainKey: keychainKey,
                     contentPassword: contentPassword,
+                    passwordProtectedIcon: passwordProtectedIcon,
                     appName: appName,
                     email: email
                 )
         )
     }
     
-    func configureContentPassword(_ password: String?) {
+    public func configureContentPassword(_ password: String?) {
         Preferences.shared.configureContentPassword(password ?? "")
+    }
+    
+    public func configurePasswordIcon(_ icon: Preferences.PasswordProtectedIcon) {
+        Preferences.shared.configurePasswordIcon(icon)
     }
     
 }

@@ -21,6 +21,7 @@ struct LinkView<Placeholder: View>: View {
                 .font(font)
                 .fontWeight(.semibold)
                 .foregroundStyle(textColor)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .webViewLinkRow(
             backgroundColor: webViewBackgroundColor,
