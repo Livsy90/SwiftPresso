@@ -16,6 +16,18 @@ struct PostListRowView<Placeholder: View>: View {
     @Environment(Router.self) private var router
     
     var body: some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(.ultraThinMaterial)
+            rowBody
+                .padding()
+        }
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: 80)
+    }
+    
+    @ViewBuilder
+    private var rowBody: some View {
         if isShowContentInWebView, let link = post.link {
             LinkView(
                 url: link,
@@ -28,13 +40,11 @@ struct PostListRowView<Placeholder: View>: View {
                 onCategory: onCategory,
                 placeholder: placeholder
             )
-            .padding(.vertical, 8)
         } else {
             Button {
                 router.navigate(to: Destination.postDetails(post: post))
             } label: {
                 Text(post.title)
-                    .padding(.vertical, 8)
                     .font(font)
                     .fontWeight(.semibold)
                     .foregroundStyle(textColor)

@@ -112,6 +112,7 @@ struct PostListView<Placeholder: View>: View {
                     }
                 )
                 .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
                 .onAppear {
                     viewModel.updateIfNeeded(id: post.id)
                 }
@@ -138,6 +139,7 @@ struct PostListView<Placeholder: View>: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .listStyle(.plain)
+        .listRowSpacing(18)
         .scrollContentBackground(.hidden)
         .background {
             Rectangle()
@@ -392,6 +394,9 @@ struct PostListView<Placeholder: View>: View {
 }
 
 #Preview {
-    SwiftPresso.configure(host: "livsycode.com")
+    SwiftPresso.configure(
+        host: "livsycode.com",
+        isShowContentInWebView: false
+    )
     return SwiftPresso.View.postList()
 }
