@@ -6,7 +6,7 @@ struct PostListRowView<Placeholder: View>: View {
     let post: PostModel
     let isShowContentInWebView: Bool
     let webViewBackgroundColor: Color
-    let interfaceColor: Color
+    let accentColor: Color
     let textColor: Color
     let font: Font
     let onTag: (String) -> Void
@@ -18,8 +18,8 @@ struct PostListRowView<Placeholder: View>: View {
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.gray)
-                .opacity(0.16)
+                .fill(Preferences.accentColor)
+                .opacity(0.15)
             rowBody
                 .padding()
         }
@@ -34,7 +34,7 @@ struct PostListRowView<Placeholder: View>: View {
                 url: link,
                 title: post.title,
                 webViewBackgroundColor: webViewBackgroundColor,
-                interfaceColor: interfaceColor,
+                accentColor: accentColor,
                 textColor: textColor,
                 font: font,
                 onTag: onTag,

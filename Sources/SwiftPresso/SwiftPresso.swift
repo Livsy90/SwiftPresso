@@ -13,7 +13,7 @@ public enum SwiftPresso {
     ///   - isShowContentInWebView: Using WKWebView as post view.
     ///   - isShowFeaturedImage: Post featured image visibility.
     ///   - backgroundColor: Post list and post view background color.
-    ///   - interfaceColor: Post list and post view interface color.
+    ///   - accentColor: Post list and post view interface color.
     ///   - textColor: Post list and post view text color.
     ///   - postListFont: Post list font.
     ///   - postBodyFont: Post body font.
@@ -46,7 +46,7 @@ public enum SwiftPresso {
         postBodyFont: UIFont = .systemFont(ofSize: 17),
         postTitleFont: Font = .largeTitle,
         backgroundColor: Color = Color(uiColor: .systemBackground),
-        interfaceColor: Color = .primary,
+        accentColor: Color = .primary,
         textColor: Color = .primary,
         menuBackgroundColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
@@ -84,7 +84,7 @@ public enum SwiftPresso {
                     menuBackgroundColor: menuBackgroundColor,
                     menuTextColor: menuTextColor,
                     backgroundColor: backgroundColor,
-                    interfaceColor: interfaceColor,
+                    accentColor: accentColor,
                     textColor: textColor,
                     homeIcon: homeIcon,
                     homeTitle: homeTitle,

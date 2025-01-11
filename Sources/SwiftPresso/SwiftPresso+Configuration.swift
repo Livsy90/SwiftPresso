@@ -43,7 +43,7 @@ public extension SwiftPresso {
             public static var postTitleFont: Font { Preferences.postTitleFont }
             
             /// Post list and post view interface color.
-            public static var interfaceColor: Color { Preferences.interfaceColor }
+            public static var accentColor: Color { Preferences.accentColor }
             
             /// Post list and post view text color.
             public static var textColor: Color { Preferences.textColor }

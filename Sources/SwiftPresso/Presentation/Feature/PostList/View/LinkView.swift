@@ -5,7 +5,7 @@ struct LinkView<Placeholder: View>: View {
     let url: URL
     let title: String
     let webViewBackgroundColor: Color
-    let interfaceColor: Color
+    let accentColor: Color
     let textColor: Color
     let font: Font
     
@@ -24,7 +24,7 @@ struct LinkView<Placeholder: View>: View {
         }
         .webViewLinkRow(
             backgroundColor: webViewBackgroundColor,
-            interfaceColor: interfaceColor,
+            accentColor: accentColor,
             onTag: onTag,
             onCategory: onCategory,
             placeholder: placeholder

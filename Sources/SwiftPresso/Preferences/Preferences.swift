@@ -56,7 +56,7 @@ extension Preferences {
         let isExcludeWebHeaderAndFooter: Bool
         let isMenuExpanded: Bool
         let backgroundColor: Color
-        let interfaceColor: Color
+        let accentColor: Color
         let textColor: Color
         let isShowPageMenu: Bool
         let isShowTagMenu: Bool
@@ -90,7 +90,7 @@ extension Preferences {
             menuBackgroundColor: Color,
             menuTextColor: Color,
             backgroundColor: Color,
-            interfaceColor: Color,
+            accentColor: Color,
             textColor: Color,
             homeIcon: Image,
             homeTitle: String,
@@ -111,7 +111,7 @@ extension Preferences {
         ) {
             self.host = host
             self.backgroundColor = backgroundColor
-            self.interfaceColor = interfaceColor
+            self.accentColor = accentColor
             self.textColor = textColor
             self.isShowPageMenu = isShowPageMenu
             self.isShowTagMenu = isShowTagMenu
@@ -163,7 +163,7 @@ extension Preferences.Configuration {
         menuBackgroundColor: .primary,
         menuTextColor: Color(uiColor: .systemBackground),
         backgroundColor: Color(uiColor: .systemBackground),
-        interfaceColor: .primary,
+        accentColor: .primary,
         textColor: .primary,
         homeIcon: Image(systemName: "house"),
         homeTitle: "Home",

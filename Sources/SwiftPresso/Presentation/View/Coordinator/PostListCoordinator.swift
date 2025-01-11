@@ -27,8 +27,8 @@ struct PostListCoordinator<Placeholder: View, ContentUnavailable: View>: View {
                     }
                 }
         }
-        .accentColor(Configuration.UI.interfaceColor)
-        .tint(Configuration.UI.interfaceColor)
+        .accentColor(Configuration.UI.accentColor)
+        .tint(Configuration.UI.accentColor)
         .environment(router)
         .onGeometryChange(for: CGSize.self) { geometry in
             return geometry.size
@@ -57,7 +57,7 @@ private extension PostListCoordinator {
             externalTagName: $tagName,
             externalCategoryName: $categoryName,
             backgroundColor: Configuration.UI.backgroundColor,
-            interfaceColor: Configuration.UI.interfaceColor,
+            accentColor: Configuration.UI.accentColor,
             textColor: Configuration.UI.textColor,
             font: Configuration.UI.postListFont,
             menuBackgroundColor: Configuration.UI.menuBackgroundColor,

@@ -230,7 +230,7 @@ extension ProfileView where Content == EmptyView {
             password: "livsycode"
         ),
         backgroundColor: .red,
-        interfaceColor: .green
+        accentColor: .green
     )
     return SwiftPresso.View.profileView()
 }

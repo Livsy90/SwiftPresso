@@ -40,7 +40,7 @@ With this configuration, you can determine the API host value, the HTTP method, 
 SwiftPresso.View.postList(
     host: "livsycode.com",
     backgroundColor: .blue,
-    interfaceColor: .white,
+    accentColor: .white,
     textColor: .white
 )
 ```
@@ -123,7 +123,7 @@ If you use SwiftPresso built-in views, you don't need to worry about the configu
     ///   - isShowContentInWebView: Using WKWebView as post view.
     ///   - isShowFeaturedImage: Post featured image visibility.
     ///   - backgroundColor: Post list and post view background color.
-    ///   - interfaceColor: Post list and post view interface color.
+    ///   - accentColor: Post list and post view interface color.
     ///   - textColor: Post list and post view text color.
     ///   - postListFont: Post list font.
     ///   - postBodyFont: Post body font.
@@ -154,7 +154,7 @@ If you use SwiftPresso built-in views, you don't need to worry about the configu
         postBodyFont: UIFont = .systemFont(ofSize: 17),
         postTitleFont: Font = .largeTitle,
         backgroundColor: Color = Color(uiColor: .systemBackground),
-        interfaceColor: Color = .primary,
+        accentColor: Color = .primary,
         textColor: Color = .primary,
         menuBackgroundColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
@@ -224,7 +224,7 @@ public enum Configuration {
         public static var postTitleFont: Font { get }
         
         /// Post list and post view interface color.
-        public static var interfaceColor: Color { get }
+        public static var accentColor: Color { get }
         
         /// Post list and post view text color.
         public static var textColor: Color { get }

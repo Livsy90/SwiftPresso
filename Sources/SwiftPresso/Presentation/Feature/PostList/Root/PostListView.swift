@@ -20,7 +20,7 @@ struct PostListView<Placeholder: View>: View {
     @State private var chosenPage: PostModel?
     
     private let backgroundColor: Color
-    private let interfaceColor: Color
+    private let accentColor: Color
     private let textColor: Color
     private let font: Font
     
@@ -45,7 +45,7 @@ struct PostListView<Placeholder: View>: View {
         externalTagName: Binding<String?>,
         externalCategoryName: Binding<String?>,
         backgroundColor: Color,
-        interfaceColor: Color,
+        accentColor: Color,
         textColor: Color,
         font: Font,
         menuBackgroundColor: Color,
@@ -65,7 +65,7 @@ struct PostListView<Placeholder: View>: View {
         _externalTagName = externalTagName
         _externalCategoryName = externalCategoryName
         self.backgroundColor = backgroundColor
-        self.interfaceColor = interfaceColor
+        self.accentColor = accentColor
         self.textColor = textColor
         self.font = font
         
@@ -98,7 +98,7 @@ struct PostListView<Placeholder: View>: View {
                     post: post,
                     isShowContentInWebView: isShowContentInWebView,
                     webViewBackgroundColor: backgroundColor,
-                    interfaceColor: interfaceColor,
+                    accentColor: accentColor,
                     textColor: textColor,
                     font: font,
                     onTag: { tagName in
@@ -191,7 +191,7 @@ struct PostListView<Placeholder: View>: View {
         .webView(
             url: $urlToOpen,
             backgroundColor: backgroundColor,
-            interfaceColor: interfaceColor,
+            accentColor: accentColor,
             onTag: { tagName in
                 showPostListByTag(tagName)
             },
