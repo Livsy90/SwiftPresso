@@ -17,7 +17,7 @@ struct PostListRowView<Placeholder: View>: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerSize: .init(width: 16, height: 16), style: .continuous)
                 .fill(Preferences.accentColor)
                 .opacity(0.15)
             rowBody
