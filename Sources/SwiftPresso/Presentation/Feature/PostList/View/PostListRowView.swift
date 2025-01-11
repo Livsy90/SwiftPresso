@@ -18,7 +18,8 @@ struct PostListRowView<Placeholder: View>: View {
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.ultraThinMaterial)
+                .fill(.gray)
+                .opacity(0.16)
             rowBody
                 .padding()
         }
@@ -52,4 +53,35 @@ struct PostListRowView<Placeholder: View>: View {
         }
     }
     
+}
+
+extension Button {
+    var listRowButton: some View {
+        buttonStyle(ListRowButtonStyle())
+    }
+}
+
+private struct ListRowButtonStyle: ButtonStyle {
+    
+    @Environment(\.isEnabled) var isEnabled
+    
+    func makeBody(configuration: Configuration) -> some View {
+        let color: Color = switch configuration.role {
+        case .cancel:
+            .accentColor.opacity(0.5)
+        case .destructive:
+            .red
+        default:
+            .accentColor
+        }
+        
+        let foregroundColor: Color = if configuration.isPressed || !isEnabled {
+            color.opacity(0.5)
+        } else {
+            color
+        }
+        
+        return configuration.label
+            .foregroundColor(foregroundColor)
+    }
 }

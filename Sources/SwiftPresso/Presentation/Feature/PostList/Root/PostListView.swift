@@ -139,7 +139,7 @@ struct PostListView<Placeholder: View>: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .listStyle(.plain)
-        .listRowSpacing(18)
+        .listRowSpacing(14)
         .scrollContentBackground(.hidden)
         .background {
             Rectangle()
