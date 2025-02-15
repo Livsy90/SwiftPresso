@@ -16,10 +16,10 @@ private struct GlassStrokeModifier: ViewModifier {
                         .linearGradient(colors: [
                             .white.opacity(0.6),
                             .clear,
-                            .accentColor.opacity(0.2),
-                            .accentColor.opacity(0.5)
+                            .white.opacity(0.2),
+                            .white.opacity(0.5)
                         ], startPoint: .topLeading, endPoint: .bottomTrailing),
-                        lineWidth: 1.7
+                        lineWidth: 1
                     )
             }
         
