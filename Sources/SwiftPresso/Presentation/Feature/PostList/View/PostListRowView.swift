@@ -26,9 +26,9 @@ struct PostListRowView<Placeholder: View>: View {
                             HStack {
                                 Spacer()
                                 Preferences.passwordProtectedIcon.image
-                                    .font(.caption)
+                                    .font(.footnote)
                                     .foregroundStyle(Preferences.accentColor)
-                                    .padding(8)
+                                    .padding(16)
                             }
                             Spacer()
                         }

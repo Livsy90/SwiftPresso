@@ -1,26 +1,16 @@
 import SwiftUI
 
 extension View {
-    func glassEffect() -> some View {
-        modifier(GlassEffectModifier())
+    func glassStroke() -> some View {
+        modifier(GlassStrokeModifier())
     }
 }
 
-private struct GlassEffectModifier: ViewModifier {
+private struct GlassStrokeModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
             .background {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(
-                        .linearGradient(colors: [
-                            .white.opacity(0.25),
-                            .white.opacity(0.05),
-                            .clear
-                        ], startPoint: .topLeading, endPoint: .bottomTrailing)
-                    )
-                    .blur(radius: 1.3)
-                
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .stroke(
                         .linearGradient(colors: [
@@ -29,7 +19,7 @@ private struct GlassEffectModifier: ViewModifier {
                             .accentColor.opacity(0.2),
                             .accentColor.opacity(0.5)
                         ], startPoint: .topLeading, endPoint: .bottomTrailing),
-                        lineWidth: 1.3
+                        lineWidth: 1.7
                     )
             }
         

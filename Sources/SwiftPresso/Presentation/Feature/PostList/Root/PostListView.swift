@@ -111,7 +111,7 @@ struct PostListView<Placeholder: View>: View {
                         loadingPlaceholder()
                     }
                 )
-                .glassEffect()
+                .glassStroke()
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
                 .onAppear {
