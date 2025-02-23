@@ -7,8 +7,8 @@ enum Destination: Hashable {
 
 struct PostListCoordinator<Placeholder: View, ContentUnavailable: View>: View {
     
-    typealias Configuration = SwiftPresso.Configuration
-    
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
+        
     let placeholder: (() -> Placeholder)
     let postContentUnavailableView: (() -> ContentUnavailable)
     
@@ -27,9 +27,10 @@ struct PostListCoordinator<Placeholder: View, ContentUnavailable: View>: View {
                     }
                 }
         }
-        .accentColor(Configuration.UI.accentColor)
-        .tint(Configuration.UI.accentColor)
+        .accentColor(configuration.accentColor)
+        .tint(configuration.accentColor)
         .environment(router)
+        .environment(\.configuration, configuration)
         .onGeometryChange(for: CGSize.self) { geometry in
             return geometry.size
         } action: { newValue in
@@ -53,27 +54,11 @@ private extension PostListCoordinator {
     
     func postListView() -> some View {
         PostListView(
-            viewModel: .init(postPerPage: Configuration.API.postsPerPage),
+            viewModel: .init(postPerPage: configuration.postsPerPage),
             externalTagName: $tagName,
-            externalCategoryName: $categoryName,
-            backgroundColor: Configuration.UI.backgroundColor,
-            accentColor: Configuration.UI.accentColor,
-            textColor: Configuration.UI.textColor,
-            font: Configuration.UI.postListFont,
-            menuBackgroundColor: Configuration.UI.menuBackgroundColor,
-            menuTextColor: Configuration.UI.menuTextColor,
-            homeIcon: Configuration.UI.homeIcon,
-            isShowContentInWebView: Configuration.UI.isShowContentInWebView,
-            isShowPageMenu: Configuration.UI.isShowPageMenu,
-            isShowTagMenu: Configuration.UI.isShowTagMenu,
-            isShowCategoryMenu: Configuration.UI.isShowCategoryMenu,
-            isMenuExpanded: Configuration.UI.isMenuExpanded,
-            pageMenuTitle: Configuration.UI.pageMenuTitle,
-            tagMenuTitle: Configuration.UI.tagMenuTitle,
-            categoryMenuTitle: Configuration.UI.categoryMenuTitle
-        ) {
-            placeholder()
-        }
+            externalCategoryName: $categoryName) {
+                placeholder()
+            }
     }
     
     func postView(_ post: PostModel) -> some View {
@@ -81,10 +66,6 @@ private extension PostListCoordinator {
             viewModel: .init(post: post, width: size.width),
             tagName: $tagName,
             categoryName: $categoryName,
-            backgroundColor: Configuration.UI.backgroundColor,
-            textColor: Configuration.UI.textColor,
-            titleFont: Configuration.UI.postTitleFont,
-            isShowFeaturedImage: Configuration.UI.isShowFeaturedImage,
             placeholder: {
                 placeholder()
             },

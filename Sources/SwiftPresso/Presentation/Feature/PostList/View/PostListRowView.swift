@@ -4,16 +4,12 @@ import ApricotNavigation
 struct PostListRowView<Placeholder: View>: View {
     
     let post: PostModel
-    let isShowContentInWebView: Bool
-    let webViewBackgroundColor: Color
-    let accentColor: Color
-    let textColor: Color
-    let font: Font
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
     
     @Environment(Router.self) private var router
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -49,18 +45,15 @@ struct PostListRowView<Placeholder: View>: View {
         }
         .frame(maxWidth: .infinity)
         .frame(minHeight: 80)
+        .environment(\.configuration, configuration)
     }
     
     @ViewBuilder
     private var rowBody: some View {
-        if isShowContentInWebView, let link = post.link {
+        if configuration.isShowContentInWebView, let link = post.link {
             LinkView(
                 url: link,
                 title: post.title,
-                webViewBackgroundColor: webViewBackgroundColor,
-                accentColor: accentColor,
-                textColor: textColor,
-                font: font,
                 onTag: onTag,
                 onCategory: onCategory,
                 placeholder: placeholder
@@ -70,9 +63,9 @@ struct PostListRowView<Placeholder: View>: View {
                 router.navigate(to: Destination.postDetails(post: post))
             } label: {
                 Text(post.title)
-                    .font(font)
+                    .font(configuration.postListFont)
                     .fontWeight(.semibold)
-                    .foregroundStyle(textColor)
+                    .foregroundStyle(configuration.textColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }

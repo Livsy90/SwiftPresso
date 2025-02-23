@@ -3,8 +3,6 @@ import SwiftUI
 extension View {
     
     func webViewLinkRow(
-        backgroundColor: Color,
-        accentColor: Color,
         onTag: @escaping (String) -> Void,
         onCategory: @escaping (String) -> Void,
         placeholder: @escaping () -> some View
@@ -12,8 +10,6 @@ extension View {
         
         modifier(
             WebViewLinkModifier(
-                backgroundColor: backgroundColor,
-                accentColor: accentColor,
                 onTag: onTag,
                 onCategory: onCategory,
                 placeholder: placeholder
@@ -23,8 +19,6 @@ extension View {
     
     func webView(
         url: Binding<URL?>,
-        backgroundColor: Color,
-        accentColor: Color,
         onTag: @escaping (String) -> Void,
         onCategory: @escaping (String) -> Void,
         placeholder: @escaping () -> some View
@@ -33,8 +27,6 @@ extension View {
         modifier(
             WebViewModifier(
                 urlToOpen: url,
-                backgroundColor: backgroundColor,
-                accentColor: accentColor,
                 onTag: onTag,
                 onCategory: onCategory,
                 placeholder: placeholder
@@ -47,8 +39,6 @@ extension View {
 private struct WebViewModifier<Placeholder: View>: ViewModifier {
     
     @Binding var urlToOpen: URL?
-    let backgroundColor: Color
-    let accentColor: Color
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
@@ -59,6 +49,8 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
     @State private var isCanGoBack = false
     @State private var isCanGoForward = false
     
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
+    
     func body(content: Content) -> some View {
         content
             .fullScreenCover(
@@ -68,8 +60,6 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
                 },
                 content: {
                     WebViewWrapperView(
-                        backgroundColor: backgroundColor,
-                        accentColor: accentColor,
                         urlToOpen: $urlToOpen,
                         isLoading: $isLoading,
                         isGoBack: $isGoBack,
@@ -96,8 +86,6 @@ private struct WebViewModifier<Placeholder: View>: ViewModifier {
 
 private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
     
-    let backgroundColor: Color
-    let accentColor: Color
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
     let placeholder: () -> Placeholder
@@ -108,6 +96,8 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
     @State private var isGoForward = false
     @State private var isCanGoBack = false
     @State private var isCanGoForward = false
+    
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
     
     func body(content: Content) -> some View {
         content
@@ -122,8 +112,6 @@ private struct WebViewLinkModifier<Placeholder: View>: ViewModifier {
                 },
                 content: {
                     WebViewWrapperView(
-                        backgroundColor: backgroundColor,
-                        accentColor: accentColor,
                         urlToOpen: $urlToOpen,
                         isLoading: $isLoading,
                         isGoBack: $isGoBack,

@@ -4,6 +4,8 @@ import ApricotNavigation
 struct PostListView<Placeholder: View>: View {
     
     @Environment(Router.self) private var router
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
+    
     @State private var size: CGSize = .zero
     @State private var viewModel: PostListViewModel
     @State private var searchText = ""
@@ -14,81 +16,24 @@ struct PostListView<Placeholder: View>: View {
     
     @State private var isShowMenu = false
     
-    @State private var isPageMenuExpanded: Bool
-    @State private var isTagMenuExpanded: Bool
-    @State private var isCategoryMenuExpanded: Bool
+    @State private var isPageMenuExpanded: Bool = true
+    @State private var isTagMenuExpanded: Bool = true
+    @State private var isCategoryMenuExpanded: Bool = true
     @State private var chosenPage: PostModel?
     
-    private let backgroundColor: Color
-    private let accentColor: Color
-    private let textColor: Color
-    private let font: Font
-    
-    private let homeIcon: Image
-    
-    private let isShowPageMenu: Bool
-    private let isShowTagMenu: Bool
-    private let isShowCategoryMenu: Bool
-    
-    private let pageMenuTitle: String
-    private let tagMenuTitle: String
-    private let categoryMenuTitle: String
-    
-    private let menuBackgroundColor: Color
-    private let menuTextColor: Color
-    
-    private let isShowContentInWebView: Bool
     private let loadingPlaceholder: () -> Placeholder
     
     init(
         viewModel: PostListViewModel,
         externalTagName: Binding<String?>,
         externalCategoryName: Binding<String?>,
-        backgroundColor: Color,
-        accentColor: Color,
-        textColor: Color,
-        font: Font,
-        menuBackgroundColor: Color,
-        menuTextColor: Color,
-        homeIcon: Image,
-        isShowContentInWebView: Bool,
-        isShowPageMenu: Bool,
-        isShowTagMenu: Bool,
-        isShowCategoryMenu: Bool,
-        isMenuExpanded: Bool,
-        pageMenuTitle: String,
-        tagMenuTitle: String,
-        categoryMenuTitle: String,
         loadingPlaceholder: @escaping () -> Placeholder
     ) {
         self.viewModel = viewModel
         _externalTagName = externalTagName
         _externalCategoryName = externalCategoryName
-        self.backgroundColor = backgroundColor
-        self.accentColor = accentColor
-        self.textColor = textColor
-        self.font = font
-        
-        self.menuBackgroundColor = menuBackgroundColor
-        self.menuTextColor = menuTextColor
-        
-        self.isShowTagMenu = isShowTagMenu
-        self.isShowCategoryMenu = isShowCategoryMenu
-        self.isShowPageMenu = isShowPageMenu
-        
-        self.homeIcon = homeIcon
-        
-        self.isShowContentInWebView = isShowContentInWebView
-        
-        self.pageMenuTitle = pageMenuTitle
-        self.tagMenuTitle = tagMenuTitle
-        self.categoryMenuTitle = categoryMenuTitle
         
         self.loadingPlaceholder = loadingPlaceholder
-        
-        self.isPageMenuExpanded = isMenuExpanded
-        self.isTagMenuExpanded = isMenuExpanded
-        self.isCategoryMenuExpanded = isMenuExpanded
     }
     
     var body: some View {
@@ -96,11 +41,6 @@ struct PostListView<Placeholder: View>: View {
             ForEach(viewModel.postList, id: \.self) { post in
                 PostListRowView(
                     post: post,
-                    isShowContentInWebView: isShowContentInWebView,
-                    webViewBackgroundColor: backgroundColor,
-                    accentColor: accentColor,
-                    textColor: textColor,
-                    font: font,
                     onTag: { tagName in
                         showPostListByTag(tagName)
                     },
@@ -144,7 +84,7 @@ struct PostListView<Placeholder: View>: View {
         .scrollContentBackground(.hidden)
         .background {
             Rectangle()
-                .fill(backgroundColor)
+                .fill(configuration.backgroundColor)
                 .edgesIgnoringSafeArea(.all)
         }
         .refreshable { [weak viewModel] in
@@ -152,7 +92,7 @@ struct PostListView<Placeholder: View>: View {
         }
         .navigationTitle(viewModel.mode.title)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(backgroundColor, for: .navigationBar)
+        .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 navigationBarPrincipalItem()
@@ -191,8 +131,6 @@ struct PostListView<Placeholder: View>: View {
         }
         .webView(
             url: $urlToOpen,
-            backgroundColor: backgroundColor,
-            accentColor: accentColor,
             onTag: { tagName in
                 showPostListByTag(tagName)
             },
@@ -213,6 +151,11 @@ struct PostListView<Placeholder: View>: View {
                 .presentationDragIndicator(.visible)
         })
         .disabled(viewModel.isInitialLoading)
+        .task {
+            isTagMenuExpanded = configuration.isMenuExpanded
+            isPageMenuExpanded = configuration.isMenuExpanded
+            isCategoryMenuExpanded = configuration.isMenuExpanded
+        }
     }
     
     private func placeholder() -> some View {
@@ -232,7 +175,7 @@ struct PostListView<Placeholder: View>: View {
     
     @ViewBuilder
     private func navigationBarTrailingItem() -> some View {
-        if isShowTagMenu || isShowPageMenu || isShowCategoryMenu {
+        if configuration.isShowTagMenu || configuration.isShowPageMenu || configuration.isShowCategoryMenu {
             Button {
                 isShowMenu = true
             } label: {
@@ -246,7 +189,7 @@ struct PostListView<Placeholder: View>: View {
             Button {
                 viewModel.loadDefault()
             } label: {
-                homeIcon
+                configuration.homeIcon
             }
             .opacity(viewModel.isRefreshable ? 1 : 0)
             .symbolEffect(.bounce, value: viewModel.isRefreshable)
@@ -256,7 +199,7 @@ struct PostListView<Placeholder: View>: View {
     private func menu() -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                if isShowPageMenu {
+                if configuration.isShowPageMenu {
                     DisclosureGroup(
                         isExpanded: $isPageMenuExpanded,
                         content: {
@@ -272,7 +215,7 @@ struct PostListView<Placeholder: View>: View {
                                                 .multilineTextAlignment(.leading)
                                                 .frame(alignment: .leading)
                                                 .fontWeight(.semibold)
-                                                .foregroundStyle(menuTextColor)
+                                                .foregroundStyle(configuration.menuTextColor)
                                             Spacer()
                                         }
                                     }
@@ -281,19 +224,19 @@ struct PostListView<Placeholder: View>: View {
                             }
                         },
                         label: {
-                            Text(pageMenuTitle)
+                            Text(configuration.pageMenuTitle)
                                 .multilineTextAlignment(.leading)
                                 .frame(alignment: .leading)
                                 .font(.title)
                                 .fontWeight(.bold)
-                                .foregroundStyle(menuTextColor)
+                                .foregroundStyle(configuration.menuTextColor)
                         }
                     )
                     .padding()
-                    .tint(menuTextColor)
+                    .tint(configuration.menuTextColor)
                 }
                 
-                if isShowCategoryMenu {
+                if configuration.isShowCategoryMenu {
                     DisclosureGroup(
                         isExpanded: $isCategoryMenuExpanded,
                         content: {
@@ -308,7 +251,7 @@ struct PostListView<Placeholder: View>: View {
                                                 .font(.callout)
                                                 .multilineTextAlignment(.leading)
                                                 .fontWeight(.semibold)
-                                                .foregroundStyle(menuTextColor)
+                                                .foregroundStyle(configuration.menuTextColor)
                                             Spacer()
                                         }
                                     }
@@ -317,18 +260,18 @@ struct PostListView<Placeholder: View>: View {
                             }
                         },
                         label: {
-                            Text(categoryMenuTitle)
+                            Text(configuration.categoryMenuTitle)
                                 .multilineTextAlignment(.leading)
                                 .font(.title)
                                 .fontWeight(.bold)
-                                .foregroundStyle(menuTextColor)
+                                .foregroundStyle(configuration.menuTextColor)
                         }
                     )
                     .padding()
-                    .tint(menuTextColor)
+                    .tint(configuration.menuTextColor)
                 }
                 
-                if isShowTagMenu {
+                if configuration.isShowTagMenu {
                     DisclosureGroup(
                         isExpanded: $isTagMenuExpanded,
                         content: {
@@ -343,7 +286,7 @@ struct PostListView<Placeholder: View>: View {
                                                 .font(.callout)
                                                 .multilineTextAlignment(.leading)
                                                 .fontWeight(.semibold)
-                                                .foregroundStyle(menuTextColor)
+                                                .foregroundStyle(configuration.menuTextColor)
                                             Spacer()
                                         }
                                     }
@@ -352,29 +295,29 @@ struct PostListView<Placeholder: View>: View {
                             }
                         },
                         label: {
-                            Text(tagMenuTitle)
+                            Text(configuration.tagMenuTitle)
                                 .multilineTextAlignment(.leading)
                                 .font(.title)
                                 .fontWeight(.bold)
-                                .foregroundStyle(menuTextColor)
+                                .foregroundStyle(configuration.menuTextColor)
                         }
                     )
                     .padding()
-                    .tint(menuTextColor)
+                    .tint(configuration.menuTextColor)
                 }
                 
                 Spacer()
             }
             .padding()
         }
-        .background(menuBackgroundColor)
+        .background(configuration.menuBackgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private func openPageIfNeeded(_ page: PostModel?) {
         guard let page else { return }
         
-        if isShowContentInWebView {
+        if configuration.isShowContentInWebView {
             guard let url = page.link else { return }
             urlToOpen = url
         } else {

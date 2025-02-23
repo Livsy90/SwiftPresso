@@ -2,8 +2,6 @@ import SwiftUI
 
 struct WebViewWrapperView<Content: View>: View {
     
-    let backgroundColor: Color
-    let accentColor: Color
     @Binding var urlToOpen: URL?
     @Binding var isLoading: Bool
     @Binding var isGoBack: Bool
@@ -14,6 +12,8 @@ struct WebViewWrapperView<Content: View>: View {
     
     let onTag: (String) -> Void
     let onCategory: (String) -> Void
+    
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
     
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct WebViewWrapperView<Content: View>: View {
                             .frame(height: 22)
                             .fontWeight(.semibold)
                     })
-                    .accentColor(accentColor)
+                    .accentColor(configuration.accentColor)
                     .padding(.horizontal)
                     .opacity(isCanGoBack ? 1 : 0)
                     .animation(.default, value: isCanGoBack)
@@ -56,7 +56,7 @@ struct WebViewWrapperView<Content: View>: View {
                         .scaledToFit()
                         .frame(height: 18)
                 }
-                .accentColor(accentColor)
+                .accentColor(configuration.accentColor)
                 .padding(.horizontal)
             }
             .frame(minHeight: 44)
@@ -91,7 +91,7 @@ struct WebViewWrapperView<Content: View>: View {
         }
         .background {
             Rectangle()
-                .fill(backgroundColor)
+                .fill(configuration.backgroundColor)
                 .ignoresSafeArea()
         }
     }

@@ -2,8 +2,8 @@ import SwiftUI
 
 struct ShimmerPlaceholder: View {
     
-    let backgroundColor: Color
-    
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
+
     var body: some View {
         ScrollView {
             ForEach(1...100, id: \.self) { _ in
@@ -16,7 +16,7 @@ struct ShimmerPlaceholder: View {
         }
         .scrollDisabled(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(backgroundColor)
+        .background(configuration.backgroundColor)
     }
     
 }

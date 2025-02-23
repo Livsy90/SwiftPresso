@@ -8,7 +8,7 @@ public extension SwiftPresso {
         @MainActor
         public static func postList() -> some SwiftUI.View {
             PostListCoordinator {
-                ShimmerPlaceholder(backgroundColor: Configuration.UI.backgroundColor)
+                ShimmerPlaceholder()
             } postContentUnavailableView: {
                 ContentUnavailableView("Not Available", image: "exclamationmark.triangle")
             }
@@ -40,7 +40,7 @@ public extension SwiftPresso {
             postContentUnavailableView: @escaping () -> ContentUnavailable
         ) -> some SwiftUI.View {
             PostListCoordinator {
-                ShimmerPlaceholder(backgroundColor: Configuration.UI.backgroundColor)
+                ShimmerPlaceholder()
             } postContentUnavailableView: {
                 postContentUnavailableView()
             }

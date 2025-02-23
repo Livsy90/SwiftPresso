@@ -13,7 +13,7 @@ public final class Preferences: Sendable {
     
     private let _configuration: Mutex<Configuration> = .init(.initial)
     
-    private var configuration: Configuration {
+    var configuration: Configuration {
         get {
             _configuration.withLock { value in
                 value

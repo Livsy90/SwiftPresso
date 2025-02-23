@@ -7,10 +7,8 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     @Binding var tagName: String?
     @Binding var categoryName: String?
     
-    let backgroundColor: Color
-    let textColor: Color
-    let titleFont: Font
-    let isShowFeaturedImage: Bool
+    @Environment(\.configuration) private var configuration: Preferences.Configuration
+    
     let placeholder: () -> Placeholder
     let contentUnavailableView: () -> ContentUnavailable
     
@@ -29,7 +27,7 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
                 Text(viewModel.title)
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundStyle(textColor)
+                    .foregroundStyle(configuration.textColor)
                     .textSelection(.enabled)
                 Spacer()
             }
@@ -45,14 +43,14 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
                     Text(date.formatted(date: .abbreviated, time: .omitted))
                         .font(.footnote)
                         .fontWeight(.semibold)
-                        .foregroundStyle(textColor)
+                        .foregroundStyle(configuration.textColor)
                     Spacer()
                 }
                 .padding([.bottom, .horizontal])
                 .opacity(viewModel.isShowContent ? 1 : 0)
             }
             
-            if isShowFeaturedImage, let featuredImageURL = viewModel.featuredImageURL {
+            if configuration.isShowFeaturedImage, let featuredImageURL = viewModel.featuredImageURL {
                 AsyncImage(url: featuredImageURL) { image in
                     image
                         .resizable()
@@ -90,7 +88,7 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
         .alert(isPresented: $viewModel.error.boolValue()) {
             Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
         }
-        .toolbarBackground(backgroundColor, for: .navigationBar)
+        .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 ProgressView()
@@ -108,7 +106,7 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
             }
         }
         .background {
-            backgroundColor
+            configuration.backgroundColor
                 .ignoresSafeArea()
         }
         .onAppear {
@@ -154,12 +152,8 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
         viewModel: .init(post: post, width: 375),
         tagName: .constant(nil),
         categoryName: .constant(nil),
-        backgroundColor: SwiftPresso.Configuration.UI.backgroundColor,
-        textColor: SwiftPresso.Configuration.UI.textColor,
-        titleFont: SwiftPresso.Configuration.UI.postTitleFont,
-        isShowFeaturedImage: SwiftPresso.Configuration.UI.isShowFeaturedImage,
         placeholder: {
-            ShimmerPlaceholder(backgroundColor: .clear)
+            ShimmerPlaceholder()
         },
         contentUnavailableView: {
             ContentUnavailableView("Not Available", systemImage: "exclamationmark.triangle")
