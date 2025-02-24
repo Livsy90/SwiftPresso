@@ -1,5 +1,6 @@
 import SwiftUI
 import ApricotNavigation
+import NukeUI
 
 struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     
@@ -17,10 +18,21 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     @State private var alertMessage: String?
     @State private var isUnavailable: Bool = false
     
+    @State private var offset: CGFloat = 0
+    
     var body: some View {
         ScrollView {
             if viewModel.isInitialLoading {
                 placeholder()
+            }
+            
+            if configuration.isShowFeaturedImage, let featuredImageURL = viewModel.featuredImageURL {
+                image(url: featuredImageURL)
+                .frame(maxWidth: .infinity)
+                .opacity(viewModel.isShowContent ? 1 : 0)
+                .frame(height: 300 + max(0, -offset))
+                .clipped()
+                .offset(y: -(max(0, offset)))
             }
             
             HStack {
@@ -50,21 +62,6 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
                 .opacity(viewModel.isShowContent ? 1 : 0)
             }
             
-            if configuration.isShowFeaturedImage, let featuredImageURL = viewModel.featuredImageURL {
-                AsyncImage(url: featuredImageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                } placeholder: {
-                    ShimmerView()
-                        .frame(height: 250)
-                        .padding()
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .opacity(viewModel.isShowContent ? 1 : 0)
-            }
-            
             if isUnavailable {
                 contentUnavailableView()
             } else {
@@ -82,6 +79,9 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
                 .padding(.horizontal)
             }
         }
+        .onScrollGeometryChange(for: CGFloat.self, of: { geo in geo.contentOffset.y + geo.contentInsets.top }, action: { new, _ in
+            offset = new
+        })
         .alert(isPresented: $alertMessage.boolValue()) {
             Alert(title: Text(alertMessage ?? ""))
         }
@@ -131,33 +131,26 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
         }
     }
     
+    private func image(url: URL) -> some View {
+        LazyImage(url: url) { state in
+            if let image = state.image {
+                image
+                    .resizable()
+                    .scaledToFill()
+            } else if state.error != nil {
+                Image(systemName: "wifi.exclamationmark")
+            } else {
+                ShimmerView()
+            }
+        }
+    }
+    
 }
 
 #Preview {
-    let text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-    let post = PostModel(
-        id: 1,
-        date: .now,
-        title: "Title",
-        excerpt: "",
-        imgURL: nil,
-        link: URL(string: "https://livsycode.com/"),
-        content: text,
-        author: 0,
-        tags: [],
-        isPasswordProtected: false
+    SwiftPresso.configure(
+        host: "hairify.ru",
+        isShowContentInWebView: false
     )
-    
-    return PostView(
-        viewModel: .init(post: post, width: 375),
-        tagName: .constant(nil),
-        categoryName: .constant(nil),
-        placeholder: {
-            ShimmerPlaceholder()
-        },
-        contentUnavailableView: {
-            ContentUnavailableView("Not Available", systemImage: "exclamationmark.triangle")
-        }
-    )
-    .environment(Router())
+    return SwiftPresso.View.postList()
 }
