@@ -51,7 +51,6 @@ struct PostListView<Placeholder: View>: View {
                         loadingPlaceholder()
                     }
                 )
-                .stroked()
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
                 .onAppear {

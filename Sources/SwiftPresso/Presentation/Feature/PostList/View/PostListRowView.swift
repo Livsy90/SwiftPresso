@@ -16,33 +16,38 @@ struct PostListRowView<Placeholder: View>: View {
     @State private var size: CGSize = .zero
     
     var body: some View {
-        ZStack(alignment: .leading) {
+        HStack {
+            if let imgURL = post.imgURL {
+                image(url: imgURL)
+            }
+            
+            VStack(alignment: .leading) {
+                rowBody
+                Spacer()
+                if let date = post.date {
+                    Text(date.formatted(date: .abbreviated, time: .omitted))
+                        .font(.caption2)
+                        .foregroundStyle(Preferences.accentColor.opacity(0.7))
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding()
+            
+            if post.isPasswordProtected {
+                VStack {
+                    passwordProtectedView
+                        .padding(.bottom, 12)
+                    Spacer()
+                }
+                .frame(width: 21)
+                .padding(.horizontal)
+            }
+        }
+        .background {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(Preferences.accentColor)
                 .opacity(0.15)
-                .overlay {
-                    if post.isPasswordProtected {
-                        passwordProtectedView
-                    }
-                }
-            HStack {
-                if let imgURL = post.imgURL {
-                    image(url: imgURL)
-                }
-                
-                VStack {
-                    rowBody
-                    Spacer()
-                    if let date = post.date {
-                        Text(date.formatted(date: .abbreviated, time: .omitted))
-                            .font(.caption2)
-                            .foregroundStyle(Preferences.accentColor.opacity(0.7))
-                            .padding(.vertical, 8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .padding()
-            }
         }
         .frame(maxWidth: .infinity)
         .frame(minHeight: 80)
@@ -78,9 +83,14 @@ struct PostListRowView<Placeholder: View>: View {
             HStack {
                 Spacer()
                 Preferences.passwordProtectedIcon.image
-                    .font(.footnote)
+                    .font(.system(size: 13))
                     .foregroundStyle(Preferences.accentColor)
-                    .padding(12)
+                    .padding(8)
+                    .background {
+                        Circle()
+                            .fill(.ultraThinMaterial)
+                    }
+                    .padding(8)
             }
             Spacer()
         }
@@ -92,16 +102,26 @@ struct PostListRowView<Placeholder: View>: View {
                 image
                     .resizable()
                     .scaledToFill()
+                    .clippedRectangle(size: size)
             } else if state.error != nil {
                 Image(systemName: "wifi.exclamationmark")
+                    .clippedRectangle(size: size)
             } else {
                 ShimmerView()
+                    .clippedRectangle(size: size)
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .frame(width: size.width / 4)
+        .clippedRectangle(size: size)
     }
     
+}
+
+private extension View {
+    func clippedRectangle(size: CGSize) -> some View {
+        self
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .frame(width: size.width / 3)
+    }
 }
 
 #Preview {
