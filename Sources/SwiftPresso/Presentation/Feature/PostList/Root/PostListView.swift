@@ -333,9 +333,5 @@ struct PostListView<Placeholder: View>: View {
 }
 
 #Preview {
-    SwiftPresso.configure(
-        host: "hairify.ru",
-        isShowContentInWebView: false
-    )
-    return SwiftPresso.View.postList()
+    SwiftPresso.View.default()
 }

@@ -17,7 +17,17 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     @State private var nextPostID: Int?
     @State private var alertMessage: String?
     @State private var isUnavailable: Bool = false
-        
+    
+    private var gradientColors: [Color] {
+        [
+            configuration.backgroundColor.opacity(0),
+            configuration.backgroundColor.opacity(0.383),
+            configuration.backgroundColor.opacity(0.707),
+            configuration.backgroundColor.opacity(0.924),
+            configuration.backgroundColor
+        ]
+    }
+    
     var body: some View {
         ScrollView {
             if viewModel.isInitialLoading {
@@ -26,9 +36,18 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
             
             headerView()
                 .opacity(viewModel.isShowContent ? 1 : 0)
+                .visualEffect { content, proxy in
+                    let frame = proxy.frame(in: .scrollView(axis: .vertical))
+                    let distance = min(0, frame.minY)
+                    
+                    return content
+                        .offset(y: -distance / 1.25)
+                        .blur(radius: -distance / 30)
+                }
             
             content()
         }
+        .scrollClipDisabled()
         .alert(isPresented: $alertMessage.boolValue()) {
             Alert(title: Text(alertMessage ?? ""))
         }
@@ -96,7 +115,6 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     private func headerView() -> some View {
         if configuration.isShowFeaturedImage, let featuredImageURL = viewModel.featuredImageURL {
             headerTitle(featuredImageURL: featuredImageURL)
-                .padding(.bottom)
         } else {
             titleView()
                 .padding()
@@ -108,18 +126,31 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
             image(url: featuredImageURL)
                 .frame(maxWidth: .infinity)
                 .opacity(viewModel.isShowContent ? 1 : 0)
+                .mask {
+                    VStack(spacing: 0) {
+                        Rectangle()
+                        
+                        LinearGradient(
+                            colors: gradientColors,
+                            startPoint: .bottom,
+                            endPoint: .top
+                        )
+                        .frame(height: 150)
+                    }
+                }
             
             titleView()
                 .background {
                     Capsule()
                         .fill(.ultraThinMaterial)
+                        .shadow(radius: 12)
                 }
-                .padding()
+                .padding(12)
         }
     }
     
     private func titleView() -> some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 18) {
             Text(viewModel.title)
                 .font(.title)
                 .multilineTextAlignment(.center)
@@ -127,7 +158,7 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
                 .foregroundStyle(configuration.textColor)
                 .textSelection(.enabled)
                 .frame(maxWidth: .infinity, alignment: .center)
-
+            
             if let date = viewModel.date {
                 Text(date.formatted(date: .abbreviated, time: .omitted))
                     .font(.footnote)
@@ -139,32 +170,45 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
         .padding(12)
     }
     
-    @ViewBuilder
     private func content() -> some View {
-        if isUnavailable {
-            contentUnavailableView()
-        } else {
-            TextView(
-                "",
-                postID: $nextPostID,
-                tagName: $tagName,
-                categoryName: $categoryName,
-                attributedString: $viewModel.attributedString,
-                shouldEditInRange: nil,
-                onEditingChanged: nil,
-                onCommit: nil
-            )
-            .opacity(viewModel.isShowContent ? 1 : 0)
-            .padding(.horizontal)
+        Group {
+            if isUnavailable {
+                contentUnavailableView()
+            } else {
+                TextView(
+                    "",
+                    postID: $nextPostID,
+                    tagName: $tagName,
+                    categoryName: $categoryName,
+                    attributedString: $viewModel.attributedString,
+                    shouldEditInRange: nil,
+                    onEditingChanged: nil,
+                    onCommit: nil
+                )
+                .opacity(viewModel.isShowContent ? 1 : 0)
+                .padding(.horizontal)
+                .padding(.vertical, 16)
+            }
+        }
+        .background {
+            configuration.backgroundColor
+                .mask {
+                    VStack(spacing: 0) {
+                        LinearGradient(
+                            colors: gradientColors,
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .frame(height: 15)
+                        
+                        Rectangle()
+                    }
+                }
         }
     }
-    
+
 }
 
 #Preview {
-    SwiftPresso.configure(
-        host: "hairify.ru",
-        isShowContentInWebView: false
-    )
-    return SwiftPresso.View.postList()
+    SwiftPresso.View.default()
 }

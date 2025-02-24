@@ -120,14 +120,10 @@ private extension View {
     func clippedRectangle(size: CGSize) -> some View {
         self
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .frame(width: size.width / 3)
+            .frame(width: size.width / 2.8)
     }
 }
 
 #Preview {
-    SwiftPresso.configure(
-        host: "hairify.ru",
-        isShowContentInWebView: false
-    )
-    return SwiftPresso.View.postList()
+    SwiftPresso.View.default()
 }
