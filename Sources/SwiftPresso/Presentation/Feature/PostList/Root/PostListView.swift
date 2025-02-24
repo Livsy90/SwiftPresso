@@ -124,11 +124,7 @@ struct PostListView<Placeholder: View>: View {
             guard let newValue else { return }
             showPostListByCategory(newValue)
         })
-        .onGeometryChange(for: CGSize.self) { geometry in
-            return geometry.size
-        } action: { newValue in
-            size = newValue
-        }
+        .readSize($size)
         .webView(
             url: $urlToOpen,
             onTag: { tagName in
@@ -339,7 +335,7 @@ struct PostListView<Placeholder: View>: View {
 
 #Preview {
     SwiftPresso.configure(
-        host: "livsycode.com",
+        host: "hairify.ru",
         isShowContentInWebView: false
     )
     return SwiftPresso.View.postList()

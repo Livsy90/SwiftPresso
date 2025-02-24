@@ -16,7 +16,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Livsy90/SkavokNetworking.git", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/Livsy90/ApricotNavigation.git", .upToNextMajor(from: "1.0.0"))
+        .package(url: "https://github.com/Livsy90/ApricotNavigation.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/kean/Nuke.git", .upToNextMajor(from: "12.8.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -25,7 +26,9 @@ let package = Package(
             name: "SwiftPresso",
             dependencies: [
                 "SkavokNetworking",
-                "ApricotNavigation"
+                "ApricotNavigation",
+                "Nuke",
+                .product(name: "NukeUI", package: "nuke")
             ]
         )
     ],

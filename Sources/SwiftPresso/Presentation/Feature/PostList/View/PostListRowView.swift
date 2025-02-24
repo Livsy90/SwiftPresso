@@ -1,5 +1,7 @@
 import SwiftUI
 import ApricotNavigation
+import NukeUI
+import Nuke
 
 struct PostListRowView<Placeholder: View>: View {
     
@@ -11,6 +13,8 @@ struct PostListRowView<Placeholder: View>: View {
     @Environment(Router.self) private var router
     @Environment(\.configuration) private var configuration: Preferences.Configuration
     
+    @State private var size: CGSize = .zero
+    
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -18,34 +22,32 @@ struct PostListRowView<Placeholder: View>: View {
                 .opacity(0.15)
                 .overlay {
                     if post.isPasswordProtected {
-                        VStack {
-                            HStack {
-                                Spacer()
-                                Preferences.passwordProtectedIcon.image
-                                    .font(.footnote)
-                                    .foregroundStyle(Preferences.accentColor)
-                                    .padding(16)
-                            }
-                            Spacer()
-                        }
+                        passwordProtectedView
                     }
                 }
-            VStack {
-                rowBody
-                if let date = post.date {
-                    Text(date.formatted(date: .abbreviated, time: .omitted))
-                        .font(.footnote)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Preferences.accentColor)
-                        .padding(.vertical, 8)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                if let imgURL = post.imgURL {
+                    image(url: imgURL)
                 }
+                
+                VStack {
+                    rowBody
+                    Spacer()
+                    if let date = post.date {
+                        Text(date.formatted(date: .abbreviated, time: .omitted))
+                            .font(.caption2)
+                            .foregroundStyle(Preferences.accentColor.opacity(0.7))
+                            .padding(.vertical, 8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                .padding()
             }
-            .padding()
         }
         .frame(maxWidth: .infinity)
         .frame(minHeight: 80)
         .environment(\.configuration, configuration)
+        .readSize($size)
     }
     
     @ViewBuilder
@@ -71,4 +73,41 @@ struct PostListRowView<Placeholder: View>: View {
         }
     }
     
+    private var passwordProtectedView: some View {
+        VStack {
+            HStack {
+                Spacer()
+                Preferences.passwordProtectedIcon.image
+                    .font(.footnote)
+                    .foregroundStyle(Preferences.accentColor)
+                    .padding(12)
+            }
+            Spacer()
+        }
+    }
+    
+    private func image(url: URL) -> some View {
+        LazyImage(url: url) { state in
+            if let image = state.image {
+                image
+                    .resizable()
+                    .scaledToFill()
+            } else if state.error != nil {
+                Image(systemName: "wifi.exclamationmark")
+            } else {
+                ShimmerView()
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .frame(width: size.width / 4)
+    }
+    
+}
+
+#Preview {
+    SwiftPresso.configure(
+        host: "hairify.ru",
+        isShowContentInWebView: false
+    )
+    return SwiftPresso.View.postList()
 }
