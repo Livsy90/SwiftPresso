@@ -41,7 +41,7 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
                     let distance = min(0, frame.minY)
                     
                     return content
-                        .offset(y: -distance / 1.25)
+                        .offset(y: -distance / 1.6)
                         .blur(radius: -distance / 30)
                 }
             
@@ -141,9 +141,9 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
             
             titleView()
                 .background {
-                    Capsule()
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(.ultraThinMaterial)
-                        .shadow(radius: 12)
+                        .shadow(radius: 8)
                 }
                 .padding(12)
         }
