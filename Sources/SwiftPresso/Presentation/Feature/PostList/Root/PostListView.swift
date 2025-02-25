@@ -1,7 +1,7 @@
 import SwiftUI
 import ApricotNavigation
 
-struct PostListView<Placeholder: View>: View {
+struct PostListView: View {
     
     @Environment(Router.self) private var router
     @Environment(\.configuration) private var configuration: Preferences.Configuration
@@ -21,7 +21,6 @@ struct PostListView<Placeholder: View>: View {
     @State private var isCategoryMenuExpanded: Bool = true
     @State private var chosenPage: PostModel?
     
-    private let loadingPlaceholder: () -> Placeholder
     private var isTagViewDataLoading: Bool {
         viewModel.tagsToPresent.isEmpty
     }
@@ -29,116 +28,106 @@ struct PostListView<Placeholder: View>: View {
     init(
         viewModel: PostListViewModel,
         externalTagName: Binding<String?>,
-        externalCategoryName: Binding<String?>,
-        loadingPlaceholder: @escaping () -> Placeholder
+        externalCategoryName: Binding<String?>
     ) {
         self.viewModel = viewModel
         _externalTagName = externalTagName
         _externalCategoryName = externalCategoryName
-        
-        self.loadingPlaceholder = loadingPlaceholder
     }
     
     var body: some View {
-        List {
-            tagView()
-            
-            listView()
-            
-            if viewModel.isInitialLoading {
-                placeholder()
-                    .frame(maxWidth: .infinity)
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-            }
-            
-            if viewModel.isLoadMore {
-                HStack {
-                    Spacer()
-                    ProgressView()
-                    Spacer()
+        ZStack(alignment: .center) {
+            VStack {
+                List {
+                    tagView()
+                    descriptionView(viewModel.chosenTag)
+                    listView()
                 }
-                .id(UUID())
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-                .padding(.horizontal)
-            }
-        }
-        .scrollDismissesKeyboard(.interactively)
-        .listStyle(.plain)
-        .listRowSpacing(12)
-        .scrollContentBackground(.hidden)
-        .background {
-            configuration.backgroundColor
-                .edgesIgnoringSafeArea(.all)
-        }
-        .refreshable { [weak viewModel] in
-            viewModel?.reload()
-        }
-        .navigationTitle(viewModel.mode.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                navigationBarPrincipalItem()
-                    .disabled(viewModel.isInitialLoading)
+                .scrollDismissesKeyboard(.interactively)
+                .listStyle(.plain)
+                .listRowSpacing(12)
+                .scrollContentBackground(.hidden)
+                .background {
+                    configuration.backgroundColor
+                        .edgesIgnoringSafeArea(.all)
+                }
+                .refreshable { [weak viewModel] in
+                    viewModel?.reload()
+                }
+                .navigationTitle(viewModel.mode.title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        navigationBarPrincipalItem()
+                            .disabled(viewModel.isInitialLoading)
+                    }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        navigationBarLeadingItem()
+                            .disabled(viewModel.isInitialLoading)
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        navigationBarTrailingItem()
+                            .disabled(viewModel.isInitialLoading)
+                    }
+                }
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                .onSubmit(of: .search) {
+                    viewModel.search(searchText)
+                }
+                .onChange(of: searchText) { _, newValue in
+                    guard newValue.isEmpty else { return }
+                    DispatchQueue.main.async {
+                        self.viewModel.loadDefault()
+                    }
+                }
+                .onChange(of: externalTagName, { _, newValue in
+                    guard let newValue else { return }
+                    showPostListByTag(newValue)
+                })
+                .onChange(of: externalCategoryName, { _, newValue in
+                    guard let newValue else { return }
+                    showPostListByCategory(newValue)
+                })
+                .readSize($size)
+                .webView(
+                    url: $urlToOpen,
+                    onTag: { tagName in
+                        showPostListByTag(tagName)
+                    },
+                    onCategory: { categoryName in
+                        showPostListByCategory(categoryName)
+                    },
+                    placeholder: {
+                        LoadingIndicator(isPrimary: true)
+                            .id(UUID())
+                    }
+                )
+                .sheet(isPresented: $isShowMenu, onDismiss: {
+                    openPageIfNeeded(chosenPage)
+                    chosenPage = nil
+                }, content: {
+                    menu()
+                        .presentationDetents([.medium, .large])
+                        .presentationDragIndicator(.visible)
+                })
+                .task {
+                    isTagMenuExpanded = configuration.isMenuExpanded
+                    isPageMenuExpanded = configuration.isMenuExpanded
+                    isCategoryMenuExpanded = configuration.isMenuExpanded
+                }
+                
+                LoadingIndicator(isPrimary: false)
+                    .opacity(viewModel.isLoadMore ? 1 : 0)
+                    .padding(.top, 4)
             }
             
-            ToolbarItem(placement: .topBarLeading) {
-                navigationBarLeadingItem()
-                    .disabled(viewModel.isInitialLoading)
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                navigationBarTrailingItem()
-                    .disabled(viewModel.isInitialLoading)
-            }
+            LoadingIndicator(isPrimary: true)
+                .opacity(viewModel.isInitialLoading ? 1 : 0)
         }
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-        .onSubmit(of: .search) {
-            viewModel.search(searchText)
-        }
-        .onChange(of: searchText) { _, newValue in
-            guard newValue.isEmpty else { return }
-            DispatchQueue.main.async {
-                self.viewModel.loadDefault()
-            }
-        }
-        .onChange(of: externalTagName, { _, newValue in
-            guard let newValue else { return }
-            showPostListByTag(newValue)
-        })
-        .onChange(of: externalCategoryName, { _, newValue in
-            guard let newValue else { return }
-            showPostListByCategory(newValue)
-        })
-        .readSize($size)
-        .webView(
-            url: $urlToOpen,
-            onTag: { tagName in
-                showPostListByTag(tagName)
-            },
-            onCategory: { categoryName in
-                showPostListByCategory(categoryName)
-            },
-            placeholder: {
-                loadingPlaceholder()
-                    .id(UUID())
-            }
-        )
-        .sheet(isPresented: $isShowMenu, onDismiss: {
-            openPageIfNeeded(chosenPage)
-            chosenPage = nil
-        }, content: {
-            menu()
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        })
-        .task {
-            isTagMenuExpanded = configuration.isMenuExpanded
-            isPageMenuExpanded = configuration.isMenuExpanded
-            isCategoryMenuExpanded = configuration.isMenuExpanded
-        }
+        .ignoresSafeArea(.all, edges: .bottom)
     }
     
 }
@@ -265,7 +254,7 @@ private extension PostListView {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    func tagRow(tag: CategoryModel) -> some View {
+    func tagItem(tag: CategoryModel) -> some View {
         Button {
             guard viewModel.chosenTag != tag else { return }
             viewModel.onTag(tag.name)
@@ -274,6 +263,7 @@ private extension PostListView {
                 .font(.headline)
                 .fontWeight(.semibold)
                 .multilineTextAlignment(.center)
+                .foregroundStyle(configuration.textColor)
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 12)
@@ -281,6 +271,20 @@ private extension PostListView {
                 }
         }
         .scalable()
+    }
+    
+    
+    @ViewBuilder
+    func descriptionView(_ model: CategoryModel?) -> some View {
+        if let model {
+            Text(model.description)
+                .font(.subheadline)
+                .multilineTextAlignment(.leading)
+                .foregroundStyle(configuration.textColor)
+                .padding(.horizontal, 8)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+        }
     }
     
     func listView() -> some View {
@@ -294,7 +298,7 @@ private extension PostListView {
                     showPostListByCategory(categoryName)
                 },
                 placeholder: {
-                    loadingPlaceholder()
+                    LoadingIndicator(isPrimary: true)
                 }
             )
             .listRowBackground(Color.clear)
@@ -307,7 +311,7 @@ private extension PostListView {
     }
     
     func tagPlaceholder() -> some View {
-        tagRow(tag: .init(id: .zero, count: .zero, name: "Placeholder"))
+        tagItem(tag: .init(id: .zero, count: .zero, name: "Placeholder", description: ""))
             .opacity(0)
             .overlay {
                 ShimmerView()
@@ -332,12 +336,12 @@ private extension PostListView {
                 ScrollView(.horizontal) {
                     LazyHStack {
                         ForEach(viewModel.tagsToPresent, id: \.self) { tag in
-                            tagRow(tag: tag)
+                            tagItem(tag: tag)
                                 .id(tag.id)
                         }
                     }
                 }
-                .onChange(of: viewModel.chosenTag ?? .init(id: 0, count: 0, name: "")) { _, newValue in
+                .onChange(of: viewModel.chosenTag ?? .init(id: 0, count: 0, name: "", description: "")) { _, newValue in
                     withAnimation {
                         proxy.scrollTo(newValue.id)
                     }
@@ -349,11 +353,6 @@ private extension PostListView {
         .background {
             configuration.backgroundColor
         }
-    }
-    
-    func placeholder() -> some View {
-        loadingPlaceholder()
-            .id(UUID())
     }
     
     func navigationBarPrincipalItem() -> some View {

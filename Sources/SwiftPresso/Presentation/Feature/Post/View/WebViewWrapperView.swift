@@ -82,11 +82,15 @@ struct WebViewWrapperView<Content: View>: View {
                     .opacity(isLoading ? 0 : 1)
                     .ignoresSafeArea(edges: .bottom)
                 }
-                placeHolder()
+                configuration.backgroundColor
+                    .ignoresSafeArea(.all)
+                    .overlay {
+                        placeHolder()
+                    }
                     .opacity(isLoading ? 1 : 0)
-                    .animation(.easeInOut(duration: isLoading ? 0 : 0.5), value: isLoading)
                     .allowsHitTesting(false)
-                    .ignoresSafeArea()
+                    .animation(.easeInOut(duration: isLoading ? 0 : 0.5), value: isLoading)
+                    
             }
         }
         .background {
@@ -96,4 +100,8 @@ struct WebViewWrapperView<Content: View>: View {
         }
     }
     
+}
+
+#Preview {
+    SwiftPresso.View.default()
 }

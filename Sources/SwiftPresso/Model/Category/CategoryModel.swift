@@ -4,6 +4,7 @@ public struct CategoryModel: Decodable, Sendable, Identifiable {
     public let id: Int
     public let count: Int
     public let name: String
+    public let description: String
 }
 
 extension CategoryModel: Hashable {

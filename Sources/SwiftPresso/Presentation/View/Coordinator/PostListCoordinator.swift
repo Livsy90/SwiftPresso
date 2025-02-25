@@ -5,11 +5,10 @@ enum Destination: Hashable {
     case postDetails(post: PostModel)
 }
 
-struct PostListCoordinator<Placeholder: View, ContentUnavailable: View>: View {
+struct PostListCoordinator<ContentUnavailable: View>: View {
     
     @Environment(\.configuration) private var configuration: Preferences.Configuration
         
-    let placeholder: (() -> Placeholder)
     let postContentUnavailableView: (() -> ContentUnavailable)
     
     @State private var router: Router = .init()
@@ -56,9 +55,8 @@ private extension PostListCoordinator {
         PostListView(
             viewModel: .init(postPerPage: configuration.postsPerPage),
             externalTagName: $tagName,
-            externalCategoryName: $categoryName) {
-                placeholder()
-            }
+            externalCategoryName: $categoryName
+        )
     }
     
     func postView(_ post: PostModel) -> some View {
@@ -66,9 +64,6 @@ private extension PostListCoordinator {
             viewModel: .init(post: post, width: size.width),
             tagName: $tagName,
             categoryName: $categoryName,
-            placeholder: {
-                placeholder()
-            },
             contentUnavailableView: {
                 postContentUnavailableView()
             }
@@ -78,6 +73,5 @@ private extension PostListCoordinator {
 }
 
 #Preview {
-    SwiftPresso.configure(host: "livsycode.com")
-    return SwiftPresso.View.postList()
+    SwiftPresso.View.default()
 }

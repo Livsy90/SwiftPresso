@@ -125,10 +125,12 @@ extension PostListViewModel {
             loadDefault()
             return
         }
-        chosenTag = tag
         mode = .tag(name.replacingOccurrences(of: "-", with: " ").capitalized)
         reset()
         loadPosts()
+        withAnimation {
+            self.chosenTag = tag
+        }
     }
     
     func onCategory(_ name: String) {
@@ -294,7 +296,7 @@ private extension PostListViewModel {
     }
     
     func setTagsToPresent(_ tags: [CategoryModel]) {
-        var tagsToPresent: [CategoryModel] = [.init(id: 0, count: 0, name: "All")]
+        var tagsToPresent: [CategoryModel] = [.init(id: 0, count: 0, name: "All", description: "")]
         tagsToPresent += tags
         withAnimation {
             self.tagsToPresent = tagsToPresent

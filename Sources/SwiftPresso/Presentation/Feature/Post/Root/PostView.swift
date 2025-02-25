@@ -2,7 +2,7 @@ import SwiftUI
 import ApricotNavigation
 import NukeUI
 
-struct PostView<Placeholder: View, ContentUnavailable: View>: View {
+struct PostView<ContentUnavailable: View>: View {
     
     @State var viewModel: PostViewModel
     @Binding var tagName: String?
@@ -10,7 +10,6 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     
     @Environment(\.configuration) private var configuration: Preferences.Configuration
     
-    let placeholder: () -> Placeholder
     let contentUnavailableView: () -> ContentUnavailable
     
     @Environment(Router.self) private var router
@@ -30,69 +29,71 @@ struct PostView<Placeholder: View, ContentUnavailable: View>: View {
     
     var body: some View {
         ScrollView {
-            if viewModel.isInitialLoading {
-                placeholder()
-            }
-            
-            headerView()
-                .opacity(viewModel.isShowContent ? 1 : 0)
-                .visualEffect { content, proxy in
-                    let frame = proxy.frame(in: .scrollView(axis: .vertical))
-                    let distance = min(0, frame.minY)
-                    
-                    return content
-                        .offset(y: -distance / 1.6)
-                        .blur(radius: -distance / 30)
-                }
-            
-            content()
-        }
-        .scrollClipDisabled()
-        .alert(isPresented: $alertMessage.boolValue()) {
-            Alert(title: Text(alertMessage ?? ""))
-        }
-        .alert(isPresented: $viewModel.error.boolValue()) {
-            Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
-        }
-        .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
-        .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                ProgressView()
-                    .opacity(viewModel.isLoading || viewModel.isInitialLoading ? 1 : 0)
+            ZStack(alignment: .center) {
+                headerView()
+                    .opacity(viewModel.isShowContent ? 1 : 0)
+                    .visualEffect { content, proxy in
+                        let frame = proxy.frame(in: .scrollView(axis: .vertical))
+                        let distance = min(0, frame.minY)
+                        
+                        return content
+                            .offset(y: -distance / 1.6)
+                            .blur(radius: -distance / 30)
+                    }
                 
-                if let url = viewModel.url {
-                    ShareLink(item: url) {
-                        Image(systemName: "square.and.arrow.up")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 22)
+                content()
+            }
+            .scrollClipDisabled()
+            .alert(isPresented: $alertMessage.boolValue()) {
+                Alert(title: Text(alertMessage ?? ""))
+            }
+            .alert(isPresented: $viewModel.error.boolValue()) {
+                Alert(title: Text(viewModel.error?.localizedDescription ?? ""))
+            }
+            .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    LoadingIndicator(isPrimary: false)
+                        .opacity(viewModel.isLoading ? 1 : 0)
+                    
+                    if let url = viewModel.url {
+                        ShareLink(item: url) {
+                            Image(systemName: "square.and.arrow.up")
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 22)
+                        }
                     }
                 }
             }
-        }
-        .background {
-            configuration.backgroundColor
-                .ignoresSafeArea()
-        }
-        .onAppear {
-            Task {
-                await viewModel.onAppear {
-                    isUnavailable = true
+            .background {
+                configuration.backgroundColor
+                    .ignoresSafeArea()
+            }
+            .onAppear {
+                Task {
+                    await viewModel.onAppear {
+                        isUnavailable = true
+                    }
                 }
             }
-        }
-        .onChange(of: nextPostID) { _, newValue in
-            guard let newValue else { return }
-            Task {
-                do {
-                    let post = try await viewModel.post(with: newValue)
-                    nextPostID = nil
-                    router.navigate(to: Destination.postDetails(post: post))
-                } catch {
-                    nextPostID = nil
-                    alertMessage = error.localizedDescription
+            .onChange(of: nextPostID) { _, newValue in
+                guard let newValue else { return }
+                Task {
+                    do {
+                        let post = try await viewModel.post(with: newValue)
+                        nextPostID = nil
+                        router.navigate(to: Destination.postDetails(post: post))
+                    } catch {
+                        nextPostID = nil
+                        alertMessage = error.localizedDescription
+                    }
                 }
+            }
+            if viewModel.isInitialLoading {
+                LoadingIndicator(isPrimary: true)
+                    .padding(.top, 150)
             }
         }
     }
