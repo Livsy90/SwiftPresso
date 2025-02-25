@@ -8,10 +8,9 @@ struct ShimmerPlaceholder: View {
         ScrollView {
             ForEach(1...100, id: \.self) { _ in
                 ShimmerView()
-                     .cornerRadius(5)
-                     .frame(height: 80)
-                     .padding(.vertical, 20)
-                     .padding(.horizontal, 12)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .frame(height: 80)
+                    .padding(6)
             }
         }
         .scrollDisabled(true)

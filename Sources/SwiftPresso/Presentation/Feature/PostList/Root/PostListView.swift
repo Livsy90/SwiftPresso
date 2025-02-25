@@ -22,6 +22,9 @@ struct PostListView<Placeholder: View>: View {
     @State private var chosenPage: PostModel?
     
     private let loadingPlaceholder: () -> Placeholder
+    private var isTagViewDataLoading: Bool {
+        viewModel.tagsToPresent.isEmpty
+    }
     
     init(
         viewModel: PostListViewModel,
@@ -38,25 +41,9 @@ struct PostListView<Placeholder: View>: View {
     
     var body: some View {
         List {
-            ForEach(viewModel.postList, id: \.self) { post in
-                PostListRowView(
-                    post: post,
-                    onTag: { tagName in
-                        showPostListByTag(tagName)
-                    },
-                    onCategory: { categoryName in
-                        showPostListByCategory(categoryName)
-                    },
-                    placeholder: {
-                        loadingPlaceholder()
-                    }
-                )
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-                .onAppear {
-                    viewModel.updateIfNeeded(id: post.id)
-                }
-            }
+            tagView()
+            
+            listView()
             
             if viewModel.isInitialLoading {
                 placeholder()
@@ -79,11 +66,10 @@ struct PostListView<Placeholder: View>: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .listStyle(.plain)
-        .listRowSpacing(14)
+        .listRowSpacing(12)
         .scrollContentBackground(.hidden)
         .background {
-            Rectangle()
-                .fill(configuration.backgroundColor)
+            configuration.backgroundColor
                 .edgesIgnoringSafeArea(.all)
         }
         .refreshable { [weak viewModel] in
@@ -95,14 +81,17 @@ struct PostListView<Placeholder: View>: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 navigationBarPrincipalItem()
+                    .disabled(viewModel.isInitialLoading)
             }
             
             ToolbarItem(placement: .topBarLeading) {
                 navigationBarLeadingItem()
+                    .disabled(viewModel.isInitialLoading)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 navigationBarTrailingItem()
+                    .disabled(viewModel.isInitialLoading)
             }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
@@ -145,7 +134,6 @@ struct PostListView<Placeholder: View>: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         })
-        .disabled(viewModel.isInitialLoading)
         .task {
             isTagMenuExpanded = configuration.isMenuExpanded
             isPageMenuExpanded = configuration.isMenuExpanded
@@ -153,45 +141,13 @@ struct PostListView<Placeholder: View>: View {
         }
     }
     
-    private func placeholder() -> some View {
-        loadingPlaceholder()
-            .id(UUID())
-    }
+}
+
+// MARK: - Views
+
+private extension PostListView {
     
-    private func navigationBarPrincipalItem() -> some View {
-        HStack {
-            Text(viewModel.mode.title)
-                .fontWeight(.semibold)
-                .foregroundStyle(.primary)
-                .frame(width: size.width, alignment: .center)
-                .padding(.horizontal)
-        }
-    }
-    
-    @ViewBuilder
-    private func navigationBarTrailingItem() -> some View {
-        if configuration.isShowTagMenu || configuration.isShowPageMenu || configuration.isShowCategoryMenu {
-            Button {
-                isShowMenu = true
-            } label: {
-                Image(systemName: "ellipsis")
-            }
-        }
-    }
-    
-    private func navigationBarLeadingItem() -> some View {
-        HStack {
-            Button {
-                viewModel.loadDefault()
-            } label: {
-                configuration.homeIcon
-            }
-            .opacity(viewModel.isRefreshable ? 1 : 0)
-            .symbolEffect(.bounce, value: viewModel.isRefreshable)
-        }
-    }
-    
-    private func menu() -> some View {
+    func menu() -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 if configuration.isShowPageMenu {
@@ -309,7 +265,134 @@ struct PostListView<Placeholder: View>: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private func openPageIfNeeded(_ page: PostModel?) {
+    func tagRow(tag: CategoryModel) -> some View {
+        Button {
+            guard viewModel.chosenTag != tag else { return }
+            viewModel.onTag(tag.name)
+        } label: {
+            Text(tag.name)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .multilineTextAlignment(.center)
+                .padding()
+                .background {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(configuration.accentColor.opacity(isTagChosen(tag) ? 0.5 : 0.15))
+                }
+        }
+        .scalable()
+    }
+    
+    func listView() -> some View {
+        ForEach(viewModel.postList, id: \.self) { post in
+            PostListRowView(
+                post: post,
+                onTag: { tagName in
+                    showPostListByTag(tagName)
+                },
+                onCategory: { categoryName in
+                    showPostListByCategory(categoryName)
+                },
+                placeholder: {
+                    loadingPlaceholder()
+                }
+            )
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .onAppear {
+                viewModel.updateIfNeeded(id: post.id)
+            }
+        }
+        .disabled(viewModel.isInitialLoading)
+    }
+    
+    func tagPlaceholder() -> some View {
+        tagRow(tag: .init(id: .zero, count: .zero, name: "Placeholder"))
+            .opacity(0)
+            .overlay {
+                ShimmerView()
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+    }
+    
+    @ViewBuilder
+    func tagView() -> some View {
+        ZStack {
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    ForEach(0...100, id: \.self) { _ in
+                        tagPlaceholder()
+                    }
+                }
+            }
+            .scrollDisabled(true)
+            .tagViewSettings()
+            .opacity(isTagViewDataLoading ? 1 : 0)
+            
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal) {
+                    LazyHStack {
+                        ForEach(viewModel.tagsToPresent, id: \.self) { tag in
+                            tagRow(tag: tag)
+                                .id(tag.id)
+                        }
+                    }
+                }
+                .tagViewSettings()
+                .onChange(of: viewModel.chosenTag ?? .init(id: 0, count: 0, name: "")) { _, newValue in
+                    withAnimation {
+                        proxy.scrollTo(newValue.id)
+                    }
+                }
+            }
+            .opacity(isTagViewDataLoading ? 0 : 1)
+        }
+    }
+    
+    func placeholder() -> some View {
+        loadingPlaceholder()
+            .id(UUID())
+    }
+    
+    func navigationBarPrincipalItem() -> some View {
+        HStack {
+            Text(viewModel.mode.title)
+                .fontWeight(.semibold)
+                .foregroundStyle(.primary)
+                .frame(width: size.width, alignment: .center)
+                .padding(.horizontal)
+        }
+    }
+    
+    @ViewBuilder
+    func navigationBarTrailingItem() -> some View {
+        if configuration.isShowTagMenu || configuration.isShowPageMenu || configuration.isShowCategoryMenu {
+            Button {
+                isShowMenu = true
+            } label: {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+    
+    func navigationBarLeadingItem() -> some View {
+        HStack {
+            Button {
+                viewModel.loadDefault()
+            } label: {
+                configuration.homeIcon
+            }
+            .opacity(viewModel.isRefreshable ? 1 : 0)
+            .symbolEffect(.bounce, value: viewModel.isRefreshable)
+        }
+    }
+}
+
+// MARK: - Helpers
+
+private extension PostListView {
+    
+    func openPageIfNeeded(_ page: PostModel?) {
         guard let page else { return }
         
         if configuration.isShowContentInWebView {
@@ -320,16 +403,37 @@ struct PostListView<Placeholder: View>: View {
         }
     }
     
-    private func showPostListByTag(_ tagName: String) {
+    func showPostListByTag(_ tagName: String) {
         searchText.removeAll()
         viewModel.onTag(tagName)
     }
     
-    private func showPostListByCategory(_ categoryName: String) {
+    func showPostListByCategory(_ categoryName: String) {
         searchText.removeAll()
         viewModel.onCategory(categoryName)
     }
     
+    func isTagChosen(_ tag: CategoryModel) -> Bool {
+        if let chosenTag = viewModel.chosenTag {
+            chosenTag == tag
+        } else if tag.id == .zero, viewModel.chosenTag == nil {
+            true
+        } else {
+            false
+        }
+    }
+    
+}
+
+private extension View {
+    func tagViewSettings() -> some View {
+        self
+            .scrollIndicators(.hidden)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .frame(height: 80)
+            .padding(.horizontal, 8)
+    }
 }
 
 #Preview {

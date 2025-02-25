@@ -46,7 +46,7 @@ struct PostListRowView<Placeholder: View>: View {
         }
         .background {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(Preferences.accentColor)
+                .fill(configuration.accentColor)
                 .opacity(0.15)
         }
         .frame(maxWidth: .infinity)

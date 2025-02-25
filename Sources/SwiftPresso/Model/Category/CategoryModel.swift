@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CategoryModel: Decodable, Sendable {
+public struct CategoryModel: Decodable, Sendable, Identifiable {
     public let id: Int
     public let count: Int
     public let name: String

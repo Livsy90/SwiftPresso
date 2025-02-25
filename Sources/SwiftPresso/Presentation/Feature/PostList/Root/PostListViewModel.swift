@@ -1,5 +1,6 @@
 import Observation
 import Foundation
+import SwiftUI
 
 @Observable
 @MainActor
@@ -31,6 +32,12 @@ final class PostListViewModel {
     var isLoadMore: Bool {
         isLoading && !isError && !isInitialLoading
     }
+    private(set) var chosenTag: CategoryModel?
+    private(set) var chosenCategory: CategoryModel?
+    private(set) var chosenPage: PostModel?
+    
+    private(set) var tagsToPresent: [CategoryModel] = []
+    
     private(set) var isLoading: Bool = true
     private(set) var postList: [PostModel] = []
     private(set) var pageList: [PostModel] = []
@@ -63,7 +70,10 @@ final class PostListViewModel {
         Task {
             async let postList = await getPostList(pageNumber: 1)
             async let pageList = await getPages()
-            self.postList = try await postList
+            let _postList = try await postList
+            withAnimation {
+                self.postList = _postList
+            }
             self.pageList = await pageList
             shouldShowFullScreenPlaceholder = false
             
@@ -71,6 +81,8 @@ final class PostListViewModel {
             async let categories = await getCategories()
             self.categories = await categories
             self.tags = await tags
+            setTagsToPresent(self.tags)
+            
             pageNumber += 1
             isLoading = false
         }
@@ -94,6 +106,7 @@ extension PostListViewModel {
     }
     
     func loadDefault() {
+        chosenTag = nil
         isRefreshable = false
         mode = .common
         reset()
@@ -108,6 +121,11 @@ extension PostListViewModel {
     
     func onTag(_ name: String) {
         isRefreshable = true
+        guard let tag = tags.first(where: { $0.name == name }) else {
+            loadDefault()
+            return
+        }
+        chosenTag = tag
         mode = .tag(name.replacingOccurrences(of: "-", with: " ").capitalized)
         reset()
         loadPosts()
@@ -142,6 +160,9 @@ private extension PostListViewModel {
                 postList += try await getPostList(pageNumber: pageNumber)
                 try Task.checkCancellation()
                 self.postList = postList
+                
+                isLoading = false
+                shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
             }
@@ -155,6 +176,9 @@ private extension PostListViewModel {
                 )
                 try Task.checkCancellation()
                 self.postList = postList
+                
+                isLoading = false
+                shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
             }
@@ -168,6 +192,9 @@ private extension PostListViewModel {
                 )
                 try Task.checkCancellation()
                 self.postList = postList
+                
+                isLoading = false
+                shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
             }
@@ -181,14 +208,15 @@ private extension PostListViewModel {
                 )
                 try Task.checkCancellation()
                 self.postList = postList
+                
+                isLoading = false
+                shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
             }
         }
         
         pageNumber += 1
-        isLoading = false
-        shouldShowFullScreenPlaceholder = false
     }
     
     func getPostList(
@@ -263,6 +291,14 @@ private extension PostListViewModel {
             .filter { $0.name.compare(name, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame }
             .map { $0.id }
             .first
+    }
+    
+    func setTagsToPresent(_ tags: [CategoryModel]) {
+        var tagsToPresent: [CategoryModel] = [.init(id: 0, count: 0, name: "All")]
+        tagsToPresent += tags
+        withAnimation {
+            self.tagsToPresent = tagsToPresent
+        }
     }
     
 }

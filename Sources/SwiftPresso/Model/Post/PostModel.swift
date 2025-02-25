@@ -1,6 +1,6 @@
 import Foundation.NSDate
 
-public struct PostModel: Sendable {
+public struct PostModel: Sendable, Identifiable {
     public let id: Int
     public let date: Date?
     public let title: String

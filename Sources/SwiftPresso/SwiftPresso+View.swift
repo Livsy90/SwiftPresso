@@ -65,7 +65,7 @@ public extension SwiftPresso {
 extension SwiftPresso.View {
     @MainActor static func `default`() -> some View {
         SwiftPresso.configure(
-            host: "hairify.ru",
+            host: "livsycode.com",
             isShowContentInWebView: false
         )
         return SwiftPresso.View.postList()
