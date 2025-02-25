@@ -326,7 +326,6 @@ private extension PostListView {
                 }
             }
             .scrollDisabled(true)
-            .tagViewSettings()
             .opacity(isTagViewDataLoading ? 1 : 0)
             
             ScrollViewReader { proxy in
@@ -338,7 +337,6 @@ private extension PostListView {
                         }
                     }
                 }
-                .tagViewSettings()
                 .onChange(of: viewModel.chosenTag ?? .init(id: 0, count: 0, name: "")) { _, newValue in
                     withAnimation {
                         proxy.scrollTo(newValue.id)
@@ -346,6 +344,10 @@ private extension PostListView {
                 }
             }
             .opacity(isTagViewDataLoading ? 0 : 1)
+        }
+        .tagViewSettings()
+        .background {
+            configuration.backgroundColor
         }
     }
     
