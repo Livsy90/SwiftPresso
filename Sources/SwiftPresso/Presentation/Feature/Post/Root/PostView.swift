@@ -28,20 +28,22 @@ struct PostView<ContentUnavailable: View>: View {
     }
     
     var body: some View {
-        ScrollView {
-            ZStack(alignment: .center) {
-                headerView()
-                    .opacity(viewModel.isShowContent ? 1 : 0)
-                    .visualEffect { content, proxy in
-                        let frame = proxy.frame(in: .scrollView(axis: .vertical))
-                        let distance = min(0, frame.minY)
-                        
-                        return content
-                            .offset(y: -distance / 1.6)
-                            .blur(radius: -distance / 30)
-                    }
-                
-                content()
+        ZStack(alignment: .center) {
+            ScrollView {
+                VStack {
+                    headerView()
+                        .opacity(viewModel.isShowContent ? 1 : 0)
+                        .visualEffect { content, proxy in
+                            let frame = proxy.frame(in: .scrollView(axis: .vertical))
+                            let distance = min(0, frame.minY)
+                            
+                            return content
+                                .offset(y: -distance / 1.6)
+                                .blur(radius: -distance / 30)
+                        }
+                    
+                    content()
+                }
             }
             .scrollClipDisabled()
             .alert(isPresented: $alertMessage.boolValue()) {
@@ -207,7 +209,7 @@ struct PostView<ContentUnavailable: View>: View {
                 }
         }
     }
-
+    
 }
 
 #Preview {
