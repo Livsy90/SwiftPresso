@@ -18,7 +18,6 @@ public enum SwiftPresso {
     ///   - postListFont: Post list font.
     ///   - postBodyFont: Post body font.
     ///   - postTitleFont: Post title font.
-    ///   - menuBackgroundColor: Menu background color.
     ///   - menuTextColor: Menu text color.
     ///   - homeIcon: The icon for the navigation bar button that restores the interface to its default state.
     ///   - homeTitle: Navigation title for default state.
@@ -48,7 +47,6 @@ public enum SwiftPresso {
         backgroundColor: Color = Color(uiColor: .systemBackground),
         accentColor: Color = .primary,
         textColor: Color = .primary,
-        menuBackgroundColor: Color = .primary,
         menuTextColor: Color = .primary,
         homeIcon: Image = Image(systemName: "house"),
         homeTitle: String = "Home",
@@ -82,7 +80,6 @@ public enum SwiftPresso {
                     postTitleFont: postTitleFont,
                     isShowFeaturedImage: isShowFeaturedImage,
                     isShowContentInWebView: isShowContentInWebView,
-                    menuBackgroundColor: menuBackgroundColor,
                     menuTextColor: menuTextColor,
                     backgroundColor: backgroundColor,
                     accentColor: accentColor,

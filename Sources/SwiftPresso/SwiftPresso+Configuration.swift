@@ -77,10 +77,7 @@ public extension SwiftPresso {
             
             /// Navigation title for search state.
             public static var searchTitle: String { Preferences.searchTitle }
-            
-            /// Menu background color.
-            public static var menuBackgroundColor: Color { Preferences.menuBackgroundColor }
-            
+                        
             /// Menu text color.
             public static var menuTextColor: Color { Preferences.menuTextColor }
             

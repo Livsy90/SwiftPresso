@@ -12,16 +12,12 @@ final class PostListViewModel {
         case category(String)
         case search(String)
         
-        var title: String {
+        var title: String? {
             switch self {
-            case .common:
-                SwiftPresso.Configuration.UI.homeTitle
-            case .tag(let title):
-                title
-            case .category(let title):
-                title
-            case .search:
-                SwiftPresso.Configuration.UI.searchTitle
+            case .common: nil
+            case .tag(let title): title
+            case .category(let title): title
+            case .search: SwiftPresso.Configuration.UI.searchTitle
             }
         }
     }
@@ -108,7 +104,9 @@ extension PostListViewModel {
     }
     
     func loadDefault() {
-        chosenTag = nil
+        withAnimation {
+            chosenTag = nil
+        }
         isRefreshable = false
         mode = .common
         reset()
@@ -127,7 +125,7 @@ extension PostListViewModel {
             loadDefault()
             return
         }
-        mode = .tag(name.replacingOccurrences(of: "-", with: " ").capitalized)
+        mode = .tag(name.refinedCategoryName)
         reset()
         loadPosts()
         withAnimation {
@@ -137,7 +135,7 @@ extension PostListViewModel {
     
     func onCategory(_ name: String) {
         isRefreshable = true
-        mode = .category(name.replacingOccurrences(of: "-", with: " ").capitalized)
+        mode = .category(name.refinedCategoryName)
         reset()
         loadPosts()
     }
@@ -312,4 +310,10 @@ private extension PostListViewModel {
         }
     }
     
+}
+
+private extension String {
+    var refinedCategoryName: String {
+        self.replacingOccurrences(of: "-", with: " ").capitalized
+    }
 }

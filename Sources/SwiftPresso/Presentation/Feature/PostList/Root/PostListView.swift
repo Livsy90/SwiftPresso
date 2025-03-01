@@ -60,6 +60,7 @@ private extension PostListView {
     func list() -> some View {
         List {
             tagView()
+            title()
             descriptionView(viewModel.chosenTag)
             listView()
             loadMoreIndicator()
@@ -76,7 +77,7 @@ private extension PostListView {
         .refreshable { [weak viewModel] in
             viewModel?.reload()
         }
-        .navigationTitle(viewModel.mode.title)
+        .navigationTitle(configuration.homeTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
         .toolbar {
@@ -138,6 +139,19 @@ private extension PostListView {
             isTagMenuExpanded = configuration.isMenuExpanded
             isPageMenuExpanded = configuration.isMenuExpanded
             isCategoryMenuExpanded = configuration.isMenuExpanded
+        }
+    }
+    
+    @ViewBuilder
+    func title() -> some View {
+        if let title = viewModel.mode.title {
+            Text(title)
+                .foregroundStyle(configuration.textColor)
+                .font(.headline)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, 8)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
         }
     }
     
@@ -384,7 +398,7 @@ private extension PostListView {
     
     func navigationBarPrincipalItem() -> some View {
         HStack {
-            Text(viewModel.mode.title)
+            Text(configuration.homeTitle)
                 .fontWeight(.semibold)
                 .foregroundStyle(.primary)
                 .frame(width: size.width, alignment: .center)

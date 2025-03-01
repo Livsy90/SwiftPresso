@@ -71,7 +71,6 @@ extension Preferences {
         let pageMenuTitle: String
         let tagMenuTitle: String
         let categoryMenuTitle: String
-        let menuBackgroundColor: Color
         let menuTextColor: Color
         let isParseHTMLWithYouTubePreviews: Bool
         let keychainKey: String
@@ -92,7 +91,6 @@ extension Preferences {
             postTitleFont: Font,
             isShowFeaturedImage: Bool,
             isShowContentInWebView: Bool,
-            menuBackgroundColor: Color,
             menuTextColor: Color,
             backgroundColor: Color,
             accentColor: Color,
@@ -126,7 +124,6 @@ extension Preferences {
             self.pageMenuTitle = pageMenuTitle
             self.tagMenuTitle = tagMenuTitle
             self.categoryMenuTitle = categoryMenuTitle
-            self.menuBackgroundColor = menuBackgroundColor
             self.menuTextColor = menuTextColor
             self.postsPerPage = postsPerPage
             self.httpScheme = httpScheme
@@ -167,7 +164,6 @@ extension Preferences.Configuration {
         postTitleFont: .largeTitle,
         isShowFeaturedImage: true,
         isShowContentInWebView: true,
-        menuBackgroundColor: .primary,
         menuTextColor: .primary,
         backgroundColor: Color(uiColor: .systemBackground),
         accentColor: .primary,

@@ -128,7 +128,6 @@ If you use SwiftPresso built-in views, you don't need to worry about the configu
     ///   - postListFont: Post list font.
     ///   - postBodyFont: Post body font.
     ///   - postTitleFont: Post title font.
-    ///   - menuBackgroundColor: Menu background color.
     ///   - menuTextColor: Menu text color.
     ///   - homeIcon: The icon for the navigation bar button that restores the interface to its default state.
     ///   - homeTitle: Navigation title for default state.
@@ -156,7 +155,6 @@ If you use SwiftPresso built-in views, you don't need to worry about the configu
         backgroundColor: Color = Color(uiColor: .systemBackground),
         accentColor: Color = .primary,
         textColor: Color = .primary,
-        menuBackgroundColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
         homeIcon: Image = Image(systemName: "house"),
         homeTitle: String = "Home",
