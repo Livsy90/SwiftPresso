@@ -371,9 +371,8 @@ private extension PostListView {
                                     let distance = min(0, frame.minX)
                                     
                                     return content
-                                        .hueRotation(.degrees(frame.origin.x / 10)) // Changed y to x
                                         .scaleEffect(1 + distance / 700)
-                                        .offset(x: -distance / 1.25) // Changed y offset to x offset
+                                        .offset(x: -distance / 1.25)
                                         .brightness(-distance / 400)
                                         .blur(radius: -distance / 50)
                                 }
@@ -392,30 +391,7 @@ private extension PostListView {
         .background {
             configuration.backgroundColor
         }
-        .overlay {
-            HStack(spacing: 0) {
-                LinearGradient(
-                    colors: gradientColors,
-                    startPoint: .trailing,
-                    endPoint: .leading
-                )
-                .frame(width: 18)
-                Rectangle()
-                    .opacity(0)
-            }
-        }
-        .overlay {
-            HStack(spacing: 0) {
-                Rectangle()
-                    .opacity(0)
-                LinearGradient(
-                    colors: gradientColors,
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-                .frame(width: 18)
-            }
-        }
+        .horizontalDimming(.all)
     }
     
     func navigationBarPrincipalItem() -> some View {

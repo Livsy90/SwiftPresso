@@ -38,6 +38,7 @@ struct PostView<ContentUnavailable: View>: View {
                             let distance = min(0, frame.minY)
                             
                             return content
+                                .scaleEffect(1 - distance / 1200)
                                 .offset(y: -distance / 1.6)
                                 .blur(radius: -distance / 30)
                         }
@@ -196,18 +197,6 @@ struct PostView<ContentUnavailable: View>: View {
         }
         .background {
             configuration.backgroundColor
-                .mask {
-                    VStack(spacing: 0) {
-                        LinearGradient(
-                            colors: gradientColors,
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        .frame(height: 15)
-                        
-                        Rectangle()
-                    }
-                }
         }
     }
     
