@@ -16,3 +16,9 @@ extension CategoryModel: Hashable {
         hasher.combine(id)
     }
 }
+
+extension CategoryModel {
+    static let empty: Self = CategoryModel(id: .zero, count: .zero, name: "", description: "")
+    static let all: Self = CategoryModel(id: .zero, count: .zero, name: "All", description: "")
+    static let placeholder: Self = CategoryModel(id: .zero, count: .zero, name: "Placeholder", description: "")
+}

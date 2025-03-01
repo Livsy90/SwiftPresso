@@ -1,9 +1,24 @@
 import SwiftUI
 
-struct LoadingIndicator: View {
+struct ProgressIndicator: View {
     
-    let isPrimary: Bool
+    private let controlSize: ControlSize
     @Environment(\.configuration) private var configuration: Preferences.Configuration
+    
+    private var sizeValue: CGFloat {
+        switch controlSize {
+        case .mini: 20
+        case .small: 30
+        case .regular: 50
+        case .large: 100
+        case .extraLarge: 150
+        @unknown default: 100
+        }
+    }
+    
+    init(_ controlSize: ControlSize) {
+        self.controlSize = controlSize
+    }
     
     var body: some View {
         loadingIndicator()
@@ -12,7 +27,7 @@ struct LoadingIndicator: View {
     private func loadingIndicator() -> some View {
         Image(systemName: "ellipsis")
             .symbolEffect(.variableColor, options: .repeat(.continuous))
-            .font(.system(size: isPrimary ? 100 : 30))
+            .font(.system(size: sizeValue))
             .fontWeight(.heavy)
             .foregroundStyle(configuration.textColor)
             .listRowBackground(Color.clear)
@@ -22,5 +37,5 @@ struct LoadingIndicator: View {
 }
 
 #Preview {
-    LoadingIndicator(isPrimary: true)
+    ProgressIndicator(.large)
 }

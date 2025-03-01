@@ -25,6 +25,14 @@ struct PostListView: View {
         viewModel.tagsToPresent.isEmpty
     }
     
+    private var gradientColors: [Color] {
+        [
+            configuration.backgroundColor.opacity(0),
+            configuration.backgroundColor.opacity(0.8),
+            configuration.backgroundColor
+        ]
+    }
+    
     init(
         viewModel: PostListViewModel,
         externalTagName: Binding<String?>,
@@ -37,97 +45,10 @@ struct PostListView: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            VStack {
-                List {
-                    tagView()
-                    descriptionView(viewModel.chosenTag)
-                    listView()
-                }
-                .scrollDismissesKeyboard(.interactively)
-                .listStyle(.plain)
-                .listRowSpacing(12)
-                .scrollContentBackground(.hidden)
-                .background {
-                    configuration.backgroundColor
-                        .edgesIgnoringSafeArea(.all)
-                }
-                .refreshable { [weak viewModel] in
-                    viewModel?.reload()
-                }
-                .navigationTitle(viewModel.mode.title)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        navigationBarPrincipalItem()
-                            .disabled(viewModel.isInitialLoading)
-                    }
-                    
-                    ToolbarItem(placement: .topBarLeading) {
-                        navigationBarLeadingItem()
-                            .disabled(viewModel.isInitialLoading)
-                    }
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        navigationBarTrailingItem()
-                            .disabled(viewModel.isInitialLoading)
-                    }
-                }
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-                .onSubmit(of: .search) {
-                    viewModel.search(searchText)
-                }
-                .onChange(of: searchText) { _, newValue in
-                    guard newValue.isEmpty else { return }
-                    DispatchQueue.main.async {
-                        self.viewModel.loadDefault()
-                    }
-                }
-                .onChange(of: externalTagName, { _, newValue in
-                    guard let newValue else { return }
-                    showPostListByTag(newValue)
-                })
-                .onChange(of: externalCategoryName, { _, newValue in
-                    guard let newValue else { return }
-                    showPostListByCategory(newValue)
-                })
-                .readSize($size)
-                .webView(
-                    url: $urlToOpen,
-                    onTag: { tagName in
-                        showPostListByTag(tagName)
-                    },
-                    onCategory: { categoryName in
-                        showPostListByCategory(categoryName)
-                    },
-                    placeholder: {
-                        LoadingIndicator(isPrimary: true)
-                            .id(UUID())
-                    }
-                )
-                .sheet(isPresented: $isShowMenu, onDismiss: {
-                    openPageIfNeeded(chosenPage)
-                    chosenPage = nil
-                }, content: {
-                    menu()
-                        .presentationDetents([.medium, .large])
-                        .presentationDragIndicator(.visible)
-                })
-                .task {
-                    isTagMenuExpanded = configuration.isMenuExpanded
-                    isPageMenuExpanded = configuration.isMenuExpanded
-                    isCategoryMenuExpanded = configuration.isMenuExpanded
-                }
-                
-                LoadingIndicator(isPrimary: false)
-                    .opacity(viewModel.isLoadMore ? 1 : 0)
-                    .padding(.top, 4)
-            }
-            
-            LoadingIndicator(isPrimary: true)
+            list()
+            ProgressIndicator(.large)
                 .opacity(viewModel.isInitialLoading ? 1 : 0)
         }
-        .ignoresSafeArea(.all, edges: .bottom)
     }
     
 }
@@ -135,6 +56,90 @@ struct PostListView: View {
 // MARK: - Views
 
 private extension PostListView {
+    
+    func list() -> some View {
+        List {
+            tagView()
+            descriptionView(viewModel.chosenTag)
+            listView()
+            loadMoreIndicator()
+        }
+        .scrollDisabled(viewModel.isInitialLoading)
+        .scrollDismissesKeyboard(.interactively)
+        .listStyle(.plain)
+        .listRowSpacing(12)
+        .scrollContentBackground(.hidden)
+        .background {
+            configuration.backgroundColor
+                .edgesIgnoringSafeArea(.all)
+        }
+        .refreshable { [weak viewModel] in
+            viewModel?.reload()
+        }
+        .navigationTitle(viewModel.mode.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                navigationBarPrincipalItem()
+            }
+            
+            ToolbarItem(placement: .topBarLeading) {
+                navigationBarLeadingItem()
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                navigationBarTrailingItem()
+                    .disabled(viewModel.isTaxonomiesLoading)
+            }
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            viewModel.search(searchText)
+        }
+        .onChange(of: searchText) { _, newValue in
+            guard newValue.isEmpty else { return }
+            DispatchQueue.main.async {
+                self.viewModel.loadDefault()
+            }
+        }
+        .onChange(of: externalTagName, { _, newValue in
+            guard let newValue else { return }
+            showPostListByTag(newValue)
+        })
+        .onChange(of: externalCategoryName, { _, newValue in
+            guard let newValue else { return }
+            showPostListByCategory(newValue)
+        })
+        .readSize($size)
+        .webView(
+            url: $urlToOpen,
+            onTag: { tagName in
+                showPostListByTag(tagName)
+            },
+            onCategory: { categoryName in
+                showPostListByCategory(categoryName)
+            },
+            placeholder: {
+                ProgressIndicator(.large)
+                    .id(UUID())
+            }
+        )
+        .sheet(isPresented: $isShowMenu, onDismiss: {
+            openPageIfNeeded(chosenPage)
+            chosenPage = nil
+        }, content: {
+            menu()
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(.ultraThinMaterial)
+        })
+        .task {
+            isTagMenuExpanded = configuration.isMenuExpanded
+            isPageMenuExpanded = configuration.isMenuExpanded
+            isCategoryMenuExpanded = configuration.isMenuExpanded
+        }
+    }
     
     func menu() -> some View {
         ScrollView {
@@ -250,7 +255,6 @@ private extension PostListView {
             }
             .padding()
         }
-        .background(configuration.menuBackgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
@@ -298,7 +302,7 @@ private extension PostListView {
                     showPostListByCategory(categoryName)
                 },
                 placeholder: {
-                    LoadingIndicator(isPrimary: true)
+                    ProgressIndicator(.large)
                 }
             )
             .listRowBackground(Color.clear)
@@ -307,11 +311,10 @@ private extension PostListView {
                 viewModel.updateIfNeeded(id: post.id)
             }
         }
-        .disabled(viewModel.isInitialLoading)
     }
     
     func tagPlaceholder() -> some View {
-        tagItem(tag: .init(id: .zero, count: .zero, name: "Placeholder", description: ""))
+        tagItem(tag: .placeholder)
             .opacity(0)
             .overlay {
                 ShimmerView()
@@ -341,9 +344,9 @@ private extension PostListView {
                         }
                     }
                 }
-                .onChange(of: viewModel.chosenTag ?? .init(id: 0, count: 0, name: "", description: "")) { _, newValue in
+                .onChange(of: viewModel.chosenTag ?? .empty) { _, newValue in
                     withAnimation {
-                        proxy.scrollTo(newValue.id)
+                        proxy.scrollTo(newValue.id, anchor: .center)
                     }
                 }
             }
@@ -352,6 +355,30 @@ private extension PostListView {
         .tagViewSettings()
         .background {
             configuration.backgroundColor
+        }
+        .overlay {
+            HStack(spacing: 0) {
+                LinearGradient(
+                    colors: gradientColors,
+                    startPoint: .trailing,
+                    endPoint: .leading
+                )
+                .frame(width: 18)
+                Rectangle()
+                    .opacity(0)
+            }
+        }
+        .overlay {
+            HStack(spacing: 0) {
+                Rectangle()
+                    .opacity(0)
+                LinearGradient(
+                    colors: gradientColors,
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+                .frame(width: 18)
+            }
         }
     }
     
@@ -387,6 +414,13 @@ private extension PostListView {
             .symbolEffect(.bounce, value: viewModel.isRefreshable)
         }
     }
+    
+    func loadMoreIndicator() -> some View {
+        ProgressIndicator(.small)
+            .opacity(viewModel.isLoadMore ? 1 : 0)
+            .frame(maxWidth: .infinity, alignment: .center)
+    }
+    
 }
 
 // MARK: - Helpers
@@ -429,6 +463,7 @@ private extension PostListView {
 private extension View {
     func tagViewSettings() -> some View {
         self
+            .contentMargins(.horizontal, 8, for: .scrollContent)
             .scrollIndicators(.hidden)
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)

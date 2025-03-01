@@ -168,7 +168,7 @@ extension Preferences.Configuration {
         isShowFeaturedImage: true,
         isShowContentInWebView: true,
         menuBackgroundColor: .primary,
-        menuTextColor: Color(uiColor: .systemBackground),
+        menuTextColor: .primary,
         backgroundColor: Color(uiColor: .systemBackground),
         accentColor: .primary,
         textColor: .primary,

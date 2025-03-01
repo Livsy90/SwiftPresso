@@ -29,6 +29,7 @@ final class PostListViewModel {
     var isInitialLoading: Bool {
         isLoading && shouldShowFullScreenPlaceholder
     }
+    var isTaxonomiesLoading: Bool = true
     var isLoadMore: Bool {
         isLoading && !isError && !isInitialLoading
     }
@@ -82,6 +83,7 @@ final class PostListViewModel {
             self.categories = await categories
             self.tags = await tags
             setTagsToPresent(self.tags)
+            isTaxonomiesLoading = false
             
             pageNumber += 1
             isLoading = false
@@ -161,8 +163,9 @@ private extension PostListViewModel {
                 var postList = self.postList
                 postList += try await getPostList(pageNumber: pageNumber)
                 try Task.checkCancellation()
-                self.postList = postList
-                
+                withAnimation {
+                    self.postList = postList
+                }
                 isLoading = false
                 shouldShowFullScreenPlaceholder = false
             } catch {
@@ -177,7 +180,9 @@ private extension PostListViewModel {
                     tag: id(by: name)
                 )
                 try Task.checkCancellation()
-                self.postList = postList
+                withAnimation {
+                    self.postList = postList
+                }
                 
                 isLoading = false
                 shouldShowFullScreenPlaceholder = false
@@ -193,7 +198,9 @@ private extension PostListViewModel {
                     category: id(by: name)
                 )
                 try Task.checkCancellation()
-                self.postList = postList
+                withAnimation {
+                    self.postList = postList
+                }
                 
                 isLoading = false
                 shouldShowFullScreenPlaceholder = false
@@ -209,7 +216,9 @@ private extension PostListViewModel {
                     searchTerms: searchTerms
                 )
                 try Task.checkCancellation()
-                self.postList = postList
+                withAnimation {
+                    self.postList = postList
+                }
                 
                 isLoading = false
                 shouldShowFullScreenPlaceholder = false
@@ -296,7 +305,7 @@ private extension PostListViewModel {
     }
     
     func setTagsToPresent(_ tags: [CategoryModel]) {
-        var tagsToPresent: [CategoryModel] = [.init(id: 0, count: 0, name: "All", description: "")]
+        var tagsToPresent: [CategoryModel] = [.all]
         tagsToPresent += tags
         withAnimation {
             self.tagsToPresent = tagsToPresent

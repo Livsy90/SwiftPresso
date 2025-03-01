@@ -1,25 +1,5 @@
 import SwiftUI
 
-struct ShimmerPlaceholder: View {
-    
-    @Environment(\.configuration) private var configuration: Preferences.Configuration
-
-    var body: some View {
-        ScrollView {
-            ForEach(1...100, id: \.self) { _ in
-                ShimmerView()
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .frame(height: 80)
-                    .padding(6)
-            }
-        }
-        .scrollDisabled(true)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(configuration.backgroundColor)
-    }
-    
-}
-
 struct ShimmerView: View {
     
     @State private var startPoint: UnitPoint = .init(x: -1.8, y: -1.2)

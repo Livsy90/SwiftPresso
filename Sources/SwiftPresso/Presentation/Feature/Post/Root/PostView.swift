@@ -55,7 +55,7 @@ struct PostView<ContentUnavailable: View>: View {
             .toolbarBackground(configuration.backgroundColor, for: .navigationBar)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    LoadingIndicator(isPrimary: false)
+                    ProgressIndicator(.small)
                         .opacity(viewModel.isLoading ? 1 : 0)
                     
                     if let url = viewModel.url {
@@ -94,7 +94,7 @@ struct PostView<ContentUnavailable: View>: View {
                 }
             }
             if viewModel.isInitialLoading {
-                LoadingIndicator(isPrimary: true)
+                ProgressIndicator(.large)
                     .padding(.top, 150)
             }
         }
