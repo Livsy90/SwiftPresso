@@ -399,7 +399,7 @@ private extension PostListView {
                     startPoint: .trailing,
                     endPoint: .leading
                 )
-                .frame(width: 20)
+                .frame(width: 18)
                 Rectangle()
                     .opacity(0)
             }
@@ -413,7 +413,7 @@ private extension PostListView {
                     startPoint: .leading,
                     endPoint: .trailing
                 )
-                .frame(width: 20)
+                .frame(width: 18)
             }
         }
     }
