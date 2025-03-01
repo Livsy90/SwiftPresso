@@ -28,7 +28,9 @@ struct PostListView: View {
     private var gradientColors: [Color] {
         [
             configuration.backgroundColor.opacity(0),
+            configuration.backgroundColor.opacity(0.4),
             configuration.backgroundColor.opacity(0.8),
+            configuration.backgroundColor.opacity(0.96),
             configuration.backgroundColor
         ]
     }
@@ -174,7 +176,7 @@ private extension PostListView {
                                                 .multilineTextAlignment(.leading)
                                                 .frame(alignment: .leading)
                                                 .fontWeight(.semibold)
-                                                .foregroundStyle(configuration.menuTextColor)
+                                                .foregroundStyle(configuration.textColor)
                                             Spacer()
                                         }
                                     }
@@ -188,11 +190,11 @@ private extension PostListView {
                                 .frame(alignment: .leading)
                                 .font(.title)
                                 .fontWeight(.bold)
-                                .foregroundStyle(configuration.menuTextColor)
+                                .foregroundStyle(configuration.textColor)
                         }
                     )
                     .padding()
-                    .tint(configuration.menuTextColor)
+                    .tint(configuration.textColor)
                 }
                 
                 if configuration.isShowCategoryMenu {
@@ -210,7 +212,7 @@ private extension PostListView {
                                                 .font(.callout)
                                                 .multilineTextAlignment(.leading)
                                                 .fontWeight(.semibold)
-                                                .foregroundStyle(configuration.menuTextColor)
+                                                .foregroundStyle(configuration.textColor)
                                             Spacer()
                                         }
                                     }
@@ -223,11 +225,11 @@ private extension PostListView {
                                 .multilineTextAlignment(.leading)
                                 .font(.title)
                                 .fontWeight(.bold)
-                                .foregroundStyle(configuration.menuTextColor)
+                                .foregroundStyle(configuration.textColor)
                         }
                     )
                     .padding()
-                    .tint(configuration.menuTextColor)
+                    .tint(configuration.textColor)
                 }
                 
                 if configuration.isShowTagMenu {
@@ -245,7 +247,7 @@ private extension PostListView {
                                                 .font(.callout)
                                                 .multilineTextAlignment(.leading)
                                                 .fontWeight(.semibold)
-                                                .foregroundStyle(configuration.menuTextColor)
+                                                .foregroundStyle(configuration.textColor)
                                             Spacer()
                                         }
                                     }
@@ -258,11 +260,11 @@ private extension PostListView {
                                 .multilineTextAlignment(.leading)
                                 .font(.title)
                                 .fontWeight(.bold)
-                                .foregroundStyle(configuration.menuTextColor)
+                                .foregroundStyle(configuration.textColor)
                         }
                     )
                     .padding()
-                    .tint(configuration.menuTextColor)
+                    .tint(configuration.textColor)
                 }
                 
                 Spacer()
@@ -281,16 +283,25 @@ private extension PostListView {
                 .font(.headline)
                 .fontWeight(.semibold)
                 .multilineTextAlignment(.center)
-                .foregroundStyle(configuration.textColor)
+                .foregroundStyle(isTagChosen(tag) ? configuration.menuTextColor : configuration.textColor)
                 .padding()
                 .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(configuration.accentColor.opacity(isTagChosen(tag) ? 0.5 : 0.15))
+                    filledRectangle(isTagChosen(tag))
                 }
         }
         .scalable()
     }
     
+    @ViewBuilder
+    func filledRectangle(_ isChosen: Bool) -> some View {
+        if isChosen {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(configuration.accentColor)
+        } else {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(.ultraThinMaterial)
+        }
+    }
     
     @ViewBuilder
     func descriptionView(_ model: CategoryModel?) -> some View {
@@ -355,6 +366,17 @@ private extension PostListView {
                         ForEach(viewModel.tagsToPresent, id: \.self) { tag in
                             tagItem(tag: tag)
                                 .id(tag.id)
+                                .visualEffect { content, proxy in
+                                    let frame = proxy.frame(in: .scrollView(axis: .horizontal))
+                                    let distance = min(0, frame.minX)
+                                    
+                                    return content
+                                        .hueRotation(.degrees(frame.origin.x / 10)) // Changed y to x
+                                        .scaleEffect(1 + distance / 700)
+                                        .offset(x: -distance / 1.25) // Changed y offset to x offset
+                                        .brightness(-distance / 400)
+                                        .blur(radius: -distance / 50)
+                                }
                         }
                     }
                 }
@@ -377,7 +399,7 @@ private extension PostListView {
                     startPoint: .trailing,
                     endPoint: .leading
                 )
-                .frame(width: 18)
+                .frame(width: 20)
                 Rectangle()
                     .opacity(0)
             }
@@ -391,7 +413,7 @@ private extension PostListView {
                     startPoint: .leading,
                     endPoint: .trailing
                 )
-                .frame(width: 18)
+                .frame(width: 20)
             }
         }
     }
