@@ -42,7 +42,7 @@ extension SwiftPresso.View {
     @MainActor static func `default`() -> some View {
         SwiftPresso.configure(
             host: "livsycode.com",
-            isShowContentInWebView: true
+            isShowContentInWebView: false
         )
         return SwiftPresso.View.postList()
     }

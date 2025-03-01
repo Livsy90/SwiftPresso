@@ -98,6 +98,7 @@ struct PostView<ContentUnavailable: View>: View {
                     .padding(.top, 150)
             }
         }
+        .toolbarRole(.editor)
     }
     
     private func image(url: URL) -> some View {
