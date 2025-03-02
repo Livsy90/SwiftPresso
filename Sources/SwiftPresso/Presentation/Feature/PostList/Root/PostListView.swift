@@ -290,6 +290,7 @@ private extension PostListView {
                 }
         }
         .scalable()
+        .sensoryFeedback(.selection, trigger: viewModel.chosenTag)
     }
     
     @ViewBuilder
