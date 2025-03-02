@@ -168,7 +168,7 @@ extension Preferences.Configuration {
         backgroundColor: Color(uiColor: .systemBackground),
         accentColor: .primary,
         textColor: .primary,
-        homeIcon: Image(systemName: "house"),
+        homeIcon: Image(systemName: "arrow.turn.up.left"),
         homeTitle: "Home",
         searchTitle: "Search",
         isShowPageMenu: true,

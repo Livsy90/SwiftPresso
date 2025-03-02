@@ -429,7 +429,7 @@ private extension PostListView {
     
     func loadMoreIndicator() -> some View {
         ProgressIndicator(.small)
-            .opacity(viewModel.isLoadMore ? 1 : 0)
+            .opacity(viewModel.isLoadingMore ? 1 : 0)
             .frame(maxWidth: .infinity, alignment: .center)
     }
     

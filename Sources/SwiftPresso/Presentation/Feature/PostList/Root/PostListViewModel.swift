@@ -26,9 +26,7 @@ final class PostListViewModel {
         isLoading && shouldShowFullScreenPlaceholder
     }
     var isTaxonomiesLoading: Bool = true
-    var isLoadMore: Bool {
-        isLoading && !isError && !isInitialLoading
-    }
+    var isLoadingMore: Bool = false
     private(set) var chosenTag: CategoryModel?
     private(set) var chosenCategory: CategoryModel?
     private(set) var chosenPage: PostModel?
@@ -94,6 +92,7 @@ extension PostListViewModel {
     
     func updateIfNeeded(id: Int) {
         guard let last = postList.last, id == last.id, !isLoading else { return }
+        isLoadingMore = true
         loadPosts()
     }
     
@@ -163,6 +162,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 withAnimation {
                     self.postList = postList
+                    isLoadingMore = false
                 }
                 isLoading = false
                 shouldShowFullScreenPlaceholder = false
@@ -180,6 +180,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 withAnimation {
                     self.postList = postList
+                    isLoadingMore = false
                 }
                 
                 isLoading = false
@@ -198,6 +199,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 withAnimation {
                     self.postList = postList
+                    isLoadingMore = false
                 }
                 
                 isLoading = false
@@ -216,6 +218,7 @@ private extension PostListViewModel {
                 try Task.checkCancellation()
                 withAnimation {
                     self.postList = postList
+                    isLoadingMore = false
                 }
                 
                 isLoading = false

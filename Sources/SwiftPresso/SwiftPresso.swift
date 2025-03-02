@@ -48,7 +48,7 @@ public enum SwiftPresso {
         accentColor: Color = .primary,
         textColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
-        homeIcon: Image = Image(systemName: "house"),
+        homeIcon: Image = Image(systemName: "arrow.turn.up.left"),
         homeTitle: String = "Home",
         searchTitle: String = "Search",
         isShowPageMenu: Bool = true,

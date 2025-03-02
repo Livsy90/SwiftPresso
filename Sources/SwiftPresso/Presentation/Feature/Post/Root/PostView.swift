@@ -61,7 +61,9 @@ struct PostView<ContentUnavailable: View>: View {
                             )
                             .onPreferenceChange(ScrollProportion.self) { proportion in
                                 Task { @MainActor in
-                                    self.proportion = proportion
+                                    withAnimation {
+                                        self.proportion = proportion
+                                    }
                                 }
                             }
                     }
@@ -103,6 +105,7 @@ struct PostView<ContentUnavailable: View>: View {
                     ProgressView(value: proportion, total: 1)
                         .frame(width: 111)
                         .padding()
+                        .opacity(proportion < 0.09 ? 0 : 1)
                 }
             }
             .background {
@@ -129,9 +132,9 @@ struct PostView<ContentUnavailable: View>: View {
                     }
                 }
             }
+            
             if viewModel.isInitialLoading {
                 ProgressIndicator(.large)
-                    .padding(.top, 150)
             }
         }
         .toolbarRole(.editor)
@@ -237,67 +240,14 @@ struct PostView<ContentUnavailable: View>: View {
     
 }
 
-#Preview {
-    SwiftPresso.View.default()
-}
-
-struct ScrollReadVStackModifier: ViewModifier {
-     
-    @Binding var scrollViewHeight: CGFloat
-    @Binding var proportion: CGFloat
-    var proportionName: String
-    
-    func body(content: Content) -> some View {
-        
-        content
-            .background(
-                GeometryReader { geo in
-                    let scrollLength = geo.size.height - scrollViewHeight
-                    let rawProportion = -geo.frame(in: .named(proportionName)).minY / scrollLength
-                    let proportion = min(max(rawProportion, 0), 1)
-                    
-                    Color.clear
-                        .preference(
-                            key: ScrollProportion.self,
-                            value: proportion
-                        )
-                        .onPreferenceChange(ScrollProportion.self) { proportion in
-                            Task { @MainActor in
-                                self.proportion = proportion
-                            }
-                        }
-                }
-            )
-        
-    }
-    
-}
-
-struct ScrollReadScrollViewModifier: ViewModifier {
-     
-    @Binding var scrollViewHeight: CGFloat
-    var proportionName: String
-    
-    func body(content: Content) -> some View {
-        
-        content
-            .background(
-                GeometryReader { geo in
-                    Color.clear.onAppear {
-                        scrollViewHeight = geo.size.height
-                    }
-                }
-            )
-            .coordinateSpace(name: proportionName)
-        
-    }
-    
-}
-
-struct ScrollProportion: PreferenceKey {
+private struct ScrollProportion: PreferenceKey {
     static let defaultValue: CGFloat = 0
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
+}
+
+#Preview {
+    SwiftPresso.View.default()
 }

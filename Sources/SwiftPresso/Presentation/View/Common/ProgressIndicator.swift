@@ -26,7 +26,7 @@ struct ProgressIndicator: View {
     
     private func loadingIndicator() -> some View {
         Image(systemName: "ellipsis")
-            .symbolEffect(.variableColor, options: .repeat(.continuous))
+            .symbolEffect(.variableColor, options: .repeat(.continuous).speed(1.3))
             .font(.system(size: sizeValue))
             .fontWeight(.heavy)
             .foregroundStyle(configuration.textColor)

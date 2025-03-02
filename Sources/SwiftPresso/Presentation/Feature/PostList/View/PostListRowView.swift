@@ -97,31 +97,25 @@ struct PostListRowView<Placeholder: View>: View {
     }
     
     private func image(url: URL) -> some View {
-        LazyImage(url: url) { state in
-            if let image = state.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .clippedRectangle(size: size)
-            } else if state.error != nil {
-                Image(systemName: "wifi.exclamationmark")
-                    .clippedRectangle(size: size)
-            } else {
-                ShimmerView()
-                    .clippedRectangle(size: size)
+        RoundedRectangle(cornerRadius: 16)
+            .fill(.ultraThinMaterial)
+            .overlay {
+                LazyImage(url: url) { state in
+                    if let image = state.image {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(maxHeight: size.height)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                    } else if state.error != nil {
+                        Image(systemName: "circle.fill")
+                            .foregroundStyle(configuration.textColor)
+                    }
+                }
             }
-        }
-        .clippedRectangle(size: size)
-    }
-    
-}
-
-private extension View {
-    func clippedRectangle(size: CGSize) -> some View {
-        self
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .frame(width: size.width / 2.8)
     }
+    
 }
 
 #Preview {

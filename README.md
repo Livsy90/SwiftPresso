@@ -156,7 +156,7 @@ If you use SwiftPresso built-in views, you don't need to worry about the configu
         accentColor: Color = .primary,
         textColor: Color = .primary,
         menuTextColor: Color = Color(uiColor: .systemBackground),
-        homeIcon: Image = Image(systemName: "house"),
+        homeIcon: Image = Image(systemName: "arrow.turn.up.left"),
         homeTitle: String = "Home",
         searchTitle: String = "Search",
         isShowPageMenu: Bool = true,

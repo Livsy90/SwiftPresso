@@ -11,26 +11,25 @@ private struct HorizontalDimming: ViewModifier {
     @Environment(\.configuration) private var configuration: Preferences.Configuration
     
     func body(content: Content) -> some View {
-        ZStack {
-            content
-            
-            HStack {
-                if edges.contains(.leading) {
-                    Rectangle()
-                        .fill(configuration.backgroundColor)
-                        .frame(width: 16)
-                        .blur(radius: 4)
-                }
-                
-                Spacer()
-                
-                if edges.contains(.trailing) {
-                    Rectangle()
-                        .fill(configuration.backgroundColor)
-                        .frame(width: 16)
-                        .blur(radius: 4)
+        content
+            .overlay {
+                HStack {
+                    if edges.contains(.leading) {
+                        Rectangle()
+                            .fill(configuration.backgroundColor)
+                            .frame(width: 16)
+                            .blur(radius: 4)
+                    }
+                    
+                    Spacer()
+                    
+                    if edges.contains(.trailing) {
+                        Rectangle()
+                            .fill(configuration.backgroundColor)
+                            .frame(width: 16)
+                            .blur(radius: 4)
+                    }
                 }
             }
-        }
     }
 }
