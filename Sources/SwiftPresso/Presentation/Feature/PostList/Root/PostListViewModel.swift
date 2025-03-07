@@ -168,6 +168,7 @@ private extension PostListViewModel {
                 shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
+                isLoadingMore = false
             }
             
         case .tag(let name):
@@ -187,6 +188,7 @@ private extension PostListViewModel {
                 shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
+                isLoadingMore = false
             }
             
         case .category(let name):
@@ -206,6 +208,7 @@ private extension PostListViewModel {
                 shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
+                isLoadingMore = false
             }
             
         case .search(let searchTerms):
@@ -225,6 +228,7 @@ private extension PostListViewModel {
                 shouldShowFullScreenPlaceholder = false
             } catch {
                 isError = true
+                isLoadingMore = false
             }
         }
         

@@ -2,11 +2,11 @@ import SwiftUI
 
 extension View {
     func readSize(_ size: Binding<CGSize>, isStatic: Bool = true) -> some View {
-        modifier(HeightReader(size: size, isStatic: isStatic))
+        modifier(SizeReader(size: size, isStatic: isStatic))
     }
 }
 
-private struct HeightReader: ViewModifier {
+private struct SizeReader: ViewModifier {
     @Binding var size: CGSize
     let isStatic: Bool
     @State private var didSetSize: Bool = false
